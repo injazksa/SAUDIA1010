@@ -9,6 +9,11 @@
 /favicon.ico       /favicon.ico     200!
 /favicon-32x32.png /favicon-32x32.png 200!
 
+# ALLOW: Admin panel
+/admin             /admin/index.html  200!
+/admin/            /admin/index.html  200!
+/admin/config.yml  /admin/config.yml  200!
+
 # BLOCK: Sensitive/Internal Files
 /.env              /404.html    404!
 /.git/*            /404.html    404!

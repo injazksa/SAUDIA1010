@@ -93,7 +93,23 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://static.prod-images.emergentagent.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
     <link rel="dns-prefetch" href="https://www.google.com">
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://wa.me">
+    
+    <!-- Prefetch key pages for INSTANT navigation -->
+    <link rel="prefetch" href="/professions.html">
+    <link rel="prefetch" href="/blog.html">
+    <link rel="prefetch" href="/calculator.html">
+    <link rel="prefetch" href="/certificates.html">
+    <link rel="prefetch" href="/about.html">
+    <link rel="prefetch" href="/professional.html">
+    <link rel="prefetch" href="/work-visa.html">
+    
+    <!-- Netlify Identity Widget (required for CMS admin) -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     
     <style>
     /* Critical Overflow Fix for RTL Layout */
@@ -180,6 +196,111 @@
         "ratingValue": "4.95",
         "bestRating": "5",
         "reviewCount": "1250"
+      }
+    }
+    </script>
+    
+    <!-- FAQ Schema for Google Rich Snippets -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "هل مكتبكم معتمد رسميا من السفارة السعودية في عمان؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "نعم، نحن مكتب معتمد رسميا من السفارة السعودية في الأردن، ونعمل كمركز متخصص لإنجاز كافة المعاملات المتعلقة بالتأشيرات والتصديقات والاعتماد المهني."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "ما هي الأوراق المطلوبة لتأشيرة العمل السعودية؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "جواز سفر ساري المفعول (صلاحية 6 أشهر على الأقل)، صور شخصية حديثة، الفحص الطبي المعتمد، الشهادات الأكاديمية والخبرات العملية، وتفويض إلكتروني (إنجاز). يمكنك البحث عن مهنتك في قسم المهن لمعرفة التفاصيل الدقيقة."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "كم تستغرق عملية تصديق الشهادات من السفارة السعودية؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "تستغرق عملية التصديق عادة من 3 إلى 5 أيام عمل، وذلك بعد استكمال كافة التصديقات المطلوبة من الجهات الأردنية المعنية."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "ما هي تكلفة خدماتكم؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "التكلفة تختلف حسب نوع الخدمة والمهنة. يمكنك استخدام حاسبة الرسوم للحصول على تقدير دقيق للتكلفة الإجمالية. نحن نضمن أسعارا تنافسية مع أعلى مستوى من الخدمة."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "كيف يمكنني التواصل معكم؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "يمكنك التواصل معنا عبر الواتساب (0789881009)، الاتصال الهاتفي المباشر (0789881009)، البريد الإلكتروني (Visa@saudia-visa.com)، أو زيارتنا في مكتبنا بعمان - الدوار الأول - جبل عمان."
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- Service Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "serviceType": "خدمات تأشيرات السعودية",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "مكتب تأشيرات السعودية في الأردن - إنجاز"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "الأردن"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "خدمات التأشيرات",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "تأشيرة العمل السعودية",
+              "description": "إنجاز كافة إجراءات تأشيرات العمل للمملكة العربية السعودية"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "تصديق الشهادات والوثائق",
+              "description": "تصديق جميع أنواع الشهادات الجامعية والوثائق الرسمية"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "الاعتماد المهني - إنجاز",
+              "description": "إجراءات الاعتماد المهني لجميع المهن والشركات"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "تأشيرات الزيارة",
+              "description": "إصدار تأشيرات الزيارة العائلية والشخصية والسياحية"
+            }
+          }
+        ]
       }
     }
     </script>
@@ -1169,16 +1290,29 @@
     
     <script src="script.js"></script>
     
+    <!-- Netlify Identity Redirect (required for CMS login) -->
+    <script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", function(user) {
+          if (!user) {
+            window.netlifyIdentity.on("login", function() {
+              document.location.href = "/admin/";
+            });
+          }
+        });
+      }
+    </script>
+    
     <!-- PWA Service Worker Registration -->
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/service-worker.js')
                     .then(registration => {
-                        console.log('✅ Service Worker registered successfully:', registration.scope);
+                        // SW registered
                     })
                     .catch(error => {
-                        console.log('❌ Service Worker registration failed:', error);
+                        // SW registration handled silently
                     });
             });
         }
@@ -1199,7 +1333,6 @@
                 if (deferredPrompt) {
                     deferredPrompt.prompt();
                     const { outcome } = await deferredPrompt.userChoice;
-                    console.log(`User response to install prompt: ${outcome}`);
                     deferredPrompt = null;
                     installBtn.remove();
                 }
