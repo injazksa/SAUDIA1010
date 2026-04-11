@@ -1,30 +1,22 @@
-# PRD - مشروع إنجاز لتأشيرات السعودية (EnjazKSA)
+# PRD - مشروع إنجاز (EnjazKSA)
 
-## ما تم تنفيذه - 4 مراحل
+## ما تم تنفيذه - 5 مراحل
 
-### المرحلة 1 - أمان
-- إصلاح 6 ثغرات XSS + ReDoS
-- Security Headers: CSP, HSTS, Permissions-Policy
-- حظر ملفات حساسة + إزالة console.log
+### المرحلة 1 - أمان: XSS, ReDoS, CSP, HSTS, file blocking
+### المرحلة 2 - SEO: Canonical tags (12 صفحة), sitemap, robots.txt
+### المرحلة 3 - سرعة: preconnect/prefetch, Schema markup, Decap CMS
+### المرحلة 4 - AI: llms.txt, 18 AI bots, AI meta tags, semantic content
+### المرحلة 5 - صفحة الشركات السعودية (corporate.html)
 
-### المرحلة 2 - SEO
-- Canonical Tags لكل 12 صفحة
-- إصلاح sitemap.xml + تحديث robots.txt
-- حذف 9MB صور غير مستخدمة
-
-### المرحلة 3 - سرعة + Schema + لوحة تحكم
-- preconnect/prefetch لكل الصفحات
-- Schema: FAQPage + Service + LocalBusiness
-- Decap CMS + Netlify Identity
-
-### المرحلة 4 - تحسين الذكاء الاصطناعي (AI Optimization)
-- llms.txt - ملف خاص للذكاء الاصطناعي (69 سطر محتوى غني)
-- robots.txt محدث مع 18 bot rule (ChatGPT, Claude, Perplexity, Google, Meta, Apple, etc.)
-- AI meta tags على كل الصفحات الرئيسية
-- محتوى semantic مخفي للـ AI crawlers
-- إشارة link alternate لـ llms.txt
+**صفحة جديدة**: `corporate.html` - صفحة مخصصة للشركات السعودية وأصحاب العمل
+- نفس الهوية البصرية (navy + gold + Alexandria font)
+- Schema markup خاص (Service + LocalBusiness)
+- AI meta tags محسّنة لاستقدام الموظفين
+- أقسام: لماذا نحن + خدمات الشركات + آلية العمل + CTA
+- مضافة في: sitemap.xml, _redirects, netlify.toml, llms.txt
+- رابط نظيف: saudia-visa.com/corporate
 
 ## Backlog
-- [ ] تفعيل Netlify Identity من لوحة تحكم Netlify
-- [ ] بناء لوحة تحكم مخصصة كاملة (A-Z)
+- [ ] تفعيل Netlify Identity
+- [ ] لوحة تحكم مخصصة A-Z
 - [ ] تحويل Tailwind من CDN لبناء محلي

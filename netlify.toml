@@ -227,6 +227,11 @@
   to = "/work-visa.html"
   status = 200
 
+[[redirects]]
+  from = "/corporate"
+  to = "/corporate.html"
+  status = 200
+
 # 404 page - catch all unknown routes
 [[redirects]]
   from = "/*"

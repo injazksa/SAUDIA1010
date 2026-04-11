@@ -38,5 +38,7 @@
 /about             /about.html          200
 /work-visa         /work-visa.html      200
 
+/corporate         /corporate.html      200
+
 # 404 catch-all (non-forced: only for paths that don't match a real file)
 /*                 /404.html            404
