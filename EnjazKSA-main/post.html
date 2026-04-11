@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جاري التحميل... | مكتب تأشيرات السعودية</title>
+    
+    <!-- SEO Meta Tags (Will be updated dynamically) -->
+    <meta name="description" content="مكتب تأشيرات السعودية في الأردن - اقرأ أحدث المقالات والأخبار حول إجراءات السفارة السعودية وتأشيرات العمل والزيارة.">
+    <meta name="keywords" content="تأشيرات السعودية، مكتب إنجاز، الأردن، فيزا السعودية، تفويض إلكتروني، تصديق شهادات">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="مدونة مكتب تأشيرات السعودية">
+    <meta property="og:description" content="دليلك الشامل لإجراءات التأشيرات السعودية من الأردن.">
+    <meta property="og:image" content="https://saudia-visa.com/assets/logo.png">
+    <meta property="og:site_name" content="مكتب تأشيرات السعودية في الأردن">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <style>
+        .post-container { padding: 60px 0; min-height: 70vh; background: #fff; }
+        .post-wrapper { max-width: 900px; margin: 0 auto; }
+        .post-header { text-align: center; margin-bottom: 40px; }
+        .post-title { font-size: 2.8rem; color: var(--primary-color); margin-bottom: 20px; line-height: 1.4; font-weight: 800; }
+        .post-meta { display: flex; justify-content: center; gap: 20px; color: var(--text-light); font-size: 1rem; margin-bottom: 30px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
+        .post-meta span { display: flex; align-items: center; gap: 8px; }
+        .post-image-container { width: 100%; margin-bottom: 40px; border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-lg); }
+        .post-image { width: 100%; height: auto; display: block; object-fit: cover; }
+        .post-content { font-size: 1.25rem; line-height: 2.2; color: #333; text-align: justify; }
+        .post-content h2 { font-size: 2rem; color: var(--primary-color); margin: 40px 0 20px; border-right: 5px solid var(--accent-color); padding-right: 15px; }
+        .post-content h3 { font-size: 1.6rem; color: var(--secondary-color); margin: 30px 0 15px; }
+        .post-content p { margin-bottom: 25px; }
+        .post-content img { max-width: 100%; border-radius: 10px; margin: 20px 0; }
+        .post-content ul, .post-content ol { margin: 20px 30px 20px 0; }
+        .post-content li { margin-bottom: 10px; }
+        
+        .loading-spinner { border: 4px solid #f3f3f3; border-top: 4px solid var(--accent-color); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 50px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .back-to-blog { display: inline-flex; align-items: center; gap: 10px; color: var(--primary-color); text-decoration: none; font-weight: 700; margin-bottom: 30px; transition: 0.3s; }
+        .back-to-blog:hover { color: var(--accent-color); transform: translateX(-5px); }
+        
+        @media (max-width: 768px) {
+            .post-title { font-size: 2rem; }
+            .post-content { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h2 id="site-name-nav">مكتب تأشيرات السعودية</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="blog.html">المدونة</a></li>
+                <li><a href="index.html#contact">اتصل بنا</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <article class="post-container">
+        <div class="container post-wrapper">
+            <a href="blog.html" class="back-to-blog"><i class="fas fa-arrow-right"></i> العودة للمدونة</a>
+            <div id="post-render-area">
+                <div class="loading-spinner"></div>
+                <p style="text-align: center; color: #666;">جاري جلب محتوى المقال...</p>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer -->
+    <footer style="background: var(--primary-color); color: white; padding: 60px 0; text-align: center; margin-top: 50px;">
+        <div class="container">
+            <h2 id="footer-site-name" style="margin-bottom: 20px;">مكتب تأشيرات السعودية في الأردن</h2>
+            <p>&copy; 2026 جميع الحقوق محفوظة. المركز المعتمد الأول للسفارة السعودية.</p>
+        </div>
+    </footer>
+
+    <script>
+        async function loadPostContent() {
+            const params = new URLSearchParams(window.location.search);
+            const fileName = params.get('file');
+            const renderArea = document.getElementById('post-render-area');
+
+            if (!fileName) {
+                renderArea.innerHTML = '<div style="text-align:center; padding:50px;"><h2>عذراً، لم يتم العثور على المقال.</h2><a href="index.html" class="service-link">العودة للرئيسية</a></div>';
+                return;
+            }
+
+            try {
+                const response = await fetch(`/blog/${fileName}`);
+                if (!response.ok) throw new Error('File not found');
+                const rawText = await response.text();
+
+                // Parse Frontmatter
+                const match = rawText.match(/^---([\s\S]*?)---/);
+                let content = rawText;
+                let meta = {};
+
+                if (match) {
+                    content = rawText.replace(match[0], '').trim();
+                    match[1].split('\n').forEach(line => {
+                        const parts = line.split(':');
+                        if (parts.length >= 2) {
+                            const key = parts[0].trim();
+                            const val = parts.slice(1).join(':').trim().replace(/^['"]|['"]$/g, '');
+                            meta[key] = val;
+                        }
+                    });
+                }
+
+                // Update SEO & Page Info
+                document.title = `${meta.title || 'مقال'} | مكتب تأشيرات السعودية`;
+                document.querySelector('meta[name="description"]').setAttribute('content', meta.description || '');
+                document.querySelector('meta[property="og:title"]').setAttribute('content', meta.title || '');
+                document.querySelector('meta[property="og:description"]').setAttribute('content', meta.description || '');
+                if (meta.image) document.querySelector('meta[property="og:image"]').setAttribute('content', window.location.origin + '/' + meta.image);
+
+                // Add Canonical Tag to prevent duplicate content issues
+                let canonical = document.querySelector('link[rel="canonical"]');
+                if (!canonical) {
+                    canonical = document.createElement('link');
+                    canonical.rel = 'canonical';
+                    document.head.appendChild(canonical);
+                }
+                canonical.href = `${window.location.origin}/post.html?file=${fileName}`;
+
+                const dateStr = meta.date ? new Date(meta.date).toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
+
+                // Render Content
+                renderArea.innerHTML = `
+                    <header class="post-header">
+                        <h1 class="post-title">${meta.title || 'بدون عنوان'}</h1>
+                        <div class="post-meta">
+                            <span><i class="far fa-calendar-alt"></i> ${dateStr}</span>
+                            <span><i class="far fa-user"></i> الإدارة</span>
+                            <span><i class="far fa-folder"></i> أخبار التأشيرات</span>
+                        </div>
+                    </header>
+                    
+                    ${meta.image ? `
+                    <div class="post-image-container">
+                        <img loading="lazy" src="${meta.image}" class="post-image" alt="${meta.title}" title="${meta.title}">
+                    </div>` : ''}
+                    
+                    <div class="post-content">
+                        ${marked.parse(content)}
+                    </div>
+
+                    <!-- Schema.org for Google -->
+                    <script type="application/ld+json">
+                    {
+                      "@context": "https://schema.org",
+                      "@type": "BlogPosting",
+                      "headline": "${meta.title}",
+                      "image": "${window.location.origin}/${meta.image}",
+                      "datePublished": "${meta.date}",
+                      "author": {"@type": "Organization", "name": "مكتب تأشيرات السعودية"},
+                      "description": "${meta.description}"
+                    }
+                    <\/script>
+                `;
+
+            } catch (err) {
+                console.error(err);
+                renderArea.innerHTML = '<div style="text-align:center; padding:50px;"><h2>حدث خطأ أثناء تحميل المقال.</h2><p>تأكد من أن الرابط صحيح.</p></div>';
+            }
+        }
+
+        window.onload = () => {
+            if (typeof loadSiteSettings === 'function') loadSiteSettings();
+            loadPostContent();
+        };
+    </script>
+</body>
+</html>

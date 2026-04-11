@@ -1,0 +1,36 @@
+# Netlify Redirects File - Security & Clean URLs
+# IMPORTANT: First matching rule wins in Netlify
+# =============================================
+
+# ALLOW FIRST: SEO & Manifest Files (before wildcards)
+/robots.txt        /robots.txt      200!
+/sitemap.xml       /sitemap.xml     200!
+/manifest.json     /manifest.json   200!
+/favicon.ico       /favicon.ico     200!
+/favicon-32x32.png /favicon-32x32.png 200!
+
+# BLOCK: Sensitive/Internal Files
+/.env              /404.html    404!
+/.git/*            /404.html    404!
+/.gitignore        /404.html    404!
+/project-structure.txt  /404.html  404!
+/DEPLOY.md         /404.html    404!
+/README.md         /404.html    404!
+/professions_processed.json  /404.html  404!
+/professions_updated.json    /404.html  404!
+/design_guidelines.json      /404.html  404!
+
+# CLEAN URLs: Pages
+/professions       /professions.html    200
+/blog              /blog.html           200
+/calculator        /calculator.html     200
+/certificates      /certificates.html   200
+/professional      /professional.html   200
+/terms             /terms.html          200
+/privacy           /privacy.html        200
+/disclaimer        /disclaimer.html     200
+/about             /about.html          200
+/work-visa         /work-visa.html      200
+
+# 404 catch-all (non-forced: only for paths that don't match a real file)
+/*                 /404.html            404

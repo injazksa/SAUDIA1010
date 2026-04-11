@@ -1,0 +1,60 @@
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Build and dist
+dist/
+build/
+.cache/
+
+# IDE and editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+
+# Admin panel sensitive files (Netlify CMS)
+admin/config.yml.bak
+
+# OS files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Netlify
+.netlify/
+functions/node_modules/
+
+# Testing
+coverage/
+.nyc_output/
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# System files
+.directory
+.Spotlight-V100
+.Trashes

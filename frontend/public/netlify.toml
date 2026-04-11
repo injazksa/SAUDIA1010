@@ -1,0 +1,9 @@
+# This netlify.toml is inside the publish directory
+# Main config is at root /netlify.toml
+# This file is for reference only - Netlify uses the root config
+
+[build]
+  publish = "."
+  
+[build.environment]
+  NODE_VERSION = "18"

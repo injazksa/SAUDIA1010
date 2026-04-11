@@ -1,0 +1,49 @@
+# Robots.txt for saudia-visa.com - SEO Optimized
+
+# Allow all bots to crawl the site
+User-agent: *
+Allow: /
+Allow: /blog/
+Allow: /images/
+Allow: /assets/
+
+# Disallow admin panel and sensitive files
+Disallow: /admin/
+Disallow: /_data/
+Disallow: /content/
+Disallow: /*.json$
+Disallow: /*.yml$
+Disallow: /.env
+Disallow: /config.yml
+Disallow: /.git/
+Disallow: /node_modules/
+
+# Specific rules for Google
+User-agent: Googlebot
+Allow: /
+Allow: /blog/
+Allow: /images/
+Allow: /professions.html
+Allow: /calculator.html
+
+# Specific rules for Bing
+User-agent: Bingbot
+Allow: /
+Allow: /blog/
+
+# Block bad bots
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+# Crawl delay (milliseconds)
+Crawl-delay: 1
+Request-rate: 1/1s
+
+# Sitemap location
+Sitemap: https://saudia-visa.com/sitemap.xml

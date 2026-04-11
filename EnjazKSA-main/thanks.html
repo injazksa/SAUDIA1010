@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تم استلام طلبك بنجاح | مكتب تأشيرات السعودية</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #001b3d;
+            --accent-color: #d4af37;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--light-bg);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .thanks-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .thanks-card {
+            background: white;
+            padding: 50px 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            border-top: 6px solid var(--accent-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .thanks-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, transparent 100%);
+            border-radius: 0 0 0 100%;
+        }
+
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background: #28a745;
+            color: white;
+            font-size: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            box-shadow: 0 10px 20px rgba(40, 167, 69, 0.2);
+            animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .thanks-msg {
+            color: #555;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .next-steps {
+            text-align: right;
+            background: #f0f4f8;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 35px;
+            border-right: 5px solid var(--accent-color);
+        }
+
+        .next-steps h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .next-steps ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .next-steps li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            color: #444;
+            font-weight: 600;
+        }
+
+        .next-steps li i {
+            color: var(--accent-color);
+            margin-top: 5px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 15px 35px;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 27, 61, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-outline {
+            display: inline-block;
+            padding: 15px 35px;
+            background: transparent;
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            border: 2px solid var(--primary-color);
+            transition: 0.3s;
+        }
+
+        .btn-outline:hover {
+            background: #f0f4f8;
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 1.8rem; }
+            .thanks-card { padding: 35px 20px; }
+            .btn-group { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="thanks-container">
+        <div class="thanks-card">
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            <h1>شكراً لك!</h1>
+            <p class="thanks-msg">تم استلام طلبك بنجاح في مكتب <strong>Saudia Visa</strong>. نحن نقدر ثقتك بنا وسنعمل على خدمتك بأسرع وقت ممكن.</p>
+            
+            <div class="next-steps">
+                <h3><i class="fas fa-info-circle"></i> ماذا سيحدث الآن؟</h3>
+                <ul>
+                    <li><i class="fas fa-user-check"></i> سيقوم فريقنا المختص بمراجعة بياناتك فوراً.</li>
+                    <li><i class="fas fa-clock"></i> سنتواصل معك عبر واتساب أو الهاتف خلال ساعة عمل واحدة.</li>
+                    <li><i class="fas fa-file-signature"></i> سنقوم بتزويدك بكافة التفاصيل والخطوات التالية لمعاملتك.</li>
+                </ul>
+            </div>
+
+            <div class="btn-group">
+                <a href="index.html" class="btn-primary">العودة للرئيسية</a>
+                <a href="https://wa.me/962789881009" class="btn-outline" target="_blank">
+                    <i class="fab fa-whatsapp"></i> تواصل سريع
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 20px; color: #888; font-size: 0.9rem;">
+        &copy; 2026 مكتب تأشيرات السعودية في الأردن. جميع الحقوق محفوظة.
+    </footer>
+</body>
+</html>

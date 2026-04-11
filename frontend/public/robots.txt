@@ -1,0 +1,35 @@
+# Robots.txt for Saudia Visa Jordan
+# Optimized for Google, Bing, and AI Crawlers (ChatGPT, Gemini, Perplexity, Claude)
+
+User-agent: *
+Allow: /
+
+# AI Crawlers - Allow All
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+# Disallow admin and system files
+Disallow: /admin/
+Disallow: /data/
+Disallow: /*.json$
+
+# Sitemap
+Sitemap: https://saudia-visa.com/sitemap.xml

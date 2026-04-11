@@ -1,0 +1,43 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/images/blog"
+public_folder: "/images/blog"
+
+locale: ar
+
+collections:
+  - name: "blog"
+    label: "مقالات المدونة"
+    label_singular: "مقال"
+    folder: "public/blog"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - {label: "العنوان", name: "title", widget: "string", required: true}
+      - {label: "المعرّف (ID)", name: "id", widget: "string", required: true, hint: "معرّف فريد بالإنجليزية بدون مسافات، مثال: work-visa-guide-2025"}
+      - {label: "التصنيف", name: "category", widget: "select", options: ["تأشيرات", "تصديقات", "إنجاز", "نصائح", "أخبار"], required: true}
+      - {label: "التاريخ", name: "date", widget: "datetime", format: "YYYY-MM-DD", required: true}
+      - {label: "وقت القراءة (بالدقائق)", name: "readingTime", widget: "number", default: 10, required: true}
+      - {label: "المقدمة (Excerpt)", name: "excerpt", widget: "text", required: true, hint: "ملخص قصير للمقال (2-3 أسطر)"}
+      - {label: "صورة بارزة (اختياري)", name: "featuredImage", widget: "image", required: false}
+      - {label: "المحتوى", name: "body", widget: "markdown", required: true}
+      - {label: "الكلمات المفتاحية (SEO)", name: "keywords", widget: "list", required: false}
+      - {label: "وصف ميتا (SEO)", name: "metaDescription", widget: "text", required: false}
+      - {label: "منشور؟", name: "published", widget: "boolean", default: true}
+
+  - name: "pages"
+    label: "الصفحات"
+    label_singular: "صفحة"
+    files:
+      - label: "الصفحة الرئيسية"
+        name: "home"
+        file: "content/home.md"
+        fields:
+          - {label: "العنوان", name: "title", widget: "string"}
+          - {label: "العنوان الفرعي", name: "subtitle", widget: "text"}
+          - {label: "نص زر الإجراء الرئيسي", name: "ctaText", widget: "string"}
+          - {label: "رابط زر الإجراء", name: "ctaLink", widget: "string"}

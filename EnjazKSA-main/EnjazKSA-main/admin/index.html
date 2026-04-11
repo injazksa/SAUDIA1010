@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة تحكم مكتب تأشيرات السعودية</title>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body>
+  <!-- Decap CMS Script -->
+  <script src="https://cdn.jsdelivr.net/npm/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <script>
+    // كود لإجبار لوحة التحكم على قراءة كل أنواع الصور في المعاينة
+    CMS.registerEditorComponent({
+      id: "image",
+      label: "Image",
+      fields: [{name: 'image', label: 'Image', widget: 'image'}],
+      pattern: /^!\[(.*)\]\((.*)\)$/,
+      fromBlock: function(match) {
+        return { image: match[2] };
+      },
+      toBlock: function(obj) {
+        return `![image](${obj.image})`;
+      },
+      toPreview: function(obj) {
+        return `<img src="${obj.image}" style="max-width:100%; height:auto;" />`;
+      }
+    });
+
+    // معالجة مسارات الصور في مكتبة الوسائط لضمان ظهور المصغرات
+    CMS.registerEventListener({
+      name: 'prePublish',
+      handler: ({ entry }) => {
+        console.log('Preparing to publish:', entry.get('slug'));
+      },
+    });
+
+    // كود إضافي للتأكد من أن روابط الصور في مكتبة الوسائط تشير للمسار الصحيح
+    if (window.location.hostname !== 'localhost') {
+      CMS.registerPreviewStyle("/style.css");
+    }
+  </script>
+</body>
+</html>

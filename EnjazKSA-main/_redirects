@@ -1,0 +1,25 @@
+# Force redirect from Netlify subdomain to primary domain for SEO
+https://rad-arithmetic-a57201.netlify.app/* https://saudia-visa.com/:splat 301!
+
+# Allow admin panel access
+/admin /admin/index.html 200
+/admin/* /admin/index.html 200
+
+# Allow blog access
+/blog/* /blog/:splat 200
+
+# Allow images, CSS, JS, and data files
+/images/* /images/:splat 200
+/assets/* /assets/:splat 200
+/style.css /style.css 200
+/script.js /script.js 200
+/professions.json /professions.json 200
+/settings.json /settings.json 200
+/news.json /news.json 200
+
+# Block direct access to sensitive files
+/.env   /  404
+/config.yml /  404
+
+# SPA Redirect for all other routes - serve index.html
+/* /index.html 200
