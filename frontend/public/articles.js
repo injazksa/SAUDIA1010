@@ -2020,6 +2020,12 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('page-title').textContent = article.title + ' - مكتب تأشيرات السعودية';
         document.getElementById('page-description').setAttribute('content', article.excerpt);
         
+        // Update canonical URL for this article
+        var canonicalEl = document.getElementById('page-canonical');
+        if (canonicalEl) {
+            canonicalEl.setAttribute('href', 'https://saudia-visa.com/post.html?id=' + encodeURIComponent(articleId));
+        }
+        
         // Update article header
         document.getElementById('article-title').textContent = article.title;
         document.getElementById('article-date').textContent = article.date;

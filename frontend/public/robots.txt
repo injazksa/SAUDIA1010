@@ -29,7 +29,12 @@ Allow: /
 # Disallow admin and system files
 Disallow: /admin/
 Disallow: /data/
+Disallow: /content/
 Disallow: /*.json$
+Disallow: /professions_processed.json
+Disallow: /professions_updated.json
+Disallow: /design_guidelines.json
+Disallow: /service-worker.js
 
 # Sitemap
 Sitemap: https://saudia-visa.com/sitemap.xml
