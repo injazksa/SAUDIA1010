@@ -71,6 +71,13 @@
     Cache-Control = "public, max-age=3600, stale-while-revalidate=600"
     X-Robots-Tag = "noindex"
 
+[[headers]]
+  for = "/llms.txt"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+    Content-Type = "text/plain; charset=utf-8"
+    X-Robots-Tag = "all"
+
 # =============================================
 # BLOCK ACCESS TO INTERNAL/CONFIG FILES
 # =============================================
@@ -85,6 +92,12 @@
 [[redirects]]
   from = "/sitemap.xml"
   to = "/sitemap.xml"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/llms.txt"
+  to = "/llms.txt"
   status = 200
   force = true
 

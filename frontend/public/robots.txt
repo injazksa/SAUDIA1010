@@ -1,20 +1,28 @@
-# Robots.txt for Saudia Visa Jordan
-# Optimized for Google, Bing, and AI Crawlers (ChatGPT, Gemini, Perplexity, Claude)
+# Robots.txt for Saudia Visa Jordan - المكتب المعتمد رسمياً من السفارة السعودية
+# Optimized for Google, Bing, AI Crawlers, and LLM Agents
 
 User-agent: *
 Allow: /
+Allow: /llms.txt
 
-# AI Crawlers - Allow All
-User-agent: ChatGPT-User
-Allow: /
-
-User-agent: GPTBot
+# Google Crawlers
+User-agent: Googlebot
 Allow: /
 
 User-agent: Google-Extended
 Allow: /
 
-User-agent: PerplexityBot
+User-agent: Googlebot-Image
+Allow: /images/
+
+# AI & LLM Crawlers - Full Access
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
 Allow: /
 
 User-agent: ClaudeBot
@@ -23,18 +31,41 @@ Allow: /
 User-agent: anthropic-ai
 Allow: /
 
+User-agent: PerplexityBot
+Allow: /
+
 User-agent: cohere-ai
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: facebookexternalhit
 Allow: /
 
 # Disallow admin and system files
 Disallow: /admin/
 Disallow: /data/
 Disallow: /content/
-Disallow: /*.json$
 Disallow: /professions_processed.json
 Disallow: /professions_updated.json
 Disallow: /design_guidelines.json
 Disallow: /service-worker.js
 
-# Sitemap
+# Sitemap & LLMs
 Sitemap: https://saudia-visa.com/sitemap.xml

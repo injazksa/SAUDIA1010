@@ -18,6 +18,14 @@
     <priority>0.95</priority>
   </url>
   
+  <!-- LLM Content Guide -->
+  <url>
+    <loc>https://saudia-visa.com/llms.txt</loc>
+    <lastmod>2026-04-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
   <!-- Main Services -->
   <url>
     <loc>https://saudia-visa.com/certificates.html</loc>
