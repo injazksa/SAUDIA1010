@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             })
             .catch(error => {
-                console.error('Error loading blog posts:', error);
+                // Error handled silently in production
                 blogPostsContainer.innerHTML = `
                     <div class="col-span-full text-center text-gray-500 py-12">
                         <i class="fas fa-exclamation-triangle text-4xl mb-4"></i>

@@ -41,7 +41,7 @@ async function loadProfessions() {
         document.getElementById('loadingState').classList.add('hidden');
         document.getElementById('professionsGrid').classList.remove('hidden');
     } catch (error) {
-        console.error('Error loading professions:', error);
+        // Error handled silently in production
         document.getElementById('loadingState').innerHTML = `
             <div class="text-center py-20">
                 <i class="fas fa-exclamation-triangle text-6xl text-red-400 mb-4"></i>
