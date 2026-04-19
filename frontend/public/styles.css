@@ -838,21 +838,37 @@ a {
 }
 
 
-/* ⚡ UX smoothness */
+/* ⚡ UX smoothness — Elegant Focus State (gold glow بدل المربع) */
 
-/* Remove Focus Outline on Click - Smooth Interaction */
+/* Remove ugly default focus box — replace with subtle brand glow */
+:focus {
+    outline: none;
+}
+
+/* Keyboard-only focus: gold ring (accessible + elegant) */
+:focus-visible {
+    outline: 2px solid rgba(201, 163, 94, 0.85);
+    outline-offset: 3px;
+    border-radius: 8px;
+    transition: outline-offset .12s ease;
+}
+
+/* Buttons + links: subtle gold shadow ring on keyboard focus */
 button:focus-visible,
 a:focus-visible,
+summary:focus-visible,
+[role="button"]:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(201,163,94,0.45), 0 0 12px rgba(201,163,94,0.25);
+}
+
+/* Form elements: refined look */
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-    outline: none !important;
-    box-shadow: none !important;
-}
-
-/* Remove Default Focus Ring (keep visible focus for keyboard nav is in browsers) */
-*:focus {
     outline: none;
+    box-shadow: 0 0 0 3px rgba(201,163,94,0.35);
+    border-color: #C9A35E !important;
 }
 
 /* Disable Tap Highlight on Mobile */

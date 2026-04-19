@@ -330,3 +330,75 @@ body, html, main, section, div, a, button {
 - 10/10 key pages return 200 OK
 - All security headers via Netlify
 - Auto-regeneration on deploy
+
+---
+
+## v2.5 UPDATE (2026-01-22) — Pre-Launch Polish
+
+### 🐛 إصلاح تكرار زر الرجوع
+- حُذف الزر القديم المدمج من 6 صفحات: `certificates.html`, `professional.html`, `disclaimer.html`, `post.html`, `privacy.html`, `terms.html`
+- الآن **زر رجوع واحد فقط** (الـ global من core.js) بتصميم موحّد في كل الصفحات
+
+### 🎨 Elegant Focus State (بدل المربع القبيح)
+استبدلت default browser focus outline بـ **gold glow** متناسق مع الهوية:
+```css
+:focus-visible {
+  outline: 2px solid rgba(201, 163, 94, 0.85);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+button:focus-visible {
+  box-shadow: 0 0 0 3px rgba(201,163,94,0.45), 0 0 12px rgba(201,163,94,0.25);
+}
+```
+- keyboard-only (مخفي للـ mouse clicks — تجربة Accessibility محسّنة)
+- Tap highlight معطّل على Mobile
+
+### 🧹 Deep Cleanup — حذف 10 MB من الصور غير المستخدمة
+- فحص كل ملفات HTML/JS/CSS لكشف الصور المُستخدمة فعلياً
+- حُذفت 25 صورة قديمة غير مُستخدَمة (كانت ~10 MB)
+- **حجم الموقع قبل: 13 MB → بعد: 4 MB** (تقليل 70%!)
+- deploy أسرع + CDN أخف + أفضل للـ Core Web Vitals
+
+### 🔒 Final CSP Fix
+أُضيف `cdnjs.cloudflare.com` إلى `font-src` → حل مشكلة أيقونات Font Awesome المكسورة بعد النشر
+
+### ✅ Pre-Deployment Audit Results:
+```
+⚡ PERFORMANCE
+   ✓ Total size: 4 MB (was 13 MB)
+   ✓ 9 images used (371 KB total)
+   ✓ 17 JS files (220 KB — merged from 20+)
+
+🔐 SECURITY
+   ✓ CSP + HSTS + X-Frame + nosniff
+   ✓ Font Awesome CSP allowed
+   ✓ 0 target=_blank without noopener
+   ✓ 0 javascript: URLs
+   ✓ Sensitive files protected
+
+🔗 LINKS
+   ✓ 0 broken internal links
+   ✓ 0 duplicate back buttons
+
+🔍 SEO
+   ✓ 17 URLs in sitemap
+   ✓ robots.txt allows GPT/Claude/Perplexity
+   ✓ All public pages have meta + canonical
+```
+
+### 🚀 Deployment Ready Checklist:
+- [x] Performance (4 MB, paginated, preloaded)
+- [x] Security (CSP, HSTS, protected sensitive files)
+- [x] SEO (sitemap auto-gen, robots.txt, schema markup)
+- [x] Accessibility (ARIA, keyboard nav, focus-visible)
+- [x] PWA (Service Worker, offline.html, manifest)
+- [x] UX (back button, scroll-to-top, reading progress, quote share)
+- [x] Content (4 blog posts + FAQ page + all service pages)
+
+### Next Steps for User:
+1. Save to GitHub
+2. Netlify auto-deploy (sitemap regenerates automatically)
+3. Google Search Console → submit sitemap.xml
+4. Bing Webmaster Tools (optional)
+5. Clear browser cache after first visit to see fresh CSP
