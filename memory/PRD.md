@@ -208,3 +208,30 @@
 - ✅ target=_blank without noopener: 0
 - ⚠️ Unreferenced images in /images/: 26 ملف (~10 MB) — لا تسبب ضرر لكن تضيع bandwidth
 - ✅ Sensitive files: محمية بـ Netlify redirects
+
+---
+
+## v2.2 UPDATE (2026-01-22) — Global Nav Controls
+
+### ✅ زر الرجوع الموحّد (Global Back Button)
+- يُحقَن تلقائياً في **كل الصفحات** (ما عدا الصفحة الرئيسية) عبر `core.js`
+- **موقع ذكي**: أعلى يمين الصفحة (`top: 80px; right: 20px`)
+- **نص تلقائي حسب السياق**:
+  - الصفحات العامة → "العودة للرئيسية" (يوجّه لـ `/`)
+  - صفحات المدونة → "العودة للمدونة" (يوجّه لـ `/blog.html`)
+- **استخدام History API ذكي**: إذا كان المستخدم قادم من صفحة أخرى في الموقع → يرجع بـ `history.back()`. غير ذلك → يتّبع الـ href المنطقي.
+- **تصميم موحّد**: Navy background + Gold border + animated hover
+- **Responsive**: على الموبايل (<640px) يصير أيقونة دائرية أسفل الشاشة (top → bottom)
+
+### ✅ زر الصعود السريع (Scroll-to-Top)
+- يُحقَن تلقائياً في **كل الصفحات** عبر `core.js`
+- **موقع بدون تضارب**: أسفل يمين (`bottom: 24px; right: 24px`) — معاكس لزر WhatsApp/Call اللي في اليسار
+- **ظهور ذكي**: يظهر فقط عند `scrollY > 300px` (animated fade-in)
+- **Smooth scroll** للأعلى (`behavior: 'smooth'`)
+- **تصميم موحّد**: دائرة ذهبية مع أيقونة سهم + hover effect
+
+### التأثير:
+- ✅ كل الصفحات (14 صفحة) عندها الآن زر رجوع + زر صعود
+- ✅ بدون تعديل يدوي لأي HTML — كل شي تلقائي من `core.js`
+- ✅ لا تضارب مع WhatsApp/Call buttons (اليسار) أو Header (الأعلى)
+- ✅ `@media print` لإخفائهم عند الطباعة (عشان صفحة المهن اللي فيها خاصية طباعة)

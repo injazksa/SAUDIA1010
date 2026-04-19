@@ -64,18 +64,164 @@
     });
   }
 
-  // ─── 3. BACK BUTTON (for sub-pages) ───
+  // ─── 3. BACK BUTTON — يُحقَن تلقائياً في كل الصفحات (ما عدا الرئيسية) ───
   function initBackButton() {
-    const backBtn = document.querySelector('[data-back-button]');
-    if (!backBtn) return;
-    backBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (window.history.length > 1) {
+    // إذا كنا في الصفحة الرئيسية، لا نضيف زر رجوع
+    const path = location.pathname;
+    if (path === '/' || path === '/index.html' || path.endsWith('/index.html')) return;
+    if (document.getElementById('global-back-btn')) return; // موجود مسبقاً
+
+    // مسارات مناسبة للعودة حسب الصفحة الحالية
+    const isBlogPost = /\/blog\/[^/]+\.html/.test(path);
+    const backHref = isBlogPost ? '/blog.html' : '/';
+    const backLabel = isBlogPost ? 'العودة للمدونة' : 'العودة للرئيسية';
+
+    const btn = document.createElement('a');
+    btn.id = 'global-back-btn';
+    btn.href = backHref;
+    btn.setAttribute('data-testid', 'global-back-btn');
+    btn.setAttribute('aria-label', backLabel);
+    btn.className = 'global-back-btn';
+    btn.innerHTML = `
+      <i class="fas fa-arrow-right" aria-hidden="true"></i>
+      <span>${backLabel}</span>
+    `;
+    btn.addEventListener('click', (e) => {
+      // إذا في history حقيقي، استخدمه — وإلا اتبع الرابط
+      if (window.history.length > 1 && document.referrer && document.referrer.includes(location.hostname)) {
+        e.preventDefault();
         window.history.back();
-      } else {
-        window.location.href = '/';
       }
     });
+
+    document.body.appendChild(btn);
+
+    // CSS مضمّن لضمان التصميم الموحّد
+    if (!document.getElementById('global-back-btn-css')) {
+      const style = document.createElement('style');
+      style.id = 'global-back-btn-css';
+      style.textContent = `
+        .global-back-btn {
+          position: fixed;
+          top: 80px;
+          right: 20px;
+          z-index: 45;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          background: #1B2A41;
+          color: #C9A35E;
+          border: 1.5px solid #C9A35E;
+          padding: 10px 18px;
+          border-radius: 999px;
+          font-family: 'Alexandria', 'Tajawal', sans-serif;
+          font-weight: 600;
+          font-size: 13px;
+          text-decoration: none;
+          box-shadow: 0 4px 14px rgba(27,42,65,0.15);
+          transition: all 0.25s ease;
+          cursor: pointer;
+        }
+        .global-back-btn:hover {
+          background: #C9A35E;
+          color: #fff;
+          transform: translateX(4px);
+          box-shadow: 0 6px 20px rgba(201,163,94,0.35);
+        }
+        .global-back-btn i { font-size: 14px; }
+        @media (max-width: 640px) {
+          .global-back-btn {
+            top: auto;
+            bottom: 100px;
+            right: 20px;
+            padding: 10px 14px;
+            font-size: 12px;
+          }
+          .global-back-btn span { display: none; }
+          .global-back-btn i { font-size: 16px; }
+        }
+        @media print {
+          .global-back-btn { display: none !important; }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  }
+
+  // ─── 3.5 SCROLL-TO-TOP BUTTON — زر صعود سريع ───
+  function initScrollTop() {
+    if (document.getElementById('scroll-to-top-btn')) return;
+
+    const btn = document.createElement('button');
+    btn.id = 'scroll-to-top-btn';
+    btn.type = 'button';
+    btn.setAttribute('data-testid', 'scroll-to-top-btn');
+    btn.setAttribute('aria-label', 'العودة لأعلى الصفحة');
+    btn.className = 'scroll-to-top-btn';
+    btn.innerHTML = '<i class="fas fa-arrow-up" aria-hidden="true"></i>';
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    document.body.appendChild(btn);
+
+    // إظهار عند التمرير > 300px
+    const onScroll = () => {
+      if (window.scrollY > 300) btn.classList.add('visible');
+      else btn.classList.remove('visible');
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // CSS موحّد — bottom-right (على عكس WhatsApp/Call اللي بالـ bottom-left)
+    if (!document.getElementById('scroll-to-top-btn-css')) {
+      const style = document.createElement('style');
+      style.id = 'scroll-to-top-btn-css';
+      style.textContent = `
+        .scroll-to-top-btn {
+          position: fixed;
+          bottom: 24px;
+          right: 24px;
+          z-index: 45;
+          width: 52px;
+          height: 52px;
+          border-radius: 50%;
+          background: #C9A35E;
+          color: #fff;
+          border: none;
+          cursor: pointer;
+          opacity: 0;
+          visibility: hidden;
+          transform: translateY(20px);
+          transition: all 0.3s ease;
+          box-shadow: 0 6px 20px rgba(201,163,94,0.4);
+          font-size: 18px;
+        }
+        .scroll-to-top-btn.visible {
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(0);
+        }
+        .scroll-to-top-btn:hover {
+          background: #1B2A41;
+          color: #C9A35E;
+          transform: translateY(-4px);
+          box-shadow: 0 10px 26px rgba(27,42,65,0.45);
+        }
+        @media (max-width: 640px) {
+          .scroll-to-top-btn {
+            width: 46px;
+            height: 46px;
+            bottom: 20px;
+            right: 20px;
+            font-size: 16px;
+          }
+        }
+        @media print {
+          .scroll-to-top-btn { display: none !important; }
+        }
+      `;
+      document.head.appendChild(style);
+    }
   }
 
   // ─── 4. SMOOTH ANCHOR SCROLL ───
@@ -139,6 +285,7 @@
     initLazyImages();
     setupResourceHints();
     initBackButton();
+    initScrollTop();
     initSmoothAnchors();
     initMobileMenu();
     // أجّل SW حتى load الكامل لتفادي التأثير على FCP
