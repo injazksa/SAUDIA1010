@@ -571,15 +571,360 @@
     });
   }
 
+  // ─── 8. DYNAMIC WHATSAPP — رسالة ذكية تتبدل حسب الصفحة ───
+  // ترسم رسالة مسبقة سياقية لأي رابط wa.me/962789881009 لم يحدّد ?text=
+  function initDynamicWhatsApp() {
+    const PHONE = '962789881009';
+    const DEFAULT_MSG = 'مرحبًا، لدي استفسار حول خدمات مكتب تأشيرات السعودية في الأردن. يرجى التواصل معي.';
+
+    // جدول مطابقة المسار → رسالة مخصصة
+    const MAP = [
+      { match: (p) => p === '/' || p === '/index.html' || p.endsWith('/index.html'),
+        msg: 'مرحبًا، لدي استفسار حول خدمات مكتب تأشيرات السعودية في الأردن. يرجى التواصل معي.' },
+      { match: (p) => p.endsWith('/certificates.html'),
+        msg: 'مرحبًا، لدي استفسار حول تصديق الشهادات والوثائق من السفارة السعودية. أرجو إفادتي بالتفاصيل والتكلفة.' },
+      { match: (p) => p.endsWith('/professional.html'),
+        msg: 'مرحبًا، لدي استفسار حول برنامج التحقق والفحص المهني (QVP) للمملكة العربية السعودية. أرجو إفادتي بالمتطلبات.' },
+      { match: (p) => p.endsWith('/professions.html'),
+        msg: 'مرحبًا، لدي استفسار حول المهن المعتمدة والأوراق المطلوبة للتأشيرة السعودية.' },
+      { match: (p) => p.endsWith('/work-visa.html'),
+        msg: 'مرحبًا، أرغب في الاستفسار عن تأشيرة العمل في المملكة العربية السعودية والإجراءات المطلوبة.' },
+      { match: (p) => p.endsWith('/calculator.html'),
+        msg: 'مرحبًا، لدي استفسار حول حساب رسوم التأشيرة السعودية. أرجو إفادتي بالتفاصيل.' },
+      { match: (p) => p.endsWith('/corporate.html'),
+        msg: 'مرحبًا، لدي استفسار حول خدمات الشركات والتأشيرات الجماعية للمملكة العربية السعودية.' },
+      { match: (p) => p.endsWith('/about.html'),
+        msg: 'مرحبًا، لدي استفسار حول مكتب تأشيرات السعودية في الأردن. يرجى التواصل معي.' },
+      { match: (p) => p.endsWith('/faq.html'),
+        msg: 'مرحبًا، لدي سؤال حول خدمات مكتب تأشيرات السعودية. أرجو الإجابة من فضلكم.' },
+      // مقالات المدونة
+      { match: (p) => /\/blog\/umrah-visa-guide-2026\.html$/.test(p),
+        msg: 'مرحبًا، قرأت دليل تأشيرة العمرة 2026 وأرغب في الاستفسار حول إجراءات التقديم والتكلفة.' },
+      { match: (p) => /\/blog\/work-visa-comprehensive-2026\.html$/.test(p),
+        msg: 'مرحبًا، قرأت دليل تأشيرة العمل الشامل 2026 وأرغب في الاستفسار حول إجراءات التقديم.' },
+      { match: (p) => /\/blog\/family-sponsorship-guide\.html$/.test(p),
+        msg: 'مرحبًا، قرأت دليل كفالة العائلة وأرغب في الاستفسار حول إجراءات استقدام العائلة للسعودية.' },
+      { match: (p) => /\/blog\/tourist-visa-guide\.html$/.test(p),
+        msg: 'مرحبًا، قرأت دليل التأشيرة السياحية للسعودية وأرغب في الاستفسار حول إجراءات التقديم.' },
+      { match: (p) => p.endsWith('/blog.html') || /\/blog\/?$/.test(p) || /\/blog\/.+\.html$/.test(p),
+        msg: 'مرحبًا، لدي استفسار بعد قراءة المدونة. أرجو إفادتي بالتفاصيل.' },
+      { match: (p) => p.endsWith('/disclaimer.html') || p.endsWith('/privacy.html') || p.endsWith('/terms.html'),
+        msg: 'مرحبًا، لدي استفسار عام حول خدمات مكتب تأشيرات السعودية في الأردن.' }
+    ];
+
+    function pickMessage() {
+      const p = (location.pathname || '/').toLowerCase();
+      for (const rule of MAP) {
+        try { if (rule.match(p)) return rule.msg; } catch (_) { /* ignore */ }
+      }
+      return DEFAULT_MSG;
+    }
+
+    const message = pickMessage();
+    const encoded = encodeURIComponent(message);
+
+    // 1) طبّق على كل روابط wa.me الخاصة بالمكتب
+    //    نُحدّث النص دائماً (حتى لو فيه ?text= قديم) — الهدف رسالة ذكية سياقية.
+    //    الاستثناء الوحيد: data-wa-keep (لو أحد أراد الإبقاء على نص مخصص).
+    const links = document.querySelectorAll('a[href*="wa.me/' + PHONE + '"]');
+    links.forEach((a) => {
+      if (a.hasAttribute('data-wa-keep')) return;
+      const href = a.getAttribute('href') || '';
+      const base = href.split('?')[0];
+      a.setAttribute('href', base + '?text=' + encoded);
+    });
+
+    // 2) طبّق على روابط api.whatsapp.com أيضاً إن وُجدت
+    const apiLinks = document.querySelectorAll('a[href*="api.whatsapp.com/send"][href*="phone=' + PHONE + '"]');
+    apiLinks.forEach((a) => {
+      if (a.hasAttribute('data-wa-keep')) return;
+      try {
+        const url = new URL(a.href, location.origin);
+        url.searchParams.set('text', message);
+        a.setAttribute('href', url.toString());
+      } catch (_) { /* ignore */ }
+    });
+  }
+
+  // ─── 9. UNIFIED HEADER — هيدر موحّد مع قائمة جانبية (Drawer) على كل الصفحات ───
+  function initUnifiedHeader() {
+    // منع التكرار
+    if (document.getElementById('uh-header')) return;
+
+    // قائمة الروابط الموحّدة
+    const NAV_ITEMS = [
+      { href: '/index.html',         label: 'الرئيسية',         icon: 'fa-home' },
+      { href: '/about.html',         label: 'من نحن',           icon: 'fa-building' },
+      { href: '/index.html#services',label: 'خدماتنا',          icon: 'fa-briefcase' },
+      { href: '/corporate.html',     label: 'خدمات الشركات',    icon: 'fa-city' },
+      { href: '/professions.html',   label: 'المهن والأوراق',   icon: 'fa-list-check' },
+      { href: '/professional.html',  label: 'الاعتماد المهني (QVP)', icon: 'fa-user-check' },
+      { href: '/certificates.html',  label: 'تصديق الشهادات',   icon: 'fa-certificate' },
+      { href: '/work-visa.html',     label: 'تأشيرة العمل',     icon: 'fa-passport' },
+      { href: '/calculator.html',    label: 'حاسبة الرسوم',     icon: 'fa-calculator' },
+      { href: '/blog.html',          label: 'المدونة',          icon: 'fa-newspaper' },
+      { href: '/faq.html',           label: 'الأسئلة الشائعة',  icon: 'fa-circle-question' }
+    ];
+
+    // أزل: الهيدر/الناف الموجود مسبقاً (القديم) + فتات الخبز (breadcrumb)
+    // الهدف: أي <header> أو <nav> في بداية الـ body يمثّل الشريط العلوي
+    const body = document.body;
+    // إزالة breadcrumbs (كما طلب المستخدم) — بكل أشكاله
+    // 1) عنصر <nav aria-label="breadcrumb">
+    document.querySelectorAll('nav[aria-label="breadcrumb"]').forEach(n => n.remove());
+    // 2) أي <nav> يحتوي روابط "الرئيسية / المدونة" (breadcrumb غير موسوم)
+    document.querySelectorAll('nav, ol').forEach(n => {
+      if (n.closest('#uh-drawer')) return; // لا تلمس قائمة الـ drawer
+      const links = n.querySelectorAll('a');
+      if (links.length < 2 || links.length > 4) return;
+      const texts = Array.from(links).map(a => (a.textContent || '').trim());
+      const hasHome = texts.includes('الرئيسية');
+      const hasBlog = texts.includes('المدونة') || texts.some(t => /مقال|المقالات/.test(t));
+      // breadcrumb نموذجي: يبدأ بـ "الرئيسية" ويتبعه روابط قسم ≤ 3
+      if (hasHome && hasBlog && texts[0] === 'الرئيسية') {
+        // إذا كان ضمن <nav> أزل الـ nav، أما ol فأزل أقرب nav/container
+        const wrapper = n.closest('nav') || n;
+        wrapper.remove();
+      }
+    });
+
+    // احذف أول <header> أو <nav.sticky> موجود في الجسم (الهيدر القديم)
+    const oldHeader = document.querySelector('body > header, body > nav');
+    if (oldHeader) oldHeader.remove();
+    // قد يكون الهيدر مغلّف بـ div — نبحث أيضاً عن header أو nav sticky داخل أول طفل
+    const nestedOldSticky = document.querySelector('header.sticky, nav.sticky.top-0, nav.bg-white.shadow-md.sticky');
+    if (nestedOldSticky) nestedOldSticky.remove();
+
+    // ابنِ الهيدر الجديد
+    const header = document.createElement('header');
+    header.id = 'uh-header';
+    header.setAttribute('data-testid', 'unified-header');
+    header.innerHTML = `
+      <div class="uh-bar">
+        <a href="/" class="uh-brand" data-testid="uh-brand">
+          <img src="/icons/logo-192.png" alt="مكتب تأشيرات السعودية في الأردن" class="uh-logo">
+          <span class="uh-title">مكتب تأشيرات السعودية<span class="uh-title-sub"> في الأردن</span></span>
+        </a>
+        <button type="button" id="uh-toggle" class="uh-toggle" aria-label="فتح القائمة" aria-expanded="false" aria-controls="uh-drawer" data-testid="uh-menu-toggle">
+          <span class="uh-bars"><span></span><span></span><span></span></span>
+        </button>
+      </div>
+    `;
+
+    // ابنِ الـ Drawer + الخلفية
+    const backdrop = document.createElement('div');
+    backdrop.id = 'uh-backdrop';
+    backdrop.setAttribute('data-testid', 'uh-backdrop');
+
+    const drawer = document.createElement('aside');
+    drawer.id = 'uh-drawer';
+    drawer.setAttribute('role', 'dialog');
+    drawer.setAttribute('aria-modal', 'true');
+    drawer.setAttribute('aria-label', 'القائمة الرئيسية');
+    drawer.setAttribute('data-testid', 'uh-drawer');
+    drawer.innerHTML = `
+      <div class="uh-drawer-head">
+        <span class="uh-drawer-title"><i class="fas fa-compass" aria-hidden="true"></i> التنقل في الموقع</span>
+        <button type="button" id="uh-close" class="uh-close" aria-label="إغلاق القائمة" data-testid="uh-menu-close">
+          <i class="fas fa-xmark" aria-hidden="true"></i>
+        </button>
+      </div>
+      <nav class="uh-nav" aria-label="القائمة الرئيسية">
+        <ul>
+          ${NAV_ITEMS.map(it => `
+            <li><a href="${it.href}" data-testid="uh-link-${it.href.replace(/[^a-z0-9]+/gi,'-').replace(/^-|-$/g,'')}">
+              <i class="fas ${it.icon}" aria-hidden="true"></i>
+              <span>${it.label}</span>
+              <i class="fas fa-chevron-left uh-chevron" aria-hidden="true"></i>
+            </a></li>`).join('')}
+        </ul>
+      </nav>
+      <div class="uh-drawer-cta">
+        <a href="tel:+962789881009" class="uh-cta-call" data-testid="uh-cta-call"><i class="fas fa-phone" aria-hidden="true"></i> اتصل بنا</a>
+        <a href="https://wa.me/962789881009" class="uh-cta-wa" data-testid="uh-cta-whatsapp"><i class="fab fa-whatsapp" aria-hidden="true"></i> واتساب</a>
+      </div>
+    `;
+
+    // حقن الهيدر في بداية الجسم، والـ drawer/backdrop آخر الجسم
+    body.insertBefore(header, body.firstChild);
+    body.appendChild(backdrop);
+    body.appendChild(drawer);
+
+    // ضع الرابط الحالي نشطاً
+    const currentPath = location.pathname.replace(/\/+$/, '') || '/';
+    drawer.querySelectorAll('.uh-nav a').forEach(a => {
+      const hrefPath = (new URL(a.getAttribute('href'), location.origin)).pathname.replace(/\/+$/, '') || '/';
+      if (hrefPath === currentPath) a.classList.add('is-active');
+    });
+
+    // السلوك: فتح/إغلاق
+    const toggleBtn = header.querySelector('#uh-toggle');
+    const closeBtn = drawer.querySelector('#uh-close');
+    function open() {
+      drawer.classList.add('is-open');
+      backdrop.classList.add('is-open');
+      toggleBtn.setAttribute('aria-expanded', 'true');
+      toggleBtn.classList.add('is-open');
+      document.documentElement.style.overflow = 'hidden';
+    }
+    function close() {
+      drawer.classList.remove('is-open');
+      backdrop.classList.remove('is-open');
+      toggleBtn.setAttribute('aria-expanded', 'false');
+      toggleBtn.classList.remove('is-open');
+      document.documentElement.style.overflow = '';
+    }
+    toggleBtn.addEventListener('click', () => {
+      drawer.classList.contains('is-open') ? close() : open();
+    });
+    closeBtn.addEventListener('click', close);
+    backdrop.addEventListener('click', close);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && drawer.classList.contains('is-open')) close(); });
+    // أغلق عند الضغط على أي رابط
+    drawer.querySelectorAll('.uh-nav a').forEach(a => a.addEventListener('click', () => close()));
+
+    // CSS مُضمّن — تصميم Navy/Gold موحّد
+    if (!document.getElementById('uh-css')) {
+      const style = document.createElement('style');
+      style.id = 'uh-css';
+      style.textContent = `
+        #uh-header {
+          position: sticky; top: 0; z-index: 50;
+          background: rgba(255,255,255,0.88);
+          backdrop-filter: saturate(1.2) blur(14px);
+          -webkit-backdrop-filter: saturate(1.2) blur(14px);
+          border-bottom: 1px solid rgba(27,42,65,0.08);
+          box-shadow: 0 1px 0 rgba(27,42,65,0.03), 0 6px 18px rgba(27,42,65,0.04);
+          font-family: 'Alexandria','Tajawal',sans-serif;
+        }
+        #uh-header .uh-bar {
+          max-width: 1200px; margin: 0 auto; padding: 10px 16px;
+          display: flex; align-items: center; justify-content: space-between; gap: 12px;
+          min-height: 60px;
+        }
+        #uh-header .uh-brand {
+          display: inline-flex; align-items: center; gap: 10px;
+          text-decoration: none; color: #1B2A41;
+        }
+        #uh-header .uh-logo { height: 38px; width: auto; display: block; }
+        #uh-header .uh-title { font-weight: 800; font-size: 13px; line-height: 1.25; color: #1B2A41; letter-spacing: -.2px; }
+        #uh-header .uh-title-sub { color: #C9A35E; font-weight: 700; }
+        @media (min-width: 640px) { #uh-header .uh-title { font-size: 15px; } #uh-header .uh-logo { height: 42px; } }
+
+        #uh-header .uh-toggle {
+          width: 44px; height: 44px; border-radius: 12px;
+          background: #1B2A41; color: #fff;
+          display: inline-flex; align-items: center; justify-content: center;
+          border: 1px solid transparent; cursor: pointer;
+          transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
+          box-shadow: 0 6px 14px rgba(27,42,65,.18);
+        }
+        #uh-header .uh-toggle:hover { background: #C9A35E; transform: translateY(-1px); box-shadow: 0 8px 20px rgba(201,163,94,.35); }
+        #uh-header .uh-toggle:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(201,163,94,.45); }
+        #uh-header .uh-bars { position: relative; width: 20px; height: 14px; display: inline-block; }
+        #uh-header .uh-bars span {
+          position: absolute; left: 0; right: 0; height: 2px; background: currentColor; border-radius: 2px;
+          transition: transform .25s ease, top .25s ease, opacity .2s ease;
+        }
+        #uh-header .uh-bars span:nth-child(1) { top: 0; }
+        #uh-header .uh-bars span:nth-child(2) { top: 6px; }
+        #uh-header .uh-bars span:nth-child(3) { top: 12px; }
+        #uh-header .uh-toggle.is-open .uh-bars span:nth-child(1) { top: 6px; transform: rotate(45deg); }
+        #uh-header .uh-toggle.is-open .uh-bars span:nth-child(2) { opacity: 0; }
+        #uh-header .uh-toggle.is-open .uh-bars span:nth-child(3) { top: 6px; transform: rotate(-45deg); }
+
+        #uh-backdrop {
+          position: fixed; inset: 0; z-index: 60;
+          background: rgba(15,25,34,.55);
+          backdrop-filter: blur(3px);
+          opacity: 0; visibility: hidden;
+          transition: opacity .25s ease, visibility 0s linear .25s;
+        }
+        #uh-backdrop.is-open { opacity: 1; visibility: visible; transition: opacity .25s ease; }
+
+        #uh-drawer {
+          position: fixed; top: 0; right: 0; bottom: 0;
+          width: min(340px, 86vw); z-index: 61;
+          background: linear-gradient(180deg, #1B2A41 0%, #0F1922 100%);
+          color: #fff; font-family: 'Alexandria','Tajawal',sans-serif;
+          transform: translateX(100%);
+          transition: transform .32s cubic-bezier(.2,.8,.2,1);
+          box-shadow: -16px 0 40px rgba(15,25,34,.28);
+          display: flex; flex-direction: column;
+        }
+        #uh-drawer.is-open { transform: translateX(0); }
+        #uh-drawer .uh-drawer-head {
+          display: flex; align-items: center; justify-content: space-between;
+          padding: 16px 18px;
+          border-bottom: 1px solid rgba(201,163,94,.18);
+        }
+        #uh-drawer .uh-drawer-title { color: #C9A35E; font-weight: 700; font-size: 13px; letter-spacing: .3px; }
+        #uh-drawer .uh-drawer-title i { margin-left: 6px; }
+        #uh-drawer .uh-close {
+          width: 36px; height: 36px; border-radius: 10px;
+          background: rgba(255,255,255,.06); color: #C9A35E; border: 1px solid rgba(201,163,94,.25);
+          cursor: pointer; transition: all .2s ease;
+        }
+        #uh-drawer .uh-close:hover { background: #C9A35E; color: #1B2A41; }
+        #uh-drawer .uh-nav { flex: 1; overflow-y: auto; padding: 8px 0; }
+        #uh-drawer .uh-nav ul { list-style: none; margin: 0; padding: 0; }
+        #uh-drawer .uh-nav a {
+          display: flex; align-items: center; gap: 14px;
+          padding: 13px 20px; color: #E8EEF5; text-decoration: none;
+          font-size: 14.5px; font-weight: 500; position: relative;
+          border-right: 3px solid transparent;
+          transition: background .2s ease, color .2s ease, border-color .2s ease, padding .2s ease;
+        }
+        #uh-drawer .uh-nav a i:first-child { width: 22px; color: #C9A35E; font-size: 14px; text-align: center; }
+        #uh-drawer .uh-nav a .uh-chevron { margin-right: auto; opacity: 0; color: #C9A35E; font-size: 11px; transform: translateX(6px); transition: all .25s ease; }
+        #uh-drawer .uh-nav a:hover {
+          background: rgba(201,163,94,.09);
+          color: #fff; border-right-color: #C9A35E; padding-right: 24px;
+        }
+        #uh-drawer .uh-nav a:hover .uh-chevron { opacity: 1; transform: translateX(0); }
+        #uh-drawer .uh-nav a.is-active {
+          background: rgba(201,163,94,.14);
+          color: #C9A35E; border-right-color: #C9A35E; font-weight: 700;
+        }
+        #uh-drawer .uh-nav a.is-active .uh-chevron { opacity: 1; transform: translateX(0); }
+
+        #uh-drawer .uh-drawer-cta {
+          display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+          padding: 12px 16px 18px;
+          border-top: 1px solid rgba(201,163,94,.18);
+        }
+        #uh-drawer .uh-drawer-cta a {
+          display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+          padding: 11px 10px; border-radius: 10px; font-weight: 700; font-size: 13.5px;
+          text-decoration: none; transition: all .2s ease;
+        }
+        #uh-drawer .uh-cta-call { background: #C9A35E; color: #1B2A41; }
+        #uh-drawer .uh-cta-call:hover { background: #D4AF73; transform: translateY(-1px); }
+        #uh-drawer .uh-cta-wa { background: #25D366; color: #fff; }
+        #uh-drawer .uh-cta-wa:hover { background: #1DB954; transform: translateY(-1px); }
+
+        @media (prefers-reduced-motion: reduce) {
+          #uh-drawer, #uh-backdrop, #uh-header .uh-toggle, #uh-drawer .uh-nav a { transition: none !important; }
+        }
+        @media print {
+          #uh-header, #uh-drawer, #uh-backdrop { display: none !important; }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  }
+
   // ─── INIT ───
   function init() {
     initLazyImages();
     setupResourceHints();
+    initUnifiedHeader();
     initBackButton();
     initScrollTop();
     initSmoothAnchors();
     initMobileMenu();
     initQuoteShare();
+    initDynamicWhatsApp();
     // أجّل SW حتى load الكامل لتفادي التأثير على FCP
     if (document.readyState === 'complete') {
       registerServiceWorker();

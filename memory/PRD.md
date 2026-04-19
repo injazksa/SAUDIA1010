@@ -402,3 +402,22 @@ button:focus-visible {
 3. Google Search Console → submit sitemap.xml
 4. Bing Webmaster Tools (optional)
 5. Clear browser cache after first visit to see fresh CSP
+
+---
+
+## 📅 Update: Feb 2026 — Unified Header + Smart WhatsApp
+
+### What was changed
+- **Unified Header Across ALL Pages** — Replaced scattered desktop/mobile navs with one clean sticky header: logo + office name + hamburger (☰). Implemented via `initUnifiedHeader()` in `/app/frontend/public/core.js`. Old `<header>`/`<nav>` on 17 pages are removed at runtime; full menu lives inside a Navy/Gold slide-in drawer (desktop + mobile).
+- **Removed page-level breadcrumbs** ("الرئيسية / المدونة / ...") on certificates/professional/blog articles, including unlabeled `<ol>` breadcrumbs inside `<main>`.
+- **Smart Dynamic WhatsApp** — `initDynamicWhatsApp()` rewrites every `wa.me/962789881009` link on page load with a context-aware Arabic pre-filled message based on `window.location.pathname`. Per-page messages for: home, certificates, professional (QVP), professions, work-visa, calculator, corporate, about, faq, blog index, and each specific blog article (Umrah 2026, Work Visa 2026, Family Sponsorship, Tourist Visa). Override available via `data-wa-keep` attribute.
+
+### Files touched
+- `/app/frontend/public/core.js` — added `initUnifiedHeader()`, `initDynamicWhatsApp()`, breadcrumb auto-removal, drawer CSS.
+
+### Testing
+- Sweep of 11 pages confirmed: `uh=True`, `old_count=0`, context-specific WA text set on each.
+- Desktop + mobile viewports (1920×800 & 390×844) verified via screenshot tool — drawer opens/closes, hamburger animates to X, active nav link highlighted in gold.
+
+### Not yet done (user chose not to request)
+- Consolidating duplicate scripts (`script.js` & `core.js` overlap — functional, just redundancy).
