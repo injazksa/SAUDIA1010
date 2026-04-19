@@ -421,3 +421,20 @@ button:focus-visible {
 
 ### Not yet done (user chose not to request)
 - Consolidating duplicate scripts (`script.js` & `core.js` overlap — functional, just redundancy).
+
+---
+
+## 📅 Update 2: Feb 2026 — Map fix + Read-More Pills + Click-Stamp FX
+
+### Issues addressed
+1. **Map broken on `/about.html` (deployed)** — The OpenStreetMap `<iframe>` was blocked by CSP. Added `https://www.openstreetmap.org` to `frame-src` in both `/app/frontend/public/_headers` and `/app/netlify.toml`. (Works locally; will render after Netlify redeploy.)
+2. **"اقرأ المزيد / اعرف المزيد" links lacked affordance** — Transformed every occurrence across the site (blog, homepage, all articles) into an elegant gold-pill button via `initReadMoreButtons()` in `core.js`. Hover fills with gold gradient, arrow slides, border glows. 8 buttons detected on `blog.html`, 3 on `index.html`.
+3. **Static focus-glow box was dull** — Replaced with an interactive **wax-seal click ripple (Gold)** (`initClickStamp()` in `core.js`): a radial gold gradient expands from the click point on any button/link and fades in 550ms. Respects `prefers-reduced-motion`. Static outline now reserved for keyboard-only focus-visible (a11y).
+
+### Files touched
+- `/app/frontend/public/core.js` — `initReadMoreButtons()`, `initClickStamp()`, inline CSS for both.
+- `/app/frontend/public/styles.css` — softened focus-visible styles.
+- `/app/frontend/public/_headers` & `/app/netlify.toml` — added openstreetmap.org to frame-src.
+
+### Tested (Playwright)
+- Desktop (1440×900) + mobile (390×844): pills render, hover state animates, stamp-fx spawns on click and cleans up. About page map loads correctly locally.

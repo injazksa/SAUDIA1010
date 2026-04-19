@@ -914,6 +914,182 @@
     }
   }
 
+  // ─── 10. READ-MORE ENHANCEMENT — يحوّل روابط "اقرأ المزيد" لكبسولة ذهبية تفاعلية ───
+  function initReadMoreButtons() {
+    // استهدف أي <a> يحتوي نص "اقرأ المزيد" أو "اعرف المزيد" (المدونة + الصفحة الرئيسية)
+    const TARGET_REGEX = /(اقرأ\s*المزيد|اعرف\s*المزيد|اقرا\s*المزيد)/;
+    const candidates = document.querySelectorAll('a:not(.rm-btn)');
+    candidates.forEach((a) => {
+      if (a.closest('#uh-drawer, #uh-header')) return;
+      const raw = (a.textContent || '').trim();
+      if (!TARGET_REGEX.test(raw)) return;
+      // حدّد نص الزر (النص بدون الأيقونة)
+      const label = raw.replace(/\s+/g, ' ').replace(/\u00a0/g,' ').trim();
+      // بعض المكاتب لها <i> سهم — نحذفها لإعادة بنائها بشكل موحّد
+      const oldIcon = a.querySelector('i.fa-arrow-left, i.fa-arrow-right, i.fa-chevron-left');
+      if (oldIcon) oldIcon.remove();
+      // نظّف النص ثم أعد بناء البنية الموحّدة
+      a.classList.add('rm-btn');
+      a.setAttribute('data-testid', a.getAttribute('data-testid') || 'read-more-btn');
+      a.innerHTML = `
+        <span class="rm-btn-label">${label}</span>
+        <span class="rm-btn-arrow" aria-hidden="true">
+          <i class="fas fa-arrow-left"></i>
+        </span>
+      `;
+    });
+
+    // CSS مُضمّن
+    if (!document.getElementById('rm-btn-css')) {
+      const style = document.createElement('style');
+      style.id = 'rm-btn-css';
+      style.textContent = `
+        .rm-btn {
+          --rm-navy: #1B2A41;
+          --rm-gold: #C9A35E;
+          --rm-gold-dark: #B48A3E;
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          padding: 9px 18px 9px 14px;
+          font-size: 13.5px; font-weight: 700;
+          color: var(--rm-navy);
+          background: linear-gradient(180deg, #FBF4E3 0%, #F6E9C9 100%);
+          border: 1.5px solid rgba(201,163,94,.55);
+          border-radius: 999px;
+          text-decoration: none;
+          line-height: 1;
+          box-shadow: 0 2px 6px rgba(27,42,65,.06), inset 0 1px 0 rgba(255,255,255,.6);
+          transition: color .25s ease, background .25s ease, border-color .25s ease, transform .25s ease, box-shadow .25s ease, padding .25s ease;
+          overflow: hidden;
+          isolation: isolate;
+          z-index: 0;
+        }
+        .rm-btn::before {
+          content: "";
+          position: absolute; inset: 0;
+          background: linear-gradient(180deg, var(--rm-gold) 0%, var(--rm-gold-dark) 100%);
+          transform: translateX(100%);
+          transition: transform .38s cubic-bezier(.2,.8,.2,1);
+          z-index: -1;
+        }
+        .rm-btn:hover { color: #fff; border-color: var(--rm-gold); transform: translateY(-1px); box-shadow: 0 8px 18px rgba(201,163,94,.35); padding-right: 18px; }
+        .rm-btn:hover::before { transform: translateX(0); }
+        .rm-btn:hover .rm-btn-arrow { color: #fff; transform: translateX(-4px); }
+        .rm-btn:active { transform: translateY(0) scale(.98); }
+        .rm-btn .rm-btn-arrow {
+          display: inline-flex; align-items: center; justify-content: center;
+          width: 22px; height: 22px; border-radius: 50%;
+          background: rgba(27,42,65,.08); color: var(--rm-navy);
+          font-size: 10px;
+          transition: transform .25s ease, background .25s ease, color .25s ease;
+        }
+        .rm-btn:hover .rm-btn-arrow { background: rgba(255,255,255,.2); }
+
+        /* on dark surfaces invert */
+        .bg-navy .rm-btn, .from-navy .rm-btn, [class*="bg-navy"] .rm-btn {
+          background: rgba(201,163,94,.12);
+          color: #F6E9C9;
+          border-color: rgba(201,163,94,.45);
+        }
+        .bg-navy .rm-btn .rm-btn-arrow, [class*="bg-navy"] .rm-btn .rm-btn-arrow {
+          background: rgba(201,163,94,.2); color: #F6E9C9;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  }
+
+  // ─── 11. CLICK STAMP / WAX-SEAL RIPPLE — تفاعل ذهبي أنيق عند الضغط ───
+  function initClickStamp() {
+    // التطبيق: كل زر/رابط/بطاقة قابلة للضغط — ماعدا ما هو opt-out
+    const selector = [
+      'a:not([data-no-stamp])',
+      'button:not([data-no-stamp])',
+      '[role="button"]:not([data-no-stamp])',
+      '.uh-nav a',                       // روابط الـ drawer
+      '.rm-btn',                         // أزرار اقرأ المزيد
+      '[data-stamp]'                     // أي عنصر يريد تفعيلها صراحةً
+    ].join(',');
+
+    document.addEventListener('pointerdown', (e) => {
+      const target = e.target.closest(selector);
+      if (!target) return;
+      // ماعدا الروابط داخل iframe/external/ثقيلة
+      if (target.matches('#uh-backdrop, #uh-close')) return;
+      spawnStamp(target, e);
+    }, { passive: true });
+
+    function spawnStamp(el, event) {
+      // اضمن أن العنصر يمكن احتواء المؤثر بداخله
+      const cs = getComputedStyle(el);
+      if (cs.position === 'static') el.style.position = 'relative';
+      if (cs.overflow === 'visible') el.style.overflow = 'hidden';
+
+      const rect = el.getBoundingClientRect();
+      const x = (event.clientX ?? (rect.left + rect.width/2)) - rect.left;
+      const y = (event.clientY ?? (rect.top + rect.height/2)) - rect.top;
+      const maxDim = Math.max(rect.width, rect.height);
+      const size = Math.max(maxDim * 1.6, 80);
+
+      const stamp = document.createElement('span');
+      stamp.className = 'stamp-fx';
+      stamp.style.setProperty('--x', x + 'px');
+      stamp.style.setProperty('--y', y + 'px');
+      stamp.style.setProperty('--size', size + 'px');
+      el.appendChild(stamp);
+      // cleanup بعد انتهاء الأنيميشن
+      setTimeout(() => stamp.remove(), 640);
+    }
+
+    if (!document.getElementById('stamp-fx-css')) {
+      const style = document.createElement('style');
+      style.id = 'stamp-fx-css';
+      style.textContent = `
+        .stamp-fx {
+          position: absolute;
+          left: var(--x); top: var(--y);
+          width: var(--size); height: var(--size);
+          margin-left: calc(var(--size) * -0.5);
+          margin-top: calc(var(--size) * -0.5);
+          border-radius: 50%;
+          pointer-events: none;
+          background: radial-gradient(closest-side,
+            rgba(201,163,94,.55) 0%,
+            rgba(201,163,94,.35) 38%,
+            rgba(201,163,94,0) 72%);
+          transform: scale(.25);
+          opacity: 0;
+          animation: stampFx .55s cubic-bezier(.2,.75,.2,1) forwards;
+          z-index: 2;
+          mix-blend-mode: screen;
+        }
+        @keyframes stampFx {
+          0%   { transform: scale(.25); opacity: .0; }
+          18%  { opacity: .95; }
+          100% { transform: scale(1); opacity: 0; }
+        }
+        /* نسخة على الخلفيات الفاتحة — اجعل المزج normal حتى يبدو الذهب واضحاً */
+        .bg-white .stamp-fx, .bg-gray-50 .stamp-fx, [class*="bg-white"] .stamp-fx,
+        article .stamp-fx, .rm-btn .stamp-fx {
+          mix-blend-mode: normal;
+          background: radial-gradient(closest-side,
+            rgba(201,163,94,.35) 0%,
+            rgba(201,163,94,.18) 45%,
+            rgba(201,163,94,0) 75%);
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .stamp-fx { display: none !important; }
+        }
+        @media print {
+          .stamp-fx { display: none !important; }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  }
+
   // ─── INIT ───
   function init() {
     initLazyImages();
@@ -925,6 +1101,8 @@
     initMobileMenu();
     initQuoteShare();
     initDynamicWhatsApp();
+    initReadMoreButtons();
+    initClickStamp();
     // أجّل SW حتى load الكامل لتفادي التأثير على FCP
     if (document.readyState === 'complete') {
       registerServiceWorker();
