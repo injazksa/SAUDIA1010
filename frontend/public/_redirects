@@ -1,0 +1,22 @@
+# ⚡ Clean URL Redirects — Saudia Visa
+/work-visa         /work-visa.html        200
+/professions       /professions.html      200
+/corporate         /corporate.html        200
+/calculator        /calculator.html       200
+/professional      /professional.html     200
+/certificates      /certificates.html     200
+/blog              /blog.html             200
+/about             /about.html            200
+/faq               /faq.html              200
+/privacy           /privacy.html          200
+/terms             /terms.html            200
+/disclaimer        /disclaimer.html       200
+
+# Blog post friendly URLs
+/blog/umrah              /blog/umrah-visa-guide-2026.html      200
+/blog/work               /blog/work-visa-comprehensive-2026.html 200
+/blog/tourist            /blog/tourist-visa-guide.html         200
+/blog/family             /blog/family-sponsorship-guide.html   200
+
+# 404
+/*                       /404.html                             404

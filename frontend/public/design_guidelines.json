@@ -1,0 +1,175 @@
+{
+  "project_info": {
+    "name": "Saudia Visa Jordan",
+    "domain": "Corporate, Visa Services, Legal",
+    "theme": "Light Theme",
+    "archetype": "Archetype 4 (Swiss & High-Contrast) blended with Archetype 5 (Jewel & Luxury)",
+    "vibe": "Luxurious, Trustworthy, Official, Modern, Elegant",
+    "description": "A highly premium, modern, and comprehensive visa services website for a Saudi visa agency in Jordan. Features include a professions database with printable PDF requirements, fee calculator, modern blog, smooth interactions, and a premium print-ready document template."
+  },
+  "color_palette": {
+    "primary": {
+      "hex": "#1B2A41",
+      "name": "Soft Navy Blue",
+      "usage": "Headers, primary buttons, major structural elements, and text accents. Conveys trust and authority."
+    },
+    "secondary": {
+      "hex": "#C9A26A",
+      "name": "Muted Gold",
+      "usage": "CTAs, hover states, icons, thin borders, and premium highlights. Replaces harsh yellow-gold for a sophisticated luxury feel."
+    },
+    "background": {
+      "hex": "#FAFAFA",
+      "name": "Alabaster White",
+      "usage": "Main page background to prevent eye strain and feel organic."
+    },
+    "surface": {
+      "hex": "#FFFFFF",
+      "name": "Pure White",
+      "usage": "Cards, bento grids, dropdowns, and calculator containers."
+    },
+    "text": {
+      "primary": "#0F172A",
+      "secondary": "#475569",
+      "muted": "#94A3B8"
+    },
+    "borders": {
+      "light": "#E2E8F0",
+      "gold_subtle": "rgba(201, 162, 106, 0.3)"
+    }
+  },
+  "typography": {
+    "primary_font": "Alexandria, Tajawal, or Outfit (for English)",
+    "hierarchy": {
+      "h1": "text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#1B2A41]",
+      "h2": "text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-[#1B2A41]",
+      "h3": "text-xl sm:text-2xl font-medium text-[#1B2A41]",
+      "body": "text-base leading-relaxed text-[#475569]",
+      "small": "text-sm text-[#94A3B8]"
+    },
+    "rules": [
+      "Use tight letter spacing (tracking-tight) for all headings above 32px.",
+      "Never use pure black for text; use Slate-900 (#0F172A).",
+      "Overlines/Labels must be uppercase, tiny (text-xs), with wide spacing (tracking-[0.2em]) in Muted Gold."
+    ]
+  },
+  "layout_spacing": {
+    "system": "Generous Spacing System",
+    "containers": "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+    "section_padding": "py-20 lg:py-32",
+    "grid_strategy": {
+      "marketing": "Asymmetrical Bento Grids (mix of col-span-1, col-span-2, row-span-2) with gap-6 or gap-8.",
+      "dashboards_tools": "Dense, functional grids for the Fee Calculator and Professions Database (gap-4)."
+    },
+    "borders_and_radius": {
+      "radius": "rounded-2xl for main cards, rounded-xl for inner elements. Avoid pill-shaped buttons unless it's a specific CTA.",
+      "shadows": "shadow-[0_8px_30px_rgb(0,0,0,0.04)] for hovering cards. Soft, diffuse, luxurious."
+    }
+  },
+  "components": {
+    "navigation": {
+      "style": "Crystal Glassmorphism (backdrop-blur-xl bg-white/80)",
+      "rules": "Sticky top, Z-50. Must include Logo, 5 links, and a primary Gold CTA. Never hide desktop links behind a hamburger menu."
+    },
+    "hero_section": {
+      "style": "Overlapping Bento or Split-Screen",
+      "rules": "Use the generated hero_office image. Max overlay opacity bg-black/30 or gradient-to-r from-[#1B2A41]/90 to-transparent. High contrast text."
+    },
+    "buttons": {
+      "primary": "bg-[#1B2A41] text-white hover:bg-[#121C2B] transition-all",
+      "secondary": "bg-[#C9A26A] text-white hover:bg-[#B58E56] transition-all",
+      "outline": "border border-[#C9A26A] text-[#C9A26A] hover:bg-[#C9A26A]/10"
+    },
+    "cards_bento": {
+      "style": "Flat background (Pure White), 1px subtle border (border-gray-100 or gold_subtle), hover lift (-translate-y-1) and soft shadow."
+    },
+    "forms_inputs": {
+      "style": "Shadcn UI customized. rounded-lg, border-gray-200, focus:ring-2 focus:ring-[#C9A26A] focus:border-transparent."
+    },
+    "news_marquee": {
+      "style": "Editorial Ribbon",
+      "rules": "Slow, smooth drift. Pale background (bg-gray-50), dark earthy text (text-[#1B2A41]). Font-serif or Alexandria medium. Massive gaps between items (gap-24)."
+    }
+  },
+  "specific_page_guidelines": {
+    "professions_database": {
+      "layout": "Data-heavy but beautiful. Advanced search bar with filters. Table or Grid view for 856+ professions.",
+      "pdf_export": "CRITICAL FEATURE. The 'Print/Download' button must generate a luxurious PDF. The PDF must contain an Official Header (Logo, Office Name, Email, Phone, Amman Address), document title, and the required papers checklist. Use the 'pdf_document_mockup' for aesthetic inspiration."
+    },
+    "fee_calculator": {
+      "layout": "Interactive Shadcn-based sliders and selects inside a Neumorphic or sleek bordered card. Real-time total calculation with a Muted Gold highlight."
+    },
+    "visa_services": {
+      "layout": "Rich content pages (Work Visa, Visit Visa, Attestations). Use icons (Phosphor or Lucide) in a 3-column feature grid. Include clear timeline steps."
+    },
+    "blog_and_cms": {
+      "layout": "Netlify CMS ready. Clean, image-focused bento grid for articles. Reading time tags, author info."
+    },
+    "footer": {
+      "layout": "Massive and luxurious (py-24 bg-[#1B2A41] text-white). Include a dynamic Google Maps embed (1st Circle, Amman, Jordan). Include large typography for 'Let's Talk'."
+    }
+  },
+  "motion_interactions": {
+    "hover": "All interactive elements must have hover states (color shift, slight transform, soft shadow).",
+    "scroll": "Use Framer Motion for entrance animations (staggered fade-up for lists and cards).",
+    "page_transitions": "Smooth opacity transitions.",
+    "pdf_generation": "Show a luxurious loading spinner (gold tinted) while generating the document."
+  },
+  "imagery": {
+    "rules": "No placeholder images. Use provided URLs. High-quality, modern corporate feel.",
+    "urls": {
+      "hero_background": {
+        "url": "https://static.prod-images.emergentagent.com/jobs/9edf86e0-bd9d-4007-a13e-6e0731d6fd46/images/ae03e99be70bc3eed83d66beb9b21f44edf76502349122cc64ecda5b08d355f0.png",
+        "category": "Hero Background",
+        "description": "Wide-angle minimal architectural interior, bright modern office with subtle luxurious gold and soft navy blue accents."
+      },
+      "visa_documents": {
+        "url": "https://static.prod-images.emergentagent.com/jobs/9edf86e0-bd9d-4007-a13e-6e0731d6fd46/images/c573ada9dc2565b8b1048bb32effa22f68a5e7cfbc38ea7567bd0a696b8f0e3b.png",
+        "category": "Services / Visas",
+        "description": "Close up of a premium passport and official travel documents on a clean desk."
+      },
+      "premium_abstract": {
+        "url": "https://static.prod-images.emergentagent.com/jobs/9edf86e0-bd9d-4007-a13e-6e0731d6fd46/images/755e799df0f34211f0a9240a51985e912be33bffc711961c1c071011d5e34e9a.png",
+        "category": "Background Patterns / Sections",
+        "description": "Abstract elegant 3D composition with soft navy blue and muted gold geometric shapes."
+      },
+      "pdf_mockup": {
+        "url": "https://static.prod-images.emergentagent.com/jobs/9edf86e0-bd9d-4007-a13e-6e0731d6fd46/images/25ecf345650c5ce8a6e0154009b127825415b2882a348ef762248bdaf1dd7d8a.png",
+        "category": "Professions / Document Generator",
+        "description": "Modern premium print document template mockup with luxurious gold header."
+      },
+      "amman_office_1": {
+        "url": "https://images.unsplash.com/photo-1671393143760-be292757aaf7?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Nzh8MHwxfHNlYXJjaHwxfHxBbW1hbiUyMEpvcmRhbiUyMGNpdHlzY2FwZXxlbnwwfHx8fDE3NzU2NTcyNTJ8MA&ixlib=rb-4.1.0&q=85",
+        "category": "About Us / Location",
+        "description": "A view of Amman city with buildings."
+      },
+      "amman_office_2": {
+        "url": "https://images.unsplash.com/photo-1721616877710-ee80aeafec23?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Nzh8MHwxfHNlYXJjaHwzfHxBbW1hbiUyMEpvcmRhbiUyMGNpdHlzY2FwZXxlbnwwfHx8fDE3NzU2NTcyNTJ8MA&ixlib=rb-4.1.0&q=85",
+        "category": "Footer / Map Alternative",
+        "description": "An aerial view of Amman."
+      },
+      "professionals_1": {
+        "url": "https://images.unsplash.com/photo-1763739530672-4aadafbd81ff?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MDV8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBidXNpbmVzcyUyMHBlb3BsZXxlbnwwfHx8fDE3NzU2NTcyNTN8MA&ixlib=rb-4.1.0&q=85",
+        "category": "Testimonials / Consulting",
+        "description": "Two professionals talking in a meeting room."
+      },
+      "professionals_2": {
+        "url": "https://images.pexels.com/photos/36733304/pexels-photo-36733304.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "category": "Team / About Us",
+        "description": "Four business professionals posing confidently."
+      }
+    }
+  },
+  "instructions_to_main_agent": [
+    "Ensure all text is aligned appropriately (Right-to-Left RTL for Arabic, or handle bi-directional text gracefully).",
+    "Build the UI using React, Tailwind CSS, and Shadcn UI.",
+    "MANDATORY: Implement `data-testid` for all interactive elements (buttons, forms, links) as required by testing rules.",
+    "The Professions Database must have a functioning search/filter and a 'Print/Download PDF' button. Use a library like jspdf or html2canvas, or just a custom print stylesheet (@media print) that formats the page with a dedicated office header (Logo, Amman 1st Circle Address, Email, Phone).",
+    "Integrate a Google Maps iframe in the footer or contact section pointing to '1st Circle, Amman, Jordan'.",
+    "Use framer-motion for smooth staggered bento grid animations.",
+    "Implement a News Ticker using react-fast-marquee.",
+    "Ensure Netlify CMS integration points (like a /admin folder or static markdown/JSON parsing structure) are set up for the blog and professions.",
+    "Do NOT use pure black or generic blue. Strictly adhere to Soft Navy Blue (#1B2A41) and Muted Gold (#C9A26A).",
+    "Apply generous spacing (p-8, p-12) to create a luxurious 'breathing room' effect across all sections."
+  ]
+}

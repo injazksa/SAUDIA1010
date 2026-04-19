@@ -1,0 +1,395 @@
+/**
+ * ⚡ SMOOTH TRANSITIONS & ANIMATIONS
+ * تأثيرات الانتقال السلسة والحركات المتقدمة
+ */
+
+:root {
+    --transition-duration: 0.15s;
+    --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+    --fade-in-duration: 0.3s;
+    --slide-duration: 0.4s;
+}
+
+/* تحسين الأداء على الأجهزة المحمولة */
+@media (max-width: 768px) {
+    :root {
+        --transition-duration: 0.1s;
+        --fade-in-duration: 0.2s;
+        --slide-duration: 0.3s;
+    }
+}
+
+/**
+ * تأثير الانتقال الرئيسي (Fade In/Out)
+ */
+main, [role="main"], .page-content {
+    transition: opacity var(--transition-duration) var(--transition-timing);
+}
+
+/**
+ * تأثيرات الدخول (Entrance Animations)
+ */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/**
+ * تطبيق تأثيرات الدخول على العناصر
+ */
+.fade-in-up {
+    animation: fadeInUp var(--fade-in-duration) var(--transition-timing) forwards;
+}
+
+.fade-in-down {
+    animation: fadeInDown var(--fade-in-duration) var(--transition-timing) forwards;
+}
+
+.fade-in-left {
+    animation: fadeInLeft var(--fade-in-duration) var(--transition-timing) forwards;
+}
+
+.fade-in-right {
+    animation: fadeInRight var(--fade-in-duration) var(--transition-timing) forwards;
+}
+
+.scale-in {
+    animation: scaleIn var(--fade-in-duration) var(--transition-timing) forwards;
+}
+
+/**
+ * تأثيرات الانتقال السلسة للعناصر
+ */
+.smooth-transition {
+    transition: all var(--transition-duration) var(--transition-timing);
+}
+
+/* الروابط والأزرار */
+a, button, input[type="button"], input[type="submit"] {
+    transition: all 0.2s var(--transition-timing);
+}
+
+a:hover, button:hover {
+    transform: translateY(-2px);
+}
+
+a:active, button:active {
+    transform: translateY(0);
+}
+
+/**
+ * تأثيرات الظلال والألوان
+ */
+.card, .service-card, .blog-card {
+    transition: box-shadow 0.3s var(--transition-timing),
+                transform 0.3s var(--transition-timing),
+                border-color 0.3s var(--transition-timing);
+}
+
+.card:hover, .service-card:hover, .blog-card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+}
+
+/**
+ * تأثيرات الصور
+ */
+img {
+    transition: opacity 0.3s var(--transition-timing),
+                transform 0.3s var(--transition-timing);
+}
+
+img.loaded {
+    opacity: 1;
+}
+
+img:not(.loaded) {
+    opacity: 0;
+}
+
+/**
+ * تأثيرات النصوص
+ */
+h1, h2, h3, h4, h5, h6 {
+    transition: color 0.3s var(--transition-timing),
+                text-shadow 0.3s var(--transition-timing);
+}
+
+/**
+ * تأثيرات الخلفيات
+ */
+.gradient-bg {
+    background: linear-gradient(-45deg, #1B2A41, #2D3E52, #1B2A41, #2D3E52);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/**
+ * تأثيرات التحميل
+ */
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.pulse {
+    animation: pulse 2s var(--transition-timing) infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
+}
+
+.shimmer {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+}
+
+/**
+ * تأثيرات الـ Scroll
+ */
+.scroll-fade {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s var(--transition-timing),
+                transform 0.6s var(--transition-timing);
+}
+
+.scroll-fade.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/**
+ * تأثيرات الـ Stagger (تأخير متدرج)
+ */
+.stagger-item {
+    animation: fadeInUp var(--fade-in-duration) var(--transition-timing) forwards;
+    opacity: 0;
+}
+
+.stagger-item:nth-child(1) { animation-delay: 0s; }
+.stagger-item:nth-child(2) { animation-delay: 0.05s; }
+.stagger-item:nth-child(3) { animation-delay: 0.1s; }
+.stagger-item:nth-child(4) { animation-delay: 0.15s; }
+.stagger-item:nth-child(5) { animation-delay: 0.2s; }
+.stagger-item:nth-child(n+6) { animation-delay: 0.25s; }
+
+/**
+ * تأثيرات الـ Hover
+ */
+.hover-lift {
+    transition: transform 0.3s var(--transition-timing),
+                box-shadow 0.3s var(--transition-timing);
+}
+
+.hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.hover-scale {
+    transition: transform 0.3s var(--transition-timing);
+}
+
+.hover-scale:hover {
+    transform: scale(1.05);
+}
+
+.hover-glow {
+    transition: box-shadow 0.3s var(--transition-timing),
+                text-shadow 0.3s var(--transition-timing);
+}
+
+.hover-glow:hover {
+    box-shadow: 0 0 20px rgba(201, 163, 94, 0.5);
+    text-shadow: 0 0 10px rgba(201, 163, 94, 0.5);
+}
+
+/**
+ * تأثيرات الـ Focus (للوصول)
+ */
+button:focus, a:focus, input:focus {
+    outline: 2px solid #C9A35E;
+    outline-offset: 2px;
+    transition: outline 0.2s var(--transition-timing);
+}
+
+/**
+ * تأثيرات الـ Loading Skeleton
+ */
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+}
+
+/**
+ * تأثيرات الـ Modal/Dialog
+ */
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.modal-enter {
+    animation: modalSlideIn 0.3s var(--transition-timing);
+}
+
+/**
+ * تأثيرات الـ Notification/Toast
+ */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+.toast-enter {
+    animation: slideInRight 0.3s var(--transition-timing);
+}
+
+.toast-exit {
+    animation: slideOutRight 0.3s var(--transition-timing);
+}
+
+/**
+ * تحسين الأداء: استخدام will-change بحذر
+ */
+.high-performance {
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/**
+ * تعطيل الحركات على الأجهزة ذات تفضيل تقليل الحركة
+ */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/**
+ * تحسينات الأداء على الشاشات الصغيرة
+ */
+@media (max-width: 640px) {
+    .card:hover, .service-card:hover, .blog-card:hover {
+        transform: translateY(-3px);
+    }
+    
+    a:hover, button:hover {
+        transform: translateY(-1px);
+    }
+}
+
+/**
+ * تأثيرات الـ Link Active
+ */
+a.active {
+    color: #C9A35E;
+    font-weight: 600;
+    transition: all 0.3s var(--transition-timing);
+}
+
+/**
+ * تأثيرات الـ Loading Bar
+ */
+@keyframes loadingBar {
+    0% { width: 0%; }
+    50% { width: 90%; }
+    100% { width: 100%; }
+}
+
+.loading-bar {
+    height: 3px;
+    background: linear-gradient(90deg, #C9A35E, #D4AF73);
+    animation: loadingBar 1s var(--transition-timing) forwards;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+}

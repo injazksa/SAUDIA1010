@@ -1,0 +1,18 @@
+# Ignore files that should not be on GitHub
+node_modules/
+.env
+.env.local
+.DS_Store
+*.log
+.vscode/
+.idea/
+
+# Ignore React/build files (we only want static HTML)
+/src/
+/build/
+/dist/
+package-lock.json
+yarn.lock
+
+# Keep only the public static files
+!/public/

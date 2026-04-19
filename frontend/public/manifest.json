@@ -1,0 +1,81 @@
+{
+  "name": "إنجاز السعودية - مكتب التأشيرات المعتمد",
+  "short_name": "إنجاز السعودية",
+  "description": "المكتب المعتمد الأول في الأردن لإنجاز كافة معاملات السفارة السعودية بدقة واحترافية متناهية",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#1B2A41",
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/icons/logo-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/logo-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/icons/screenshot-wide.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/icons/screenshot-narrow.jpg",
+      "sizes": "640x1136",
+      "type": "image/jpeg",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "المهن والأوراق",
+      "short_name": "المهن",
+      "description": "ابحث عن مهنتك والأوراق المطلوبة",
+      "url": "/professions.html",
+      "icons": [
+        {
+          "src": "/icons/logo-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "حاسبة الرسوم",
+      "short_name": "الحاسبة",
+      "description": "احسب رسوم تأشيرتك",
+      "url": "/calculator.html",
+      "icons": [
+        {
+          "src": "/icons/logo-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "تواصل معنا",
+      "short_name": "اتصل",
+      "description": "تواصل مباشرة عبر واتساب",
+      "url": "https://wa.me/962789881009",
+      "icons": [
+        {
+          "src": "/icons/logo-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "categories": ["business", "government", "productivity"],
+  "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-31a8ce4e53b7"
+}

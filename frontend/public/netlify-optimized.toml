@@ -1,0 +1,143 @@
+# ⚡ NETLIFY CONFIGURATION - ULTRA-FAST PERFORMANCE
+# إعدادات Netlify - أداء فائقة السرعة
+
+[build]
+  # Build command
+  command = "echo 'Static site - no build needed'"
+  
+  # Publish directory
+  publish = "."
+  
+  # Environment variables
+  [build.environment]
+    NODE_ENV = "production"
+
+# ⚡ Performance Optimizations
+[build.processing]
+  # Enable CSS minification
+  skip_processing = false
+
+[build.processing.css]
+  bundle = true
+  minify = true
+
+[build.processing.js]
+  bundle = true
+  minify = true
+
+# ⚡ Redirects and Rewrites
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# ⚡ Headers for Performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Cache Control
+    Cache-Control = "public, max-age=3600, must-revalidate"
+    
+    # Security Headers
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    
+    # Compression
+    Content-Encoding = "gzip, br"
+    
+    # Performance
+    Link = "</fonts/alexandria.woff2>; rel=preload; as=font; crossorigin, </fonts/tajawal.woff2>; rel=preload; as=font; crossorigin"
+
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, must-revalidate"
+    Content-Type = "text/html; charset=utf-8"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, must-revalidate"
+    Content-Type = "text/html; charset=utf-8"
+
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Content-Type = "image/webp"
+
+[[headers]]
+  for = "/images/*.webp"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Content-Type = "image/webp"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Content-Type = "text/css; charset=utf-8"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Content-Type = "application/javascript; charset=utf-8"
+
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Content-Type = "font/woff2"
+
+[[headers]]
+  for = "/manifest.json"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, must-revalidate"
+    Content-Type = "application/manifest+json"
+
+[[headers]]
+  for = "/service-worker.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    Content-Type = "application/javascript; charset=utf-8"
+
+[[headers]]
+  for = "/advanced-service-worker.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    Content-Type = "application/javascript; charset=utf-8"
+
+[[headers]]
+  for = "/*.json"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, must-revalidate"
+    Content-Type = "application/json; charset=utf-8"
+
+# ⚡ Context-specific settings
+[context.production]
+  command = "echo 'Static site - no build needed'"
+  
+  [context.production.environment]
+    NODE_ENV = "production"
+
+[context.deploy-preview]
+  command = "echo 'Static site - no build needed'"
+
+[context.branch-deploy]
+  command = "echo 'Static site - no build needed'"
+
+# ⚡ Functions (Optional - for future API endpoints)
+# [functions]
+#   directory = "netlify/functions"
+#   node_bundler = "esbuild"
+
+# ⚡ Plugins
+# [[plugins]]
+#   package = "@netlify/plugin-lighthouse"
+
+# ⚡ Analytics
+[analytics]
+  enabled = true

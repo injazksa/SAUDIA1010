@@ -1,0 +1,228 @@
+# ═══════════════════════════════════════════════════════════════
+# ⚡ NETLIFY CONFIGURATION — SAUDIA VISA JORDAN (v2.0.0)
+# ═══════════════════════════════════════════════════════════════
+# استراتيجية كاش متقدّمة:
+# - HTML        → تحديث فوري (must-revalidate)
+# - JS/CSS      → stale-while-revalidate (سريع + يتحدّث بالخلفية)
+# - Images/Fonts→ كاش طويل 1 سنة (immutable)
+# - Service Worker → لا يُخزّن مطلقاً (حرج لتحديثات فورية)
+# ═══════════════════════════════════════════════════════════════
+
+[build]
+  publish = "frontend/public"
+  command = "echo 'Static site — no build step'"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+# ───────────────────────────────────────────────────────────────
+# ⚡ COMPRESSION (Netlify يفعّل Brotli/Gzip تلقائياً)
+# ───────────────────────────────────────────────────────────────
+
+# ───────────────────────────────────────────────────────────────
+# 🔒 SECURITY + FRESHNESS HEADERS (افتراضي لكل الملفات)
+# ───────────────────────────────────────────────────────────────
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Security
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=(), interest-cohort=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    # افتراضي: تحقق مع السيرفر (للـ HTML)
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# ───────────────────────────────────────────────────────────────
+# 📄 HTML — تحديث فوري دائم (هذا يحل مشكلة "التحديثات ما بتظهر")
+# ───────────────────────────────────────────────────────────────
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    Content-Type = "text/html; charset=utf-8"
+
+[[headers]]
+  for = "/"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# ───────────────────────────────────────────────────────────────
+# ⚙️ JS — stale-while-revalidate (أسرع + يتحدث بالخلفية)
+# ───────────────────────────────────────────────────────────────
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, stale-while-revalidate=86400"
+    Content-Type = "application/javascript; charset=utf-8"
+
+# ───────────────────────────────────────────────────────────────
+# 🎨 CSS — stale-while-revalidate
+# ───────────────────────────────────────────────────────────────
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, stale-while-revalidate=86400"
+    Content-Type = "text/css; charset=utf-8"
+
+# ───────────────────────────────────────────────────────────────
+# 🖼️ IMAGES — كاش طويل (الصور نادراً ما تتغيّر)
+# ───────────────────────────────────────────────────────────────
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/icons/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.webp"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.jpeg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.ico"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# ───────────────────────────────────────────────────────────────
+# 🔤 FONTS — كاش طويل
+# ───────────────────────────────────────────────────────────────
+[[headers]]
+  for = "*.woff2"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.woff"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# ───────────────────────────────────────────────────────────────
+# ⚙️ SERVICE WORKERS — لا تخزين (حرج!)
+# ───────────────────────────────────────────────────────────────
+[[headers]]
+  for = "/service-worker.js"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Content-Type = "application/javascript; charset=utf-8"
+
+[[headers]]
+  for = "/advanced-service-worker.js"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Content-Type = "application/javascript; charset=utf-8"
+
+[[headers]]
+  for = "/manifest.json"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+    Content-Type = "application/manifest+json; charset=utf-8"
+
+# ───────────────────────────────────────────────────────────────
+# 🤖 SEO FILES
+# ───────────────────────────────────────────────────────────────
+[[headers]]
+  for = "/robots.txt"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+    Content-Type = "text/plain; charset=utf-8"
+
+[[headers]]
+  for = "/sitemap.xml"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+    Content-Type = "application/xml; charset=utf-8"
+
+# ───────────────────────────────────────────────────────────────
+# 🔄 CLEAN URL REDIRECTS (بدون .html)
+# ───────────────────────────────────────────────────────────────
+[[redirects]]
+  from = "/work-visa"
+  to = "/work-visa.html"
+  status = 200
+
+[[redirects]]
+  from = "/professions"
+  to = "/professions.html"
+  status = 200
+
+[[redirects]]
+  from = "/corporate"
+  to = "/corporate.html"
+  status = 200
+
+[[redirects]]
+  from = "/calculator"
+  to = "/calculator.html"
+  status = 200
+
+[[redirects]]
+  from = "/professional"
+  to = "/professional.html"
+  status = 200
+
+[[redirects]]
+  from = "/certificates"
+  to = "/certificates.html"
+  status = 200
+
+[[redirects]]
+  from = "/blog"
+  to = "/blog.html"
+  status = 200
+
+[[redirects]]
+  from = "/about"
+  to = "/about.html"
+  status = 200
+
+[[redirects]]
+  from = "/faq"
+  to = "/faq.html"
+  status = 200
+
+[[redirects]]
+  from = "/privacy"
+  to = "/privacy.html"
+  status = 200
+
+[[redirects]]
+  from = "/terms"
+  to = "/terms.html"
+  status = 200
+
+[[redirects]]
+  from = "/disclaimer"
+  to = "/disclaimer.html"
+  status = 200
+
+# 404 fallback
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404

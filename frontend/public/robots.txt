@@ -1,0 +1,106 @@
+# ═══════════════════════════════════════════════════════════════
+# 🤖 ROBOTS.TXT — Saudia Visa Jordan
+# ═══════════════════════════════════════════════════════════════
+# يسمح لكل محركات البحث + الـ AI crawlers المشروعة بفهرسة الموقع
+# ═══════════════════════════════════════════════════════════════
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /.git/
+Disallow: /.env
+Disallow: /node_modules/
+
+# السماح صراحةً بالموارد الحرجة (CSS/JS/صور) — ضروري لـ Mobile-Friendly
+Allow: /*.css$
+Allow: /*.js$
+Allow: /*.webp$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.svg$
+Allow: /*.woff2$
+Allow: /*.ico$
+
+# ───────────────────────────────────────────────────────────────
+# 🔍 محركات البحث الرئيسية
+# ───────────────────────────────────────────────────────────────
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Googlebot-Image
+Allow: /images/
+Allow: /icons/
+Allow: /*.webp$
+Allow: /*.png$
+Allow: /*.jpg$
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+# ───────────────────────────────────────────────────────────────
+# 🤖 AI Crawlers (ChatGPT, Claude, Gemini, Perplexity)
+# السماح لتعزيز ظهور الموقع في الذكاء الاصطناعي
+# ───────────────────────────────────────────────────────────────
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# ───────────────────────────────────────────────────────────────
+# 🚫 حظر Bad Bots و Scrapers
+# ───────────────────────────────────────────────────────────────
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+# ───────────────────────────────────────────────────────────────
+# 📍 Sitemap & Host
+# ───────────────────────────────────────────────────────────────
+Sitemap: https://saudia-visa.com/sitemap.xml
+Host: https://saudia-visa.com

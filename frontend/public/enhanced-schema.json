@@ -1,0 +1,261 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://saudia-visa.com/#organization",
+      "name": "مكتب تأشيرات السعودية المعتمد - إنجاز السعودية",
+      "alternateName": [
+        "مركز السعودية المعتمد",
+        "إنجاز السعودية",
+        "مكتب السعودية المعتمد الأردن",
+        "Saudia Visa Jordan",
+        "Enjaz KSA Jordan",
+        "مكتب إنجاز معتمد",
+        "مكتب معتمد السفارة السعودية"
+      ],
+      "url": "https://saudia-visa.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://saudia-visa.com/icons/logo-512.png",
+        "width": 512,
+        "height": 512
+      },
+      "image": "https://saudia-visa.com/icons/logo-512.png",
+      "description": "المكتب الرسمي المعتمد من السفارة السعودية في الأردن لإنجاز تأشيرات العمل، تصديق الشهادات الجامعية والوثائق الرسمية، والاعتماد المهني (إنجاز) لجميع المهن والشركات",
+      "slogan": "مكتبك المعتمد لجميع خدمات السفارة السعودية",
+      "foundingDate": "2014",
+      "founder": {
+        "@type": "Person",
+        "name": "إنجاز السعودية"
+      },
+      "telephone": "+962789881009",
+      "email": "Info@saudia-visa.com",
+      "priceRange": "JOD 20-200",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "جبل عمان - الدوار الأول",
+        "addressLocality": "عمان",
+        "addressRegion": "محافظة العاصمة",
+        "postalCode": "11183",
+        "addressCountry": "JO"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "31.9547",
+        "longitude": "35.9106"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"],
+          "opens": "09:00",
+          "closes": "17:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "09:00",
+          "closes": "14:00"
+        }
+      ],
+      "areaServed": [
+        {
+          "@type": "Country",
+          "name": "Jordan"
+        },
+        {
+          "@type": "City",
+          "name": "Amman"
+        }
+      ],
+      "serviceArea": {
+        "@type": "GeoCircle",
+        "geoMidpoint": {
+          "@type": "GeoCoordinates",
+          "latitude": "31.9547",
+          "longitude": "35.9106"
+        },
+        "geoRadius": "50000"
+      },
+      "sameAs": [
+        "https://www.facebook.com/Saudiavisajo",
+        "https://saudia-visa.com"
+      ],
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "+962-78-988-1009",
+          "contactType": "customer service",
+          "areaServed": "JO",
+          "availableLanguage": ["Arabic", "English"],
+          "contactOption": "TollFree"
+        },
+        {
+          "@type": "ContactPoint",
+          "telephone": "+962-78-988-1009",
+          "contactType": "sales",
+          "areaServed": "JO",
+          "availableLanguage": ["Arabic", "English"]
+        }
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.95",
+        "reviewCount": "1250",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "numberOfEmployees": {
+        "@type": "QuantitativeValue",
+        "value": "5-10"
+      },
+      "knowsAbout": [
+        "تأشيرات العمل السعودية",
+        "تصديق الشهادات الجامعية",
+        "الاعتماد المهني السعودي",
+        "إنجاز معاملات السفارة",
+        "التفويض الرسمي",
+        "الوثائق الرسمية"
+      ],
+      "makesOffer": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "تأشيرات عمل سعودية",
+            "description": "إنجاز تأشيرات العمل السعودية لجميع المهن والشركات"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "تصديق الشهادات",
+            "description": "تصديق الشهادات الجامعية والوثائق الرسمية من السفارة السعودية"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "الاعتماد المهني إنجاز",
+            "description": "الاعتماد المهني السعودي لجميع المهن والتخصصات"
+          }
+        }
+      ]
+    },
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://saudia-visa.com/#localbusiness",
+      "name": "مكتب تأشيرات السعودية المعتمد",
+      "image": "https://saudia-visa.com/icons/logo-512.png",
+      "@id": "https://saudia-visa.com",
+      "url": "https://saudia-visa.com",
+      "telephone": "+962789881009",
+      "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "جبل عمان - الدوار الأول",
+        "addressLocality": "عمان",
+        "addressCountry": "JO"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 31.9547,
+        "longitude": 35.9106
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Saturday"],
+        "opens": "09:00",
+        "closes": "17:00"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://saudia-visa.com/#website",
+      "url": "https://saudia-visa.com",
+      "name": "مكتب تأشيرات السعودية المعتمد",
+      "description": "المكتب الرسمي المعتمد من السفارة السعودية في الأردن",
+      "publisher": {
+        "@id": "https://saudia-visa.com/#organization"
+      },
+      "inLanguage": "ar",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://saudia-visa.com/professions.html?search={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://saudia-visa.com/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "الرئيسية",
+          "item": "https://saudia-visa.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "من نحن",
+          "item": "https://saudia-visa.com/about.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "الخدمات",
+          "item": "https://saudia-visa.com/#services"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "ما هي خدمات مكتب تأشيرات السعودية المعتمد؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "نقدم تأشيرات عمل سعودية لجميع المهن، تصديق الشهادات الجامعية والوثائق الرسمية، الاعتماد المهني (إنجاز)، وجميع خدمات السفارة السعودية في الأردن."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "كم تستغرق معاملة تأشيرة العمل؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "عادة تستغرق المعاملة من 5-7 أيام عمل، حسب نوع المعاملة وتعقيدها."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "هل المكتب معتمد من السفارة السعودية؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "نعم، نحن المكتب الرسمي المعتمد من السفارة السعودية في الأردن لإنجاز جميع المعاملات."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "ما هي المهن المتاحة للتأشيرات؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "نخدم أكثر من 587 مهنة مختلفة، من الطب والهندسة إلى الحرف والخدمات. يمكنك البحث عن مهنتك في صفحة المهن."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "هل تخدمون الشركات؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "نعم، نقدم خدمات تفويض شاملة للشركات السعودية لإنجاز تأشيرات موظفيها بسرعة ودقة."
+          }
+        }
+      ]
+    }
+  ]
+}
