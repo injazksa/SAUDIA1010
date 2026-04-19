@@ -1612,7 +1612,7 @@ const articles = {
             <div class="grid md:grid-cols-3 gap-4 mb-4">
                 <div class="bg-blue-50 p-4 rounded-lg">
                     <p class="text-sm text-gray-600 mb-1">الراتب الشهري</p>
-                    <p class="text-xl font-bold text-navy">3,000 - 8,000 ريال</p>
+                    <p class="text-xl font-bold text-navy">6,000 - 15,000 ريال</p>
                 </div>
                 <div class="bg-blue-50 p-4 rounded-lg">
                     <p class="text-sm text-gray-600 mb-1">المؤهل</p>
@@ -1641,7 +1641,7 @@ const articles = {
             <div class="grid md:grid-cols-3 gap-4 mb-4">
                 <div class="bg-green-50 p-4 rounded-lg">
                     <p class="text-sm text-gray-600 mb-1">الراتب الشهري</p>
-                    <p class="text-xl font-bold text-navy">4,000 - 15,000 ريال</p>
+                    <p class="text-xl font-bold text-navy">8,000 - 20,000+ ريال</p>
                 </div>
                 <div class="bg-green-50 p-4 rounded-lg">
                     <p class="text-sm text-gray-600 mb-1">المؤهل</p>
@@ -1669,7 +1669,7 @@ const articles = {
             <div class="grid md:grid-cols-3 gap-4 mb-4">
                 <div class="bg-purple-50 p-4 rounded-lg">
                     <p class="text-sm text-gray-600 mb-1">الراتب الشهري</p>
-                    <p class="text-xl font-bold text-navy">3,500 - 9,000 ريال</p>
+                    <p class="text-xl font-bold text-navy">5,000 - 11,000 ريال</p>
                 </div>
                 <div class="bg-purple-50 p-4 rounded-lg">
                     <p class="text-sm text-gray-600 mb-1">المؤهل</p>
@@ -1703,7 +1703,7 @@ const articles = {
                         <span class="bg-gold text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">5</span>
                         مندوبو مبيعات
                     </h4>
-                    <p class="text-sm text-gray-600 mb-1">الراتب: 2,000 - 5,000 ريال + عمولة</p>
+                    <p class="text-sm text-gray-600 mb-1">الراتب: 5,000 - 8,000 ريال + عمولة</p>
                     <p class="text-sm text-gray-700">المؤهل: ثانوية عامة + خبرة</p>
                 </div>
 
@@ -1712,7 +1712,7 @@ const articles = {
                         <span class="bg-gold text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">6</span>
                         فنيو صيانة (كهرباء، تكييف)
                     </h4>
-                    <p class="text-sm text-gray-600 mb-1">الراتب: 1,800 - 4,000 ريال</p>
+                    <p class="text-sm text-gray-600 mb-1">الراتب: 4,000 - 6,000 ريال</p>
                     <p class="text-sm text-gray-700">المؤهل: دبلوم فني + خبرة عملية</p>
                 </div>
 
@@ -1721,7 +1721,7 @@ const articles = {
                         <span class="bg-gold text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">7</span>
                         عمال بناء وإنشاءات
                     </h4>
-                    <p class="text-sm text-gray-600 mb-1">الراتب: 1,500 - 3,500 ريال</p>
+                    <p class="text-sm text-gray-600 mb-1">الراتب: 3,500 - 6,000 ريال</p>
                     <p class="text-sm text-gray-700">المؤهل: خبرة عملية في المجال</p>
                 </div>
 
@@ -1730,7 +1730,7 @@ const articles = {
                         <span class="bg-gold text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">8</span>
                         سائقون
                     </h4>
-                    <p class="text-sm text-gray-600 mb-1">الراتب: 1,800 - 3,500 ريال</p>
+                    <p class="text-sm text-gray-600 mb-1">الراتب: 3,000 - 5,000 ريال</p>
                     <p class="text-sm text-gray-700">المؤهل: رخصة قيادة سارية</p>
                 </div>
 
@@ -1739,9 +1739,53 @@ const articles = {
                         <span class="bg-gold text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">9</span>
                         عمالة منزلية
                     </h4>
-                    <p class="text-sm text-gray-600 mb-1">الراتب: 1,500 - 2,500 ريال</p>
+                    <p class="text-sm text-gray-600 mb-1">الراتب: 2,500 - 4,000 ريال</p>
                     <p class="text-sm text-gray-700">المؤهل: خبرة في المهنة</p>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 💡 Salary Disclaimer -->
+    <div class="bg-gradient-to-br from-amber-50 to-yellow-50 border-r-4 border-gold rounded-xl p-6 mb-10 shadow-sm">
+        <div class="flex items-start gap-4">
+            <div class="bg-gold/15 text-gold w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-circle-info text-xl"></i>
+            </div>
+            <div>
+                <h4 class="font-bold text-navy text-lg mb-2">ملاحظة مهمّة حول الرواتب</h4>
+                <p class="text-gray-700 leading-relaxed mb-3">
+                    الأرقام أعلاه هي <strong>نطاقات تقريبية</strong> تعكس متوسط السوق السعودي لعام 2026، وقد تجد راتبًا <strong>أعلى أو أقل</strong> من النطاق المذكور بحسب عدة عوامل:
+                </p>
+                <div class="grid sm:grid-cols-2 gap-3 mb-3">
+                    <div class="flex items-center gap-2 text-sm text-gray-700">
+                        <i class="fas fa-briefcase text-gold text-xs"></i>
+                        <span><strong>الخبرة</strong> وعدد سنوات العمل السابقة</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm text-gray-700">
+                        <i class="fas fa-graduation-cap text-gold text-xs"></i>
+                        <span><strong>التخصص الدقيق</strong> والشهادات الاحترافية</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm text-gray-700">
+                        <i class="fas fa-map-marker-alt text-gold text-xs"></i>
+                        <span><strong>المدينة/المنطقة</strong> (الرياض، جدة، المنطقة الشرقية)</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm text-gray-700">
+                        <i class="fas fa-clock text-gold text-xs"></i>
+                        <span><strong>ساعات العمل</strong> ونوع العقد (دوام جزئي/كلي)</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm text-gray-700">
+                        <i class="fas fa-building text-gold text-xs"></i>
+                        <span><strong>حجم صاحب العمل</strong> (شركة خاصة، حكومية، متعدد الجنسيات)</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm text-gray-700">
+                        <i class="fas fa-gift text-gold text-xs"></i>
+                        <span><strong>البدلات والمزايا</strong> (سكن، مواصلات، تأمين)</span>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-600 italic">
+                    للأطقم الطبية والاختصاصات النادرة قد يتجاوز الراتب الشهري 25,000 ريال مع سنوات الخبرة والشهادات المتخصصة.
+                </p>
             </div>
         </div>
     </div>
