@@ -9,8 +9,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
     
-    if (mobileMenuBtn && mobileMenu) {
-        mobileMenuBtn.addEventListener('click', function() {
+    if (mobileMenuBtn && mobileMenu && mobileMenuBtn.dataset.menuInit !== '1') {
+        mobileMenuBtn.dataset.menuInit = '1';
+        mobileMenuBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
             mobileMenu.classList.toggle('hidden');
         });
         

@@ -1,5 +1,8 @@
-// Professions Page JavaScript
+// Professions Page JavaScript - Optimized v2.0
 let professionsData = [];
+let filteredData = [];
+let renderedCount = 0;
+const BATCH_SIZE = 30;
 let currentProfession = null;
 
 // Load professions data on page load
@@ -23,6 +26,18 @@ document.addEventListener('DOMContentLoaded', function() {
     if (genderFilter) {
         genderFilter.addEventListener('change', filterProfessions);
     }
+
+    // ⚡ Event delegation للكروت (بدلاً من inline onclick لكل كرت)
+    const grid = document.getElementById('professionsGrid');
+    if (grid) {
+        grid.addEventListener('click', function(e) {
+            const card = e.target.closest('[data-prof-idx]');
+            if (!card) return;
+            const idx = parseInt(card.dataset.profIdx, 10);
+            const source = filteredData.length ? filteredData : professionsData;
+            if (source[idx]) showProfessionDetails(source[idx]);
+        });
+    }
 });
 
 // Load professions from JSON file
@@ -31,6 +46,7 @@ async function loadProfessions() {
         const response = await fetch('professions.json');
         const data = await response.json();
         professionsData = data;
+        filteredData = data;
         
         displayProfessions(professionsData);
         document.getElementById('loadingState').classList.add('hidden');
@@ -50,16 +66,20 @@ async function loadProfessions() {
     }
 }
 
-// Display professions in grid
+// ⚡ Display professions in grid - with PAGINATION (render only BATCH_SIZE at a time)
 function displayProfessions(professions) {
     const grid = document.getElementById('professionsGrid');
     const resultsCount = document.getElementById('resultsCount');
     const noResults = document.getElementById('noResults');
     
+    filteredData = professions;
+    renderedCount = 0;
+    
     if (professions.length === 0) {
         grid.classList.add('hidden');
         noResults.classList.remove('hidden');
         resultsCount.textContent = '0';
+        removeLoadMoreButton();
         return;
     }
     
@@ -67,30 +87,73 @@ function displayProfessions(professions) {
     noResults.classList.add('hidden');
     resultsCount.textContent = professions.length;
     
-    grid.innerHTML = professions.map(profession => createProfessionCard(profession)).join('');
+    // Render first batch
+    grid.innerHTML = '';
+    renderBatch(professions);
 }
 
-// Create profession card HTML
-function createProfessionCard(profession) {
+function renderBatch(professions) {
+    const grid = document.getElementById('professionsGrid');
+    const end = Math.min(renderedCount + BATCH_SIZE, professions.length);
+    const slice = professions.slice(renderedCount, end);
+    
+    // استخدم DocumentFragment لتحميل أسرع
+    const frag = document.createDocumentFragment();
+    const temp = document.createElement('div');
+    temp.innerHTML = slice.map((p, i) => createProfessionCard(p, renderedCount + i)).join('');
+    while (temp.firstChild) frag.appendChild(temp.firstChild);
+    grid.appendChild(frag);
+    
+    renderedCount = end;
+    updateLoadMoreButton(professions);
+}
+
+function updateLoadMoreButton(professions) {
+    let btn = document.getElementById('loadMoreBtn');
+    if (renderedCount >= professions.length) {
+        if (btn) btn.remove();
+        return;
+    }
+    if (!btn) {
+        btn = document.createElement('button');
+        btn.id = 'loadMoreBtn';
+        btn.type = 'button';
+        btn.dataset.testid = 'load-more-professions-btn';
+        btn.className = 'mx-auto mt-8 px-8 py-4 bg-gold hover:bg-gold-light text-white rounded-xl font-bold shadow-lg transition-all hover:scale-105 flex items-center gap-3';
+        btn.addEventListener('click', () => renderBatch(filteredData));
+        const grid = document.getElementById('professionsGrid');
+        grid.parentNode.insertBefore(btn, grid.nextSibling);
+    }
+    const remaining = professions.length - renderedCount;
+    btn.innerHTML = `<i class="fas fa-plus-circle"></i> تحميل ${Math.min(BATCH_SIZE, remaining)} مهنة إضافية (من ${remaining} متبقية)`;
+}
+
+function removeLoadMoreButton() {
+    const btn = document.getElementById('loadMoreBtn');
+    if (btn) btn.remove();
+}
+
+// Create profession card HTML - ⚡ بدون inline JSON (يستخدم data-prof-idx)
+function createProfessionCard(profession, index) {
     const professionName = profession.profession_name_ar || profession.name || profession.professionName || 'غير محدد';
     const professionCode = profession.profession_code || profession.code || profession.professionCode || 'N/A';
     const category = profession.category || profession.classification || 'أخرى';
     
     return `
         <div class="bg-white rounded-2xl p-6 border border-gray-100 hover:border-gold/50 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 cursor-pointer group"
-             onclick='showProfessionDetails(${JSON.stringify(profession).replace(/'/g, "&apos;")})' 
+             data-prof-idx="${index}"
              data-testid="profession-card-${professionCode}">
             <div class="flex items-start justify-between mb-4">
                 <div class="flex-1">
                     <h3 class="text-xl font-bold text-navy mb-2 group-hover:text-gold transition-colors line-clamp-2">
-                        ${professionName}
+                        ${escapeHtml(professionName)}
                     </h3>
                     <div class="flex items-center gap-2 text-sm text-gray-600">
                         <span class="px-3 py-1 bg-gold/10 text-gold rounded-full font-semibold">
-                            ${professionCode}
+                            ${escapeHtml(professionCode)}
                         </span>
                         <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full">
-                            ${category}
+                            ${escapeHtml(category)}
                         </span>
                     </div>
                 </div>
@@ -113,6 +176,17 @@ function createProfessionCard(profession) {
             </div>
         </div>
     `;
+}
+
+// 🔒 آمن ضد XSS
+function escapeHtml(s) {
+    if (s == null) return '';
+    return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
 }
 
 // Normalize Arabic text for better search

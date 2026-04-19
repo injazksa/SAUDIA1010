@@ -156,12 +156,10 @@ function validateInput(input, type = 'text') {
     };
 })();
 
-// 6. Content Security Policy (CSP) Headers
+// 6. Content Security Policy (CSP) — يُعالج الآن عبر Netlify headers/netlify.toml
+// لا نضيف meta CSP هنا لتجنب التعارض مع HTTP headers
 function setCSPHeaders() {
-    const meta = document.createElement('meta');
-    meta.httpEquiv = 'Content-Security-Policy';
-    meta.content = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://wa.me; frame-ancestors 'none'; base-uri 'self'; form-action 'self'";
-    document.head.appendChild(meta);
+    // no-op: CSP is delivered via Netlify headers (see netlify.toml)
 }
 
 // 7. Prevent Clickjacking

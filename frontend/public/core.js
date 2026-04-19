@@ -92,19 +92,21 @@
     });
   }
 
-  // ─── 5. MOBILE MENU TOGGLE ───
+  // ─── 5. MOBILE MENU TOGGLE (idempotent — لا يتكرر إذا كان script.js نفّذه) ───
   function initMobileMenu() {
     const btn = document.getElementById('mobile-menu-btn');
     const menu = document.getElementById('mobile-menu');
     if (!btn || !menu) return;
-    btn.addEventListener('click', () => {
+    // إذا كان عنده handler من script.js (أو حُقن سابقاً) → لا تُضِف ثاني
+    if (btn.dataset.menuInit === '1') return;
+    btn.dataset.menuInit = '1';
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
       menu.classList.toggle('hidden');
     });
-    // close on outside click
-    document.addEventListener('click', (e) => {
-      if (!menu.contains(e.target) && !btn.contains(e.target)) {
-        menu.classList.add('hidden');
-      }
+    // إغلاق عند الضغط على أي رابط داخل القائمة
+    menu.querySelectorAll('a').forEach((a) => {
+      a.addEventListener('click', () => menu.classList.add('hidden'));
     });
   }
 

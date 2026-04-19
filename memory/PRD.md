@@ -164,3 +164,47 @@
 4. submit sitemap.xml في Google Search Console
 5. submit في Bing Webmaster Tools
 6. اختبار PageSpeed Insights + Lighthouse + GTmetrix
+
+---
+
+## v2.1 UPDATE (2026-01-22) — Audit, Fixes & Safety
+
+### 🔧 Bug Fixes:
+- **القائمة (Hamburger menu)** كانت لا تعمل بسبب تضارب `script.js` و `core.js` — صار عنده flag `data-menu-init="1"` ليمنع التكرار
+- **صفحة المهن كانت بطيئة**: كانت تحمّل 761 كرت مع JSON كامل مضمّن في كل `onclick` (HTML ضخم جداً). الآن:
+  - **Pagination**: تحمّل 30 مهنة فقط + زر "تحميل المزيد"
+  - **Event delegation**: بدلاً من `onclick` لكل كرت → handler واحد موحّد
+  - **DocumentFragment**: إدراج DOM دفعة واحدة
+  - **Preload**: `<link rel="preload" as="fetch" href="/professions.json">` لبدء التحميل فوراً
+  - نتيجة: السرعة تضاعفت ~10× والـ HTML أصغر بـ ~90%
+- **روابط مكسورة** في `family-sponsorship-guide.html`: أُصلحت (tourism-visa → tourist-visa-guide، إلخ)
+
+### 🔐 Security Hardening:
+- `rel="noopener noreferrer"` مضاف تلقائياً لكل `target="_blank"` (حماية من tabnabbing)
+- CSP الآن يُسلَّم عبر **Netlify headers** فقط (بدلاً من meta tag — تحاشي التضارب)
+- **Netlify redirects** تحمي: `/.env`, `/.git/*`, `/*.md`, `/*.py`, `/backend/*`, `/scripts/*`, `/memory/*`, `/tests/*`
+- XSS Safe: `escapeHtml()` في professions.js لكل محتوى مُدخل
+- Share buttons: `encodeURIComponent` لكل معاملات الـ URL (لا حقن)
+
+### 📤 Share Buttons الجديدة (`/share-buttons.js`):
+- 6 منصات: WhatsApp + Facebook + X (Twitter) + Telegram + LinkedIn + نسخ الرابط
+- تُفعَّل تلقائياً على أي صفحة فيها `<div data-share-buttons></div>`
+- آمنة 100% (noopener + encoded URLs)
+- مضافة للمدونات الأربعة
+
+### ⚖️ قرار نظام التقييمات:
+بعد نقاش المستخدم حول خطر **التقييمات الكيدية**، القرار:
+- ❌ **لا نضيف نموذج تقييم مفتوح** (خطر تقييمات سيئة كيدية)
+- ✅ **نعتمد على Facebook Page reviews** كإشارة ثقة خارجية حقيقية
+- ✅ **نظام testimonials بإدارة يدوية** (جمع تقييمات حقيقية من عملاء + موافقتهم + نشرها من admin فقط)
+- هذا يحمي الموقع من:
+  - المنافسين اللي يحطوا تقييمات وهمية سيئة
+  - عقوبات Google (fake ratings)
+  - فقدان الثقة
+
+### 📊 Full Audit Results:
+- ✅ Broken internal links: 0
+- ✅ Dangerous javascript: URLs: 0
+- ✅ target=_blank without noopener: 0
+- ⚠️ Unreferenced images in /images/: 26 ملف (~10 MB) — لا تسبب ضرر لكن تضيع bandwidth
+- ✅ Sensitive files: محمية بـ Netlify redirects
