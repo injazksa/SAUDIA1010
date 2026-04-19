@@ -142,18 +142,19 @@ a:active, button:active {
 }
 
 /**
- * تأثيرات الصور
+ * تأثيرات الصور — نُطبّق فقط على الصور اللي عليها data-fade
+ * (بدلاً من كل الصور، لتجنب إخفائها)
  */
-img {
+img[data-fade] {
     transition: opacity 0.3s var(--transition-timing),
                 transform 0.3s var(--transition-timing);
 }
 
-img.loaded {
+img[data-fade].loaded {
     opacity: 1;
 }
 
-img:not(.loaded) {
+img[data-fade]:not(.loaded) {
     opacity: 0;
 }
 

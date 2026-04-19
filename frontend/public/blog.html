@@ -5,386 +5,303 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مدونة تأشيرات السعودية | مقالات ودليل شامل من خبراء معتمدين</title>
     <meta name="description" content="مقالات حصرية وأدلّة تفصيلية عن تأشيرات العمل، العمرة، السياحية، والاستقدام العائلي. محتوى موثوق من المكتب المعتمد رقم 22128 في الأردن.">
+    <meta name="keywords" content="مدونة تأشيرات السعودية, مقالات تأشيرات, دليل العمرة, تأشيرة العمل السعودية, Nusuk, إنجاز, قوى">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
     <link rel="canonical" href="https://saudia-visa.com/blog.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://saudia-visa.com/blog.html">
+    <meta property="og:title" content="مدونة تأشيرات السعودية — مقالات خبراء المكتب المعتمد">
+    <meta property="og:description" content="دليلك الشامل لكل ما يخص تأشيرات السعودية — محتوى موثوق من المكتب المعتمد.">
+    <meta property="og:image" content="https://saudia-visa.com/images/blog-umrah-hero.webp">
+    <meta property="og:locale" content="ar_JO">
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'navy': '#1B2A41',
-                        'navy-dark': '#0F1922',
-                        'gold': '#C9A35E',
-                    }
-                }
-            }
-        }
+        tailwind.config = { theme: { extend: {
+            colors: { 'navy': '#1B2A41', 'navy-dark': '#0F1922', 'gold': '#C9A35E', 'gold-light': '#D4AF73' },
+            fontFamily: { 'arabic': ['Alexandria', 'Tajawal', 'sans-serif'] }
+        }}};
     </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
-    
-    <!-- ⚡ Performance Optimization Styles -->
     <link rel="stylesheet" href="smooth-transitions.css">
     <script src="/schema-markup.js" defer></script>
+
+    <!-- Blog List Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "name": "مدونة مكتب تأشيرات السعودية في الأردن",
+      "description": "مقالات موثوقة من خبراء المكتب المعتمد رقم 22128 عن تأشيرات العمل والعمرة والسياحة والاستقدام العائلي.",
+      "url": "https://saudia-visa.com/blog.html",
+      "publisher": {
+        "@type": "Organization",
+        "name": "مكتب تأشيرات السعودية في الأردن",
+        "logo": { "@type": "ImageObject", "url": "https://saudia-visa.com/icons/logo-512.png" }
+      },
+      "inLanguage": "ar"
+    }
+    </script>
 </head>
-<body class="bg-gray-50">
-    <!-- Navigation -->
+<body class="font-arabic bg-gray-50">
+    <!-- Nav -->
     <nav class="bg-white shadow-md sticky top-0 z-50">
         <div class="container mx-auto px-4">
             <div class="flex items-center justify-between h-16">
-                <div class="flex items-center gap-2">
-                    <a href="/" class="flex items-center gap-2">
-                        <img src="/icons/logo-192.png" alt="مكتب تأشيرات السعودية" class="h-10 w-auto">
-                        <div class="hidden sm:block">
-                            <h1 class="text-[11px] lg:text-xs font-bold text-navy leading-tight">
-                                <span class="block">مكتب تأشيرات السعودية في الأردن</span>
-                            </h1>
-                        </div>
-                    </a>
-                </div>
+                <a href="/" class="flex items-center gap-2">
+                    <img src="/icons/logo-192.png" alt="مكتب تأشيرات السعودية" width="40" height="40" class="h-10 w-auto">
+                    <h1 class="text-[11px] lg:text-xs font-bold text-navy leading-tight hidden sm:block">مكتب تأشيرات السعودية في الأردن</h1>
+                </a>
                 <div class="hidden md:flex items-center gap-6">
                     <a href="index.html" class="text-navy hover:text-gold transition-colors">الرئيسية</a>
-                    <a href="corporate.html" class="text-navy hover:text-gold transition-colors">خدمات الشركات</a>
                     <a href="professions.html" class="text-navy hover:text-gold transition-colors">المهن والأوراق</a>
                     <a href="calculator.html" class="text-navy hover:text-gold transition-colors">حاسبة الرسوم</a>
                     <a href="certificates.html" class="text-navy hover:text-gold transition-colors">تصديق الشهادات</a>
                     <a href="professional.html" class="text-navy hover:text-gold transition-colors">الاعتماد المهني</a>
                     <a href="blog.html" class="text-gold font-bold">المدونة</a>
-                    <a href="faq.html" class="text-navy hover:text-gold transition-colors font-medium">الأسئلة الشائعة</a>
-                    <a href="https://wa.me/962789881009" class="bg-gold text-white px-6 py-2 rounded-lg hover:bg-gold/90 transition-all">
-                        تواصل معنا
-                    </a>
+                    <a href="faq.html" class="text-navy hover:text-gold transition-colors">الأسئلة الشائعة</a>
+                    <a href="https://wa.me/962789881009" class="bg-gold text-white px-6 py-2 rounded-lg hover:bg-gold-light transition-all">تواصل معنا</a>
                 </div>
+                <button id="mobile-menu-btn" class="md:hidden p-2 text-navy"><i class="fas fa-bars text-2xl"></i></button>
             </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t px-4 py-4 space-y-2">
+            <a href="index.html" class="block py-2 text-navy">الرئيسية</a>
+            <a href="professions.html" class="block py-2 text-navy">المهن</a>
+            <a href="calculator.html" class="block py-2 text-navy">الحاسبة</a>
+            <a href="blog.html" class="block py-2 text-gold font-bold">المدونة</a>
+            <a href="faq.html" class="block py-2 text-navy">الأسئلة الشائعة</a>
         </div>
     </nav>
-    <div class="bg-gray-100 border-b border-gray-200">
-        <div class="container mx-auto px-4">
-            <div class="flex items-center gap-4 py-3">
-                <button onclick="window.history.back()" class="flex items-center gap-2 text-navy hover:text-gold transition-colors font-semibold">
-                    <i class="fas fa-arrow-right"></i>
-                    <span>رجوع</span>
-                </button>
-                <span class="text-gray-300">|</span>
-                <a href="index.html" class="flex items-center gap-2 text-gray-600 hover:text-gold transition-colors">
-                    <i class="fas fa-home"></i>
-                    <span>الصفحة الرئيسية</span>
-                </a>
-            </div>
-        </div>
-    </div>
 
-    <!-- Hero Section -->
+    <!-- Hero -->
     <section class="bg-gradient-to-br from-navy via-navy-dark to-navy text-white py-20">
-        <div class="container mx-auto px-4">
-            <div class="max-w-4xl mx-auto text-center">
-                <div class="inline-block bg-gold/20 text-gold px-6 py-2 rounded-full text-sm font-bold mb-6">
-                    <i class="fas fa-newspaper ml-2"></i>
-                    مدونة مكتب التأشيرات
-                </div>
-                <h1 class="text-4xl md:text-5xl font-bold mb-6">مقالات ونصائح للعمل في السعودية</h1>
-                <p class="text-xl text-gray-300 mb-8">دليلك الشامل لكل ما تحتاج معرفته عن التأشيرات السعودية، التصديقات، والاعتماد المهني من خبراء معتمدين</p>
+        <div class="container mx-auto px-4 text-center max-w-4xl">
+            <div class="inline-block bg-gold/20 text-gold px-6 py-2 rounded-full text-sm font-bold mb-6">
+                <i class="fas fa-newspaper ml-2"></i>مدونة المكتب المعتمد · ترخيص 22128
             </div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">مقالات ونصائح للعمل والسفر في السعودية</h1>
+            <p class="text-xl text-gray-300">دليلك الشامل لكل ما تحتاج معرفته عن التأشيرات السعودية، التصديقات، والاعتماد المهني — من خبراء معتمدين</p>
         </div>
     </section>
 
-    <!-- Featured Posts -->
-    <section class="py-20 bg-white">
+    <!-- Articles Grid -->
+    <section class="py-16 bg-white">
         <div class="container mx-auto px-4">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-12">
-                    <span class="text-gold text-sm font-bold uppercase tracking-wider">المقالات المميزة</span>
-                    <h2 class="text-3xl md:text-4xl font-bold text-navy mt-3">أحدث المقالات</h2>
+                    <span class="text-gold text-sm font-bold uppercase tracking-wider">المقالات الأحدث</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-navy mt-3">8 مقالات شاملة وموثوقة</h2>
                 </div>
 
-                <div class="grid lg:grid-cols-3 gap-8">
-                    <!-- Article 1: Tourist Visa (NEW) -->
-                    <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100">
-                        <div class="relative h-64 bg-gradient-to-br from-navy to-navy-dark flex items-center justify-center">
-                            <div class="text-center text-white p-6">
-                                <i class="fas fa-plane-departure text-6xl text-gold mb-4"></i>
-                                <h3 class="text-xl font-bold">التأشيرة السياحية</h3>
+                <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-8">
+
+                    <!-- 1. Umrah (NEW) -->
+                    <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-gold/30 flex flex-col">
+                        <a href="/blog/umrah-visa-guide-2026.html" class="block relative overflow-hidden">
+                            <img src="/images/blog-umrah-hero.webp" alt="دليل تأشيرة العمرة 2026" width="800" height="450" class="w-full h-56 object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
+                            <div class="absolute top-4 right-4 bg-gold text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">جديد 2026</div>
+                        </a>
+                        <div class="p-6 flex-1 flex flex-col">
+                            <div class="flex items-center gap-3 text-sm text-gray-500 mb-3">
+                                <span><i class="far fa-calendar text-gold"></i> 22 يناير 2026</span>
+                                <span><i class="far fa-clock text-gold"></i> 12 دقيقة</span>
                             </div>
-                            <div class="absolute top-4 right-4 bg-gold text-white px-3 py-1 rounded-full text-xs font-bold">
-                                جديد
+                            <h3 class="text-xl font-bold text-navy mb-3 hover:text-gold transition-colors">
+                                <a href="/blog/umrah-visa-guide-2026.html">دليل تأشيرة العمرة الشامل 2026</a>
+                            </h3>
+                            <p class="text-gray-600 text-sm leading-relaxed mb-4 flex-1">أنواع تأشيرات العمرة، منصة نُسك، الشروط، الرسوم، وخطوات التقديم من المصادر السعودية الرسمية.</p>
+                            <div class="flex items-center justify-between">
+                                <a href="/blog/umrah-visa-guide-2026.html" class="text-gold font-bold text-sm hover:gap-3 transition-all inline-flex items-center">اقرأ المزيد<i class="fas fa-arrow-left mr-2"></i></a>
+                                <span class="bg-gold/10 text-gold px-3 py-1 rounded-full text-xs font-semibold">العمرة</span>
                             </div>
                         </div>
-                        <div class="p-6">
-                            <div class="flex items-center gap-3 text-sm text-gray-500 mb-4">
-                                <span class="flex items-center gap-1">
-                                    <i class="far fa-calendar text-gold"></i>
-                                    13 أبريل 2026
-                                </span>
-                                <span class="flex items-center gap-1">
-                                    <i class="far fa-clock text-gold"></i>
-                                    8 دقائق قراءة
-                                </span>
+                    </article>
+
+                    <!-- 2. Work Visa Comprehensive (NEW) -->
+                    <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-gold/30 flex flex-col">
+                        <a href="/blog/work-visa-comprehensive-2026.html" class="block relative overflow-hidden">
+                            <img src="/images/blog-work-visa-hero.webp" alt="دليل تأشيرة العمل الشامل 2026" width="800" height="450" class="w-full h-56 object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
+                            <div class="absolute top-4 right-4 bg-gold text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">جديد 2026</div>
+                        </a>
+                        <div class="p-6 flex-1 flex flex-col">
+                            <div class="flex items-center gap-3 text-sm text-gray-500 mb-3">
+                                <span><i class="far fa-calendar text-gold"></i> 22 يناير 2026</span>
+                                <span><i class="far fa-clock text-gold"></i> 18 دقيقة</span>
                             </div>
-                            <h3 class="text-2xl font-bold text-navy mb-3 hover:text-gold transition-colors">
+                            <h3 class="text-xl font-bold text-navy mb-3 hover:text-gold transition-colors">
+                                <a href="/blog/work-visa-comprehensive-2026.html">دليل تأشيرة العمل السعودية الشامل 2026</a>
+                            </h3>
+                            <p class="text-gray-600 text-sm leading-relaxed mb-4 flex-1">الأكمل لعام 2026: منصات قوى وإنجاز ومساند، الأوراق، رسوم كل مهنة، الفحص الطبي، وأخطاء شائعة.</p>
+                            <div class="flex items-center justify-between">
+                                <a href="/blog/work-visa-comprehensive-2026.html" class="text-gold font-bold text-sm hover:gap-3 transition-all inline-flex items-center">اقرأ المزيد<i class="fas fa-arrow-left mr-2"></i></a>
+                                <span class="bg-gold/10 text-gold px-3 py-1 rounded-full text-xs font-semibold">تأشيرات العمل</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 3. Tourist Visa -->
+                    <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-gold/30 flex flex-col">
+                        <a href="/blog/tourist-visa-guide.html" class="block relative overflow-hidden">
+                            <img src="/images/blog-tourist-visa-hero.webp" alt="التأشيرة السياحية للسعودية" width="800" height="450" class="w-full h-56 object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
+                        </a>
+                        <div class="p-6 flex-1 flex flex-col">
+                            <div class="flex items-center gap-3 text-sm text-gray-500 mb-3">
+                                <span><i class="far fa-calendar text-gold"></i> 13 أبريل 2026</span>
+                                <span><i class="far fa-clock text-gold"></i> 8 دقائق</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-navy mb-3 hover:text-gold transition-colors">
                                 <a href="/blog/tourist-visa-guide.html">دليل شامل: التأشيرة السياحية للسعودية 2026</a>
                             </h3>
-                            <p class="text-gray-600 leading-relaxed mb-4">
-                                دليل كامل للحصول على التأشيرة السياحية: الشروط، الجوازات المؤهلة، تأشيرة عند الوصول، والمتطلبات للجنسيات العربية والأجنبية.
-                            </p>
+                            <p class="text-gray-600 text-sm leading-relaxed mb-4 flex-1">الشروط، الجوازات المؤهلة، تأشيرة عند الوصول، والمتطلبات للجنسيات العربية والأجنبية.</p>
                             <div class="flex items-center justify-between">
-                                <a href="/blog/tourist-visa-guide.html" class="text-gold font-bold hover:gap-3 transition-all inline-flex items-center">
-                                    اقرأ المزيد
-                                    <i class="fas fa-arrow-left mr-2"></i>
-                                </a>
-                                <div class="flex gap-2">
-                                    <span class="bg-gold/10 text-gold px-3 py-1 rounded-full text-xs font-semibold">سياحة</span>
-                                </div>
+                                <a href="/blog/tourist-visa-guide.html" class="text-gold font-bold text-sm hover:gap-3 transition-all inline-flex items-center">اقرأ المزيد<i class="fas fa-arrow-left mr-2"></i></a>
+                                <span class="bg-gold/10 text-gold px-3 py-1 rounded-full text-xs font-semibold">سياحة</span>
                             </div>
                         </div>
                     </article>
 
-                    <!-- Article 2: Family Sponsorship (NEW) -->
-                    <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100">
-                        <div class="relative h-64 bg-gradient-to-br from-navy via-navy-dark to-navy flex items-center justify-center">
-                            <div class="text-center text-white p-6">
-                                <i class="fas fa-home text-6xl text-gold mb-4"></i>
-                                <h3 class="text-xl font-bold">الاستقدام العائلي</h3>
+                    <!-- 4. Family Sponsorship -->
+                    <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-gold/30 flex flex-col">
+                        <a href="/blog/family-sponsorship-guide.html" class="block relative overflow-hidden">
+                            <img src="/images/blog-family-visa-hero.webp" alt="الاستقدام العائلي للسعودية" width="800" height="450" class="w-full h-56 object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
+                        </a>
+                        <div class="p-6 flex-1 flex flex-col">
+                            <div class="flex items-center gap-3 text-sm text-gray-500 mb-3">
+                                <span><i class="far fa-calendar text-gold"></i> 13 أبريل 2026</span>
+                                <span><i class="far fa-clock text-gold"></i> 12 دقيقة</span>
                             </div>
-                            <div class="absolute top-4 right-4 bg-gold text-white px-3 py-1 rounded-full text-xs font-bold">
-                                جديد
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex items-center gap-3 text-sm text-gray-500 mb-4">
-                                <span class="flex items-center gap-1">
-                                    <i class="far fa-calendar text-gold"></i>
-                                    13 أبريل 2026
-                                </span>
-                                <span class="flex items-center gap-1">
-                                    <i class="far fa-clock text-gold"></i>
-                                    12 دقيقة قراءة
-                                </span>
-                            </div>
-                            <h3 class="text-2xl font-bold text-navy mb-3 hover:text-gold transition-colors">
+                            <h3 class="text-xl font-bold text-navy mb-3 hover:text-gold transition-colors">
                                 <a href="/blog/family-sponsorship-guide.html">دليل شامل: الاستقدام العائلي للسعودية 2026</a>
                             </h3>
-                            <p class="text-gray-600 leading-relaxed mb-4">
-                                كل ما تحتاج معرفته عن استقدام عائلتك (الزوجة والأبناء) للسعودية: الشروط، الوثائق، التصديقات، فحص وافد، وشهادة حسن السيرة.
-                            </p>
+                            <p class="text-gray-600 text-sm leading-relaxed mb-4 flex-1">استقدام الزوجة والأبناء — الشروط، الوثائق، التصديقات، فحص وافد، وشهادة حسن السيرة.</p>
                             <div class="flex items-center justify-between">
-                                <a href="/blog/family-sponsorship-guide.html" class="text-gold font-bold hover:gap-3 transition-all inline-flex items-center">
-                                    اقرأ المزيد
-                                    <i class="fas fa-arrow-left mr-2"></i>
-                                </a>
-                                <div class="flex gap-2">
-                                    <span class="bg-gold/10 text-gold px-3 py-1 rounded-full text-xs font-semibold">استقدام</span>
-                                </div>
+                                <a href="/blog/family-sponsorship-guide.html" class="text-gold font-bold text-sm hover:gap-3 transition-all inline-flex items-center">اقرأ المزيد<i class="fas fa-arrow-left mr-2"></i></a>
+                                <span class="bg-gold/10 text-gold px-3 py-1 rounded-full text-xs font-semibold">استقدام</span>
                             </div>
                         </div>
                     </article>
 
-                    <!-- Article 3: Work Visa -->
-                    <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100">
-                        <div class="relative h-64 bg-gradient-to-br from-navy to-navy-dark flex items-center justify-center">
-                            <div class="text-center text-white p-6">
-                                <i class="fas fa-passport text-6xl text-gold mb-4"></i>
-                                <h3 class="text-xl font-bold">تأشيرة العمل السعودية</h3>
+                    <!-- 5. Work Visa 2025 -->
+                    <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-gold/30 flex flex-col">
+                        <a href="post.html?id=work-visa-guide-2025" class="block relative overflow-hidden">
+                            <img src="/images/blog-work-visa-2025.webp" alt="تأشيرة العمل السعودية 2025" width="800" height="450" class="w-full h-56 object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
+                        </a>
+                        <div class="p-6 flex-1 flex flex-col">
+                            <div class="flex items-center gap-3 text-sm text-gray-500 mb-3">
+                                <span><i class="far fa-calendar text-gold"></i> 22 ديسمبر 2025</span>
+                                <span><i class="far fa-clock text-gold"></i> 15 دقيقة</span>
                             </div>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex items-center gap-3 text-sm text-gray-500 mb-4">
-                                <span class="flex items-center gap-1">
-                                    <i class="far fa-calendar text-gold"></i>
-                                    22 ديسمبر 2025
-                                </span>
-                                <span class="flex items-center gap-1">
-                                    <i class="far fa-clock text-gold"></i>
-                                    15 دقيقة قراءة
-                                </span>
-                            </div>
-                            <h3 class="text-2xl font-bold text-navy mb-3 hover:text-gold transition-colors">
-                                <a href="post.html?id=work-visa-guide-2025">دليل شامل: تأشيرة العمل السعودية من الأردن 2025</a>
+                            <h3 class="text-xl font-bold text-navy mb-3 hover:text-gold transition-colors">
+                                <a href="post.html?id=work-visa-guide-2025">تأشيرة العمل السعودية من الأردن 2025</a>
                             </h3>
-                            <p class="text-gray-600 leading-relaxed mb-4">
-                                كل ما تحتاج معرفته عن الحصول على تأشيرة عمل سعودية من الأردن: الشروط، الأوراق المطلوبة، الرسوم، المدة، وأهم النصائح من خبرائنا المعتمدين.
-                            </p>
+                            <p class="text-gray-600 text-sm leading-relaxed mb-4 flex-1">كل ما تحتاج معرفته عن الحصول على تأشيرة عمل سعودية: الشروط، الأوراق، الرسوم، والنصائح.</p>
                             <div class="flex items-center justify-between">
-                                <a href="post.html?id=work-visa-guide-2025" class="text-gold font-bold hover:gap-3 transition-all inline-flex items-center">
-                                    اقرأ المزيد
-                                    <i class="fas fa-arrow-left mr-2"></i>
-                                </a>
-                                <div class="flex gap-2">
-                                    <span class="bg-gold/10 text-gold px-3 py-1 rounded-full text-xs font-semibold">تأشيرات</span>
-                                </div>
+                                <a href="post.html?id=work-visa-guide-2025" class="text-gold font-bold text-sm hover:gap-3 transition-all inline-flex items-center">اقرأ المزيد<i class="fas fa-arrow-left mr-2"></i></a>
+                                <span class="bg-gold/10 text-gold px-3 py-1 rounded-full text-xs font-semibold">تأشيرات</span>
                             </div>
                         </div>
                     </article>
 
-                    <!-- Article 4: Certificates -->
-                    <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100">
-                        <div class="relative h-64 bg-gradient-to-br from-navy via-navy-dark to-navy flex items-center justify-center">
-                            <div class="text-center text-white p-6">
-                                <i class="fas fa-certificate text-6xl text-gold mb-4"></i>
-                                <h3 class="text-xl font-bold">تصديق الشهادات</h3>
+                    <!-- 6. Certificates -->
+                    <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-gold/30 flex flex-col">
+                        <a href="post.html?id=certificate-attestation-guide" class="block relative overflow-hidden">
+                            <img src="/images/blog-certificates-hero.webp" alt="تصديق الشهادات من السفارة السعودية" width="800" height="450" class="w-full h-56 object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
+                        </a>
+                        <div class="p-6 flex-1 flex flex-col">
+                            <div class="flex items-center gap-3 text-sm text-gray-500 mb-3">
+                                <span><i class="far fa-calendar text-gold"></i> 20 ديسمبر 2025</span>
+                                <span><i class="far fa-clock text-gold"></i> 12 دقيقة</span>
                             </div>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex items-center gap-3 text-sm text-gray-500 mb-4">
-                                <span class="flex items-center gap-1">
-                                    <i class="far fa-calendar text-gold"></i>
-                                    20 ديسمبر 2025
-                                </span>
-                                <span class="flex items-center gap-1">
-                                    <i class="far fa-clock text-gold"></i>
-                                    12 دقيقة قراءة
-                                </span>
-                            </div>
-                            <h3 class="text-2xl font-bold text-navy mb-3 hover:text-gold transition-colors">
-                                <a href="post.html?id=certificate-attestation-guide">تصديق الشهادات من السفارة السعودية: الدليل الكامل</a>
+                            <h3 class="text-xl font-bold text-navy mb-3 hover:text-gold transition-colors">
+                                <a href="post.html?id=certificate-attestation-guide">تصديق الشهادات من السفارة السعودية</a>
                             </h3>
-                            <p class="text-gray-600 leading-relaxed mb-4">
-                                دليل تفصيلي لتصديق جميع أنواع الشهادات الجامعية والوثائق الرسمية من السفارة السعودية في الأردن: الخطوات، المتطلبات، والأخطاء الشائعة.
-                            </p>
+                            <p class="text-gray-600 text-sm leading-relaxed mb-4 flex-1">دليل تفصيلي لتصديق الشهادات الجامعية والوثائق الرسمية — الخطوات والمتطلبات والأخطاء الشائعة.</p>
                             <div class="flex items-center justify-between">
-                                <a href="post.html?id=certificate-attestation-guide" class="text-gold font-bold hover:gap-3 transition-all inline-flex items-center">
-                                    اقرأ المزيد
-                                    <i class="fas fa-arrow-left mr-2"></i>
-                                </a>
-                                <div class="flex gap-2">
-                                    <span class="bg-gold/10 text-gold px-3 py-1 rounded-full text-xs font-semibold">تصديقات</span>
-                                </div>
+                                <a href="post.html?id=certificate-attestation-guide" class="text-gold font-bold text-sm hover:gap-3 transition-all inline-flex items-center">اقرأ المزيد<i class="fas fa-arrow-left mr-2"></i></a>
+                                <span class="bg-gold/10 text-gold px-3 py-1 rounded-full text-xs font-semibold">تصديقات</span>
                             </div>
                         </div>
                     </article>
 
-                    <!-- Article 5: Professional -->
-                    <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100">
-                        <div class="relative h-64 bg-gradient-to-br from-navy via-navy-dark to-navy flex items-center justify-center">
-                            <div class="text-center text-white p-6">
-                                <i class="fas fa-user-check text-6xl text-gold mb-4"></i>
-                                <h3 class="text-xl font-bold">الاعتماد المهني</h3>
+                    <!-- 7. Professional Accreditation -->
+                    <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-gold/30 flex flex-col">
+                        <a href="post.html?id=professional-accreditation-enjaz" class="block relative overflow-hidden">
+                            <img src="/images/blog-qvp-hero.webp" alt="الاعتماد المهني السعودي QVP" width="800" height="450" class="w-full h-56 object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
+                        </a>
+                        <div class="p-6 flex-1 flex flex-col">
+                            <div class="flex items-center gap-3 text-sm text-gray-500 mb-3">
+                                <span><i class="far fa-calendar text-gold"></i> 18 ديسمبر 2025</span>
+                                <span><i class="far fa-clock text-gold"></i> 10 دقائق</span>
                             </div>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex items-center gap-3 text-sm text-gray-500 mb-4">
-                                <span class="flex items-center gap-1">
-                                    <i class="far fa-calendar text-gold"></i>
-                                    18 ديسمبر 2025
-                                </span>
-                                <span class="flex items-center gap-1">
-                                    <i class="far fa-clock text-gold"></i>
-                                    10 دقيقة قراءة
-                                </span>
-                            </div>
-                            <h3 class="text-2xl font-bold text-navy mb-3 hover:text-gold transition-colors">
-                                <a href="post.html?id=professional-accreditation-enjaz">الاعتماد المهني السعودي (إنجاز): كل ما تحتاج معرفته</a>
+                            <h3 class="text-xl font-bold text-navy mb-3 hover:text-gold transition-colors">
+                                <a href="post.html?id=professional-accreditation-enjaz">الاعتماد المهني السعودي (إنجاز)</a>
                             </h3>
-                            <p class="text-gray-600 leading-relaxed mb-4">
-                                شرح مفصل لبرنامج الاعتماد المهني السعودي (إنجاز): التحقق المهني، الفحص المهني، الفرق بينهما، والمهن المطلوبة لكل نوع مع نصائح للنجاح.
-                            </p>
+                            <p class="text-gray-600 text-sm leading-relaxed mb-4 flex-1">برنامج الاعتماد المهني السعودي — التحقق المهني، الفحص المهني، والفرق بينهما.</p>
                             <div class="flex items-center justify-between">
-                                <a href="post.html?id=professional-accreditation-enjaz" class="text-gold font-bold hover:gap-3 transition-all inline-flex items-center">
-                                    اقرأ المزيد
-                                    <i class="fas fa-arrow-left mr-2"></i>
-                                </a>
-                                <div class="flex gap-2">
-                                    <span class="bg-gold/10 text-gold px-3 py-1 rounded-full text-xs font-semibold">إنجاز</span>
-                                </div>
+                                <a href="post.html?id=professional-accreditation-enjaz" class="text-gold font-bold text-sm hover:gap-3 transition-all inline-flex items-center">اقرأ المزيد<i class="fas fa-arrow-left mr-2"></i></a>
+                                <span class="bg-gold/10 text-gold px-3 py-1 rounded-full text-xs font-semibold">إنجاز</span>
                             </div>
                         </div>
                     </article>
 
-                    <!-- Article 6: Professions -->
-                    <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100">
-                        <div class="relative h-64 bg-gradient-to-br from-navy via-navy-dark to-navy flex items-center justify-center">
-                            <div class="text-center text-white p-6">
-                                <i class="fas fa-briefcase text-6xl text-gold mb-4"></i>
-                                <h3 class="text-xl font-bold">المهن المطلوبة</h3>
+                    <!-- 8. Top Professions -->
+                    <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-gold/30 flex flex-col">
+                        <a href="post.html?id=top-professions-saudi-2025" class="block relative overflow-hidden">
+                            <img src="/images/blog-top-professions-hero.webp" alt="أكثر المهن طلباً في السعودية" width="800" height="450" class="w-full h-56 object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
+                        </a>
+                        <div class="p-6 flex-1 flex flex-col">
+                            <div class="flex items-center gap-3 text-sm text-gray-500 mb-3">
+                                <span><i class="far fa-calendar text-gold"></i> 15 ديسمبر 2025</span>
+                                <span><i class="far fa-clock text-gold"></i> 8 دقائق</span>
                             </div>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex items-center gap-3 text-sm text-gray-500 mb-4">
-                                <span class="flex items-center gap-1">
-                                    <i class="far fa-calendar text-gold"></i>
-                                    15 ديسمبر 2025
-                                </span>
-                                <span class="flex items-center gap-1">
-                                    <i class="far fa-clock text-gold"></i>
-                                    8 دقيقة قراءة
-                                </span>
-                            </div>
-                            <h3 class="text-2xl font-bold text-navy mb-3 hover:text-gold transition-colors">
+                            <h3 class="text-xl font-bold text-navy mb-3 hover:text-gold transition-colors">
                                 <a href="post.html?id=top-professions-saudi-2025">المهن الأكثر طلباً في السعودية 2025</a>
                             </h3>
-                            <p class="text-gray-600 leading-relaxed mb-4">
-                                قائمة شاملة بأكثر المهن المطلوبة في سوق العمل السعودي لعام 2025، الرواتب المتوقعة، الشروط، والأوراق المطلوبة لكل مهنة مع نصائح للتقديم.
-                            </p>
+                            <p class="text-gray-600 text-sm leading-relaxed mb-4 flex-1">قائمة شاملة بأكثر المهن المطلوبة، الرواتب المتوقعة، الشروط، والأوراق المطلوبة لكل مهنة.</p>
                             <div class="flex items-center justify-between">
-                                <a href="post.html?id=top-professions-saudi-2025" class="text-gold font-bold hover:gap-3 transition-all inline-flex items-center">
-                                    اقرأ المزيد
-                                    <i class="fas fa-arrow-left mr-2"></i>
-                                </a>
-                                <div class="flex gap-2">
-                                    <span class="bg-gold/10 text-gold px-3 py-1 rounded-full text-xs font-semibold">مهن</span>
-                                </div>
+                                <a href="post.html?id=top-professions-saudi-2025" class="text-gold font-bold text-sm hover:gap-3 transition-all inline-flex items-center">اقرأ المزيد<i class="fas fa-arrow-left mr-2"></i></a>
+                                <span class="bg-gold/10 text-gold px-3 py-1 rounded-full text-xs font-semibold">مهن</span>
                             </div>
                         </div>
                     </article>
 
-
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
+    <!-- CTA -->
     <section class="py-20 bg-gradient-to-r from-navy to-navy-dark">
-        <div class="container mx-auto px-4">
-            <div class="max-w-4xl mx-auto text-center text-white">
-                <h2 class="text-3xl md:text-4xl font-bold mb-6">هل تحتاج مساعدة في إجراءاتك؟</h2>
-                <p class="text-xl text-gray-300 mb-8">فريقنا المتخصص جاهز لمساعدتك في جميع إجراءات التأشيرات والتصديقات</p>
-                <div class="flex flex-wrap gap-4 justify-center">
-                    <a href="https://wa.me/962789881009" class="bg-gold hover:bg-gold/90 text-white px-8 py-4 rounded-xl font-bold transition-all shadow-lg">
-                        <i class="fab fa-whatsapp ml-2"></i>
-                        تواصل عبر واتساب
-                    </a>
-                    <a href="tel:+962789881009" class="bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-xl font-bold transition-all border-2 border-white/30">
-                        <i class="fas fa-phone ml-2"></i>
-                        اتصل الآن
-                    </a>
-                </div>
+        <div class="container mx-auto px-4 text-center text-white max-w-4xl">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">هل تحتاج مساعدة في إجراءاتك؟</h2>
+            <p class="text-xl text-gray-300 mb-8">فريقنا المتخصص جاهز لمساعدتك</p>
+            <div class="flex flex-wrap gap-4 justify-center">
+                <a href="https://wa.me/962789881009" class="bg-gold hover:bg-gold-light text-white px-8 py-4 rounded-xl font-bold transition-all shadow-lg"><i class="fab fa-whatsapp ml-2"></i>تواصل عبر واتساب</a>
+                <a href="tel:+962789881009" class="bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-xl font-bold border-2 border-white/30"><i class="fas fa-phone ml-2"></i>اتصل الآن</a>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="bg-navy text-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="text-center">
-                <h3 class="text-2xl font-bold mb-4">مكتب تأشيرات السعودية في الأردن</h3>
-                <p class="text-gray-400 mb-6">المكتب المعتمد والمرخص من السفارة السعودية</p>
-                <div class="flex justify-center gap-6 mb-6">
-                    <a href="https://wa.me/962789881009" class="text-gray-400 hover:text-gold transition-colors">
-                        <i class="fab fa-whatsapp text-2xl"></i>
-                    </a>
-                    <a href="tel:+962789881009" class="text-gray-400 hover:text-gold transition-colors">
-                        <i class="fas fa-phone text-2xl"></i>
-                    </a>
-                    <a href="mailto:Visa@saudia-visa.com" class="text-gray-400 hover:text-gold transition-colors">
-                        <i class="fas fa-envelope text-2xl"></i>
-                    </a>
-                </div>
-                <p class="text-gray-500 text-sm">© 2025 Saudia-visa - جميع الحقوق محفوظة</p>
-            </div>
+        <div class="container mx-auto px-4 text-center">
+            <h3 class="text-2xl font-bold mb-4">مكتب تأشيرات السعودية في الأردن</h3>
+            <p class="text-gray-400 mb-6">المكتب المعتمد رقم 22128 — ترخيص السفارة السعودية</p>
+            <p class="text-gray-500 text-sm">© 2026 Saudia-visa — جميع الحقوق محفوظة</p>
         </div>
     </footer>
 
-    <!-- WhatsApp Float Button -->
-    <a href="https://wa.me/962789881009" class="fixed bottom-6 left-6 bg-green-500 text-white w-16 h-16 rounded-full flex items-center justify-center shadow-2xl hover:bg-green-600 transition-all z-50 hover:scale-110">
-        <i class="fab fa-whatsapp text-3xl"></i>
-    </a>
+    <a href="https://wa.me/962789881009" class="fixed bottom-6 left-6 bg-green-500 text-white w-16 h-16 rounded-full flex items-center justify-center shadow-2xl hover:bg-green-600 transition-all z-50 hover:scale-110"><i class="fab fa-whatsapp text-3xl"></i></a>
 
-    <script src="script.js"></script>
-
-    <!-- ⚡ Core + Security (consolidated - 2 files instead of 8) -->
     <script src="/core.js" defer></script>
     <script src="/security.js" defer></script>
-
 </body>
 </html>
