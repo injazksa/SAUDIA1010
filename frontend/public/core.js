@@ -151,6 +151,8 @@
   // ─── 3.5 SCROLL-TO-TOP BUTTON — زر صعود سريع ───
   function initScrollTop() {
     if (document.getElementById('scroll-to-top-btn')) return;
+    // reading progress bar init (auto-detect if article page)
+    initReadingProgress();
 
     const btn = document.createElement('button');
     btn.id = 'scroll-to-top-btn';
@@ -236,6 +238,106 @@
       e.preventDefault();
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
+  }
+
+  // ─── 4.5 READING PROGRESS BAR — خط تقدم قراءة المقال (ذكي/تلقائي) ───
+  function initReadingProgress() {
+    if (document.getElementById('reading-progress-bar')) return;
+
+    // كشف ذكي للصفحات اللي هي "مقال":
+    //   - الصفحة تحت /blog/ أو post.html (الطريقة الأساسية — تعمل على أي مقال مستقبلي)
+    //   - أو العنصر <article> فيه نص طويل (>1500 حرف)
+    const path = location.pathname;
+    const isBlogPath = /\/blog\/[^/]+\.html?(\?|$)/.test(path) || /\/post(-[^/]+)?\.html?(\?|$)/.test(path);
+
+    // للصفحات خارج /blog/ — نعتمد على محتوى مطوّل داخل <article>
+    let hasLongArticle = false;
+    if (!isBlogPath) {
+      const art = document.querySelector('article');
+      if (art) {
+        // احسب طول النص الفعلي للمقال
+        const txt = (art.innerText || art.textContent || '').trim();
+        if (txt.length > 1500) hasLongArticle = true;
+      }
+    }
+
+    const isArticle = isBlogPath || hasLongArticle;
+    if (!isArticle) return;
+
+    // إنشاء شريط التقدم
+    const bar = document.createElement('div');
+    bar.id = 'reading-progress-bar';
+    bar.setAttribute('role', 'progressbar');
+    bar.setAttribute('aria-label', 'تقدم قراءة المقال');
+    bar.setAttribute('aria-valuemin', '0');
+    bar.setAttribute('aria-valuemax', '100');
+    bar.setAttribute('aria-valuenow', '0');
+    bar.setAttribute('data-testid', 'reading-progress-bar');
+    document.body.appendChild(bar);
+
+    // CSS مضمّن
+    if (!document.getElementById('reading-progress-css')) {
+      const style = document.createElement('style');
+      style.id = 'reading-progress-css';
+      style.textContent = `
+        #reading-progress-bar {
+          position: fixed;
+          top: 0; left: 0;
+          width: 0%;
+          height: 3px;
+          background: linear-gradient(90deg, #C9A35E 0%, #D4AF73 100%);
+          z-index: 1000;
+          transition: width 0.08s ease-out;
+          box-shadow: 0 0 8px rgba(201,163,94,0.5);
+          will-change: width;
+        }
+        @media print { #reading-progress-bar { display: none !important; } }
+        @media (prefers-reduced-motion: reduce) {
+          #reading-progress-bar { transition: none; }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    // اختر عنصر القياس: إذا في <article> نحسب نسبة قراءته فقط، وإلا نستخدم كامل الصفحة
+    function getProgress() {
+      const article = document.querySelector('article');
+      if (article) {
+        const rect = article.getBoundingClientRect();
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        const articleTop = rect.top + window.scrollY;
+        const articleHeight = article.offsetHeight;
+        // البداية: عندما يصل أعلى المقال لأعلى الشاشة
+        // النهاية: عندما يصل أسفل المقال لأسفل الشاشة
+        const scrolled = window.scrollY - articleTop + vh;
+        const total = articleHeight; // ما نطرح vh — نعدّ القراءة منذ أول ما يبان أعلى المقال
+        if (total <= 0) return 0;
+        return Math.min(100, Math.max(0, (scrolled / total) * 100));
+      }
+      // fallback: كامل الصفحة
+      const doc = document.documentElement;
+      const total = (doc.scrollHeight || 0) - (window.innerHeight || 0);
+      if (total <= 0) return 0;
+      return Math.min(100, Math.max(0, (window.scrollY / total) * 100));
+    }
+
+    let ticking = false;
+    function update() {
+      const p = getProgress();
+      bar.style.width = p.toFixed(2) + '%';
+      bar.setAttribute('aria-valuenow', Math.round(p));
+      ticking = false;
+    }
+    function onScrollOrResize() {
+      if (!ticking) {
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    }
+    window.addEventListener('scroll', onScrollOrResize, { passive: true });
+    window.addEventListener('resize', onScrollOrResize, { passive: true });
+    // set initial
+    update();
   }
 
   // ─── 5. MOBILE MENU TOGGLE (idempotent — لا يتكرر إذا كان script.js نفّذه) ───

@@ -810,35 +810,16 @@ body {
 
 
 /* ==========================================
-   ULTRA PERFORMANCE OPTIMIZATIONS
+   ULTRA PERFORMANCE OPTIMIZATIONS (cleaned)
+   Note: transform on body/html/section/div was REMOVED
+   because it breaks position:fixed — modern browsers
+   handle hardware acceleration automatically.
    ========================================== */
-
-/* Hardware Acceleration for Smooth Scrolling */
-body {
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    perspective: 1000;
-    -webkit-perspective: 1000;
-}
-
-/* Optimize Images */
-img {
-    will-change: transform;
-    transform: translateZ(0);
-}
 
 /* Optimize Links for Instant Feel */
 a {
     -webkit-tap-highlight-color: transparent;
     tap-highlight-color: transparent;
-}
-
-/* Remove lag on hover/active states */
-button, a, .card-3d {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
 }
 
 /* Disable transitions during scroll for smoothness */
@@ -857,7 +838,7 @@ button, a, .card-3d {
 }
 
 
-/* ⚡ ULTRA-FAST PERFORMANCE & SMOOTH UX */
+/* ⚡ UX smoothness */
 
 /* Remove Focus Outline on Click - Smooth Interaction */
 button:focus-visible,
@@ -869,29 +850,14 @@ textarea:focus-visible {
     box-shadow: none !important;
 }
 
-/* Remove Default Focus Ring */
+/* Remove Default Focus Ring (keep visible focus for keyboard nav is in browsers) */
 *:focus {
-    outline: none !important;
+    outline: none;
 }
 
 /* Disable Tap Highlight on Mobile */
--webkit-tap-highlight-color: transparent !important;
 * {
-    -webkit-tap-highlight-color: transparent !important;
-}
-
-/* GPU Acceleration for Smooth Animations */
-body, html, main, section, div, a, button {
-    will-change: auto;
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-}
-
-/* Smooth Transitions on All Elements */
-* {
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    -webkit-tap-highlight-color: transparent;
 }
 
 /* Disable Transitions on Scroll for Performance */

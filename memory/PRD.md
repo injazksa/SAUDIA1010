@@ -235,3 +235,40 @@
 - ✅ بدون تعديل يدوي لأي HTML — كل شي تلقائي من `core.js`
 - ✅ لا تضارب مع WhatsApp/Call buttons (اليسار) أو Header (الأعلى)
 - ✅ `@media print` لإخفائهم عند الطباعة (عشان صفحة المهن اللي فيها خاصية طباعة)
+
+---
+
+## v2.3 UPDATE (2026-01-22) — Reading Progress + Fixed CSS Bug
+
+### ✅ شريط تقدم قراءة المقال (Reading Progress Bar)
+- **ذكي/تلقائي**: يكتشف المقال تلقائياً ويشتغل على أي مقال حالي أو مستقبلي
+- **منطق الكشف**:
+  1. إذا المسار تحت `/blog/*.html` أو `post.html` → مقال مؤكد
+  2. أو فيه عنصر `<article>` مع نص > 1500 حرف → مقال
+  3. غير ذلك → ليس مقالاً (لا يظهر الشريط)
+- **الحساب الذكي**: إذا وُجد عنصر `<article>`، يحسب التقدم نسبةً للمقال (مش كامل الصفحة)
+- **الأداء**: `requestAnimationFrame` + scroll listener بـ `{ passive: true }` = بدون lag
+- **Accessible**: ARIA attributes (`role=progressbar`, `aria-valuenow`, `aria-valuemax`)
+- **موقع**: أعلى الصفحة تماماً، 3px ذهبي مع glow خفيف
+- **Print-safe**: يختفي عند الطباعة
+
+### 🐛 Critical CSS Bug Fix:
+اكتشفت أن `styles.css` كان فيه rules تكسر `position: fixed`:
+```css
+body, html, main, section, div, a, button {
+    transform: translateZ(0);  /* ← هذا كسر كل fixed elements */
+}
+* { transition: all 0.2s !important; }  /* ← lag على كل شي */
+```
+**النتيجة قبل الفيكس**: WhatsApp button, scroll-to-top, back button — جميعهم كانوا ثابتين بشكل خاطئ (يتحركون مع الـ scroll بدلاً من البقاء ثابتين).
+**بعد الفيكس**: كل الـ fixed elements تعمل بشكل صحيح + بدون transitions زائدة = سرعة أفضل وبدون bugs.
+
+### 📊 ملخص `core.js` النهائي (ملف واحد يعمل كل شي):
+1. Lazy images
+2. DNS prefetch + preconnect
+3. **Global back button** (ذكي حسب المسار)
+4. **Scroll-to-top button** (bottom-right)
+5. **Reading progress bar** (auto-detect articles)
+6. Smooth anchor scroll
+7. Mobile menu (idempotent — no conflict with script.js)
+8. Service worker registration
