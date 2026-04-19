@@ -240,29 +240,23 @@
     });
   }
 
+  // ─── Shared helper: هل الصفحة الحالية مقال؟ (يعمل على أي مقال حالي ومستقبلي) ───
+  function isArticlePage() {
+    const path = location.pathname;
+    const isBlogPath = /\/blog\/[^/]+\.html?(\?|$)/.test(path) || /\/post(-[^/]+)?\.html?(\?|$)/.test(path);
+    if (isBlogPath) return true;
+    const art = document.querySelector('article');
+    if (art) {
+      const txt = (art.innerText || art.textContent || '').trim();
+      if (txt.length > 1500) return true;
+    }
+    return false;
+  }
+
   // ─── 4.5 READING PROGRESS BAR — خط تقدم قراءة المقال (ذكي/تلقائي) ───
   function initReadingProgress() {
     if (document.getElementById('reading-progress-bar')) return;
-
-    // كشف ذكي للصفحات اللي هي "مقال":
-    //   - الصفحة تحت /blog/ أو post.html (الطريقة الأساسية — تعمل على أي مقال مستقبلي)
-    //   - أو العنصر <article> فيه نص طويل (>1500 حرف)
-    const path = location.pathname;
-    const isBlogPath = /\/blog\/[^/]+\.html?(\?|$)/.test(path) || /\/post(-[^/]+)?\.html?(\?|$)/.test(path);
-
-    // للصفحات خارج /blog/ — نعتمد على محتوى مطوّل داخل <article>
-    let hasLongArticle = false;
-    if (!isBlogPath) {
-      const art = document.querySelector('article');
-      if (art) {
-        // احسب طول النص الفعلي للمقال
-        const txt = (art.innerText || art.textContent || '').trim();
-        if (txt.length > 1500) hasLongArticle = true;
-      }
-    }
-
-    const isArticle = isBlogPath || hasLongArticle;
-    if (!isArticle) return;
+    if (!isArticlePage()) return;
 
     // إنشاء شريط التقدم
     const bar = document.createElement('div');
@@ -382,6 +376,201 @@
       .catch(() => {});
   }
 
+  // ─── 7. QUOTE SHARE — مشاركة الاقتباس (حدِّد نصاً واختَر وسيلة المشاركة) ───
+  // يعمل تلقائياً على أي مقال حالي أو مستقبلي (نفس منطق isArticlePage)
+  function initQuoteShare() {
+    if (!isArticlePage()) return;
+    if (document.getElementById('quote-share-popup')) return;
+
+    const art = document.querySelector('article');
+    const scopeEl = art || document.body;
+
+    // أنشئ الـ popup مسبقاً (hidden)
+    const popup = document.createElement('div');
+    popup.id = 'quote-share-popup';
+    popup.setAttribute('role', 'dialog');
+    popup.setAttribute('aria-label', 'مشاركة الاقتباس');
+    popup.setAttribute('data-testid', 'quote-share-popup');
+    popup.setAttribute('aria-hidden', 'true');
+    popup.innerHTML = `
+      <div class="quote-share-inner">
+        <div class="quote-share-title">
+          <i class="fas fa-quote-right" aria-hidden="true"></i>
+          <span>شارك هذا الاقتباس</span>
+        </div>
+        <div class="quote-share-buttons">
+          <button type="button" data-qs="whatsapp" aria-label="مشاركة عبر واتساب" data-testid="quote-share-whatsapp-btn"><i class="fab fa-whatsapp" aria-hidden="true"></i></button>
+          <button type="button" data-qs="facebook" aria-label="مشاركة عبر فيسبوك" data-testid="quote-share-facebook-btn"><i class="fab fa-facebook-f" aria-hidden="true"></i></button>
+          <button type="button" data-qs="x" aria-label="مشاركة عبر X" data-testid="quote-share-x-btn"><i class="fab fa-x-twitter" aria-hidden="true"></i></button>
+          <button type="button" data-qs="telegram" aria-label="مشاركة عبر تيليجرام" data-testid="quote-share-telegram-btn"><i class="fab fa-telegram" aria-hidden="true"></i></button>
+          <button type="button" data-qs="copy" aria-label="نسخ الاقتباس" data-testid="quote-share-copy-btn"><i class="fas fa-copy" aria-hidden="true"></i></button>
+        </div>
+      </div>
+      <div class="quote-share-arrow" aria-hidden="true"></div>
+    `;
+    document.body.appendChild(popup);
+
+    // CSS مضمّن — متسق مع هوية الموقع (Navy + Gold)
+    if (!document.getElementById('quote-share-css')) {
+      const style = document.createElement('style');
+      style.id = 'quote-share-css';
+      style.textContent = `
+        #quote-share-popup {
+          position: absolute;
+          z-index: 60;
+          opacity: 0;
+          visibility: hidden;
+          transform: translateY(6px);
+          transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s;
+          pointer-events: none;
+          font-family: 'Alexandria', 'Tajawal', sans-serif;
+        }
+        #quote-share-popup.visible {
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(0);
+          pointer-events: auto;
+          transition: opacity .18s ease, transform .18s ease;
+        }
+        #quote-share-popup .quote-share-inner {
+          background: #1B2A41;
+          color: #fff;
+          border: 1px solid #C9A35E;
+          border-radius: 14px;
+          padding: 10px 12px;
+          box-shadow: 0 12px 32px rgba(27,42,65,.35);
+          min-width: 260px;
+        }
+        #quote-share-popup .quote-share-title {
+          display: flex; align-items: center; gap: 8px;
+          color: #C9A35E; font-weight: 700; font-size: 12px;
+          margin-bottom: 8px; padding-bottom: 8px;
+          border-bottom: 1px dashed rgba(201,163,94,.25);
+        }
+        #quote-share-popup .quote-share-buttons {
+          display: flex; gap: 6px; justify-content: space-between;
+        }
+        #quote-share-popup .quote-share-buttons button {
+          flex: 1; background: rgba(255,255,255,.07); color: #fff;
+          border: 1px solid rgba(201,163,94,.25); border-radius: 10px;
+          width: 40px; height: 40px; cursor: pointer;
+          display: inline-flex; align-items: center; justify-content: center;
+          transition: all .18s ease; font-size: 15px;
+        }
+        #quote-share-popup .quote-share-buttons button:hover {
+          background: #C9A35E; color: #1B2A41; transform: translateY(-2px);
+        }
+        #quote-share-popup .quote-share-arrow {
+          position: absolute; bottom: -6px; right: 30px;
+          width: 12px; height: 12px;
+          background: #1B2A41;
+          border-right: 1px solid #C9A35E;
+          border-bottom: 1px solid #C9A35E;
+          transform: rotate(45deg);
+        }
+        @media (max-width: 640px) {
+          #quote-share-popup .quote-share-inner { min-width: 220px; }
+          #quote-share-popup .quote-share-buttons button { width: 36px; height: 36px; }
+        }
+        @media print { #quote-share-popup { display: none !important; } }
+      `;
+      document.head.appendChild(style);
+    }
+
+    function hide() {
+      popup.classList.remove('visible');
+      popup.setAttribute('aria-hidden', 'true');
+    }
+
+    function show(rect) {
+      const pageUrl = window.location.href;
+      popup.dataset.url = pageUrl;
+      // حدّد موضع الـ popup فوق التحديد
+      const scrollY = window.scrollY || document.documentElement.scrollTop;
+      const scrollX = window.scrollX || document.documentElement.scrollLeft;
+      const top = rect.top + scrollY - popup.offsetHeight - 12;
+      let left = rect.left + scrollX + (rect.width / 2) - (popup.offsetWidth / 2);
+      // clamp بين حدود الشاشة
+      const maxLeft = document.documentElement.scrollWidth - popup.offsetWidth - 8;
+      if (left < 8) left = 8;
+      if (left > maxLeft) left = maxLeft;
+      popup.style.top = Math.max(scrollY + 8, top) + 'px';
+      popup.style.left = left + 'px';
+      popup.classList.add('visible');
+      popup.setAttribute('aria-hidden', 'false');
+    }
+
+    function getSelectionData() {
+      const sel = window.getSelection();
+      if (!sel || sel.isCollapsed) return null;
+      const text = sel.toString().trim();
+      // اقل 10 أحرف عشان نتجنب popup على تحديد عرضي
+      if (text.length < 10 || text.length > 400) return null;
+      // تأكد إن التحديد داخل المقال
+      const range = sel.getRangeAt(0);
+      if (!scopeEl.contains(range.commonAncestorContainer)) return null;
+      return { text, rect: range.getBoundingClientRect() };
+    }
+
+    // أحداث الحساسة للتحديد (mouse + touch)
+    let selectionTimer;
+    function onSelectionChange() {
+      clearTimeout(selectionTimer);
+      selectionTimer = setTimeout(() => {
+        const data = getSelectionData();
+        if (data) show(data.rect); else hide();
+      }, 150);
+    }
+
+    document.addEventListener('mouseup', onSelectionChange);
+    document.addEventListener('touchend', onSelectionChange);
+    document.addEventListener('selectionchange', () => {
+      // إخفاء الفوري إذا التحديد اختفى
+      const sel = window.getSelection();
+      if (!sel || sel.isCollapsed) hide();
+    });
+    // إخفاء عند scroll/resize لتفادي popup معلق
+    window.addEventListener('scroll', hide, { passive: true });
+    window.addEventListener('resize', hide);
+
+    // زر "نسخ" + أزرار المشاركة (آمنة من XSS: encodeURIComponent دائماً)
+    popup.addEventListener('click', async (e) => {
+      const btn = e.target.closest('[data-qs]');
+      if (!btn) return;
+      const sel = window.getSelection();
+      const text = sel ? sel.toString().trim() : '';
+      if (!text) return hide();
+      const quote = '"' + text + '"';
+      const url = window.location.href;
+      const enc = (s) => encodeURIComponent(s);
+      const action = btn.dataset.qs;
+      let openUrl = null;
+
+      if (action === 'whatsapp') {
+        openUrl = `https://wa.me/?text=${enc(quote + '\n\n' + url)}`;
+      } else if (action === 'facebook') {
+        openUrl = `https://www.facebook.com/sharer/sharer.php?u=${enc(url)}&quote=${enc(quote)}`;
+      } else if (action === 'x') {
+        openUrl = `https://twitter.com/intent/tweet?text=${enc(quote)}&url=${enc(url)}`;
+      } else if (action === 'telegram') {
+        openUrl = `https://t.me/share/url?url=${enc(url)}&text=${enc(quote)}`;
+      } else if (action === 'copy') {
+        try {
+          await navigator.clipboard.writeText(quote + '\n' + url);
+          const originalHTML = btn.innerHTML;
+          btn.innerHTML = '<i class="fas fa-check" aria-hidden="true"></i>';
+          setTimeout(() => { btn.innerHTML = originalHTML; hide(); }, 1200);
+        } catch (_) { hide(); }
+        return;
+      }
+
+      if (openUrl) {
+        window.open(openUrl, '_blank', 'noopener,noreferrer');
+        hide();
+      }
+    });
+  }
+
   // ─── INIT ───
   function init() {
     initLazyImages();
@@ -390,6 +579,7 @@
     initScrollTop();
     initSmoothAnchors();
     initMobileMenu();
+    initQuoteShare();
     // أجّل SW حتى load الكامل لتفادي التأثير على FCP
     if (document.readyState === 'complete') {
       registerServiceWorker();

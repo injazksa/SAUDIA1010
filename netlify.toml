@@ -10,7 +10,7 @@
 
 [build]
   publish = "frontend/public"
-  command = "echo 'Static site — no build step'"
+  command = "python3 scripts/generate_sitemap.py || echo 'sitemap gen skipped (not fatal)'"
 
 [build.environment]
   NODE_VERSION = "18"

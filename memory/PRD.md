@@ -272,3 +272,61 @@ body, html, main, section, div, a, button {
 6. Smooth anchor scroll
 7. Mobile menu (idempotent — no conflict with script.js)
 8. Service worker registration
+
+---
+
+## v2.4 UPDATE (2026-01-22) — Quote Share + Auto-Sitemap
+
+### ✅ ميزة مشاركة الاقتباس (Quote Share)
+- **تلقائية لأي مقال حالي ومستقبلي** (نفس منطق `isArticlePage()`)
+- يحدد المستخدم نصاً (10-400 حرف) في `<article>` → يظهر popup أنيق
+- 5 خيارات مشاركة: WhatsApp · Facebook · X (Twitter) · Telegram · نسخ
+- يعمل على Desktop (mouseup) و Mobile (touchend)
+- **آمن ضد XSS**: كل URL mapped via `encodeURIComponent`
+- تصميم Navy + Gold موحّد + popup arrow يشير للنص المحدد
+- يختفي تلقائياً عند: scroll, resize, أو إلغاء التحديد
+- Accessible: ARIA dialog + aria-label + data-testid
+
+### 🗺️ Auto-Sitemap Generator (محوري للفهرسة Google)
+- **Script ذكي**: `/app/scripts/generate_sitemap.py` يمسح كل HTML تلقائياً
+- **يُولّد 17 URL** (كل الصفحات المهمة للفهرسة):
+  1. / (1.0)
+  2. /about.html (0.95) ← صفحة محورية
+  3. /work-visa.html (0.95)
+  4. /professions.html (0.95)
+  5. /calculator.html (0.9)
+  6. /professional.html (0.9)
+  7. /certificates.html (0.9)
+  8. /corporate.html (0.85)
+  9. /faq.html (0.85)
+  10. /blog.html (0.9)
+  11-14. كل مقالات /blog/ (0.9)
+  15. /privacy.html (0.5)
+  16. /terms.html (0.5)
+  17. /disclaimer.html (0.5)
+- **يستخرج lastmod الفعلي** من `file.mtime` لكل صفحة
+- **Image sitemap tags** لكل صفحة فيها صورة رئيسية
+- **Netlify auto-rebuild**: `netlify.toml build.command = python3 scripts/generate_sitemap.py`
+  - كل push على GitHub → Netlify يولد sitemap جديد تلقائياً
+  - أي مقال مستقبلي يُضاف = يظهر في sitemap بدون تدخل يدوي
+
+### 🛡️ Backward & Forward Compatibility:
+- كل الميزات (reading progress, back button, scroll top, quote share) تستخدم **نفس `isArticlePage()`**
+- أي مقال تضيفه في `/blog/*.html` مستقبلاً → حيعمل عليه كل شي تلقائياً
+- أي تحسين أمني مستقبلي → بـ Netlify redirects + CSP headers يغطي كل شي
+- `core.js` هو الملف الموحّد — لا تكرار، لا تضارب
+
+### 📊 Google Search Console — خطوات النشر:
+1. بعد النشر على Netlify، روح: https://search.google.com/search-console
+2. أضف الموقع (Property): https://saudia-visa.com
+3. تأكد الملكية (عبر DNS/HTML file)
+4. قدّم sitemap: `https://saudia-visa.com/sitemap.xml`
+5. اطلب فهرسة للصفحات الأساسية (about/work-visa/professions)
+
+### ✅ Final Audit (v2.4):
+- 17 pages in sitemap
+- 0 broken internal links
+- 0 ESLint errors
+- 10/10 key pages return 200 OK
+- All security headers via Netlify
+- Auto-regeneration on deploy

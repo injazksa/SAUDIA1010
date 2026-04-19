@@ -3,110 +3,63 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml"
         xmlns:image="http://www.google.com/schemas/sitemap-image/0.9">
 
-  <!-- ══════════════════════════════════════════════════ -->
-  <!-- 🏠 الصفحات الرئيسية -->
-  <!-- ══════════════════════════════════════════════════ -->
+  <!-- 🗺️ Auto-generated sitemap — 2026-04-19 -->
+  <!-- Total indexed pages: 17 -->
 
   <url>
-    <loc>https://saudia-visa.com/</loc>
-    <lastmod>2026-01-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <loc>https://saudia-visa.com/about.html</loc>
+    <lastmod>2026-04-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
     <image:image>
       <image:loc>https://saudia-visa.com/icons/logo-512.png</image:loc>
-      <image:title>مكتب تأشيرات السعودية المعتمد في الأردن</image:title>
+      <image:title>من نحن</image:title>
     </image:image>
   </url>
 
   <url>
-    <loc>https://saudia-visa.com/about.html</loc>
-    <lastmod>2026-01-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- ══════════════════════════════════════════════════ -->
-  <!-- 🛂 صفحات الخدمات -->
-  <!-- ══════════════════════════════════════════════════ -->
-
-  <url>
-    <loc>https://saudia-visa.com/work-visa.html</loc>
-    <lastmod>2026-01-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.95</priority>
-  </url>
-
-  <url>
-    <loc>https://saudia-visa.com/professions.html</loc>
-    <lastmod>2026-01-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.95</priority>
-  </url>
-
-  <url>
-    <loc>https://saudia-visa.com/calculator.html</loc>
-    <lastmod>2026-01-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://saudia-visa.com/professional.html</loc>
-    <lastmod>2026-01-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://saudia-visa.com/certificates.html</loc>
-    <lastmod>2026-01-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://saudia-visa.com/corporate.html</loc>
-    <lastmod>2026-01-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-
-  <!-- ══════════════════════════════════════════════════ -->
-  <!-- ❓ الأسئلة الشائعة والمساعدة -->
-  <!-- ══════════════════════════════════════════════════ -->
-
-  <url>
-    <loc>https://saudia-visa.com/faq.html</loc>
-    <lastmod>2026-01-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-
-  <!-- ══════════════════════════════════════════════════ -->
-  <!-- 📝 المدونة -->
-  <!-- ══════════════════════════════════════════════════ -->
-
-  <url>
     <loc>https://saudia-visa.com/blog.html</loc>
-    <lastmod>2026-01-22</lastmod>
+    <lastmod>2026-04-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://saudia-visa.com/blog/family-sponsorship-guide.html</loc>
+    <lastmod>2026-04-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://saudia-visa.com/images/blog-family-visa-hero.webp</image:loc>
+      <image:title>الاستقدام العائلي للسعودية</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://saudia-visa.com/blog/tourist-visa-guide.html</loc>
+    <lastmod>2026-04-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://saudia-visa.com/images/blog-tourist-visa-hero.webp</image:loc>
+      <image:title>التأشيرة السياحية للسعودية 2026</image:title>
+    </image:image>
   </url>
 
   <url>
     <loc>https://saudia-visa.com/blog/umrah-visa-guide-2026.html</loc>
-    <lastmod>2026-01-22</lastmod>
+    <lastmod>2026-04-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
       <image:loc>https://saudia-visa.com/images/blog-umrah-hero.webp</image:loc>
-      <image:title>دليل تأشيرة العمرة 2026</image:title>
+      <image:title>دليل تأشيرة العمرة الشامل 2026</image:title>
     </image:image>
   </url>
 
   <url>
     <loc>https://saudia-visa.com/blog/work-visa-comprehensive-2026.html</loc>
-    <lastmod>2026-01-22</lastmod>
+    <lastmod>2026-04-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -116,42 +69,84 @@
   </url>
 
   <url>
-    <loc>https://saudia-visa.com/blog/tourist-visa-guide.html</loc>
-    <lastmod>2026-01-22</lastmod>
+    <loc>https://saudia-visa.com/calculator.html</loc>
+    <lastmod>2026-04-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://saudia-visa.com/certificates.html</loc>
+    <lastmod>2026-04-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://saudia-visa.com/corporate.html</loc>
+    <lastmod>2026-04-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
-  </url>
-
-  <url>
-    <loc>https://saudia-visa.com/blog/family-sponsorship-guide.html</loc>
-    <lastmod>2026-01-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-
-  <!-- ══════════════════════════════════════════════════ -->
-  <!-- ⚖️ الصفحات القانونية (Google يزحف عليها أيضاً) -->
-  <!-- ══════════════════════════════════════════════════ -->
-
-  <url>
-    <loc>https://saudia-visa.com/privacy.html</loc>
-    <lastmod>2026-01-22</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.4</priority>
-  </url>
-
-  <url>
-    <loc>https://saudia-visa.com/terms.html</loc>
-    <lastmod>2026-01-22</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.4</priority>
   </url>
 
   <url>
     <loc>https://saudia-visa.com/disclaimer.html</loc>
-    <lastmod>2026-01-22</lastmod>
+    <lastmod>2026-04-19</lastmod>
     <changefreq>yearly</changefreq>
-    <priority>0.4</priority>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://saudia-visa.com/faq.html</loc>
+    <lastmod>2026-04-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://saudia-visa.com/</loc>
+    <lastmod>2026-04-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://saudia-visa.com/icons/logo-512.png</image:loc>
+      <image:title>مكتب تأشيرات السعودية المعتمد في الأردن</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://saudia-visa.com/privacy.html</loc>
+    <lastmod>2026-04-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://saudia-visa.com/professional.html</loc>
+    <lastmod>2026-04-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://saudia-visa.com/professions.html</loc>
+    <lastmod>2026-04-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <url>
+    <loc>https://saudia-visa.com/terms.html</loc>
+    <lastmod>2026-04-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://saudia-visa.com/work-visa.html</loc>
+    <lastmod>2026-04-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
   </url>
 
 </urlset>
