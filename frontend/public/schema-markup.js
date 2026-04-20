@@ -29,7 +29,7 @@
       postal: '11190',
       country: 'JO'
     },
-    geo: { lat: 31.9515, lng: 35.9227 },
+    geo: { lat: 31.9520, lng: 35.9224 },
     license: '22128',
     founded: '2015',
     sameAs: [

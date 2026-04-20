@@ -16,10 +16,10 @@ function initializeMap() {
         return;
     }
     
-    // ⚡ PRECISE COORDINATES FOR FIRST CIRCLE, JABAL AMMAN, AMMAN, JORDAN
-    // الإحداثيات الدقيقة للدوار الأول، جبل عمّان، عمّان، الأردن
-    const lat = 31.9515;   // First Circle exact latitude
-    const lng = 35.9227;   // First Circle exact longitude
+    // ⚡ PRECISE COORDINATES — مطابقة النقطة الحمرا التي حدّدها المستخدم
+    // الجانب الشمالي من الدوار الأول (قُرب Buffalo Wings & Rings)
+    const lat = 31.9520;   // north edge of First Circle roundabout
+    const lng = 35.9224;   // slightly west of previous coord
     
     try {
         // Create map with optimized settings
@@ -85,8 +85,8 @@ function initializeMap() {
                 
                 <div style="margin: 12px 0; padding: 10px; background: #f0f0f0; border-radius: 5px; font-size: 12px; color: #666;">
                     <strong>الإحداثيات:</strong><br/>
-                    خط العرض: 31.9515°<br/>
-                    خط الطول: 35.9227°
+                    خط العرض: 31.9520°<br/>
+                    خط الطول: 35.9224°
                 </div>
             </div>
         `;
@@ -99,14 +99,8 @@ function initializeMap() {
         // Add additional markers for nearby landmarks
         const landmarks = [
             {
-                lat: 31.9510,
-                lng: 35.9235,
-                name: 'جبل عمّان',
-                icon: '🏔️'
-            },
-            {
-                lat: 31.9520,
-                lng: 35.9220,
+                lat: 31.9518,
+                lng: 35.9225,
                 name: 'الدوار الأول',
                 icon: '🔄'
             }
