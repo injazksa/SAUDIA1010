@@ -36,6 +36,7 @@ PAGE_PRIORITY = {
     'professional.html':{'priority': 0.9, 'freq': 'monthly'},
     'certificates.html':{'priority': 0.9, 'freq': 'monthly'},
     'corporate.html':   {'priority': 0.85,'freq': 'monthly'},
+    'other-services.html': {'priority': 0.9, 'freq': 'monthly'},
     'faq.html':         {'priority': 0.85,'freq': 'monthly'},
     'blog.html':        {'priority': 0.9, 'freq': 'weekly'},
     # Blog posts (any /blog/*.html)

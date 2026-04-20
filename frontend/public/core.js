@@ -1093,6 +1093,444 @@
     }
   }
 
+
+  // ─── 15. AUTO INTERNAL LINKS — "روابط ذات صلة" أسفل صفحات الخدمات ───
+  function initInternalLinks() {
+    const p = location.pathname;
+    const PAGES = {
+      '/about.html':         { name: 'من نحن',              icon: 'fa-building' },
+      '/work-visa.html':     { name: 'تأشيرة العمل',        icon: 'fa-passport' },
+      '/certificates.html':  { name: 'تصديق الشهادات',      icon: 'fa-certificate' },
+      '/professional.html':  { name: 'الاعتماد المهني QVP', icon: 'fa-user-check' },
+      '/professions.html':   { name: 'المهن والأوراق',      icon: 'fa-list-check' },
+      '/calculator.html':    { name: 'حاسبة الرسوم',        icon: 'fa-calculator' },
+      '/corporate.html':     { name: 'خدمات الشركات',       icon: 'fa-city' },
+      '/other-services.html':{ name: 'خدمات أخرى',           icon: 'fa-concierge-bell' },
+      '/blog.html':          { name: 'المدونة',             icon: 'fa-newspaper' },
+      '/faq.html':           { name: 'الأسئلة الشائعة',     icon: 'fa-circle-question' }
+    };
+
+    const TARGETS = [
+      '/about.html', '/work-visa.html', '/certificates.html', '/professional.html',
+      '/professions.html', '/calculator.html', '/corporate.html',
+      '/other-services.html', '/faq.html'
+    ];
+    if (!TARGETS.some(t => p.endsWith(t))) return;
+    if (document.getElementById('related-links-sec')) return;
+
+    const currentKey = Object.keys(PAGES).find(k => p.endsWith(k));
+    const related = Object.entries(PAGES)
+      .filter(([k]) => k !== currentKey)
+      .slice(0, 6);
+
+    const sec = document.createElement('section');
+    sec.id = 'related-links-sec';
+    sec.setAttribute('aria-label', 'روابط ذات صلة');
+    sec.innerHTML = `
+      <div class="rl-inner">
+        <div class="rl-head">
+          <span class="rl-tag">اكتشف المزيد</span>
+          <h2 class="rl-title">خدمات أخرى من <strong>مكتب تأشيرات السعودية في الأردن</strong></h2>
+        </div>
+        <div class="rl-grid">
+          ${related.map(([href, v]) => `
+            <a href="${href}" class="rl-card" data-testid="related-link-${href.replace(/[^a-z0-9]+/gi,'-').replace(/^-|-$/g,'')}">
+              <span class="rl-icon"><i class="fas ${v.icon}" aria-hidden="true"></i></span>
+              <span class="rl-name">${v.name}</span>
+              <span class="rl-arrow"><i class="fas fa-arrow-left" aria-hidden="true"></i></span>
+            </a>`).join('')}
+        </div>
+      </div>
+    `;
+
+    const footer = document.querySelector('footer');
+    if (footer) footer.parentNode.insertBefore(sec, footer);
+    else document.body.appendChild(sec);
+
+    if (!document.getElementById('related-links-css')) {
+      const style = document.createElement('style');
+      style.id = 'related-links-css';
+      style.textContent = `
+        #related-links-sec {
+          padding: 56px 16px;
+          background: linear-gradient(180deg, #F9FAFB 0%, #FFFFFF 100%);
+          border-top: 1px solid rgba(201,163,94,.15);
+          font-family: 'Alexandria','Tajawal',sans-serif;
+        }
+        #related-links-sec .rl-inner { max-width: 1100px; margin: 0 auto; }
+        #related-links-sec .rl-head { text-align: center; margin-bottom: 28px; }
+        #related-links-sec .rl-tag {
+          display: inline-block; color: #C9A35E;
+          font-size: 11px; font-weight: 700; letter-spacing: 2px;
+          text-transform: uppercase; margin-bottom: 8px;
+        }
+        #related-links-sec .rl-title {
+          color: #1B2A41; font-size: 22px; font-weight: 700; margin: 0;
+        }
+        #related-links-sec .rl-title strong { color: #C9A35E; }
+        @media (min-width: 768px) { #related-links-sec .rl-title { font-size: 26px; } }
+        #related-links-sec .rl-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        @media (min-width: 640px) { #related-links-sec .rl-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (min-width: 1024px) { #related-links-sec .rl-grid { grid-template-columns: repeat(6, 1fr); } }
+        #related-links-sec .rl-card {
+          display: flex; flex-direction: column; align-items: center; gap: 8px;
+          padding: 18px 12px; text-decoration: none;
+          background: #fff; border: 1px solid rgba(27,42,65,.08);
+          border-radius: 14px; color: #1B2A41;
+          transition: all .25s ease; position: relative;
+        }
+        #related-links-sec .rl-card:hover {
+          border-color: #C9A35E; transform: translateY(-3px);
+          box-shadow: 0 12px 24px rgba(27,42,65,.08);
+        }
+        #related-links-sec .rl-icon {
+          width: 44px; height: 44px; border-radius: 12px;
+          background: rgba(201,163,94,.08); color: #C9A35E;
+          display: inline-flex; align-items: center; justify-content: center;
+          font-size: 16px; transition: all .25s ease;
+        }
+        #related-links-sec .rl-card:hover .rl-icon {
+          background: #C9A35E; color: #fff; transform: scale(1.08);
+        }
+        #related-links-sec .rl-name {
+          font-size: 13px; font-weight: 700; text-align: center; line-height: 1.3;
+        }
+        #related-links-sec .rl-arrow {
+          color: #C9A35E; font-size: 10px; opacity: 0; transform: translateX(4px);
+          transition: all .25s ease;
+        }
+        #related-links-sec .rl-card:hover .rl-arrow { opacity: 1; transform: translateX(0); }
+        @media print { #related-links-sec { display: none !important; } }
+      `;
+      document.head.appendChild(style);
+    }
+  }
+
+
+  // ─── 12. OPEN STATUS BADGE — مفتوح الآن / مغلق (حسب الوقت الحالي في عمّان) ───
+  function initOpenStatus() {
+    // أهداف الحقن: أي عنصر فيه data-open-status OR class="js-open-status"
+    const slots = document.querySelectorAll('[data-open-status], .js-open-status');
+    if (!slots.length) return;
+
+    // جدول الدوام: السبت–الخميس 09:00 – 16:00، الجمعة مغلق
+    // أيام JavaScript: Sun=0, Mon=1, ..., Fri=5, Sat=6
+    // العطلة: Friday = 5
+    function isOpenNow(d) {
+      const day = d.getDay();
+      if (day === 5) return { open: false, reason: 'friday' };
+      const h = d.getHours();
+      const m = d.getMinutes();
+      const mins = h * 60 + m;
+      if (mins < 9 * 60) return { open: false, reason: 'before' };
+      if (mins >= 16 * 60) return { open: false, reason: 'after' };
+      return { open: true };
+    }
+
+    function render() {
+      // استخدم توقيت عمّان UTC+3 (لمن يزور من منطقة أخرى)
+      const now = new Date(Date.now() + ((new Date().getTimezoneOffset() + 180) * 60000));
+      const status = isOpenNow(now);
+      const html = status.open
+        ? `<span class="os-dot os-open"></span><span class="os-label">مفتوح الآن</span><span class="os-sub">حتى 4:00 مساءً</span>`
+        : `<span class="os-dot os-closed"></span><span class="os-label">مغلق حالياً</span><span class="os-sub">نفتح السبت–الخميس 9ص–4م</span>`;
+      slots.forEach((el) => {
+        el.classList.add('open-status');
+        el.setAttribute('data-testid', el.getAttribute('data-testid') || 'open-status');
+        el.innerHTML = html;
+      });
+    }
+    render();
+    // أعد التقييم كل دقيقة (خفيف جداً)
+    setInterval(render, 60000);
+
+    if (!document.getElementById('open-status-css')) {
+      const style = document.createElement('style');
+      style.id = 'open-status-css';
+      style.textContent = `
+        .open-status {
+          display: inline-flex; align-items: center; gap: 8px;
+          font-family: 'Alexandria','Tajawal',sans-serif;
+          font-size: 13px; font-weight: 600;
+          padding: 6px 12px; border-radius: 999px;
+          background: rgba(255,255,255,.08);
+          border: 1px solid rgba(201,163,94,.25);
+          color: #E8EEF5;
+        }
+        .open-status .os-dot {
+          width: 9px; height: 9px; border-radius: 50%;
+          display: inline-block; box-shadow: 0 0 0 0 currentColor;
+        }
+        .open-status .os-dot.os-open {
+          background: #22C55E;
+          animation: os-pulse 1.8s cubic-bezier(.4,0,.6,1) infinite;
+        }
+        .open-status .os-dot.os-closed { background: #EF4444; }
+        .open-status .os-label { font-weight: 700; }
+        .open-status .os-sub { opacity: .75; font-size: 11.5px; margin-right: 4px; }
+        @keyframes os-pulse {
+          0%,100% { box-shadow: 0 0 0 0 rgba(34,197,94,.5); }
+          50%     { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  }
+
+  // ─── 13. PAGE SHARE BUTTON — زر مشاركة الصفحة على صفحات الخدمات ───
+  function initPageShare() {
+    // لا نضيف الزر على الصفحات القانونية/الأدمن
+    const path = location.pathname;
+    const SKIP = ['/privacy.html','/terms.html','/disclaimer.html','/404.html','/offline.html'];
+    if (SKIP.some(s => path.endsWith(s))) return;
+    // بدون تكرار
+    if (document.getElementById('page-share-fab')) return;
+
+    const btn = document.createElement('button');
+    btn.id = 'page-share-fab';
+    btn.type = 'button';
+    btn.setAttribute('aria-label', 'شارك الصفحة');
+    btn.setAttribute('data-testid', 'page-share-fab');
+    btn.innerHTML = '<i class="fas fa-share-nodes" aria-hidden="true"></i>';
+    document.body.appendChild(btn);
+
+    const menu = document.createElement('div');
+    menu.id = 'page-share-menu';
+    menu.setAttribute('role', 'menu');
+    menu.innerHTML = `
+      <div class="psm-title">
+        <i class="fas fa-share-nodes" aria-hidden="true"></i>
+        <span>شارك هذه الصفحة</span>
+      </div>
+      <div class="psm-grid">
+        <button type="button" data-ps="whatsapp" aria-label="واتساب" data-testid="ps-whatsapp"><i class="fab fa-whatsapp"></i><span>واتساب</span></button>
+        <button type="button" data-ps="facebook" aria-label="فيسبوك" data-testid="ps-facebook"><i class="fab fa-facebook-f"></i><span>فيسبوك</span></button>
+        <button type="button" data-ps="x" aria-label="إكس" data-testid="ps-x"><i class="fab fa-x-twitter"></i><span>X</span></button>
+        <button type="button" data-ps="telegram" aria-label="تيليجرام" data-testid="ps-telegram"><i class="fab fa-telegram"></i><span>تيليجرام</span></button>
+        <button type="button" data-ps="copy" aria-label="نسخ الرابط" data-testid="ps-copy"><i class="fas fa-link"></i><span>نسخ الرابط</span></button>
+      </div>
+    `;
+    document.body.appendChild(menu);
+
+    function openMenu() { menu.classList.add('visible'); btn.classList.add('active'); }
+    function closeMenu() { menu.classList.remove('visible'); btn.classList.remove('active'); }
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      // Native share API إن وُجد على الجوال
+      if (navigator.share && window.matchMedia('(pointer:coarse)').matches) {
+        navigator.share({
+          title: document.title,
+          text: (document.querySelector('meta[name="description"]')?.content || '').trim(),
+          url: location.href
+        }).catch(() => { /* user cancelled */ });
+        return;
+      }
+      menu.classList.contains('visible') ? closeMenu() : openMenu();
+    });
+    document.addEventListener('click', (e) => {
+      if (!menu.contains(e.target) && e.target !== btn) closeMenu();
+    });
+
+    menu.addEventListener('click', async (e) => {
+      const t = e.target.closest('button[data-ps]');
+      if (!t) return;
+      const action = t.dataset.ps;
+      const url = location.href;
+      const title = document.title;
+      const enc = encodeURIComponent;
+      let openUrl = '';
+      if (action === 'whatsapp')      openUrl = `https://wa.me/?text=${enc(title + '\n' + url)}`;
+      else if (action === 'facebook') openUrl = `https://www.facebook.com/sharer/sharer.php?u=${enc(url)}`;
+      else if (action === 'x')        openUrl = `https://twitter.com/intent/tweet?text=${enc(title)}&url=${enc(url)}`;
+      else if (action === 'telegram') openUrl = `https://t.me/share/url?url=${enc(url)}&text=${enc(title)}`;
+      else if (action === 'copy') {
+        try {
+          await navigator.clipboard.writeText(url);
+          const orig = t.innerHTML;
+          t.innerHTML = '<i class="fas fa-check"></i><span>نُسخ!</span>';
+          setTimeout(() => { t.innerHTML = orig; closeMenu(); }, 1100);
+        } catch (_) { closeMenu(); }
+        return;
+      }
+      if (openUrl) { window.open(openUrl, '_blank', 'noopener,noreferrer'); closeMenu(); }
+    });
+
+    if (!document.getElementById('page-share-css')) {
+      const style = document.createElement('style');
+      style.id = 'page-share-css';
+      style.textContent = `
+        #page-share-fab {
+          position: fixed; bottom: 88px; right: 24px;
+          width: 48px; height: 48px; border-radius: 50%;
+          background: #1B2A41; color: #C9A35E;
+          border: 1.5px solid #C9A35E;
+          box-shadow: 0 8px 20px rgba(27,42,65,.25);
+          cursor: pointer; z-index: 46;
+          transition: all .25s ease; font-size: 16px;
+        }
+        #page-share-fab:hover { background: #C9A35E; color: #fff; transform: translateY(-2px); }
+        #page-share-fab.active { background: #C9A35E; color: #fff; }
+        @media (max-width: 640px) {
+          #page-share-fab { width: 44px; height: 44px; bottom: 80px; right: 20px; font-size: 15px; }
+        }
+        #page-share-menu {
+          position: fixed; bottom: 144px; right: 24px;
+          background: #1B2A41; color: #fff;
+          border: 1px solid rgba(201,163,94,.4);
+          border-radius: 14px; padding: 12px;
+          box-shadow: 0 14px 36px rgba(27,42,65,.35);
+          z-index: 47; min-width: 240px;
+          opacity: 0; visibility: hidden; transform: translateY(8px);
+          transition: opacity .2s ease, transform .2s ease, visibility 0s linear .2s;
+          font-family: 'Alexandria','Tajawal',sans-serif;
+        }
+        #page-share-menu.visible { opacity: 1; visibility: visible; transform: translateY(0);
+          transition: opacity .2s ease, transform .2s ease; }
+        #page-share-menu .psm-title {
+          display: flex; align-items: center; gap: 8px;
+          font-weight: 700; color: #C9A35E; font-size: 12px;
+          padding-bottom: 8px; margin-bottom: 8px;
+          border-bottom: 1px dashed rgba(201,163,94,.25);
+        }
+        #page-share-menu .psm-grid {
+          display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px;
+        }
+        #page-share-menu button {
+          display: flex; flex-direction: column; align-items: center; gap: 4px;
+          background: rgba(255,255,255,.06); color: #fff;
+          border: 1px solid rgba(201,163,94,.2); border-radius: 10px;
+          padding: 8px 4px; cursor: pointer; font-size: 10.5px; font-weight: 600;
+          font-family: inherit;
+          transition: all .2s ease;
+        }
+        #page-share-menu button i { font-size: 16px; color: #C9A35E; }
+        #page-share-menu button:hover { background: #C9A35E; color: #1B2A41; border-color: #C9A35E; transform: translateY(-2px); }
+        #page-share-menu button:hover i { color: #1B2A41; }
+        @media (max-width: 640px) {
+          #page-share-menu { right: 20px; bottom: 136px; min-width: 220px; }
+        }
+        @media print { #page-share-fab, #page-share-menu { display: none !important; } }
+      `;
+      document.head.appendChild(style);
+    }
+  }
+
+  // ─── 14. SAVE PROFESSION — حفظ المهن المفضلة (صفحة professions فقط) ───
+  function initSaveProfession() {
+    if (!/\/professions\.html?$/.test(location.pathname)) return;
+    const KEY = 'savedProfessions_v1';
+    const read = () => {
+      try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch(_) { return []; }
+    };
+    const write = (arr) => { try { localStorage.setItem(KEY, JSON.stringify(arr)); } catch(_){} };
+
+    // أضف زر "حفظ" داخل كل بطاقة مهنة
+    function decorate() {
+      const cards = document.querySelectorAll('.profession-card, [data-profession-id]');
+      cards.forEach((card) => {
+        if (card.querySelector('.sp-save')) return;
+        const id = card.getAttribute('data-profession-id') || card.querySelector('[data-profession-id]')?.getAttribute('data-profession-id') || card.querySelector('h3, h4')?.textContent?.trim();
+        if (!id) return;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'sp-save';
+        btn.setAttribute('data-testid', 'save-profession-btn');
+        btn.setAttribute('aria-label', 'احفظ المهنة');
+        btn.innerHTML = '<i class="far fa-star"></i>';
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation(); e.preventDefault();
+          const saved = read();
+          const i = saved.indexOf(id);
+          if (i >= 0) { saved.splice(i, 1); btn.classList.remove('saved'); btn.innerHTML = '<i class="far fa-star"></i>'; }
+          else { saved.push(id); btn.classList.add('saved'); btn.innerHTML = '<i class="fas fa-star"></i>'; }
+          write(saved);
+          refreshCounter();
+        });
+        if (read().includes(id)) { btn.classList.add('saved'); btn.innerHTML = '<i class="fas fa-star"></i>'; }
+        // ضعه في زاوية البطاقة
+        if (getComputedStyle(card).position === 'static') card.style.position = 'relative';
+        card.appendChild(btn);
+      });
+    }
+
+    // عداد عائم: كم مهنة حفظت
+    let counter;
+    function refreshCounter() {
+      const n = read().length;
+      if (!counter) return;
+      counter.style.display = n > 0 ? 'inline-flex' : 'none';
+      counter.querySelector('.spc-num').textContent = n;
+    }
+    function addCounter() {
+      if (document.getElementById('saved-prof-counter')) return;
+      counter = document.createElement('div');
+      counter.id = 'saved-prof-counter';
+      counter.setAttribute('data-testid', 'saved-professions-counter');
+      counter.innerHTML = `
+        <i class="fas fa-star"></i>
+        <span><span class="spc-num">0</span> مهنة محفوظة</span>
+        <button type="button" class="spc-clear" aria-label="مسح القائمة"><i class="fas fa-xmark"></i></button>
+      `;
+      counter.style.display = 'none';
+      document.body.appendChild(counter);
+      counter.querySelector('.spc-clear').addEventListener('click', () => {
+        write([]);
+        document.querySelectorAll('.sp-save.saved').forEach(b => { b.classList.remove('saved'); b.innerHTML = '<i class="far fa-star"></i>'; });
+        refreshCounter();
+      });
+      refreshCounter();
+    }
+
+    addCounter();
+    decorate();
+    // راقب الإضافات (قائمة المهن تُحمَّل بـ JS)
+    const mo = new MutationObserver(() => decorate());
+    mo.observe(document.body, { childList: true, subtree: true });
+
+    if (!document.getElementById('save-prof-css')) {
+      const style = document.createElement('style');
+      style.id = 'save-prof-css';
+      style.textContent = `
+        .sp-save {
+          position: absolute; top: 8px; left: 8px;
+          width: 32px; height: 32px; border-radius: 50%;
+          background: rgba(255,255,255,.92); color: #C9A35E;
+          border: 1px solid rgba(201,163,94,.4);
+          cursor: pointer; font-size: 13px;
+          display: inline-flex; align-items: center; justify-content: center;
+          transition: all .2s ease; z-index: 3;
+          box-shadow: 0 2px 6px rgba(27,42,65,.12);
+        }
+        .sp-save:hover { background: #C9A35E; color: #fff; transform: scale(1.08); }
+        .sp-save.saved { background: #C9A35E; color: #fff; box-shadow: 0 4px 12px rgba(201,163,94,.45); }
+        #saved-prof-counter {
+          position: fixed; bottom: 88px; left: 24px; z-index: 46;
+          background: #1B2A41; color: #fff;
+          border: 1px solid rgba(201,163,94,.4);
+          border-radius: 999px;
+          padding: 8px 12px 8px 16px; gap: 10px;
+          align-items: center;
+          font-family: 'Alexandria','Tajawal',sans-serif;
+          font-size: 13px; font-weight: 700;
+          box-shadow: 0 8px 20px rgba(27,42,65,.28);
+        }
+        #saved-prof-counter i.fa-star { color: #C9A35E; font-size: 14px; }
+        #saved-prof-counter .spc-clear {
+          width: 22px; height: 22px; border-radius: 50%;
+          background: rgba(201,163,94,.18); color: #C9A35E;
+          border: none; cursor: pointer; font-size: 11px;
+        }
+        #saved-prof-counter .spc-clear:hover { background: #C9A35E; color: #1B2A41; }
+        @media (max-width: 640px) {
+          #saved-prof-counter { bottom: 80px; left: 20px; font-size: 12px; padding: 6px 10px 6px 12px; }
+        }
+        @media print { .sp-save, #saved-prof-counter { display: none !important; } }
+      `;
+      document.head.appendChild(style);
+    }
+  }
+
+
   // ─── INIT ───
   function init() {
     initLazyImages();
@@ -1106,6 +1544,10 @@
     initDynamicWhatsApp();
     initReadMoreButtons();
     initClickStamp();
+    initOpenStatus();
+    initPageShare();
+    initSaveProfession();
+    initInternalLinks();
     // أجّل SW حتى load الكامل لتفادي التأثير على FCP
     if (document.readyState === 'complete') {
       registerServiceWorker();

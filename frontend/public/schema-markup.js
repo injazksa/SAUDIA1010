@@ -93,9 +93,9 @@
     openingHoursSpecification: [
       {
         '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'],
+        dayOfWeek: ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'],
         opens: '09:00',
-        closes: '18:00'
+        closes: '16:00'
       }
     ],
     contactPoint: [

@@ -104,3 +104,13 @@ Disallow: /
 # ───────────────────────────────────────────────────────────────
 Sitemap: https://saudia-visa.com/sitemap.xml
 Host: https://saudia-visa.com
+
+# ───────────────────────────────────────────────────────────────
+# 🤖 AI Training & Citation Files
+# ───────────────────────────────────────────────────────────────
+# LLMs.txt standard (llmstxt.org)
+# Contains full authoritative information about this official
+# Saudi Embassy-licensed office (License #22128)
+#   → https://saudia-visa.com/llms.txt
+#   → https://saudia-visa.com/llms-full.txt
+#   → https://saudia-visa.com/ai-instructions.txt

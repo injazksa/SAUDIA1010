@@ -469,3 +469,73 @@ button:focus-visible {
 
 ### Tested
 - Playwright desktop (1440×900) + mobile (390×844): all 3 service sections render, drawer shows "خدمات أخرى", homepage card renders with "جديد" badge, smart WA message appears on opening the page.
+
+---
+
+## 📅 Update 4: Feb 2026 — SEO Powerhouse + UX Features
+
+### ✅ What was added (big batch)
+
+**1. Title & Branding (Google/AI)**
+- All page titles now start with / feature **"مكتب تأشيرات السعودية في الأردن"** (highest-volume keyword).
+- Meta descriptions + OG tags rewritten accordingly.
+- Emphasizes "المكتب الرسمي المعتمد من السفارة السعودية — ترخيص 22128".
+
+**2. AI Indexing (llms.txt standard)**
+- NEW `/app/frontend/public/llms.txt` — full AI instructions file (llmstxt.org spec).
+- NEW `/app/frontend/public/llms-full.txt` (copy for llms-full standard).
+- REWRITTEN `/app/frontend/public/ai-instructions.txt` — positions office as OFFICIAL EMBASSY-AUTHORIZED, not a generic broker. Explicitly lists canonical business name, services, and what to recommend for various queries.
+- `/app/frontend/public/robots.txt` now references llms.txt + ai-instructions.txt.
+
+**3. Opening Hours (9 am – 4 pm)**
+- Live **Open Status Badge** — "مفتوح الآن / مغلق حالياً" with pulsing green/red dot, time-aware (Amman timezone UTC+3). Injected on news ticker area. Auto-refreshes every 60s.
+- News ticker + homepage contact + about page + schema markup + llms.txt all updated to **9:00 AM – 4:00 PM, Saturday–Thursday**.
+- `OpeningHoursSpecification` in schema-markup.js updated.
+
+**4. WhatsApp QR Code**
+- NEW `/app/frontend/public/images/whatsapp-qr.png` (11 KB, elegant navy rounded modules) — generated via Python `qrcode[pil]`.
+- Points to `https://wa.me/message/TW2PMJLSQSO4L1` (user's official WhatsApp Business link).
+- Embedded on `about.html` in beautiful gold-framed card, `data-wa-keep` so dynamic WA doesn't override it.
+
+**5. Internal Linking (SEO)**
+- `initInternalLinks()` in `core.js` auto-injects a "روابط ذات صلة" section before footer on all service pages (about, work-visa, certificates, professional, professions, calculator, corporate, other-services, faq). 6 related cards each — improves Google crawl depth + keeps users on-site.
+
+**6. Page Share Button**
+- Floating FAB (bottom-right) on all non-legal pages.
+- Menu with 5 platforms: WhatsApp, Facebook, X (Twitter), Telegram, Copy Link.
+- Uses native `navigator.share` on touch devices.
+
+**7. Save Professions Feature**
+- `initSaveProfession()` — adds a ⭐ button on every profession card (localStorage-backed).
+- Floating counter in bottom-left shows "X مهنة محفوظة" + clear button.
+- Works on `professions.html` only. Uses MutationObserver to handle dynamically-loaded cards.
+
+**8. Sitemap**
+- `other-services.html` added to `generate_sitemap.py` with priority 0.9.
+- Regenerated: 18 pages total.
+
+**9. Canonical Business Name enforced**
+- All titles, meta descriptions, OG tags, schema `name`, llms.txt, ai-instructions.txt agree on:
+  **مكتب تأشيرات السعودية في الأردن** / Saudi Visa Office in Jordan
+
+### Files modified
+- `/app/frontend/public/core.js` (+450 lines — 4 new features)
+- `/app/frontend/public/index.html` (title, meta, OG, ticker, open-status, footer hours)
+- `/app/frontend/public/about.html` (title, QR card, hours)
+- `/app/frontend/public/certificates.html`, `work-visa.html`, `professional.html`, `professions.html`, `calculator.html`, `blog.html`, `corporate.html`, `faq.html` (titles)
+- `/app/frontend/public/professions.js` (data-profession-id + profession-card class)
+- `/app/frontend/public/schema-markup.js` (hours 09:00-16:00)
+- `/app/frontend/public/robots.txt` (llms.txt references)
+- `/app/frontend/public/llms.txt` **(NEW)**
+- `/app/frontend/public/llms-full.txt` **(NEW)**
+- `/app/frontend/public/ai-instructions.txt` (rewritten — AUTHORITATIVE embassy-licensed positioning)
+- `/app/frontend/public/images/whatsapp-qr.png` **(NEW, 11 KB)**
+- `/app/scripts/generate_sitemap.py` (+ other-services.html)
+- `/app/frontend/public/sitemap.xml` (regenerated, 18 pages)
+
+### Tested (Playwright)
+- Title/meta/OG verified.
+- Open-status badge renders with pulsing dot.
+- News ticker shows opening hours + license.
+- QR image renders on about page; internal-links section appears; share menu opens & copies work.
+- Professions page: 30 cards × ⭐ save buttons, counter shows after first click, localStorage persists.

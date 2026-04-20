@@ -140,8 +140,9 @@ function createProfessionCard(profession, index) {
     const category = profession.category || profession.classification || 'أخرى';
     
     return `
-        <div class="bg-white rounded-2xl p-6 border border-gray-100 hover:border-gold/50 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 cursor-pointer group"
+        <div class="bg-white rounded-2xl p-6 border border-gray-100 hover:border-gold/50 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 cursor-pointer group profession-card"
              data-prof-idx="${index}"
+             data-profession-id="${escapeHtml(professionCode)}"
              data-testid="profession-card-${professionCode}">
             <div class="flex items-start justify-between mb-4">
                 <div class="flex-1">
