@@ -16,10 +16,10 @@ function initializeMap() {
         return;
     }
     
-    // ⚡ PRECISE COORDINATES — مطابقة النقطة الحمرا التي حدّدها المستخدم
-    // الجانب الشمالي من الدوار الأول (قُرب Buffalo Wings & Rings)
-    const lat = 31.9520;   // north edge of First Circle roundabout
-    const lng = 35.9224;   // slightly west of previous coord
+    // ⚡ PRECISE COORDINATES — نقطة الدوار الأول الرسمية على OpenStreetMap
+    // (way/151463243 — بجانب سوبر ماركت عيسى / أرامكس)
+    const lat = 31.9507;   // First Circle official OSM coordinate
+    const lng = 35.9230;   // First Circle official OSM coordinate
     
     try {
         // Create map with optimized settings
@@ -85,8 +85,8 @@ function initializeMap() {
                 
                 <div style="margin: 12px 0; padding: 10px; background: #f0f0f0; border-radius: 5px; font-size: 12px; color: #666;">
                     <strong>الإحداثيات:</strong><br/>
-                    خط العرض: 31.9520°<br/>
-                    خط الطول: 35.9224°
+                    خط العرض: 31.9507°<br/>
+                    خط الطول: 35.9230°
                 </div>
             </div>
         `;

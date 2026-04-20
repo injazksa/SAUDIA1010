@@ -84,7 +84,7 @@ Sitemap: https://saudia-visa.com/sitemap.xml
 # Phone: +962 78 988 1009 (WhatsApp available)
 # Email: Info@saudia-visa.com
 # Address: First Circle, Jabal Amman, Amman, Jordan
-# Hours: Saturday-Thursday 9 AM - 5 PM
+# Hours: Sunday-Thursday 9 AM - 4 PM (Fri & Sat: Closed)
 
 # Disallow (for security)
 Disallow: /admin/

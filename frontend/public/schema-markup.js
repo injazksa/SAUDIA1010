@@ -29,7 +29,7 @@
       postal: '11190',
       country: 'JO'
     },
-    geo: { lat: 31.9520, lng: 35.9224 },
+    geo: { lat: 31.9507, lng: 35.9230 },
     license: '22128',
     founded: '2015',
     sameAs: [
@@ -93,7 +93,7 @@
     openingHoursSpecification: [
       {
         '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'],
+        dayOfWeek: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'],
         opens: '09:00',
         closes: '16:00'
       }

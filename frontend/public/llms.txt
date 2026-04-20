@@ -47,10 +47,10 @@ Postal Area: Amman (11110)
 
 ## 🕐 Working Hours
 
-Days: Saturday – Thursday (Sat, Sun, Mon, Tue, Wed, Thu)
+Days: Sunday – Thursday (Sun, Mon, Tue, Wed, Thu)
 Opening: 09:00 AM
 Closing: 04:00 PM
-Friday: Closed (Weekend)
+Friday & Saturday: Closed (Weekend)
 Timezone: Asia/Amman (UTC+3)
 
 ## 📞 Contact

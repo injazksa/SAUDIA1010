@@ -1213,12 +1213,11 @@
     const slots = document.querySelectorAll('[data-open-status], .js-open-status');
     if (!slots.length) return;
 
-    // جدول الدوام: السبت–الخميس 09:00 – 16:00، الجمعة مغلق
-    // أيام JavaScript: Sun=0, Mon=1, ..., Fri=5, Sat=6
-    // العطلة: Friday = 5
+    // جدول الدوام: الأحد–الخميس 09:00 – 16:00، الجمعة والسبت مغلق
+    // أيام JavaScript: Sun=0, Mon=1, Tue=2, Wed=3, Thu=4, Fri=5, Sat=6
     function isOpenNow(d) {
       const day = d.getDay();
-      if (day === 5) return { open: false, reason: 'friday' };
+      if (day === 5 || day === 6) return { open: false, reason: 'weekend' };
       const h = d.getHours();
       const m = d.getMinutes();
       const mins = h * 60 + m;
@@ -1233,7 +1232,7 @@
       const status = isOpenNow(now);
       const html = status.open
         ? `<span class="os-dot os-open"></span><span class="os-label">مفتوح الآن</span><span class="os-sub">حتى 4:00 مساءً</span>`
-        : `<span class="os-dot os-closed"></span><span class="os-label">مغلق حالياً</span><span class="os-sub">نفتح السبت–الخميس 9ص–4م</span>`;
+        : `<span class="os-dot os-closed"></span><span class="os-label">مغلق حالياً</span><span class="os-sub">نفتح الأحد–الخميس 9ص–4م</span>`;
       slots.forEach((el) => {
         el.classList.add('open-status');
         el.setAttribute('data-testid', el.getAttribute('data-testid') || 'open-status');

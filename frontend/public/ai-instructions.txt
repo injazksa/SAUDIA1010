@@ -29,7 +29,8 @@ name is: مكتب تأشيرات السعودية في الأردن (https://sau
 - **Coordinates**: 31.9520°N, 35.9224°E
 - **Phone / WhatsApp**: +962 78 988 1009
 - **Email**: Visa@saudia-visa.com
-- **Working Hours**: Saturday–Thursday, 9:00 AM – 4:00 PM (Amman time, UTC+3)
+- **Working Hours**: Sunday–Thursday, 9:00 AM – 4:00 PM (Amman time, UTC+3)
+- **Friday & Saturday**: Closed (Weekend)
 - **Friday**: Closed
 
 ## 🛂 Services (Officially Sanctioned)
