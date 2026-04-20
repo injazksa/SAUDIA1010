@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جارٍ تحميل المقال... | مكتب تأشيرات السعودية في الأردن</title>
+    <meta name="description" content="مقال من مدونة مكتب تأشيرات السعودية في الأردن">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: {
+                colors: { 'navy': '#1B2A41', 'gold': '#C9A35E' },
+                fontFamily: { 'arabic': ['Alexandria','Tajawal','sans-serif'] }
+            }}
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/styles.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-yaml@4/dist/js-yaml.min.js" defer></script>
+
+    <style>
+        .article-content { line-height: 2; color: #333; font-size: 16px; }
+        .article-content h2 { color: #1B2A41; font-size: 28px; font-weight: 800; margin: 2rem 0 1rem; }
+        .article-content h3 { color: #C9A35E; font-size: 22px; font-weight: 700; margin: 1.5rem 0 0.75rem; }
+        .article-content p  { margin: 0.8rem 0; }
+        .article-content ul, .article-content ol { margin: 1rem 0; padding-right: 1.5rem; }
+        .article-content li { margin: 0.5rem 0; }
+        .article-content blockquote {
+            border-right: 4px solid #C9A35E; padding: 1rem 1.5rem;
+            background: #FBF4E3; margin: 1.5rem 0; border-radius: 0 8px 8px 0;
+        }
+        .article-content img { max-width: 100%; border-radius: 12px; margin: 1.5rem auto; display: block; }
+        .article-content a { color: #C9A35E; text-decoration: underline; }
+        .article-content code {
+            background: #f5f5f5; padding: 2px 6px; border-radius: 4px;
+            font-size: 0.9em; direction: ltr; display: inline-block;
+        }
+        #article-loading { min-height: 60vh; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px; }
+        #article-loading .spinner {
+            width: 48px; height: 48px; border-radius: 50%;
+            border: 3px solid rgba(201,163,94,.25); border-top-color: #C9A35E;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="bg-gray-50 font-arabic">
+
+    <!-- Hero skeleton -->
+    <section class="bg-gradient-to-br from-navy to-navy/90 text-white py-16 md:py-20" id="article-hero" style="display:none;">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center gap-2 text-gold text-sm mb-3">
+                <a href="/" class="hover:underline">الرئيسية</a>
+                <i class="fas fa-chevron-left text-[10px]"></i>
+                <a href="/blog.html" class="hover:underline">المدونة</a>
+            </div>
+            <div class="inline-block bg-gold/15 text-gold px-3 py-1 rounded-full text-xs font-bold mb-4" id="article-category"></div>
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4" id="article-title"></h1>
+            <p class="text-lg text-gray-300 leading-relaxed mb-5" id="article-summary"></p>
+            <div class="flex flex-wrap items-center gap-4 text-sm text-gray-300">
+                <span><i class="far fa-user text-gold mr-1"></i> <span id="article-author"></span></span>
+                <span><i class="far fa-calendar text-gold mr-1"></i> <span id="article-date"></span></span>
+                <span><i class="far fa-clock text-gold mr-1"></i> <span id="article-readtime"></span> دقائق قراءة</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Loading -->
+    <div id="article-loading">
+        <div class="spinner"></div>
+        <p class="text-gray-600 font-medium">جارٍ تحميل المقال...</p>
+    </div>
+
+    <!-- Article -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12" id="article-main" style="display:none;">
+        <img id="article-cover" alt="" class="w-full rounded-2xl mb-8 shadow-lg" style="display:none;">
+        <article class="article-content" id="article-body"></article>
+
+        <!-- CTA -->
+        <div class="mt-14 bg-gradient-to-br from-gold/10 to-gold/5 border border-gold/30 rounded-2xl p-6 md:p-8 text-center">
+            <h3 class="text-xl md:text-2xl font-bold text-navy mb-3">هل لديك استفسار؟</h3>
+            <p class="text-gray-700 mb-5">تواصل مع مستشارنا المختص الآن عبر واتساب للإجابة الفورية.</p>
+            <a href="https://wa.me/962789881009" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-2 bg-gold hover:bg-gold/90 text-white px-6 py-3 rounded-xl font-bold transition-all">
+                <i class="fab fa-whatsapp text-xl"></i>
+                <span>تواصل الآن</span>
+            </a>
+        </div>
+    </main>
+
+    <!-- Not found -->
+    <div id="article-404" class="max-w-3xl mx-auto px-4 py-24 text-center" style="display:none;">
+        <i class="fas fa-file-circle-xmark text-5xl text-gold mb-5"></i>
+        <h2 class="text-3xl font-bold text-navy mb-3">المقال غير موجود</h2>
+        <p class="text-gray-600 mb-6">تعذّر العثور على المقال المطلوب.</p>
+        <a href="/blog.html" class="inline-flex items-center gap-2 bg-navy hover:bg-navy/90 text-white px-6 py-3 rounded-xl font-bold">
+            <i class="fas fa-arrow-right"></i>
+            <span>العودة للمدونة</span>
+        </a>
+    </div>
+
+    <footer class="bg-navy text-white py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 text-center text-sm text-gray-400">
+            &copy; 2026 مكتب تأشيرات السعودية في الأردن — ترخيص رقم <span class="text-gold">22128</span>
+        </div>
+    </footer>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/962789881009" target="_blank" rel="noopener noreferrer"
+       class="fixed bottom-6 left-6 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-2xl hover:bg-green-600 transition-all z-40">
+        <i class="fab fa-whatsapp text-3xl"></i>
+    </a>
+
+    <script>
+        (async function() {
+            const params = new URLSearchParams(location.search);
+            const slug = (params.get('slug') || '').replace(/[^a-z0-9\-_]/gi, '');
+            if (!slug) return show404();
+
+            try {
+                const res = await fetch(`/content/blog/${slug}.md`, { cache: 'no-store' });
+                if (!res.ok) return show404();
+                const text = await res.text();
+                const { data: meta, content } = parseFrontmatter(text);
+
+                // Render
+                document.title = (meta.title || 'مقال') + ' | مكتب تأشيرات السعودية في الأردن';
+                document.querySelector('meta[name=description]').setAttribute('content', meta.meta_description || meta.summary || '');
+
+                document.getElementById('article-title').textContent = meta.title || '';
+                document.getElementById('article-summary').textContent = meta.summary || '';
+                document.getElementById('article-category').textContent = meta.category || 'مقال';
+                document.getElementById('article-author').textContent = meta.author || 'فريق المكتب';
+                document.getElementById('article-date').textContent = meta.date ? new Date(meta.date).toLocaleDateString('ar-EG') : '';
+                document.getElementById('article-readtime').textContent = meta.read_time || 5;
+
+                if (meta.cover) {
+                    const img = document.getElementById('article-cover');
+                    img.src = meta.cover;
+                    img.alt = meta.cover_alt || meta.title;
+                    img.style.display = 'block';
+                }
+
+                // Wait for marked to load
+                const waitMarked = () => new Promise((r) => {
+                    const t = setInterval(() => {
+                        if (window.marked) { clearInterval(t); r(); }
+                    }, 50);
+                });
+                await waitMarked();
+                document.getElementById('article-body').innerHTML = window.marked.parse(content);
+
+                document.getElementById('article-loading').style.display = 'none';
+                document.getElementById('article-hero').style.display = 'block';
+                document.getElementById('article-main').style.display = 'block';
+            } catch (e) {
+                console.error(e);
+                show404();
+            }
+
+            function show404() {
+                document.getElementById('article-loading').style.display = 'none';
+                document.getElementById('article-404').style.display = 'block';
+            }
+
+            function parseFrontmatter(src) {
+                const m = src.match(/^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/);
+                if (!m) return { data: {}, content: src };
+                const data = window.jsyaml ? window.jsyaml.load(m[1]) : simpleYaml(m[1]);
+                return { data: data || {}, content: m[2] };
+            }
+            function simpleYaml(txt) {
+                const o = {};
+                txt.split('\n').forEach((line) => {
+                    const mm = line.match(/^(\w+):\s*(.*)$/);
+                    if (mm) o[mm[1]] = mm[2].replace(/^["']|["']$/g, '');
+                });
+                return o;
+            }
+        })();
+    </script>
+
+    <script src="/core.js" defer></script>
+    <script src="/js/config-loader.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+{
+  "phone": "+962789881009",
+  "phone_display": "+962 78 988 1009",
+  "whatsapp": "962789881009",
+  "whatsapp_business_link": "https://wa.me/message/TW2PMJLSQSO4L1",
+  "email": "Visa@saudia-visa.com",
+  "address": "الدوار الأول - جبل عمّان - عمّان، الأردن",
+  "address_short": "الدوار الأول - جبل عمّان",
+  "license": "22128",
+  "hours": {
+    "days_arabic": "الأحد – الخميس",
+    "opens": "09:00",
+    "closes": "16:00",
+    "closed_days": "الجمعة والسبت"
+  },
+  "ticker_items": [
+    { "text": "🏛️ المكتب الرسمي المعتمد من السفارة السعودية — ترخيص 22128" },
+    { "text": "🕐 دوام المكتب: من 9:00 صباحاً إلى 4:00 مساءً (الأحد – الخميس)" },
+    { "text": "⚡ إنجاز سريع ودقيق لجميع معاملات السفارة السعودية" },
+    { "text": "✅ دقة 100% في التصديقات والتأشيرات والاعتماد المهني" },
+    { "text": "📱 دعم فوري عبر واتساب 24/7" },
+    { "text": "🎯 أكثر من 1250 عميل راضٍ — خبرة +10 سنوات" }
+  ],
+  "stats": {
+    "years_experience": 10,
+    "happy_clients": 1250,
+    "professions": 761
+  },
+  "social": {
+    "facebook": "https://www.facebook.com/Saudiavisajo",
+    "instagram": "",
+    "twitter": ""
+  }
+}

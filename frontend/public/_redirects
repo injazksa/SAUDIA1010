@@ -1,5 +1,6 @@
 # ⚡ Clean URL Redirects — Saudia Visa
 /work-visa         /work-visa.html        200
+/other-services    /other-services.html   200
 /professions       /professions.html      200
 /corporate         /corporate.html        200
 /calculator        /calculator.html       200

@@ -1,0 +1,140 @@
+# ═══════════════════════════════════════════════════════════════════
+# Decap CMS Configuration — مكتب تأشيرات السعودية في الأردن
+# ═══════════════════════════════════════════════════════════════════
+
+backend:
+  name: git-gateway
+  branch: main            # فرع Git الرئيسي
+  commit_messages:
+    create: 'إنشاء "{{slug}}" في {{collection}}'
+    update: 'تحديث "{{slug}}" في {{collection}}'
+    delete: 'حذف "{{slug}}" من {{collection}}'
+    uploadMedia: 'رفع ملف "{{path}}"'
+    deleteMedia: 'حذف ملف "{{path}}"'
+
+# إظهار رسالة "تم النشر" باللغة العربية
+locale: 'ar'
+
+# مكان الصور المرفوعة
+media_folder: "frontend/public/images/uploads"
+public_folder: "/images/uploads"
+
+# لا تسمح بالتسجيل الحر (يدوي فقط عبر الدعوة)
+publish_mode: editorial_workflow
+
+# ═══════════════════════════════════════════════════════════════════
+# Collections — ما يمكن تعديله
+# ═══════════════════════════════════════════════════════════════════
+collections:
+
+  # ───────────────────────────────────────────
+  # 1. إعدادات الموقع العامّة
+  # ───────────────────────────────────────────
+  - name: 'settings'
+    label: '⚙️ إعدادات الموقع'
+    description: 'تعديل الهاتف، العنوان، ساعات الدوام، الشريط الإخباري، وأرقام الإحصائيات'
+    files:
+      - name: 'site'
+        label: 'الإعدادات الرئيسية'
+        file: 'frontend/public/content/settings.json'
+        fields:
+          # Contact block
+          - { name: phone,         label: 'رقم الهاتف',                    widget: string,  hint: 'مثال: +962789881009' }
+          - { name: phone_display, label: 'الهاتف كما يظهر للزائر',        widget: string,  hint: 'مثال: +962 78 988 1009' }
+          - { name: whatsapp,      label: 'رقم الواتساب',                  widget: string,  hint: 'بدون + (مثال: 962789881009)' }
+          - { name: whatsapp_business_link, label: 'رابط WhatsApp Business (للـ QR)', widget: string, required: false, hint: 'مثال: https://wa.me/message/XXXX' }
+          - { name: email,         label: 'البريد الإلكتروني',              widget: string }
+          - { name: address,       label: 'العنوان',                         widget: string }
+          - { name: address_short, label: 'العنوان المختصر',                 widget: string, hint: 'مثال: الدوار الأول - جبل عمان' }
+          - { name: license,       label: 'رقم الترخيص',                     widget: string }
+          # Hours
+          - name: hours
+            label: 'ساعات الدوام'
+            widget: object
+            fields:
+              - { name: days_arabic,  label: 'الأيام (بالعربية)',  widget: string, hint: 'مثال: الأحد – الخميس' }
+              - { name: opens,        label: 'وقت الفتح',           widget: string, hint: 'صيغة 24h — مثال: 09:00' }
+              - { name: closes,       label: 'وقت الإغلاق',         widget: string, hint: 'صيغة 24h — مثال: 16:00' }
+              - { name: closed_days,  label: 'أيام الإغلاق',        widget: string, hint: 'مثال: الجمعة والسبت' }
+          # Ticker
+          - name: ticker_items
+            label: 'رسائل الشريط الإخباري'
+            widget: list
+            summary: '{{fields.text}}'
+            field: { name: text, label: 'الرسالة', widget: string }
+          # Stats
+          - name: stats
+            label: 'الإحصائيات'
+            widget: object
+            fields:
+              - { name: years_experience, label: 'سنوات الخبرة', widget: number, value_type: int, default: 10 }
+              - { name: happy_clients,    label: 'عدد العملاء',  widget: number, value_type: int, default: 1250 }
+              - { name: professions,      label: 'عدد المهن',    widget: number, value_type: int, default: 761 }
+          # Social
+          - name: social
+            label: 'وسائل التواصل'
+            widget: object
+            fields:
+              - { name: facebook,  label: 'فيسبوك',  widget: string, required: false }
+              - { name: instagram, label: 'إنستغرام', widget: string, required: false }
+              - { name: twitter,   label: 'X (تويتر)', widget: string, required: false }
+
+      # ───────────────────────────────────────────
+      # 2. محتوى البطل (Hero) على الصفحة الرئيسية
+      # ───────────────────────────────────────────
+      - name: 'homepage'
+        label: '🏠 الصفحة الرئيسية'
+        file: 'frontend/public/content/homepage.json'
+        fields:
+          - { name: hero_badge,    label: 'شارة فوق العنوان',          widget: string, hint: 'مثال: مكتب معتمد من السفارة السعودية' }
+          - { name: hero_title_1,  label: 'العنوان الرئيسي — جزء 1',   widget: string, hint: 'أول جزء بلون navy' }
+          - { name: hero_title_2,  label: 'العنوان الرئيسي — جزء 2',   widget: string, hint: 'الجزء بلون gold' }
+          - { name: hero_subtitle, label: 'النص التعريفي',              widget: text }
+          - { name: hero_cta_primary,   label: 'نص زر الإجراء الأول',  widget: string }
+          - { name: hero_cta_secondary, label: 'نص زر الإجراء الثاني', widget: string, required: false }
+
+  # ───────────────────────────────────────────
+  # 3. مقالات المدونة
+  # ───────────────────────────────────────────
+  - name: 'blog'
+    label: '📝 المدونة'
+    description: 'إضافة وتعديل مقالات المدونة'
+    folder: 'frontend/public/content/blog'
+    create: true
+    slug: '{{slug}}'
+    preview_path: 'blog-post.html?slug={{slug}}'
+    editor: { preview: false }
+    fields:
+      - { name: title,      label: 'عنوان المقال',        widget: string }
+      - { name: summary,    label: 'ملخص قصير',           widget: text, hint: 'يظهر في بطاقة المدونة' }
+      - { name: date,       label: 'تاريخ النشر',         widget: datetime, default: '', format: 'YYYY-MM-DD' }
+      - { name: author,     label: 'الكاتب',              widget: string, default: 'فريق المكتب' }
+      - { name: category,   label: 'التصنيف',             widget: select, options: ['تأشيرة العمل','العمرة والحج','التصديقات','الاعتماد المهني QVP','تأشيرة السياحة','العائلة والاستقدام','نصائح عامة'] }
+      - { name: cover,      label: 'صورة الغلاف',         widget: image, required: false }
+      - { name: cover_alt,  label: 'وصف الصورة (SEO)',    widget: string, required: false }
+      - { name: read_time,  label: 'مدة القراءة (دقائق)', widget: number, value_type: int, default: 5, required: false }
+      - { name: featured,   label: 'مقال مميَّز؟',          widget: boolean, default: false, required: false }
+      - { name: meta_description, label: 'وصف SEO للمقال', widget: text, required: false, hint: 'للـ Meta Description في Google' }
+      - { name: meta_keywords,    label: 'كلمات مفتاحية SEO', widget: string, required: false, hint: 'مفصولة بفواصل' }
+      - name: body
+        label: 'محتوى المقال'
+        widget: markdown
+        hint: 'استخدم العناوين H2/H3، القوائم، الاقتباسات، والصور كما تشاء'
+
+  # ───────────────────────────────────────────
+  # 4. الشهادات (آراء العملاء) — اختيارية مستقبلية
+  # ───────────────────────────────────────────
+  - name: 'testimonials'
+    label: '⭐ آراء العملاء'
+    description: 'إضافة آراء العملاء التي تظهر في الصفحة الرئيسية'
+    folder: 'frontend/public/content/testimonials'
+    create: true
+    delete: true
+    slug: '{{slug}}'
+    fields:
+      - { name: name,       label: 'اسم العميل',    widget: string }
+      - { name: profession, label: 'المهنة/الدور',  widget: string, required: false }
+      - { name: rating,     label: 'التقييم (1-5)', widget: number, value_type: int, default: 5, min: 1, max: 5 }
+      - { name: message,    label: 'الرأي',         widget: text }
+      - { name: date,       label: 'التاريخ',       widget: datetime, format: 'YYYY-MM-DD' }
+      - { name: published,  label: 'نشر الرأي؟',     widget: boolean, default: true }

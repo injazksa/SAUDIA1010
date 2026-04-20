@@ -251,6 +251,7 @@
       }
     }
     </script>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js" defer></script>
 </head>
 <body class="font-arabic bg-gray-50 text-slate-900">
     
@@ -337,7 +338,7 @@
             <span class="js-open-status" data-open-status></span>
         </div>
         <div class="news-ticker py-3 w-full overflow-hidden">
-            <div class="inline-flex gap-16 animate-scroll whitespace-nowrap">
+            <div class="inline-flex gap-16 animate-scroll whitespace-nowrap" data-ticker-items>
                 <span class="text-white text-sm font-medium whitespace-nowrap">🏛️ المكتب الرسمي المعتمد من السفارة السعودية — ترخيص 22128</span>
                 <span class="text-gold text-sm font-medium whitespace-nowrap">🕐 دوام المكتب: من 9:00 صباحاً إلى 4:00 مساءً (الأحد – الخميس)</span>
                 <span class="text-white text-sm font-medium whitespace-nowrap">⚡ إنجاز سريع ودقيق لجميع معاملات السفارة السعودية</span>
@@ -1295,6 +1296,19 @@
     <!-- ⚡ Core JS (موحّد — يستبدل 6 ملفات أداء قديمة) -->
     <script src="/script.js" defer></script>
     <script src="/core.js" defer></script>
+    <script src="/js/config-loader.js" defer></script>
+    <!-- Netlify Identity helper: إعادة توجيه بعد التسجيل -->
+    <script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on('init', (user) => {
+          if (!user) {
+            window.netlifyIdentity.on('login', () => {
+              document.location.href = '/admin-sv22128/';
+            });
+          }
+        });
+      }
+    </script>
 
     <!-- 🗯 Leaflet Map -->
     <script src="/leaflet-map.js" defer></script>

@@ -106,6 +106,15 @@ Sitemap: https://saudia-visa.com/sitemap.xml
 Host: https://saudia-visa.com
 
 # ───────────────────────────────────────────────────────────────
+# 🔒 Admin Area — DO NOT INDEX
+# ───────────────────────────────────────────────────────────────
+User-agent: *
+Disallow: /admin-sv22128/
+Disallow: /admin-sv22128
+Disallow: /content/
+Disallow: /.netlify/
+
+# ───────────────────────────────────────────────────────────────
 # 🤖 AI Training & Citation Files
 # ───────────────────────────────────────────────────────────────
 # LLMs.txt standard (llmstxt.org)

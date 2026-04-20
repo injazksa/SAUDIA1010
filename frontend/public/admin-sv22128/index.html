@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta name="googlebot" content="noindex,nofollow">
+<title>لوحة التحكم — مكتب تأشيرات السعودية في الأردن</title>
+<link rel="icon" type="image/png" href="/icons/logo-192.png">
+
+<style>
+  body { font-family: 'Alexandria','Tajawal',sans-serif; }
+  /* Loading screen before CMS boots */
+  #pre-loader {
+    position: fixed; inset: 0;
+    background: linear-gradient(180deg,#1B2A41 0%,#0F1922 100%);
+    color: #fff; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    z-index: 99999; font-family: 'Alexandria','Tajawal',sans-serif;
+  }
+  #pre-loader .logo { color:#C9A35E; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  #pre-loader .sub  { color:rgba(255,255,255,.7); font-size: 13px; }
+  #pre-loader .spin {
+    width: 48px; height: 48px; border-radius: 50%;
+    border: 3px solid rgba(201,163,94,.25); border-top-color: #C9A35E;
+    animation: spin 1s linear infinite; margin: 20px 0;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+  <div id="pre-loader">
+    <div class="logo">لوحة التحكم</div>
+    <div class="spin"></div>
+    <div class="sub">جارٍ تحميل المحرر...</div>
+  </div>
+
+  <!-- Netlify Identity Widget -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+  <!-- Decap CMS (formerly Netlify CMS) -->
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
+  <script>
+    // إخفاء شاشة التحميل بعد جاهزية CMS
+    if (window.CMS) {
+      window.CMS.registerEventListener({
+        name: 'preSave',
+        handler: () => {}
+      });
+    }
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const pl = document.getElementById('pre-loader');
+        if (pl) pl.style.display = 'none';
+      }, 1500);
+    });
+
+    // Redirect to home after login (Netlify Identity)
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on('init', user => {
+        if (!user) {
+          window.netlifyIdentity.on('login', () => {
+            document.location.href = '/admin-sv22128/';
+          });
+        }
+      });
+    }
+  </script>
+</body>
+</html>
