@@ -1155,7 +1155,32 @@
                 </div>
                 
                 <!-- Leaflet Map - Jabal Amman First Circle -->
-                <div class="rounded-2xl overflow-hidden shadow-2xl h-[600px] lg:sticky lg:top-24" id="map" data-testid="leaflet-map"></div>
+                <div class="lg:sticky lg:top-24">
+                    <div class="rounded-2xl overflow-hidden shadow-2xl h-[550px]" id="map" data-testid="leaflet-map"></div>
+                    <!-- فتح الخريطة بالكامل / الاتجاهات -->
+                    <div class="mt-3 flex items-center justify-between flex-wrap gap-2 bg-white rounded-xl p-3 shadow-lg border border-gray-100">
+                        <div class="flex items-center gap-2 text-navy">
+                            <i class="fas fa-map-marker-alt text-gold"></i>
+                            <span class="font-bold text-sm">جبل عمّان - الدوار الأول</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <a href="https://www.openstreetmap.org/?mlat=31.9515&amp;mlon=35.9227#map=17/31.9515/35.9227"
+                               target="_blank" rel="noopener noreferrer"
+                               data-testid="open-full-map-home"
+                               class="inline-flex items-center gap-2 bg-navy hover:bg-navy-dark text-white text-xs font-semibold px-3 py-2 rounded-lg transition-all">
+                                <i class="fas fa-up-right-from-square"></i>
+                                <span>فتح الخريطة بالكامل</span>
+                            </a>
+                            <a href="https://www.google.com/maps/dir/?api=1&amp;destination=31.9515,35.9227"
+                               target="_blank" rel="noopener noreferrer"
+                               data-testid="open-directions-home"
+                               class="inline-flex items-center gap-2 bg-gold hover:bg-gold/90 text-white text-xs font-semibold px-3 py-2 rounded-lg transition-all">
+                                <i class="fas fa-route"></i>
+                                <span>الاتجاهات</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
