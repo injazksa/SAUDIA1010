@@ -3,8 +3,8 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml"
         xmlns:image="http://www.google.com/schemas/sitemap-image/0.9">
 
-  <!-- 🗺️ Auto-generated sitemap — 2026-04-19 -->
-  <!-- Total indexed pages: 17 -->
+  <!-- 🗺️ Auto-generated sitemap — 2026-04-20 -->
+  <!-- Total indexed pages: 18 -->
 
   <url>
     <loc>https://saudia-visa.com/about.html</loc>
@@ -105,13 +105,20 @@
 
   <url>
     <loc>https://saudia-visa.com/</loc>
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-04-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://saudia-visa.com/icons/logo-512.png</image:loc>
       <image:title>مكتب تأشيرات السعودية المعتمد في الأردن</image:title>
     </image:image>
+  </url>
+
+  <url>
+    <loc>https://saudia-visa.com/other-services.html</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 
   <url>

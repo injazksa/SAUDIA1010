@@ -438,3 +438,34 @@ button:focus-visible {
 
 ### Tested (Playwright)
 - Desktop (1440×900) + mobile (390×844): pills render, hover state animates, stamp-fx spawns on click and cleans up. About page map loads correctly locally.
+
+---
+
+## 📅 Update 3: Feb 2026 — "خدمات أخرى" Page + Service Card + Nav
+
+### What was added
+- **New page** `/app/frontend/public/other-services.html` — Navy/Gold editorial design with:
+  1. Hero with on-brand AI-generated WebP image (`/images/other-services-hero.webp`, 34 KB)
+  2. "لمن صُمّمت هذه الخدمات؟" — 4 audience cards (رجال أعمال / شركات / عائلات / مقيمون خارج عمّان)
+  3. **UAE Embassy Attestation** section with all document types (birth, marriage, divorce, POAs, non-conviction, commercial registries, medical reports, universities, schools, contracts) — explicit note that fees vary, NO prices shown
+  4. **Pickup & Delivery** 4-step timeline (استلام → معاينة → تصديق → تسليم) + "تنسيق كامل" covering MoFA, MoJ, Higher Education, Saudi + other embassies (before or after KSA attestation)
+  5. **Aramex Shipping** — feature cards + 4-step process, inside/outside Jordan, no prices
+  6. Final CTA + SEO schema + OG tags
+- **Homepage services grid** (`index.html`) — Added card #7 "خدمات أخرى" with `fa-concierge-bell` icon + "جديد" gold badge
+- **Unified drawer nav** (`core.js`) — Added `/other-services.html` with icon
+- **Smart WhatsApp** — Added context-aware message for the new page
+- **Sitemap** regenerated → 18 pages
+
+### Image generation
+- `/app/scripts/generate_other_services_image.py` — gpt-image-1 via Emergent LLM key (same style as blog heroes).
+
+### Files touched
+- NEW: `/app/frontend/public/other-services.html`
+- NEW: `/app/scripts/generate_other_services_image.py`
+- NEW: `/app/frontend/public/images/other-services-hero.webp`
+- EDIT: `/app/frontend/public/index.html` (added 7th service card)
+- EDIT: `/app/frontend/public/core.js` (nav item + WA mapping)
+- EDIT: `/app/frontend/public/sitemap.xml` (regenerated)
+
+### Tested
+- Playwright desktop (1440×900) + mobile (390×844): all 3 service sections render, drawer shows "خدمات أخرى", homepage card renders with "جديد" badge, smart WA message appears on opening the page.

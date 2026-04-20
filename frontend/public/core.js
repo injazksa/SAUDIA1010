@@ -591,6 +591,8 @@
         msg: 'مرحبًا، أرغب في الاستفسار عن تأشيرة العمل في المملكة العربية السعودية والإجراءات المطلوبة.' },
       { match: (p) => p.endsWith('/calculator.html'),
         msg: 'مرحبًا، لدي استفسار حول حساب رسوم التأشيرة السعودية. أرجو إفادتي بالتفاصيل.' },
+      { match: (p) => p.endsWith('/other-services.html'),
+        msg: 'مرحبًا، لدي استفسار حول الخدمات الإضافية (تصديق السفارة الإماراتية / خدمة الاستلام والتسليم / إرسال أرامكس). أرجو إفادتي بالتفاصيل.' },
       { match: (p) => p.endsWith('/corporate.html'),
         msg: 'مرحبًا، لدي استفسار حول خدمات الشركات والتأشيرات الجماعية للمملكة العربية السعودية.' },
       { match: (p) => p.endsWith('/about.html'),
@@ -662,6 +664,7 @@
       { href: '/certificates.html',  label: 'تصديق الشهادات',   icon: 'fa-certificate' },
       { href: '/work-visa.html',     label: 'تأشيرة العمل',     icon: 'fa-passport' },
       { href: '/calculator.html',    label: 'حاسبة الرسوم',     icon: 'fa-calculator' },
+      { href: '/other-services.html',label: 'خدمات أخرى',        icon: 'fa-concierge-bell' },
       { href: '/blog.html',          label: 'المدونة',          icon: 'fa-newspaper' },
       { href: '/faq.html',           label: 'الأسئلة الشائعة',  icon: 'fa-circle-question' }
     ];
