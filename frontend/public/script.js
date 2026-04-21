@@ -9,10 +9,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
     
-    if (mobileMenuBtn && mobileMenu && mobileMenuBtn.dataset.menuInit !== '1') {
-        mobileMenuBtn.dataset.menuInit = '1';
-        mobileMenuBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
+    if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener('click', function() {
             mobileMenu.classList.toggle('hidden');
         });
         
@@ -97,12 +95,6 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .catch(error => {
                 console.error('Error loading blog posts:', error);
-                blogPostsContainer.innerHTML = `
-                    <div class="col-span-full text-center text-gray-500 py-12">
-                        <i class="fas fa-exclamation-triangle text-4xl mb-4"></i>
-                        <p>عذراً، حدث خطأ في تحميل المقالات</p>
-                    </div>
-                `;
             });
     }
     
@@ -110,78 +102,159 @@ document.addEventListener('DOMContentLoaded', function() {
     // Navbar Scroll Effect
     // ======================
     const navbar = document.querySelector('header');
-    let lastScroll = 0;
-    
-    window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
-        
-        if (currentScroll > 100) {
-            navbar.classList.add('shadow-lg');
-        } else {
-            navbar.classList.remove('shadow-lg');
-        }
-        
-        lastScroll = currentScroll;
-    });
-    
-    // ======================
-    // Animate Elements on Scroll
-    // ======================
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-    
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+    if (navbar) {
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 100) {
+                navbar.classList.add('shadow-lg');
+            } else {
+                navbar.classList.remove('shadow-lg');
             }
         });
-    }, observerOptions);
-    
-    // Observe service cards and other elements
-    document.querySelectorAll('.service-card, .review-card, .blog-card').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
-    });
-    
-    // ======================
-    // Back to Top Button
-    // ======================
-    const backToTopBtn = document.createElement('button');
-    backToTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
-    backToTopBtn.className = 'fixed bottom-24 left-6 z-40 w-12 h-12 bg-navy hover:bg-navy-dark text-white rounded-full shadow-2xl opacity-0 pointer-events-none transition-all duration-300';
-    backToTopBtn.setAttribute('aria-label', 'العودة للأعلى');
-    document.body.appendChild(backToTopBtn);
-    
-    window.addEventListener('scroll', () => {
-        if (window.pageYOffset > 500) {
-            backToTopBtn.style.opacity = '1';
-            backToTopBtn.style.pointerEvents = 'auto';
-        } else {
-            backToTopBtn.style.opacity = '0';
-            backToTopBtn.style.pointerEvents = 'none';
-        }
-    });
-    
-    backToTopBtn.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-    
+    }
+
+    // Initialize Reviews
+    initReviews();
 });
 
 // ======================
-// Helper Functions
+// Real-time Reviews System
 // ======================
 
-// Create Blog Card HTML
+function initReviews() {
+    const reviewsContainer = document.getElementById('reviews-container');
+    if (!reviewsContainer) return;
+
+    // Load reviews from JSON
+    fetch('reviews.json')
+        .then(response => response.json())
+        .then(reviews => {
+            // Get local reviews from localStorage
+            const localReviews = JSON.parse(localStorage.getItem('user_reviews') || '[]');
+            const allReviews = [...localReviews, ...reviews];
+            
+            displayReviews(allReviews);
+        })
+        .catch(error => {
+            console.error('Error loading reviews:', error);
+            const localReviews = JSON.parse(localStorage.getItem('user_reviews') || '[]');
+            if (localReviews.length > 0) displayReviews(localReviews);
+        });
+
+    // Star Rating Logic
+    const stars = document.querySelectorAll('#star-rating i');
+    const starsInput = document.getElementById('stars-input');
+    
+    if (stars.length > 0) {
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                const value = this.getAttribute('data-value');
+                starsInput.value = value;
+                
+                stars.forEach(s => {
+                    if (parseInt(s.getAttribute('data-value')) <= parseInt(value)) {
+                        s.classList.remove('text-gray-300');
+                        s.classList.add('text-gold');
+                    } else {
+                        s.classList.remove('text-gold');
+                        s.classList.add('text-gray-300');
+                    }
+                });
+            });
+        });
+    }
+
+    // Form Submission
+    const reviewForm = document.getElementById('review-form');
+    if (reviewForm) {
+        reviewForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const newReview = {
+                id: Date.now(),
+                name: formData.get('name'),
+                stars: parseInt(formData.get('stars')),
+                comment: formData.get('comment'),
+                date: new Date().toISOString().split('T')[0]
+            };
+
+            const localReviews = JSON.parse(localStorage.getItem('user_reviews') || '[]');
+            localReviews.unshift(newReview);
+            localStorage.setItem('user_reviews', JSON.stringify(localReviews));
+
+            // Close modal and show success
+            closeReviewModal();
+            alert('شكراً لتقييمك! سيظهر تقييمك فوراً في الموقع.');
+            
+            // Refresh display
+            displayReviews([...localReviews, ...JSON.parse(sessionStorage.getItem('original_reviews') || '[]')]);
+            location.reload(); 
+        });
+    }
+}
+
+function displayReviews(reviews) {
+    const container = document.getElementById('reviews-container');
+    if (!container) return;
+
+    container.innerHTML = reviews.map(review => `
+        <div class="bg-white rounded-2xl p-8 border border-gray-100 hover:border-gold/30 transition-all shadow-sm hover:shadow-lg">
+            <div class="flex text-gold text-lg mb-4">
+                ${Array(5).fill(0).map((_, i) => `
+                    <i class="${i < review.stars ? 'fas' : 'far'} fa-star"></i>
+                `).join('')}
+            </div>
+            <p class="text-gray-700 mb-6 leading-relaxed italic">
+                "${review.comment}"
+            </p>
+            <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                <div>
+                    <div class="font-bold text-navy">${review.name}</div>
+                    <div class="text-sm text-gray-500">تقييم حقيقي</div>
+                </div>
+                <div class="text-xs text-gray-400">${formatRelativeDate(review.date)}</div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function formatRelativeDate(dateString) {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffTime = Math.abs(now - date);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 0) return 'اليوم';
+    if (diffDays === 1) return 'أمس';
+    if (diffDays < 7) return `منذ ${diffDays} أيام`;
+    if (diffDays < 30) return `منذ ${Math.floor(diffDays / 7)} أسابيع`;
+    return `منذ ${Math.floor(diffDays / 30)} أشهر`;
+}
+
+function openReviewModal() {
+    const modal = document.getElementById('review-modal');
+    const content = document.getElementById('modal-content');
+    if (modal) {
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            content.classList.remove('scale-95', 'opacity-0');
+            content.classList.add('scale-100', 'opacity-100');
+        }, 10);
+    }
+}
+
+function closeReviewModal() {
+    const modal = document.getElementById('review-modal');
+    const content = document.getElementById('modal-content');
+    if (modal) {
+        content.classList.remove('scale-100', 'opacity-100');
+        content.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 300);
+    }
+}
+
 function createBlogCard(post) {
     const date = new Date(post.date).toLocaleDateString('ar-SA', {
         year: 'numeric',
@@ -190,7 +263,7 @@ function createBlogCard(post) {
     });
     
     return `
-        <article class="blog-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl border border-gray-100 hover:border-gold/30 transition-all" data-testid="blog-post-${post.slug}">
+        <article class="blog-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl border border-gray-100 hover:border-gold/30 transition-all">
             <div class="overflow-hidden">
                 <img src="${post.image || 'images/default-blog.webp'}" 
                      alt="${post.title}" 
@@ -202,12 +275,6 @@ function createBlogCard(post) {
                         <i class="far fa-calendar"></i>
                         ${date}
                     </span>
-                    ${post.author ? `
-                    <span class="flex items-center gap-1">
-                        <i class="far fa-user"></i>
-                        ${post.author}
-                    </span>
-                    ` : ''}
                 </div>
                 <h3 class="text-xl font-bold text-navy mb-3 line-clamp-2 hover:text-gold transition-colors">
                     ${post.title}
@@ -216,8 +283,7 @@ function createBlogCard(post) {
                     ${post.description || post.excerpt || ''}
                 </p>
                 <a href="post.html?id=${post.slug}" 
-                   class="inline-flex items-center text-gold font-semibold hover:gap-3 transition-all"
-                   data-testid="blog-read-more-${post.slug}">
+                   class="inline-flex items-center text-gold font-semibold hover:gap-3 transition-all">
                     اقرأ المزيد
                     <i class="fas fa-arrow-left mr-2"></i>
                 </a>
@@ -225,487 +291,3 @@ function createBlogCard(post) {
         </article>
     `;
 }
-
-// Format Date in Arabic
-function formatDateArabic(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('ar-SA', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    });
-}
-
-// Show Loading Spinner
-function showLoader(container) {
-    container.innerHTML = `
-        <div class="flex items-center justify-center py-12">
-            <div class="loader"></div>
-        </div>
-    `;
-}
-
-// Show Error Message
-function showError(container, message) {
-    container.innerHTML = `
-        <div class="error-message text-center">
-            <i class="fas fa-exclamation-triangle text-3xl mb-3"></i>
-            <p>${message}</p>
-        </div>
-    `;
-}
-
-// Show Success Message
-function showSuccess(container, message) {
-    container.innerHTML = `
-        <div class="success-message text-center">
-            <i class="fas fa-check-circle text-3xl mb-3"></i>
-            <p>${message}</p>
-        </div>
-    `;
-}
-
-// Debounce Function
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// Search Highlight
-function highlightText(text, query) {
-    if (!query) return text;
-    const regex = new RegExp(`(${query})`, 'gi');
-    return text.replace(regex, '<span class="search-highlight">$1</span>');
-}
-
-// Copy to Clipboard
-function copyToClipboard(text) {
-    if (navigator.clipboard) {
-        navigator.clipboard.writeText(text).then(() => {
-            showToast('تم النسخ بنجاح');
-        });
-    } else {
-        // Fallback for older browsers
-        const textArea = document.createElement('textarea');
-        textArea.value = text;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-        showToast('تم النسخ بنجاح');
-    }
-}
-
-// Show Toast Notification
-function showToast(message, duration = 3000) {
-    const toast = document.createElement('div');
-    toast.className = 'fixed top-24 right-6 bg-navy text-white px-6 py-3 rounded-lg shadow-2xl z-50 transform transition-all duration-300 translate-x-full';
-    toast.innerHTML = `
-        <div class="flex items-center gap-3">
-            <i class="fas fa-check-circle text-gold"></i>
-            <span>${message}</span>
-        </div>
-    `;
-    
-    document.body.appendChild(toast);
-    
-    setTimeout(() => {
-        toast.style.transform = 'translateX(0)';
-    }, 100);
-    
-    setTimeout(() => {
-        toast.style.transform = 'translateX(full)';
-        setTimeout(() => {
-            document.body.removeChild(toast);
-        }, 300);
-    }, duration);
-}
-
-// Print Function for Profession Documents
-function printProfessionDocument(professionCode, professionName, requirements) {
-    // Create a new window for printing
-    const printWindow = window.open('', '_blank');
-    
-    const printContent = `
-        <!DOCTYPE html>
-        <html lang="ar" dir="rtl">
-        <head>
-            <meta charset="UTF-8">
-            <title>الأوراق المطلوبة - ${professionName}</title>
-            <style>
-                @page {
-                    size: A4;
-                    margin: 20mm;
-                }
-                body {
-                    font-family: 'Arial', sans-serif;
-                    direction: rtl;
-                    text-align: right;
-                    line-height: 1.8;
-                    color: #333;
-                }
-                .print-header {
-                    text-align: center;
-                    margin-bottom: 30px;
-                    padding-bottom: 20px;
-                    border-bottom: 3px solid #C9A26A;
-                }
-                .print-header h1 {
-                    color: #1B2A41;
-                    font-size: 28px;
-                    margin-bottom: 10px;
-                }
-                .print-header .subtitle {
-                    color: #C9A26A;
-                    font-size: 18px;
-                    font-weight: bold;
-                    margin-bottom: 15px;
-                }
-                .office-info {
-                    color: #475569;
-                    font-size: 14px;
-                    line-height: 1.6;
-                }
-                .document-title {
-                    background: #1B2A41;
-                    color: white;
-                    padding: 15px;
-                    margin: 20px 0;
-                    border-radius: 8px;
-                    font-size: 20px;
-                    font-weight: bold;
-                    text-align: center;
-                }
-                .profession-info {
-                    background: #f9fafb;
-                    padding: 15px;
-                    margin: 20px 0;
-                    border-right: 4px solid #C9A26A;
-                    border-radius: 4px;
-                }
-                .requirements-list {
-                    margin: 20px 0;
-                }
-                .requirements-list li {
-                    padding: 10px 0;
-                    border-bottom: 1px solid #e5e7eb;
-                    list-style-position: inside;
-                }
-                .footer {
-                    margin-top: 40px;
-                    padding-top: 20px;
-                    border-top: 2px solid #C9A26A;
-                    text-align: center;
-                    color: #64748b;
-                    font-size: 12px;
-                }
-            </style>
-        </head>
-        <body>
-            <div class="print-header">
-                <h1>مكتب تأشيرات السعودية في الأردن</h1>
-                <div class="subtitle">المركز المعتمد من السفارة السعودية</div>
-                <div class="office-info">
-                    <div>📍 العنوان: الدوار الأول - جبل عمان، الأردن</div>
-                    <div>📞 الهاتف / واتساب: 0789881009</div>
-                    <div>✉️ البريد الإلكتروني: Visa@saudia-visa.com</div>
-                    <div>🌐 الموقع الإلكتروني: www.saudia-visa.com</div>
-                </div>
-            </div>
-            
-            <div class="document-title">
-                الأوراق المطلوبة لتأشيرة العمل السعودية
-            </div>
-            
-            <div class="profession-info">
-                <strong>المهنة:</strong> ${professionName}<br>
-                <strong>رمز المهنة:</strong> ${professionCode}<br>
-                <strong>تاريخ الطباعة:</strong> ${new Date().toLocaleDateString('ar-SA')}
-            </div>
-            
-            <h2 style="color: #1B2A41; margin-top: 30px;">الأوراق والمستندات المطلوبة:</h2>
-            <ol class="requirements-list">
-                ${requirements.map(req => `<li>${req}</li>`).join('')}
-            </ol>
-            
-            <div class="footer">
-                <p><strong>ملاحظة:</strong> قد تختلف المتطلبات حسب السفارة والحالة الفردية. يرجى التواصل معنا للحصول على معلومات دقيقة ومحدثة.</p>
-                <p style="margin-top: 10px;">© 2025 مكتب تأشيرات السعودية في الأردن - جميع الحقوق محفوظة</p>
-            </div>
-        </body>
-        </html>
-    `;
-    
-    printWindow.document.write(printContent);
-    printWindow.document.close();
-    
-    // Wait for content to load then print
-    printWindow.onload = function() {
-        printWindow.print();
-    };
-}
-
-// Export functions for use in other files
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = {
-        createBlogCard,
-        formatDateArabic,
-        showLoader,
-        showError,
-        showSuccess,
-        debounce,
-        highlightText,
-        copyToClipboard,
-        showToast,
-        printProfessionDocument
-    };
-}
-
-// ======================
-// HERO SLIDER
-// ======================
-(function() {
-    const slides = document.querySelectorAll('.hero-slide');
-    const dots = document.querySelectorAll('.slider-dot');
-    
-    // Only run if slider elements exist
-    if (slides.length === 0 || dots.length === 0) {
-        return;
-    }
-    
-    let currentSlide = 0;
-    const slideInterval = 5000; // 5 seconds
-
-    function showSlide(index) {
-        // Remove active class from all slides and dots
-        slides.forEach(slide => slide.classList.remove('active'));
-        dots.forEach(dot => dot.classList.remove('active'));
-        
-        // Add active class to current slide and dot
-        if (slides[index] && dots[index]) {
-            slides[index].classList.add('active');
-            dots[index].classList.add('active');
-        }
-    }
-
-    function nextSlide() {
-        currentSlide = (currentSlide + 1) % slides.length;
-        showSlide(currentSlide);
-    }
-
-    // Auto advance slides
-    let autoSlide = setInterval(nextSlide, slideInterval);
-
-    // Dot click handlers
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-            currentSlide = index;
-            showSlide(currentSlide);
-            // Reset auto advance
-            clearInterval(autoSlide);
-            autoSlide = setInterval(nextSlide, slideInterval);
-        });
-    });
-
-    // Pause on hover
-    const heroSection = document.querySelector('#home');
-    if (heroSection) {
-        heroSection.addEventListener('mouseenter', () => {
-            clearInterval(autoSlide);
-        });
-
-        heroSection.addEventListener('mouseleave', () => {
-            autoSlide = setInterval(nextSlide, slideInterval);
-        });
-    }
-})();
-
-// ======================
-// SCROLL ANIMATIONS
-// ======================
-(function() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('fade-in-up');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    // Observe all sections
-    const sections = document.querySelectorAll('section:not(#home)');
-    if (sections.length > 0) {
-        sections.forEach(section => {
-            observer.observe(section);
-        });
-    }
-
-    // Observe all cards
-    const cards = document.querySelectorAll('.card-3d, .blog-card');
-    if (cards.length > 0) {
-        cards.forEach((card, index) => {
-            card.style.animationDelay = `${index * 0.1}s`;
-            observer.observe(card);
-        });
-    }
-})();
-
-// ======================
-// SMOOTH SCROLL FOR ANCHOR LINKS
-// ======================
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        const href = this.getAttribute('href');
-        if (href !== '#' && href.length > 1) {
-            e.preventDefault();
-            const target = document.querySelector(href);
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        }
-    });
-});
-
-// ======================
-// PARALLAX EFFECT ON HERO - Fixed for RTL
-// ======================
-(function() {
-    const heroSection = document.querySelector('#home');
-    
-    if (heroSection) {
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const parallaxSpeed = 0.3;
-            
-            const slides = heroSection.querySelectorAll('.hero-slide img');
-            slides.forEach(slide => {
-                // Only use translateY to avoid horizontal overflow
-                slide.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
-            });
-        });
-    }
-})();
-
-// ======================
-// ADD HOVER EFFECTS TO BUTTONS
-// ======================
-(function() {
-    const buttons = document.querySelectorAll('a[href], button');
-    
-    buttons.forEach(button => {
-        // Add ripple class
-        if (!button.classList.contains('slider-dot')) {
-            button.classList.add('ripple');
-        }
-    });
-})();
-
-// ======================
-// NAVBAR BACKGROUND ON SCROLL
-// ======================
-(function() {
-    const nav = document.querySelector('nav');
-    
-    if (nav) {
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                nav.classList.add('shadow-xl');
-                nav.style.background = 'rgba(255, 255, 255, 0.98)';
-            } else {
-                nav.classList.remove('shadow-xl');
-                nav.style.background = 'white';
-            }
-        });
-    }
-})();
-
-// ======================
-// ANIMATED COUNTERS (for Stats)
-// ======================
-(function() {
-    const stats = document.querySelectorAll('.text-3xl, .text-4xl');
-    
-    const animateCounter = (element) => {
-        const target = parseInt(element.textContent.replace(/\D/g, ''));
-        if (isNaN(target)) return;
-        
-        const duration = 2000;
-        const step = target / (duration / 16);
-        let current = 0;
-        
-        const updateCounter = () => {
-            current += step;
-            if (current < target) {
-                element.textContent = Math.floor(current) + '+';
-                requestAnimationFrame(updateCounter);
-            } else {
-                element.textContent = target + '+';
-            }
-        };
-        
-        updateCounter();
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const text = entry.target.textContent;
-                if (text.includes('+')) {
-                    animateCounter(entry.target);
-                    observer.unobserve(entry.target);
-                }
-            }
-        });
-    }, { threshold: 0.5 });
-    
-    stats.forEach(stat => observer.observe(stat));
-})();
-
-console.log('🚀 Modern Animations & Interactions loaded successfully!');
-
-// ==========================================
-// INSTANT PAGE TRANSITIONS (Turbo-like)
-// ==========================================
-(function() {
-    // Prefetch links on hover for instant navigation
-    const prefetchedLinks = new Set();
-    
-    document.addEventListener('mouseover', (e) => {
-        const link = e.target.closest('a[href]');
-        if (link && link.hostname === window.location.hostname && !prefetchedLinks.has(link.href)) {
-            const prefetch = document.createElement('link');
-            prefetch.rel = 'prefetch';
-            prefetch.href = link.href;
-            document.head.appendChild(prefetch);
-            prefetchedLinks.add(link.href);
-        }
-    });
-    
-    // Disable transitions during scroll for smoothness
-    let scrollTimer;
-    window.addEventListener('scroll', () => {
-        document.body.classList.add('disable-transitions');
-        clearTimeout(scrollTimer);
-        scrollTimer = setTimeout(() => {
-            document.body.classList.remove('disable-transitions');
-        }, 100);
-    }, { passive: true });
-    
-})();
-
