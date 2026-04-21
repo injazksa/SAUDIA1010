@@ -12,6 +12,17 @@ window.openReviewModal = function() {
         if (formContainer) formContainer.classList.remove('hidden');
         if (successContainer) successContainer.classList.add('hidden');
         
+        // Reset stars to 5
+        const starsInput = document.getElementById('stars-input');
+        const stars = document.querySelectorAll('#star-rating i');
+        if (starsInput && stars.length > 0) {
+            starsInput.value = "5";
+            stars.forEach(s => {
+                s.classList.remove('text-gray-200');
+                s.classList.add('text-gold');
+            });
+        }
+        
         modal.classList.remove('hidden');
         modal.classList.add('flex');
         setTimeout(() => {
@@ -178,20 +189,26 @@ function initReviews() {
         stars.forEach(star => {
             star.addEventListener('click', function() {
                 const value = this.getAttribute('data-value');
-                if (starsInput) starsInput.value = value;
-                
-                stars.forEach(s => {
-                    if (parseInt(s.getAttribute('data-value')) <= parseInt(value)) {
-                        s.classList.remove('text-gray-200');
-                        s.classList.add('text-gold');
-                    } else {
-                        s.classList.remove('text-gold');
-                        s.classList.add('text-gray-200');
-                    }
-                });
+                updateStars(value);
             });
         });
     }
+
+    function updateStars(value) {
+        if (starsInput) starsInput.value = value;
+        stars.forEach(s => {
+            if (parseInt(s.getAttribute('data-value')) <= parseInt(value)) {
+                s.classList.remove('text-gray-200');
+                s.classList.add('text-gold');
+            } else {
+                s.classList.remove('text-gold');
+                s.classList.add('text-gray-200');
+            }
+        });
+    }
+
+    // Set default to 5 stars on init
+    updateStars(5);
 
     // Form Submission
     const reviewForm = document.getElementById('review-form');
@@ -252,7 +269,7 @@ function displayReviews(reviews) {
             <div class="flex items-center justify-between pt-4 border-t border-gray-100">
                 <div>
                     <div class="font-bold text-navy">${review.name}</div>
-                    <div class="text-sm text-gray-500">رأي موثق</div>
+                    <div class="text-sm text-gray-500">تقييم موثق</div>
                 </div>
                 <div class="text-xs text-gray-400">${formatRelativeDate(review.date)}</div>
             </div>
