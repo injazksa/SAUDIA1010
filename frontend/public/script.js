@@ -1,5 +1,36 @@
 // Modern Saudi Visa Website - JavaScript
 
+// Global functions for modal (needed because of onclick in HTML)
+window.openReviewModal = function() {
+    const modal = document.getElementById('review-modal');
+    const content = document.getElementById('modal-content');
+    if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        setTimeout(() => {
+            if (content) {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }
+        }, 10);
+    }
+};
+
+window.closeReviewModal = function() {
+    const modal = document.getElementById('review-modal');
+    const content = document.getElementById('modal-content');
+    if (modal) {
+        if (content) {
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+        }
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }, 300);
+    }
+};
+
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     
@@ -14,7 +45,6 @@ document.addEventListener('DOMContentLoaded', function() {
             mobileMenu.classList.toggle('hidden');
         });
         
-        // Close mobile menu when clicking on a link
         const mobileMenuLinks = mobileMenu.querySelectorAll('a');
         mobileMenuLinks.forEach(link => {
             link.addEventListener('click', function() {
@@ -34,7 +64,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const answer = faqItem.querySelector('.faq-answer');
             const icon = this.querySelector('i');
             
-            // Close all other items
             document.querySelectorAll('.faq-answer').forEach(item => {
                 if (item !== answer) {
                     item.classList.remove('active');
@@ -48,7 +77,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
             
-            // Toggle current item
             answer.classList.toggle('hidden');
             answer.classList.toggle('active');
             icon.classList.toggle('rotate-180');
@@ -56,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // ======================
-    // Smooth Scroll for Anchor Links
+    // Smooth Scroll
     // ======================
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -75,27 +103,20 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // ======================
-    // Load Blog Posts (Homepage)
+    // Load Blog Posts
     // ======================
     const blogPostsContainer = document.getElementById('blog-posts');
-    
     if (blogPostsContainer) {
         fetch('blog/posts.json')
             .then(response => response.json())
             .then(posts => {
                 blogPostsContainer.innerHTML = '';
-                
-                // Show only first 3 posts on homepage
                 const postsToShow = posts.slice(0, 3);
-                
                 postsToShow.forEach(post => {
-                    const postCard = createBlogCard(post);
-                    blogPostsContainer.innerHTML += postCard;
+                    blogPostsContainer.innerHTML += createBlogCard(post);
                 });
             })
-            .catch(error => {
-                console.error('Error loading blog posts:', error);
-            });
+            .catch(error => console.error('Error loading blog posts:', error));
     }
     
     // ======================
@@ -128,10 +149,8 @@ function initReviews() {
     fetch('reviews.json')
         .then(response => response.json())
         .then(reviews => {
-            // Get local reviews from localStorage
             const localReviews = JSON.parse(localStorage.getItem('user_reviews') || '[]');
             const allReviews = [...localReviews, ...reviews];
-            
             displayReviews(allReviews);
         })
         .catch(error => {
@@ -148,7 +167,7 @@ function initReviews() {
         stars.forEach(star => {
             star.addEventListener('click', function() {
                 const value = this.getAttribute('data-value');
-                starsInput.value = value;
+                if (starsInput) starsInput.value = value;
                 
                 stars.forEach(s => {
                     if (parseInt(s.getAttribute('data-value')) <= parseInt(value)) {
@@ -182,12 +201,8 @@ function initReviews() {
             localReviews.unshift(newReview);
             localStorage.setItem('user_reviews', JSON.stringify(localReviews));
 
-            // Close modal and show success
-            closeReviewModal();
+            window.closeReviewModal();
             alert('شكراً لتقييمك! سيظهر تقييمك فوراً في الموقع.');
-            
-            // Refresh display
-            displayReviews([...localReviews, ...JSON.parse(sessionStorage.getItem('original_reviews') || '[]')]);
             location.reload(); 
         });
     }
@@ -196,6 +211,11 @@ function initReviews() {
 function displayReviews(reviews) {
     const container = document.getElementById('reviews-container');
     if (!container) return;
+
+    if (reviews.length === 0) {
+        container.innerHTML = '<div class="col-span-full text-center text-gray-500 py-12">لا توجد تقييمات حالياً. كن أول من يقيم!</div>';
+        return;
+    }
 
     container.innerHTML = reviews.map(review => `
         <div class="bg-white rounded-2xl p-8 border border-gray-100 hover:border-gold/30 transition-all shadow-sm hover:shadow-lg">
@@ -229,30 +249,6 @@ function formatRelativeDate(dateString) {
     if (diffDays < 7) return `منذ ${diffDays} أيام`;
     if (diffDays < 30) return `منذ ${Math.floor(diffDays / 7)} أسابيع`;
     return `منذ ${Math.floor(diffDays / 30)} أشهر`;
-}
-
-function openReviewModal() {
-    const modal = document.getElementById('review-modal');
-    const content = document.getElementById('modal-content');
-    if (modal) {
-        modal.classList.remove('hidden');
-        setTimeout(() => {
-            content.classList.remove('scale-95', 'opacity-0');
-            content.classList.add('scale-100', 'opacity-100');
-        }, 10);
-    }
-}
-
-function closeReviewModal() {
-    const modal = document.getElementById('review-modal');
-    const content = document.getElementById('modal-content');
-    if (modal) {
-        content.classList.remove('scale-100', 'opacity-100');
-        content.classList.add('scale-95', 'opacity-0');
-        setTimeout(() => {
-            modal.classList.add('hidden');
-        }, 300);
-    }
 }
 
 function createBlogCard(post) {
