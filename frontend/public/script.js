@@ -269,7 +269,7 @@ function displayReviews(reviews) {
             <div class="flex items-center justify-between pt-4 border-t border-gray-100">
                 <div>
                     <div class="font-bold text-navy">${review.name}</div>
-                    <div class="text-sm text-gray-500">تقييم موثق</div>
+                    <div class="text-sm text-gray-500">رأي موثق</div>
                 </div>
                 <div class="text-xs text-gray-400">${formatRelativeDate(review.date)}</div>
             </div>
