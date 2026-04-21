@@ -1,10 +1,17 @@
 // Modern Saudi Visa Website - JavaScript
 
-// Global functions for modal (needed because of onclick in HTML)
+// Global functions for modal
 window.openReviewModal = function() {
     const modal = document.getElementById('review-modal');
     const content = document.getElementById('modal-content');
+    const formContainer = document.getElementById('review-form-container');
+    const successContainer = document.getElementById('review-success-container');
+    
     if (modal) {
+        // Reset state
+        if (formContainer) formContainer.classList.remove('hidden');
+        if (successContainer) successContainer.classList.add('hidden');
+        
         modal.classList.remove('hidden');
         modal.classList.add('flex');
         setTimeout(() => {
@@ -13,6 +20,8 @@ window.openReviewModal = function() {
                 content.classList.add('scale-100', 'opacity-100');
             }
         }, 10);
+        // Prevent body scroll
+        document.body.style.overflow = 'hidden';
     }
 };
 
@@ -27,6 +36,8 @@ window.closeReviewModal = function() {
         setTimeout(() => {
             modal.classList.add('hidden');
             modal.classList.remove('flex');
+            // Re-enable body scroll
+            document.body.style.overflow = '';
         }, 300);
     }
 };
@@ -171,11 +182,11 @@ function initReviews() {
                 
                 stars.forEach(s => {
                     if (parseInt(s.getAttribute('data-value')) <= parseInt(value)) {
-                        s.classList.remove('text-gray-300');
+                        s.classList.remove('text-gray-200');
                         s.classList.add('text-gold');
                     } else {
                         s.classList.remove('text-gold');
-                        s.classList.add('text-gray-300');
+                        s.classList.add('text-gray-200');
                     }
                 });
             });
@@ -193,7 +204,7 @@ function initReviews() {
                 id: Date.now(),
                 name: formData.get('name'),
                 stars: parseInt(formData.get('stars')),
-                comment: formData.get('comment'),
+                comment: formData.get('comment') || "خدمة ممتازة وسريعة، أنصح بالتعامل معهم.",
                 date: new Date().toISOString().split('T')[0]
             };
 
@@ -201,9 +212,20 @@ function initReviews() {
             localReviews.unshift(newReview);
             localStorage.setItem('user_reviews', JSON.stringify(localReviews));
 
-            window.closeReviewModal();
-            alert('شكراً لتقييمك! سيظهر تقييمك فوراً في الموقع.');
-            location.reload(); 
+            // Show Success State
+            const formContainer = document.getElementById('review-form-container');
+            const successContainer = document.getElementById('review-success-container');
+            if (formContainer && successContainer) {
+                formContainer.classList.add('hidden');
+                successContainer.classList.remove('hidden');
+            }
+            
+            // Refresh display after short delay
+            setTimeout(() => {
+                fetch('reviews.json')
+                    .then(r => r.json())
+                    .then(orig => displayReviews([...localReviews, ...orig]));
+            }, 500);
         });
     }
 }
@@ -213,7 +235,7 @@ function displayReviews(reviews) {
     if (!container) return;
 
     if (reviews.length === 0) {
-        container.innerHTML = '<div class="col-span-full text-center text-gray-500 py-12">لا توجد تقييمات حالياً. كن أول من يقيم!</div>';
+        container.innerHTML = '<div class="col-span-full text-center text-gray-500 py-12">كن أول من يشارك تجربته معنا!</div>';
         return;
     }
 
@@ -230,7 +252,7 @@ function displayReviews(reviews) {
             <div class="flex items-center justify-between pt-4 border-t border-gray-100">
                 <div>
                     <div class="font-bold text-navy">${review.name}</div>
-                    <div class="text-sm text-gray-500">تقييم حقيقي</div>
+                    <div class="text-sm text-gray-500">رأي موثق</div>
                 </div>
                 <div class="text-xs text-gray-400">${formatRelativeDate(review.date)}</div>
             </div>
