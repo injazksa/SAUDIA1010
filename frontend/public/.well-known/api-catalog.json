@@ -1,0 +1,27 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://saudia-visa.com/",
+      "links": [
+        {
+          "rel": "service-desc",
+          "href": "https://saudia-visa.com/openapi.json",
+          "type": "application/json",
+          "title": "Saudi Visa Services API - OpenAPI Specification"
+        },
+        {
+          "rel": "service-doc",
+          "href": "https://saudia-visa.com/docs/api",
+          "type": "text/html",
+          "title": "Saudi Visa Services API Documentation"
+        },
+        {
+          "rel": "status",
+          "href": "https://saudia-visa.com/api/health",
+          "type": "application/json",
+          "title": "API Health Status"
+        }
+      ]
+    }
+  ]
+}

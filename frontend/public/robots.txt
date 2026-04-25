@@ -115,6 +115,12 @@ Disallow: /content/
 Disallow: /.netlify/
 
 # ───────────────────────────────────────────────────────────────
+# 🎯 Content-Signal Directives (AI Preferences)
+# ───────────────────────────────────────────────────────────────
+# Signals for AI training, search indexing, and AI input usage
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
+
+# ───────────────────────────────────────────────────────────────
 # 🤖 AI Training & Citation Files
 # ───────────────────────────────────────────────────────────────
 # LLMs.txt standard (llmstxt.org)

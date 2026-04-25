@@ -1,0 +1,74 @@
+# ═══════════════════════════════════════════════════════════════
+# Apache Configuration for AI Agent Optimization
+# ═══════════════════════════════════════════════════════════════
+
+# Enable CORS for API endpoints
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type, Accept"
+</IfModule>
+
+# ───────────────────────────────────────────────────────────────
+# RFC 8288 Link Headers for AI Agent Discovery
+# ───────────────────────────────────────────────────────────────
+<IfModule mod_headers.c>
+    # API Catalog
+    Header set Link "</api-catalog>; rel=\"api-catalog\"; type=\"application/linkset+json\""
+    
+    # Service Documentation
+    Header append Link "</docs/api>; rel=\"service-doc\"; type=\"text/html\""
+    
+    # Agent Skills Discovery
+    Header append Link "</.well-known/agent-skills/index.json>; rel=\"agent-skills\"; type=\"application/json\""
+</IfModule>
+
+# ───────────────────────────────────────────────────────────────
+# Content Negotiation for Markdown (AI Agents)
+# ───────────────────────────────────────────────────────────────
+<IfModule mod_negotiation.c>
+    # Allow Markdown content type for AI agents
+    AddType text/markdown .md
+    AddType text/markdown .markdown
+</IfModule>
+
+# ───────────────────────────────────────────────────────────────
+# Cache Control for API Endpoints
+# ───────────────────────────────────────────────────────────────
+<FilesMatch "\.(json|xml)$">
+    Header set Cache-Control "public, max-age=3600"
+    Header set Content-Type "application/json; charset=utf-8"
+</FilesMatch>
+
+# ───────────────────────────────────────────────────────────────
+# Compression for API Responses
+# ───────────────────────────────────────────────────────────────
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/xml
+</IfModule>
+
+# ───────────────────────────────────────────────────────────────
+# Security Headers
+# ───────────────────────────────────────────────────────────────
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# ───────────────────────────────────────────────────────────────
+# Rewrite Rules for .well-known paths
+# ───────────────────────────────────────────────────────────────
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Allow direct access to .well-known files
+    RewriteCond %{REQUEST_URI} ^/\.well-known/ [OR]
+    RewriteCond %{REQUEST_URI} ^/(robots\.txt|sitemap\.xml|llms\.txt|ai-instructions\.txt)$ 
+    RewriteRule ^ - [L]
+</IfModule>

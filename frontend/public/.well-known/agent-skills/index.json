@@ -1,0 +1,40 @@
+{
+  "$schema": "https://agentskills.io/schema/v0.2.0/index.json",
+  "skills": [
+    {
+      "name": "get-visa-requirements",
+      "type": "tool",
+      "description": "Get comprehensive visa requirements for Saudi Arabia including documents, medical checks, and processing times",
+      "url": "https://saudia-visa.com/professions.json",
+      "sha256": "auto"
+    },
+    {
+      "name": "check-profession-eligibility",
+      "type": "tool",
+      "description": "Check if a specific profession is eligible for Saudi work visa and get its requirements",
+      "url": "https://saudia-visa.com/api/professions",
+      "sha256": "auto"
+    },
+    {
+      "name": "get-visa-types",
+      "type": "tool",
+      "description": "Get information about different types of Saudi visas (work, tourist, family sponsorship, etc.)",
+      "url": "https://saudia-visa.com/api/visa-types",
+      "sha256": "auto"
+    },
+    {
+      "name": "get-office-info",
+      "type": "tool",
+      "description": "Get information about our Saudi Embassy-licensed visa office (License #22128) in Jordan",
+      "url": "https://saudia-visa.com/api/office-info",
+      "sha256": "auto"
+    },
+    {
+      "name": "get-blog-posts",
+      "type": "tool",
+      "description": "Get latest blog posts about Saudi visa procedures, requirements, and tips",
+      "url": "https://saudia-visa.com/blog/posts.json",
+      "sha256": "auto"
+    }
+  ]
+}
