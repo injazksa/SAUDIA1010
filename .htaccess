@@ -1,0 +1,54 @@
+# ═══════════════════════════════════════════════════════════════
+# .htaccess — مكتب تأشيرات السعودية | حماية احتياطية لخوادم Apache
+# (Netlify يستخدم _headers و _redirects؛ هذا الملف للخوادم التقليدية)
+# ═══════════════════════════════════════════════════════════════
+
+# ── منع عرض محتويات المجلدات (Directory Listing) ──
+Options -Indexes -MultiViews
+
+# ── منع الوصول لكل الملفات النقطية الحساسة (.git, .env, .htaccess ...) ──
+<FilesMatch "(^\.|\.(env|git|gitignore|gitconfig|yml|yaml|toml|log|bak|sh|ini|sql)$)">
+    Require all denied
+</FilesMatch>
+
+# ── حماية ملفات التكوين باسمها الصريح ──
+<FilesMatch "^(config\.yml|config\.yaml|package\.json|package-lock\.json|\.htaccess|\.htpasswd)$">
+    Require all denied
+</FilesMatch>
+
+# ── منع الوصول للمجلدات الحساسة ──
+RedirectMatch 404 ^/(admin|admin-secure|backend|frontend|\.git|\.emergent|content)(/.*)?$
+
+# ── منع محاولات اجتياز المسارات (Path Traversal) وحقن الأوامر ──
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # حجب أي محاولة احتواء على ../ أو ..\ أو ترميزها
+    RewriteCond %{THE_REQUEST} (\.\./|\.\.\\|%2e%2e) [NC]
+    RewriteRule .* - [F,L]
+    # حجب محاولات حقن السكربتات في الـ query string
+    RewriteCond %{QUERY_STRING} (<script|%3Cscript|base64_|eval\(|union.*select) [NC]
+    RewriteRule .* - [F,L]
+</IfModule>
+
+# ── ترويسات أمان (مكافئة لـ _headers) ──
+<IfModule mod_headers.c>
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+    # إخفاء توقيع الخادم
+    Header unset X-Powered-By
+    Header unset Server
+    # منع فهرسة الملفات الحساسة
+    <FilesMatch "\.(yml|yaml|toml|json|env)$">
+        Header set X-Robots-Tag "noindex, nofollow, noarchive"
+    </FilesMatch>
+</IfModule>
+
+# ── إخفاء توقيع الخادم ──
+ServerSignature Off
+
+# ── صفحة الخطأ المخصصة ──
+ErrorDocument 404 /404.html
+ErrorDocument 403 /404.html

@@ -1,0 +1,72 @@
+# ⚡ Clean URL Redirects — Saudia Visa
+# 🔄 301 Permanent Redirects from OLD system to NEW system (2026)
+# This ensures Google updates its index and consolidates ranking signals
+
+# ═══════════════════════════════════════════════════════════════
+# 🔁 Single-step redirects: HTTPS + Non-WWW (Task 5 - fixes redirect chain)
+# يحوّل http://www, http://, https://www مباشرة إلى https://saudia-visa.com بقفزة واحدة
+# ═══════════════════════════════════════════════════════════════
+http://www.saudia-visa.com/*    https://saudia-visa.com/:splat    301!
+http://saudia-visa.com/*        https://saudia-visa.com/:splat    301!
+https://www.saudia-visa.com/*   https://saudia-visa.com/:splat    301!
+
+# Old post.html dynamic URLs → New static blog pages (301 Permanent)
+/post?id=work-visa-guide-2025              /blog/work-visa-comprehensive-2026.html  301
+/post?id=work-visa                         /blog/work-visa-comprehensive-2026.html  301
+/post?id=umrah                             /blog/umrah-visa-guide-2026.html         301
+/post?id=tourist                           /blog/tourist-visa-guide.html            301
+/post?id=family                            /blog/family-sponsorship-guide.html       301
+
+# Old post.html template redirect
+/post                                      /blog.html                               301
+/post.html                                 /blog.html                               301
+
+# Clean URL Redirects (200 rewrites - no SEO impact)
+/work-visa         /work-visa.html        200
+/other-services    /other-services.html   200
+/labor-exam        /saudi-labor-exam-jordan.html   200
+/saudi-labor-exam  /saudi-labor-exam-jordan.html   200
+/fahis             /saudi-labor-exam-jordan.html   200
+/professions       /professions.html      200
+/corporate         /corporate.html        200
+/calculator        /calculator.html       200
+/professional      /professional.html     200
+/certificates      /certificates.html     200
+/blog              /blog.html             200
+/about             /about.html            200
+/faq               /faq.html              200
+/privacy           /privacy.html          200
+/terms             /terms.html            200
+/disclaimer        /disclaimer.html       200
+
+# Blog post friendly URLs
+/blog/umrah              /blog/umrah-visa-guide-2026.html      200
+/blog/work               /blog/work-visa-comprehensive-2026.html 200
+/blog/tourist            /blog/tourist-visa-guide.html         200
+/blog/family             /blog/family-sponsorship-guide.html   200
+
+# ═══════════════════════════════════════════════════════════════
+# 🔒 SECURITY: حجب الوصول للملفات والمسارات الحساسة (403 → 404)
+# يمنع القراءة أو التصفّح أو محاولات اجتياز المسارات
+# ═══════════════════════════════════════════════════════════════
+/.git/*                  /404.html   404!
+/.gitignore              /404.html   404!
+/.gitconfig              /404.html   404!
+/.env                    /404.html   404!
+/.env/*                  /404.html   404!
+/.emergent/*             /404.html   404!
+/backend/*               /404.html   404!
+/frontend/*              /404.html   404!
+/*.yml                   /404.html   404!
+/*.yaml                  /404.html   404!
+/*.toml                  /404.html   404!
+/*.env                   /404.html   404!
+/*.sh                    /404.html   404!
+/*.log                   /404.html   404!
+/*.bak                   /404.html   404!
+/*.config.json           /404.html   404!
+/package.json            /404.html   404!
+/package-lock.json       /404.html   404!
+
+# 404
+/*                       /404.html                             404

@@ -1,0 +1,231 @@
+# ═══════════════════════════════════════════════════════════════
+# Netlify Config — مكتب تأشيرات السعودية | v4.0 | 2026-05-07
+# أداء عالٍ + أمان + WebP + CDN + Brotli
+# ═══════════════════════════════════════════════════════════════
+
+[build]
+ publish = "."
+ command = "echo 'Static site - no build needed'"
+
+[build.environment]
+ NODE_VERSION = "20"
+ NODE_ENV = "production"
+
+# ⚡ تحسين CSS و JS تلقائياً
+[build.processing]
+ skip_processing = false
+
+[build.processing.css]
+ bundle = true
+ minify = true
+
+[build.processing.js]
+ bundle = false
+ minify = true
+
+[build.processing.html]
+ pretty_urls = false
+
+[build.processing.images]
+ compress = true
+
+# ═══════════════════════════════════════════════════════════════
+# 🔒 حماية ملفات حساسة
+# ═══════════════════════════════════════════════════════════════
+[[redirects]]
+ from = "/.env*"
+ to = "/404.html"
+ status = 404
+ force = true
+
+[[redirects]]
+ from = "/.git/*"
+ to = "/404.html"
+ status = 404
+ force = true
+
+[[redirects]]
+ from = "/*.md"
+ to = "/404.html"
+ status = 404
+ force = true
+
+[[redirects]]
+ from = "/*.py"
+ to = "/404.html"
+ status = 404
+ force = true
+
+[[redirects]]
+ from = "/node_modules/*"
+ to = "/404.html"
+ status = 404
+ force = true
+
+# ═══════════════════════════════════════════════════════════════
+# 🔁 Single-step redirects: HTTPS + Non-WWW (Task 5)
+# يقلّص سلسلة التحويلات (http://www → https://www → https://) إلى قفزة واحدة
+# ═══════════════════════════════════════════════════════════════
+[[redirects]]
+ from = "http://www.saudia-visa.com/*"
+ to = "https://saudia-visa.com/:splat"
+ status = 301
+ force = true
+
+[[redirects]]
+ from = "http://saudia-visa.com/*"
+ to = "https://saudia-visa.com/:splat"
+ status = 301
+ force = true
+
+[[redirects]]
+ from = "https://www.saudia-visa.com/*"
+ to = "https://saudia-visa.com/:splat"
+ status = 301
+ force = true
+
+# ═══════════════════════════════════════════════════════════════
+# 🔄 روابط نظيفة (بدون .html) + توجيه مقالات القديمة
+# ═══════════════════════════════════════════════════════════════
+[[redirects]]
+ from = "/post?id=work-visa-guide-2025"
+ to = "/blog/work-visa-comprehensive-2026.html"
+ status = 301
+
+[[redirects]]
+ from = "/post?id=work-visa"
+ to = "/blog/work-visa-comprehensive-2026.html"
+ status = 301
+
+[[redirects]]
+ from = "/post?id=umrah"
+ to = "/blog/umrah-visa-guide-2026.html"
+ status = 301
+
+[[redirects]]
+ from = "/post?id=tourist"
+ to = "/blog/tourist-visa-guide.html"
+ status = 301
+
+[[redirects]]
+ from = "/post?id=family"
+ to = "/blog/family-sponsorship-guide.html"
+ status = 301
+
+[[redirects]]
+ from = "/post.html"
+ to = "/blog.html"
+ status = 301
+
+[[redirects]]
+ from = "/post"
+ to = "/blog.html"
+ status = 301
+
+# ─── روابط نظيفة ─────────────────────────────────────────────
+[[redirects]]
+ from = "/work-visa"
+ to = "/work-visa.html"
+ status = 200
+
+[[redirects]]
+ from = "/other-services"
+ to = "/other-services.html"
+ status = 200
+
+[[redirects]]
+ from = "/labor-exam"
+ to = "/saudi-labor-exam-jordan.html"
+ status = 200
+
+[[redirects]]
+ from = "/saudi-labor-exam"
+ to = "/saudi-labor-exam-jordan.html"
+ status = 200
+
+[[redirects]]
+ from = "/fahis"
+ to = "/saudi-labor-exam-jordan.html"
+ status = 200
+
+[[redirects]]
+ from = "/professions"
+ to = "/professions.html"
+ status = 200
+
+[[redirects]]
+ from = "/corporate"
+ to = "/corporate.html"
+ status = 200
+
+[[redirects]]
+ from = "/calculator"
+ to = "/calculator.html"
+ status = 200
+
+[[redirects]]
+ from = "/professional"
+ to = "/professional.html"
+ status = 200
+
+[[redirects]]
+ from = "/certificates"
+ to = "/certificates.html"
+ status = 200
+
+[[redirects]]
+ from = "/blog"
+ to = "/blog.html"
+ status = 200
+
+[[redirects]]
+ from = "/about"
+ to = "/about.html"
+ status = 200
+
+[[redirects]]
+ from = "/faq"
+ to = "/faq.html"
+ status = 200
+
+[[redirects]]
+ from = "/privacy"
+ to = "/privacy.html"
+ status = 200
+
+[[redirects]]
+ from = "/terms"
+ to = "/terms.html"
+ status = 200
+
+[[redirects]]
+ from = "/disclaimer"
+ to = "/disclaimer.html"
+ status = 200
+
+# ─── روابط مدونة نظيفة ───────────────────────────────────────
+[[redirects]]
+ from = "/blog/umrah"
+ to = "/blog/umrah-visa-guide-2026.html"
+ status = 200
+
+[[redirects]]
+ from = "/blog/work"
+ to = "/blog/work-visa-comprehensive-2026.html"
+ status = 200
+
+[[redirects]]
+ from = "/blog/tourist"
+ to = "/blog/tourist-visa-guide.html"
+ status = 200
+
+[[redirects]]
+ from = "/blog/family"
+ to = "/blog/family-sponsorship-guide.html"
+ status = 200
+
+# ─── 404 fallback ────────────────────────────────────────────
+[[redirects]]
+ from = "/*"
+ to = "/404.html"
+ status = 404

@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+ <meta charset="UTF-8">
+ <!-- ✅ Favicon — السيف والنخلة (نيلي وذهبي) -->
+ <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+ <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+ <link rel="icon" type="image/png" sizes="192x192" href="/icons/logo-192.png">
+ <link rel="apple-touch-icon" sizes="180x180" href="/icons/logo-192.png">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+ <!-- SEO Meta Tags -->
+ <title>حاسبة تكلفة التأشيرة السعودية | إنجاز الأردن</title>
+ <meta property="og:type" content="website">
+ <meta property="og:site_name" content="مكتب تأشيرات السعودية في الأردن">
+ <meta property="og:locale" content="ar_JO">
+ <meta property="og:url" content="https://saudia-visa.com/calculator.html">
+ <meta property="og:title" content="حاسبة تكلفة التأشيرة السعودية | إنجاز الأردن">
+ <meta property="og:description" content="احسب تكلفة تأشيرتك السعودية: عمل، إقامة، زيارة، عمرة. مكتب معتمد.">
+ <meta property="og:image" content="https://saudia-visa.com/images/og-cover.png">
+ <meta property="og:image:width" content="1200">
+ <meta property="og:image:height" content="630">
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+ <meta name="description" content="احسب تكلفة تأشيرتك السعودية: عمل، إقامة، زيارة، عمرة. تشمل الرسوم الحكومية والفحص الطبي والاعتماد المهني — مكتب معتمد.">
+ <!-- ✅ Google Search Console: استبدل XXXX برمز التحقق من لوحة GSC -->
+ <meta name="google-site-verification" content="REPLACE_WITH_GSC_CODE">
+ <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+ <meta name="keywords" content="حاسبة رسوم التأشيرات السعودية, تكلفة تأشيرة عمل سعودية, رسوم السفارة السعودية, تكلفة QVP, مكتب تأشيرات معتمد الأردن">
+ <link rel="canonical" href="https://saudia-visa.com/calculator.html">
+ 
+ <!-- 📍 JSON-LD Schema Markup for Local Business -->
+ <script src="schema-markup.js" defer></script>
+ <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+ 
+ <!-- ⚡ Performance: preload critical resources -->
+ <link rel="preload" href="/styles.css" as="style">
+ <link rel="preload" href="/js/config-loader.js" as="script">
+ <link rel="stylesheet" href="styles.css">
+ 
+ <!-- ⚡ Performance Optimization Styles -->
+ <link rel="stylesheet" href="smooth-transitions.css">
+
+ <!-- 💎 Calculator Premium UI Polish -->
+ <link rel="stylesheet" href="calculator-ui.css">
+
+ <meta name="twitter:card" content="summary_large_image">
+ <meta name="twitter:site" content="@SaudiaVisa_JO">
+ <meta name="twitter:title" content="حاسبة تكلفة التأشيرة السعودية | إنجاز الأردن">
+ <meta name="twitter:description" content="احسب تكلفة تأشيرتك السعودية: عمل، إقامة، زيارة، عمرة. تشمل الرسوم الحكومية والفحص الطبي — مكتب معتمد.">
+ <meta name="twitter:image" content="https://saudia-visa.com/images/og-cover.png">
+ 
+    <!-- 📊 Facebook Pixel + WhatsApp/Phone/Email click tracking -->
+    <script src="/marketing-pixel.js" defer></script>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2499298600459646&ev=PageView&noscript=1"/></noscript>
+    <!-- Tailwind (compiled, loaded last so utilities win cascade) -->
+    <link rel="stylesheet" href="/css/tailwind.min.css">
+
+
+</head>
+<body class="font-arabic bg-gray-50">
+ 
+ <a href="https://wa.me/962789881009" target="_blank" class="fixed bottom-6 left-6 z-50 w-16 h-16 bg-green-500 hover:bg-green-600 text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-all" rel="noopener noreferrer">
+ <i class="fab fa-whatsapp text-3xl"></i>
+ </a>
+ 
+ <!-- Header -->
+ <header class="sticky top-0 z-40 backdrop-blur-xl bg-white/80 border-b border-gray-100 shadow-sm">
+ <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+ <div class="flex items-center justify-between h-16">
+ <div class="flex-shrink-0">
+ <a href="/" class="flex items-center gap-2">
+ <img src="/icons/logo-192.png" alt="مكتب تأشيرات السعودية" class="h-10 w-auto">
+ <div class="hidden sm:block">
+ <span class="text-[11px] lg:text-xs font-bold text-navy leading-tight"><span class="block">مكتب تأشيرات السعودية في الأردن</span></span>
+ </div>
+ </a>
+ </div>
+ <nav class="hidden lg:flex items-center space-x-8 space-x-reverse">
+ <a href="index.html" class="text-navy hover:text-gold transition-colors font-medium">الرئيسية</a>
+ <a href="index.html#services" class="text-navy hover:text-gold transition-colors font-medium">خدماتنا</a>
+ <a href="corporate.html" class="text-navy hover:text-gold transition-colors font-medium">خدمات الشركات</a>
+ <a href="professions.html" class="text-navy hover:text-gold transition-colors font-medium">المهن والأوراق</a>
+ <a href="calculator.html" class="text-gold font-bold">حاسبة الرسوم</a>
+ <a href="blog.html" class="text-navy hover:text-gold transition-colors font-medium">المدونة</a>
+ <a href="faq.html" class="text-navy hover:text-gold transition-colors font-medium">الأسئلة الشائعة</a>
+ <a href="index.html#contact" class="bg-gold hover:bg-gold-light text-white px-6 py-2.5 rounded-lg font-semibold transition-all">تواصل معنا</a>
+ </nav>
+ </div>
+ </div>
+ </header>
+ 
+ <!-- Hero -->
+ <section class="relative bg-gradient-to-br from-navy to-navy-dark text-white py-20">
+ <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+ <span class="inline-block px-4 py-2 bg-gold/20 text-gold text-xs font-bold uppercase tracking-wider rounded-full border border-gold/40 mb-6">أداة مجانية وذكية</span>
+ <h1 class="calc-hero-h1 text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">حاسبة رسوم التأشيرات السعودية</h1>
+ <p class="calc-hero-p text-xl text-gray-200 max-w-3xl mx-auto">احصل على تقدير دقيق لتكلفة تأشيرتك شاملة الرسوم الحكومية ورسوم QVP</p>
+ </div>
+ </section>
+ 
+ <!-- Calculator -->
+ <section class="py-20">
+ <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+ <div class="calc-card">
+ <div class="calc-header">
+ <h2>احسب التكلفة الكاملة</h2>
+ <p>أدخل المعلومات المطلوبة للحصول على تقدير دقيق</p>
+ </div>
+ 
+ <div class="calc-body">
+ <!-- Visa Type -->
+ <div>
+ <label class="calc-label" for="visaType">
+ <span class="calc-label-num">1</span>
+ نوع التأشيرة
+ </label>
+ <select id="visaType" onchange="handleVisaTypeChange" class="calc-select">
+ <option value="work">تأشيرة عمل</option>
+ <option value="residence">الإقامة (الاستقدام)</option>
+ <option value="visit">تأشيرة زيارة</option>
+ <option value="family">تأشيرة زيارة عائلية</option>
+ <option value="personal">تأشيرة شخصية</option>
+ <option value="government">تأشيرة حكومية</option>
+ <option value="business">تأشيرة أعمال</option>
+ </select>
+ </div>
+ 
+ <!-- Profession Category - Only for Work Visa -->
+ <div id="professionSection" class="calc-profession-section">
+ <div>
+ <label class="calc-label" for="professionCategory">
+ <span class="calc-label-num">2</span>
+ تصنيف المهنة
+ </label>
+ <select id="professionCategory" onchange="handleProfessionChange" class="calc-select">
+ <option value="">— حدد المهنة المطلوبة </option>
+
+ <optgroup label="مهن لا تحتاج اعتماد مهني">
+ <option value="domestic">عمالة منزلية (سائق، عامل منزلي، مربية، حارس)</option>
+ <option value="worker">عمال (تحميل، مخزن، بناء، إلخ)</option>
+ <option value="ceo">رئيس تنفيذي / مدير عام</option>
+ </optgroup>
+
+ <optgroup label="مهن تحتاج اعتماد مهني (QVP)">
+ <option value="engineer">مهندسين (مع تصديق شهادات)</option>
+ <option value="professional">مهن إدارية ومهنية (محاسب، مدير، مسوّق…)</option>
+ </optgroup>
+ </select>
+ <p class="calc-hint">
+ <i class="fas fa-lightbulb" style="color:#C9A35E; margin-top: 2px;"></i>
+ <span><strong>اختر الأقرب لمهنتك</strong> — السعر النهائي يتم تأكيده عند التواصل المباشر مع المكتب.</span>
+ </p>
+ </div>
+ 
+ <!-- Experience Level - Only for Professional -->
+ <div id="experienceSection" class="hidden">
+ <label class="calc-label">
+ <span class="calc-label-num">3</span>
+ مستوى الخبرة المطلوب
+ </label>
+ <div class="calc-segmented" role="radiogroup" aria-label="مستوى الخبرة">
+ <input type="radio" id="exp-none" name="experienceLevelSeg" value="none" checked>
+ <label for="exp-none">بدون خبرة</label>
+ <input type="radio" id="exp-one" name="experienceLevelSeg" value="one">
+ <label for="exp-one">سنة واحدة</label>
+ <input type="radio" id="exp-two" name="experienceLevelSeg" value="two-plus">
+ <label for="exp-two">أكثر من سنتين</label>
+ </div>
+ <!-- Hidden select for JS compatibility -->
+ <select id="experienceLevel" style="display:none" aria-hidden="true">
+ <option value="none">بدون خبرة</option>
+ <option value="one">سنة واحدة</option>
+ <option value="two-plus">أكثر من سنتين</option>
+ </select>
+ </div>
+ </div>
+ 
+ <!-- Services -->
+ <div id="servicesSection">
+ <label class="calc-label">
+ <span class="calc-label-num">4</span>
+ الخدمات المطلوبة
+ </label>
+ <div class="calc-services">
+ <label class="calc-service" for="visaOnly">
+ <input type="checkbox" id="visaOnly" onchange="handleVisaOnlyChange">
+ <span class="calc-service-text">
+ <span class="calc-service-title">فقط رسوم التأشيرة</span>
+ <span class="calc-service-meta">بدون تصديق أو اعتماد مهني</span>
+ </span>
+ </label>
+ <label class="calc-service" id="certificationLabel" for="certification">
+ <input type="checkbox" id="certification">
+ <span class="calc-service-text">
+ <span class="calc-service-title">تصديق الشهادات</span>
+ <span class="calc-service-meta">للمهندسين (150–180 دينار)</span>
+ </span>
+ </label>
+ <label class="calc-service" id="professionalLabel" for="professional">
+ <input type="checkbox" id="professional">
+ <span class="calc-service-text">
+ <span class="calc-service-title">الاعتماد المهني (QVP)</span>
+ <span class="calc-service-meta">80–160 دينار حسب الخبرة</span>
+ </span>
+ </label>
+ <label class="calc-service" for="medical">
+ <input type="checkbox" id="medical">
+ <span class="calc-service-text">
+ <span class="calc-service-title">الفحص الطبي</span>
+ <span class="calc-service-meta">+132 دينار</span>
+ </span>
+ </label>
+ </div>
+ </div>
+ 
+ <button onclick="calculateCost" class="calc-cta" type="button" data-testid="calculator-submit-btn">
+ <i class="fas fa-calculator"></i>
+ احسب التكلفة الآن
+ </button>
+ </div>
+ </div>
+ 
+ <!-- Result -->
+ <div id="result" class="calc-result hidden" data-testid="calculator-result">
+ <h3 class="calc-result-title">التكلفة التقريبية</h3>
+
+ <div class="calc-total-box">
+ <div class="calc-total-label">التكلفة الإجمالية</div>
+ <div class="calc-total-value">
+ <span id="totalRange"></span>
+ <button type="button"
+ class="calc-share-btn"
+ onclick="openShareSheet"
+ aria-label="مشاركة نتيجة الحاسبة"
+ title="شارك النتيجة"
+ data-testid="calculator-share-btn">
+ <i class="fas fa-share-alt"></i>
+ </button>
+ </div>
+ <div id="breakdown" class="calc-breakdown"></div>
+ </div>
+
+ <div class="calc-note">
+ <i class="fas fa-info-circle" style="color:#fde68a;"></i>
+ <strong>ملاحظة هامة:</strong> الأسعار تقريبية وقابلة للتغيير حسب الحالة. للحصول على سعر دقيق، تواصل معنا مباشرة.
+ </div>
+
+ <div class="calc-result-actions">
+ <a href="https://wa.me/962789881009" class="calc-btn-whatsapp" data-testid="calculator-whatsapp-btn">
+ <i class="fab fa-whatsapp"></i>
+ تواصل معنا للسعر الدقيق
+ </a>
+ <a href="professions.html" class="calc-btn-secondary">
+ <i class="fas fa-file-alt"></i>
+ الأوراق المطلوبة
+ </a>
+ </div>
+ </div>
+ </div>
+ </section>
+
+ <!-- Share Sheet -->
+ <div class="share-sheet-backdrop" id="shareSheetBackdrop" onclick="closeShareSheet"></div>
+ <div class="share-sheet" id="shareSheet" role="dialog" aria-modal="true" aria-labelledby="shareSheetTitle">
+ <div class="share-sheet-handle"></div>
+ <h4 class="share-sheet-title" id="shareSheetTitle">شارك التقدير</h4>
+ <p class="share-sheet-subtitle">أرسل هذه الأرقام لكفيلك، مديرك أو شركة التوظيف خلال ثوانٍ.</p>
+ <div class="share-sheet-grid">
+ <a href="#" class="share-item" id="shareWhatsapp" data-testid="share-whatsapp" target="_blank" rel="noopener">
+ <span class="share-item-icon whatsapp"><i class="fab fa-whatsapp"></i></span>
+ واتساب
+ </a>
+ <a href="#" class="share-item" id="shareTelegram" data-testid="share-telegram" target="_blank" rel="noopener">
+ <span class="share-item-icon telegram"><i class="fab fa-telegram-plane"></i></span>
+ تيليجرام
+ </a>
+ <a href="#" class="share-item" id="shareSms" data-testid="share-sms">
+ <span class="share-item-icon sms"><i class="fas fa-comment-dots"></i></span>
+ رسالة SMS
+ </a>
+ <a href="#" class="share-item" id="shareEmail" data-testid="share-email">
+ <span class="share-item-icon email"><i class="fas fa-envelope"></i></span>
+ البريد
+ </a>
+ <button type="button" class="share-item" onclick="copyShareText" data-testid="share-copy">
+ <span class="share-item-icon copy"><i class="fas fa-copy"></i></span>
+ نسخ
+ </button>
+ <button type="button" class="share-item" id="shareNativeBtn" onclick="nativeShare" data-testid="share-native" style="display:none;">
+ <span class="share-item-icon native"><i class="fas fa-share"></i></span>
+ مشاركة
+ </button>
+ </div>
+ <div class="share-preview" id="sharePreview"></div>
+ <button type="button" class="share-close" onclick="closeShareSheet" data-testid="share-close">إغلاق</button>
+ </div>
+
+ <!-- Toast -->
+ <div class="calc-toast" id="calcToast" role="status" aria-live="polite">
+ <i class="fas fa-check-circle"></i>
+ <span id="calcToastText">تم النسخ!</span>
+ </div>
+ 
+ <script>
+ // Handle visa type change
+ function handleVisaTypeChange() {
+ const visaType = document.getElementById('visaType').value;
+ const professionSection = document.getElementById('professionSection');
+ const servicesSection = document.getElementById('servicesSection');
+ 
+ if (visaType === 'work' | visaType === 'residence') {
+ professionSection.classList.remove('hidden');
+ servicesSection.classList.remove('hidden');
+ } else {
+ professionSection.classList.add('hidden');
+ servicesSection.classList.add('hidden');
+ }
+ 
+ // Reset
+ document.getElementById('result').classList.add('hidden');
+ }
+ 
+ // Handle profession change
+ function handleProfessionChange() {
+ const profession = document.getElementById('professionCategory').value;
+ const experienceSection = document.getElementById('experienceSection');
+ const certLabel = document.getElementById('certificationLabel');
+ const profLabel = document.getElementById('professionalLabel');
+ 
+ // Show/hide experience for professional category
+ if (profession === 'professional') {
+ experienceSection.classList.remove('hidden');
+ } else {
+ experienceSection.classList.add('hidden');
+ }
+ 
+ // Disable certification for all except engineer
+ if (profession === 'engineer') {
+ document.getElementById('certification').disabled = false;
+ certLabel.classList.remove('is-disabled');
+ } else {
+ document.getElementById('certification').disabled = true;
+ document.getElementById('certification').checked = false;
+ certLabel.classList.add('is-disabled');
+ }
+ 
+ // Disable professional for domestic, ceo, worker
+ const disableProfessional = ['domestic', 'ceo', 'worker'];
+ if (disableProfessional.includes(profession)) {
+ document.getElementById('professional').disabled = true;
+ document.getElementById('professional').checked = false;
+ profLabel.classList.add('is-disabled');
+ } else {
+ document.getElementById('professional').disabled = false;
+ profLabel.classList.remove('is-disabled');
+ }
+ }
+ 
+ // Handle visa only checkbox
+ function handleVisaOnlyChange() {
+ const visaOnly = document.getElementById('visaOnly').checked;
+ 
+ if (visaOnly) {
+ document.getElementById('certification').checked = false;
+ document.getElementById('professional').checked = false;
+ document.getElementById('certification').disabled = true;
+ document.getElementById('professional').disabled = true;
+ document.getElementById('certificationLabel').classList.add('is-disabled');
+ document.getElementById('professionalLabel').classList.add('is-disabled');
+ } else {
+ document.getElementById('certification').disabled = false;
+ document.getElementById('professional').disabled = false;
+ document.getElementById('certificationLabel').classList.remove('is-disabled');
+ document.getElementById('professionalLabel').classList.remove('is-disabled');
+ }
+ }
+ 
+ function calculateCost() {
+ const visaType = document.getElementById('visaType').value;
+ const profession = document.getElementById('professionCategory').value;
+ const experience = document.getElementById('experienceLevel').value;
+ const visaOnly = document.getElementById('visaOnly').checked;
+ const certification = document.getElementById('certification').checked;
+ const professional = document.getElementById('professional').checked;
+ const medical = document.getElementById('medical').checked;
+ 
+ let minCost = 0;
+ let maxCost = 0;
+ let breakdown = [];
+ let needsMedical = true; // افتراضي: يحتاج فحص طبي
+ 
+ // Calculate based on visa type
+ if (visaType === 'work') {
+ if (!profession) {
+ alert('الرجاء اختيار تصنيف المهنة');
+ return;
+ }
+ 
+ needsMedical = true;
+ 
+ // Base visa cost based on profession (نطاق موحّد: 150-400 دينار)
+ if (profession === 'domestic') {
+ // عمالة منزلية
+ minCost = 150;
+ maxCost = 200;
+ breakdown.push('رسوم التأشيرة (عمالة منزلية): 150-200 دينار');
+ } else if (profession === 'ceo') {
+ // رئيس تنفيذي / مدير عام
+ minCost = 350;
+ maxCost = 400;
+ breakdown.push('رسوم التأشيرة (رئيس تنفيذي/مدير عام): 350-400 دينار');
+ } else if (profession === 'worker') {
+ // عمال
+ minCost = 150;
+ maxCost = 200;
+ breakdown.push('رسوم التأشيرة (عمال): 150-200 دينار');
+ } else if (profession === 'engineer') {
+ // مهندسين
+ minCost = 220;
+ maxCost = 300;
+ breakdown.push('رسوم التأشيرة الأساسية: 220-300 دينار');
+
+ if (certification) {
+ minCost += 150;
+ maxCost += 180;
+ breakdown.push('+ تصديق الشهادات الهندسية: 150-180 دينار');
+ }
+
+ if (professional) {
+ // QVP — 80-160 دينار
+ minCost += 80;
+ maxCost += 160;
+ breakdown.push('+ الاعتماد المهني (QVP): 80-160 دينار');
+ }
+ } else if (profession === 'professional') {
+ // مهن مهنية
+ minCost = 220;
+ maxCost = 300;
+ breakdown.push('رسوم التأشيرة الأساسية: 220-300 دينار');
+
+ // لا تصديق شهادات - فقط اعتماد مهني (QVP)
+ if (professional) {
+ if (experience === 'two-plus') {
+ minCost += 120;
+ maxCost += 160;
+ breakdown.push('+ الاعتماد المهني QVP (خبرة +2 سنوات): 120-160 دينار');
+ } else if (experience === 'one') {
+ minCost += 80;
+ maxCost += 120;
+ breakdown.push('+ الاعتماد المهني QVP (خبرة سنة): 80-120 دينار');
+ } else {
+ minCost += 80;
+ maxCost += 160;
+ breakdown.push('+ الاعتماد المهني QVP: 80-160 دينار');
+ }
+ }
+ }
+ 
+ // Add medical exam if selected
+ if (medical) {
+ minCost += 132;
+ maxCost += 132;
+ breakdown.push('+ الفحص الطبي: 132 دينار');
+ }
+ 
+ } else if (visaType === 'residence') {
+ // الإقامة (الاستقدام)
+ needsMedical = true;
+ minCost = 70;
+ maxCost = 90;
+ breakdown.push('رسوم التأشيرة (مكتب تأشير): 70-90 دينار');
+ breakdown.push('+ حجز موعد: 15 دينار (تواصل معنا)');
+ 
+ if (medical) {
+ minCost += 132;
+ maxCost += 132;
+ breakdown.push('+ الفحص الطبي: 132 دينار');
+ }
+ 
+ } else if (visaType === 'visit') {
+ // زيارة
+ needsMedical = false;
+ minCost = 120;
+ maxCost = 140;
+ breakdown.push('رسوم التأشيرة (مكتب تأشير): 120-140 دينار');
+ 
+ } else if (visaType === 'family') {
+ // زيارة عائلية
+ needsMedical = false;
+ minCost = 120;
+ maxCost = 140;
+ breakdown.push('رسوم التأشيرة (مكتب تأشير): 120-140 دينار');
+ 
+ } else if (visaType === 'personal') {
+ // شخصية
+ needsMedical = false;
+ minCost = 120;
+ maxCost = 140;
+ breakdown.push('رسوم التأشيرة (مكتب تأشير): 120-140 دينار');
+ 
+ } else if (visaType === 'business') {
+ // أعمال
+ needsMedical = false;
+ minCost = 120;
+ maxCost = 140;
+ breakdown.push('رسوم التأشيرة (مكتب تأشير): 120-140 دينار');
+ 
+ } else if (visaType === 'government') {
+ // حكومية
+ needsMedical = false;
+ minCost = 50;
+ maxCost = 90;
+ breakdown.push('رسوم التأشيرة (مكتب تأشير): 50-90 دينار');
+ }
+ 
+ // Display result
+ let rangeText = '';
+ if (minCost === maxCost) {
+ rangeText = `${minCost} دينار`;
+ } else {
+ rangeText = `${minCost} - ${maxCost} دينار`;
+ }
+ 
+ document.getElementById('totalRange').textContent = rangeText;
+ 
+ // Display breakdown
+ const breakdownDiv = document.getElementById('breakdown');
+ breakdownDiv.innerHTML = breakdown.map(item => `<div>• ${item}</div>`).join('');
+ 
+ // Show medical note if not needed
+ if (!needsMedical && medical) {
+ breakdownDiv.innerHTML += '<div class="text-yellow-300 mt-2">⚠️ هذا النوع من التأشيرات لا يحتاج فحص طبي</div>';
+ }
+ 
+ document.getElementById('result').classList.remove('hidden');
+ document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+ }
+ 
+ function getVisaTypeName(type) {
+ const names = {
+ 'work': 'تأشيرة العمل',
+ 'residence': 'الإقامة (الاستقدام)',
+ 'visit': 'تأشيرة الزيارة',
+ 'family': 'تأشيرة الزيارة العائلية',
+ 'personal': 'التأشيرة الشخصية',
+ 'government': 'التأشيرة الحكومية',
+ 'business': 'تأشيرة الأعمال'
+ };
+ return names[type] | 'التأشيرة';
+ }
+ 
+ // Sync segmented radios <-> hidden experience select
+ document.querySelectorAll('input[name="experienceLevelSeg"]').forEach(radio => {
+ radio.addEventListener('change', () => {
+ const hidden = document.getElementById('experienceLevel');
+ if (hidden) hidden.value = radio.value;
+ });
+ });
+
+ // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ // 📤 SHARE SHEET
+ // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ function buildShareText() {
+ const visaType = document.getElementById('visaType').value;
+ const totalRange = document.getElementById('totalRange').textContent.trim;
+ const breakdownItems = Array.from(
+ document.getElementById('breakdown').querySelectorAll('div')
+ ).map(d => d.textContent.trim).filter(t => t && !t.startsWith('⚠️'));
+
+ const lines = [
+ '💎 تقدير رسوم التأشيرة السعودية',
+ '─────────────────────',
+ `• نوع التأشيرة: ${getVisaTypeName(visaType)}`,
+ `• التكلفة التقريبية: ${totalRange}`,
+ ''
+ ];
+ if (breakdownItems.length) {
+ lines.push('📋 التفاصيل:');
+ breakdownItems.forEach(b => lines.push(` ${b}`));
+ lines.push('');
+ }
+ lines.push('ℹ️ الأسعار تقريبية — للسعر الدقيق تواصل معنا:');
+ lines.push('📞 واتساب: +962 7 8988 1009');
+ lines.push('🌐 saudia-visa.com/calculator.html');
+ return lines.join('\n');
+ }
+
+ function openShareSheet() {
+ const text = buildShareText;
+ const url = 'https://saudia-visa.com/calculator.html';
+ const encoded = encodeURIComponent(text);
+
+ document.getElementById('sharePreview').textContent = text;
+
+ // Build share links
+ document.getElementById('shareWhatsapp').href = `https://wa.me/?text=${encoded}`;
+ document.getElementById('shareTelegram').href = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encoded}`;
+ document.getElementById('shareSms').href = `sms:?&body=${encoded}`;
+ document.getElementById('shareEmail').href =
+ `mailto:?subject=${encodeURIComponent('تقدير رسوم التأشيرة السعودية')}&body=${encoded}`;
+
+ // Show native share if available
+ const nativeBtn = document.getElementById('shareNativeBtn');
+ if (navigator.share) {
+ nativeBtn.style.display = 'flex';
+ }
+
+ document.getElementById('shareSheetBackdrop').classList.add('is-open');
+ document.getElementById('shareSheet').classList.add('is-open');
+ document.body.style.overflow = 'hidden';
+ }
+
+ function closeShareSheet() {
+ document.getElementById('shareSheetBackdrop').classList.remove('is-open');
+ document.getElementById('shareSheet').classList.remove('is-open');
+ document.body.style.overflow = '';
+ }
+
+ function showToast(msg) {
+ const toast = document.getElementById('calcToast');
+ document.getElementById('calcToastText').textContent = msg;
+ toast.classList.add('is-show');
+ clearTimeout(window._calcToastTimer);
+ window._calcToastTimer = setTimeout(() => toast.classList.remove('is-show'), 2200);
+ }
+
+ async function copyShareText() {
+ const text = buildShareText;
+ try {
+ await navigator.clipboard.writeText(text);
+ showToast('تم نسخ النتيجة!');
+ } catch (e) {
+ // Fallback
+ const ta = document.createElement('textarea');
+ ta.value = text;
+ document.body.appendChild(ta);
+ ta.select;
+ try { document.execCommand('copy'); showToast('تم نسخ النتيجة!'); }
+ catch (err) { showToast('تعذّر النسخ'); }
+ document.body.removeChild(ta);
+ }
+ }
+
+ async function nativeShare() {
+ if (!navigator.share) return;
+ try {
+ await navigator.share({
+ title: 'تقدير رسوم التأشيرة السعودية',
+ text: buildShareText,
+ url: 'https://saudia-visa.com/calculator.html'
+ });
+ closeShareSheet;
+ } catch (e) { /* user cancelled */ }
+ }
+
+ // ESC closes the sheet
+ document.addEventListener('keydown', (e) => {
+ if (e.key === 'Escape') closeShareSheet;
+ });
+
+ // Initialize
+ handleVisaTypeChange;
+ </script>
+ 
+ <!-- Footer -->
+ <footer class="bg-gradient-to-br from-navy to-navy-dark text-white py-12">
+ <div class="container mx-auto px-4">
+ <!-- Bottom Footer -->
+ <div class="flex flex-col md:flex-row items-center justify-between gap-4 border-t border-white/10 pt-6">
+ <div class="text-gray-400 text-sm text-center md:text-right">
+ © 2025 مكتب تأشيرات السعودية في الأردن - جميع الحقوق محفوظة
+ </div>
+ <div class="flex gap-6 text-sm">
+ <a href="privacy.html" class="text-gray-400 hover:text-gold transition-colors">سياسة الخصوصية</a>
+ <a href="terms.html" class="text-gray-400 hover:text-gold transition-colors">الشروط والأحكام</a>
+ <a href="disclaimer.html" class="text-gray-400 hover:text-gold transition-colors">إخلاء المسؤولية</a>
+ </div>
+ </div>
+ </div>
+ </footer>
+ 
+ <script src="script.js"></script>
+
+ <!-- ⚡ Core + Security (consolidated - 2 files instead of 8) -->
+ <script src="/core.js" defer></script>
+ <script src="/security.js" defer></script>
+
+ <script src="/js/config-loader.js" defer></script>
+
+ <script type="application/ld+json">
+ [{
+ "@context": "https://schema.org",
+ "@type": "LocalBusiness",
+ "@id": "https://saudia-visa.com/#business",
+ "name": "مكتب تأشيرات السعودية المعتمد",
+ "alternateName": "Saudia Visa Jordan | إنجاز السعودية",
+ "url": "https://saudia-visa.com",
+ "logo": "https://saudia-visa.com/images/og-cover.png",
+ "image": "https://saudia-visa.com/images/og-cover.png",
+ "description": "المكتب الرسمي المعتمد من السفارة السعودية في الأردن لتأشيرات العمل والتصديقات والاعتماد المهني..",
+ "telephone": "+962789881009",
+ "email": "Visa@saudia-visa.com",
+ "address": {
+ "@type": "PostalAddress",
+ "streetAddress": "الدوار الأول - جبل عمّان",
+ "addressLocality": "عمّان",
+ "addressCountry": "JO"
+ },
+ "geo": { "@type": "GeoCoordinates", "latitude": 31.9547, "longitude": 35.9106 },
+ "openingHoursSpecification": [
+ { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Sunday","Monday","Tuesday","Wednesday","Thursday"], "opens": "09:00", "closes": "16:00" }
+ ],
+ "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.95", "reviewCount": "1250", "bestRating": "5" },
+ "priceRange": "$$",
+ "currenciesAccepted": "JOD",
+ "paymentAccepted": "Cash, Bank Transfer",
+ "areaServed": "Jordan",
+ "sameAs": ["https://www.facebook.com/Saudiavisajo"]
+ }]
+ </script>
+</body>
+</html>
