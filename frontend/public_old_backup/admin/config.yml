@@ -1,0 +1,51 @@
+backend:
+  name: git-gateway
+  branch: main
+
+locale: ar
+
+media_folder: "frontend/public/images"
+public_folder: "/images"
+
+slug:
+  encoding: "ascii"
+  clean_accents: true
+
+editor:
+  preview: false
+
+collections:
+  - name: "settings"
+    label: "اعدادات الموقع"
+    delete: false
+    files:
+      - name: "general"
+        label: "المعلومات الأساسية"
+        file: "frontend/public/data/settings.json"
+        fields:
+          - {label: "اسم المكتب", name: "site_name", widget: "string"}
+          - {label: "رقم الهاتف", name: "phone", widget: "string"}
+          - {label: "رقم الواتساب (بدون +)", name: "whatsapp", widget: "string"}
+          - {label: "البريد الإلكتروني", name: "email", widget: "string"}
+          - {label: "رابط فيسبوك", name: "facebook", widget: "string", required: false}
+          - {label: "العنوان الجغرافي", name: "address", widget: "string"}
+          - {label: "وصف الموقع لـ Google (SEO)", name: "meta_description", widget: "text"}
+
+  - name: "blog"
+    label: "المدونة"
+    label_singular: "مقال"
+    folder: "frontend/public/blog"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - {label: "العنوان", name: "title", widget: "string", required: true}
+      - {label: "المعرف (بالإنجليزية)", name: "slug", widget: "string", required: true, hint: "مثال: work-visa-guide-2025"}
+      - {label: "التصنيف", name: "category", widget: "select", options: ["تأشيرات", "تصديقات", "إنجاز", "نصائح", "أخبار"], required: true}
+      - {label: "التاريخ", name: "date", widget: "datetime", format: "YYYY-MM-DD", required: true}
+      - {label: "وقت القراءة (بالدقائق)", name: "readingTime", widget: "number", default: 10}
+      - {label: "المقدمة", name: "excerpt", widget: "text", required: true}
+      - {label: "صورة المقال", name: "image", widget: "image", required: false}
+      - {label: "المحتوى", name: "body", widget: "markdown", required: true}
+      - {label: "منشور؟", name: "published", widget: "boolean", default: true}

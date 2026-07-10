@@ -1,0 +1,33 @@
+{
+  "summary": "Verified data-logic changes for professions site. Main-search flows and DB alignment all correct. Fixed a small note-container toggle bug in professions.js so the amber verification note now shows properly on AI-generated cards (عامل عزل حراري / صوتي / استقدام عائلي). Smart-fallback tool works for مندوب مبيعات/مشتريات but REJECTS 'عامل عزل حراري' due to a semantic validator that flags 'عزل'/'حراري' as unrelated words — needs main-agent fix.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [
+      {
+        "component": "smart-fallback.js validateProfessionInput/isSemanticallySensible",
+        "issue": "Entering 'عامل عزل حراري' or 'عامل عزل صوتي' in the smart-fallback tool is rejected as 'nonsense_compound' because tokens 'عزل', 'حراري', 'صوتي' are not present in LEGIT_VOCAB/PROF_MODIFIERS/PROFESSION_PREFIXES. Expected: labor template with 7 reqs and the note 'يرجى التواصل مع خدمة العملاء…'. Currently the amber validation-error box appears instead.",
+        "selector": "#smart-fallback-error / validateProfessionInput() at line 951, isSemanticallySensible() at line 917",
+        "priority": "HIGH"
+      }
+    ],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [
+    "smart-fallback.js: allow labor-head + technical modifier compounds. Either (a) add عزل, حراري, صوتي, مائي, تركيب, صيانة, تشطيب, دهانات, بلاستيك, معدن, خشب, زجاج, مصاعد, شبكات, انابيب, انترلوك, جبس, رخام, سيراميك, معجون, تكسير, هدم, حفر, لحام, تمديد, كسر… to LEGIT_VOCAB, OR (b) in isSemanticallySensible, when head is a KNOWN_LABOR head (عامل/عاملة/عمال/حمال…), return 'ok' instead of 'reject' (fall through so labor rule matches). This is the safer minimal change and consistent with how the main-search AI classifier handles the same input (which works fine).",
+    "Optional: smart-fallback label for مندوب مبيعات currently reads 'مسار مندوبي المبيعات' (sales_rep template). Spec text mentioned only مندوب مشتريات should read 'مسار المدراء والأخصائيين' (already correct). No change needed unless product wants unified label."
+  ],
+  "critical_code_review_comments": [
+    "professions.js showProfessionDetails: previously called noteEl.parentElement.classList.remove('hidden'), but noteEl (span#modalNoteBox) parentElement is the <p>, not #modalNoteContainer which owns the .hidden class. Fixed to target #modalNoteContainer directly.",
+    "Two separate 'AI labor' code paths exist (professions.js classifyProfession rule 8 and smart-fallback.js labor template). They agree on doc list + note text now, but the smart-fallback pre-validator (isSemanticallySensible) blocks the same input the classifier happily accepts. Consider consolidating or at least sharing the compound-vocab list."
+  ],
+  "updated_files": ["/app/frontend/public/professions.js"],
+  "success_rate": {"backend": "N/A", "frontend": "92%"},
+  "test_credentials": "N/A - static public site",
+  "seed_data_creation": "None",
+  "retest_needed": true,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Cache-bust with ?v=NN on professions.html to bypass service worker. Desktop viewport (≥768px) opens #professionModal on card click; note is in #modalNoteContainer with span #modalNoteBox. Main-search results verified for: مندوب مبيعات (9 items, سنة واحدة), مندوب مشتريات & أخصائي تسويق (9 items, سنتين, identical), عامل مخزن == عامل تحميل وتنزيل (8 items each), عامل عزل حراري/صوتي (AI, 7 items + note visible), استقدام عائلي (8 items + التصديقات in note). Regressions مهندس معماري (12 items incl. نقابة المهندسين), زهور→منسق زهور, محاسب (3 DB cards), /p/dalil-1.html HTTP 200 all still OK. Smart-fallback: مندوب مبيعات OK (9 items, سنة واحدة, label مسار مندوبي المبيعات), مندوب مشتريات OK (9 items, سنتين, label مسار المدراء والأخصائيين). Only failure: 'عامل عزل حراري' in smart-fallback triggers validator error.",
+  "rca of the issue": "smart-fallback.js line 947: 'if (suspiciousCount > 0 && sensibleCount === 0) return reject'. For input 'عامل عزل حراري', head='عامل' is in KNOWN_PROFESSION_HEADS; tokens 'عزل' and 'حراري' aren't in LEGIT_VOCAB/PROF_MODIFIERS/heads/prefixes, so both count as suspicious with 0 sensible → nonsense_compound rejection, bypassing the labor rule at line 516 that would otherwise match keyword 'عامل'. Fix: whitelist the technical modifiers or grant labor-head compounds a pass."
+}

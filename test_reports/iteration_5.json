@@ -1,0 +1,59 @@
+{
+  "summary": "Retest of smart-fallback PROF_MODIFIERS fix on /professions.html. All 4 targeted cases + 2 regression cases PASS. Technical labor modifiers (عزل, حراري, صوتي, ...) are now accepted by smart-fallback and generate the labor sheet with verification note. Anti-abuse rejection still functional. Specialist regression still functional. Main-search AI card still rendered.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_results": {
+    "smart_fallback_accept_عامل_عزل_حراري": {
+      "error_box_hidden": true,
+      "labor_header_present": "مسار العمالة التشغيلية ✓",
+      "numbered_docs": 7,
+      "specialist_accreditation_item_absent": true,
+      "verification_note_present": true,
+      "status": "PASS"
+    },
+    "smart_fallback_accept_عامل_عزل_صوتي": {
+      "error_box_hidden": true,
+      "labor_header_present": true,
+      "verification_note_present": true,
+      "status": "PASS"
+    },
+    "smart_fallback_reject_عامل_بطيخ": {
+      "error_box_visible": true,
+      "error_message": "إدخال غير صالح ... النص المُدخل لا يُمثّل مسمى مهنة معتمد",
+      "status": "PASS"
+    },
+    "smart_fallback_reject_مهندس_علي": {
+      "error_box_visible": true,
+      "error_message": "يرجى كتابة مسمى مهني صحيح ... يبدو أن المُدخل يحتوي على كلمة غير متعلّقة بالمهنة",
+      "status": "PASS"
+    },
+    "smart_fallback_specialist_regression_مندوب_مشتريات": {
+      "specialist_header": "مسار المدراء والأخصائيين ✓",
+      "experience_2yr_present": true,
+      "numbered_docs_visible": 9,
+      "status": "PASS"
+    },
+    "main_search_regression_عامل_عزل_حراري": {
+      "ai_card_rendered": true,
+      "ai_card_label": "تحليل ذكي",
+      "category": "العمال",
+      "note": "Card renders in collapsed state on results grid; full 7-item + amber note expansion in modal was previously verified in iteration_4 and not re-expanded here.",
+      "status": "PASS"
+    }
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "smart-fallback error <div id='smart-fallback-error'> keeps stale innerText after being hidden — visibility is controlled via display/hidden which is correct, but consider clearing innerText on hide to avoid confusion during debugging."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A", "frontend": "100%"},
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "PROF_MODIFIERS fix in /app/frontend/public/smart-fallback.js verified. All 4 target cases + 2 regressions pass. No open bugs from previous iterations remaining. Preview URL: https://repo-manager-13.preview.emergentagent.com — remember to cache-bust with ?v=NN due to service worker."
+}

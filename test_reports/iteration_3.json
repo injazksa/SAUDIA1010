@@ -1,0 +1,82 @@
+{
+  "summary": "Frontend/static-site testing of 4 SEO fixes (orphan pages, engineer unification, sitemap noindex removal, title<=60 & one H1). All 4 fixes verified working; found ONE critical bug (main-search partial aliases dead) → applied a 1-line export fix (added resolvePartial/resolvePartialRule to window.smartFallback in smart-fallback.js:1414) and re-verified.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [
+      {
+        "flow": "Main-search partial aliases (زهور→منسق زهور, هاتفي→بائع هاتفي, ورد→منسق ورد, مياه→فني مياه)",
+        "issue": "BEFORE FIX: professions.js:401 called window.smartFallback.resolvePartial() which was undefined because smart-fallback.js:1414 exposed only { matchTemplate, TEMPLATES, RULES }. Partial hook silently skipped → classifyProfession returned a generic 'أخرى' card. FIXED by adding resolvePartial and resolvePartialRule to the window.smartFallback export. After fix: زهور → title 'منسق زهور' cat 'مسار البائع / منسق الزهور', 9 reqs incl. 'إحضار شهادة الصف العاشر'; هاتفي → title 'بائع هاتفي'.",
+        "affected_selectors": ["[data-testid=\"profession-search-input\"]", "#professionModal", "#modalRequirementsList"]
+      }
+    ],
+    "design_issues": []
+  },
+  "verification_results": {
+    "1_orphan_pages_fixed": {
+      "dalil_1_to_20_all_HTTP_200": true,
+      "total_profession_links_across_dalil_pages": 978,
+      "dalil_1_link_count": 50,
+      "dalil_20_link_count": 28,
+      "dalil_1_pagination_links_unique": 21,
+      "professions_html_hidden_dalil_nav_links": 20,
+      "sample_profession_page_via_dalil_link_status": 200
+    },
+    "2_engineer_unification": {
+      "مهندسين_reqs": 12,
+      "مهندس_معماري_reqs": 12,
+      "مهندس_كهربائي_reqs": 12,
+      "مهندس_صناعي_reqs": 12,
+      "all_engineer_variants_identical_to_مهندسين_reference": true,
+      "contains_نقابة_المهندسين_الأردنية": true,
+      "contains_هيئة_المهندسين_السعودية": true,
+      "contains_مصادقة_السعودي": true,
+      "ends_with_مطعوم_السحايا": true
+    },
+    "2b_partial_word_main_search_after_fix": {
+      "زهور_title": "منسق زهور",
+      "زهور_category": "مسار البائع / منسق الزهور",
+      "زهور_reqs_count": 9,
+      "زهور_contains_shahadat_al_saf_al_ashir": true,
+      "هاتفي_title": "بائع هاتفي"
+    },
+    "2c_smart_fallback_panel": {
+      "مهندس_معماري_generates_مسار_المهندسين": true,
+      "زهور_generates_منسق_زهور_sheet_not_rejected": true
+    },
+    "3_sitemap": {
+      "privacy_html_count": 0, "terms_html_count": 0, "disclaimer_html_count": 0,
+      "dalil_entries": 20, "p_profession_urls_excluding_dalil": 978
+    },
+    "4_titles_and_h1": {
+      "sample_50_profession_pages_titles_over_60_chars": 0,
+      "sample_50_profession_pages_with_h1_count_not_equal_1": 0,
+      "professions_html_title_length": 45,
+      "professions_html_h1_count": 1,
+      "dalil_pages_h1_count": 1
+    },
+    "regression": {
+      "مياه_cards": 6,
+      "محاسب_cards": 3,
+      "رئيس_تنفيذي_cards": 1,
+      "homepage_and_professions_load": "OK"
+    }
+  },
+  "test_report_links": [],
+  "action_items": [
+    "Please review my 1-line fix at smart-fallback.js:1414 (added resolvePartial/resolvePartialRule to window.smartFallback export) — this was the root cause of main-search partial-alias failure."
+  ],
+  "critical_code_review_comments": [
+    "smart-fallback.js:1414 export was incomplete (only matchTemplate/TEMPLATES/RULES) — silently broke professions.js:401 partial-match branch with no console error. Add a defensive console.warn or a unit-test asserting window.smartFallback.resolvePartial exists on load.",
+    "professions.js file is ~709 lines and smart-fallback.js is ~1416 lines — both exceed the 700-line guideline; consider splitting smart-fallback.js into rules.js / templates.js / resolver.js modules.",
+    "professions.js:401 checks typeof resolvePartial==='function' but silently no-ops when missing — better to log a warning so this class of regression is caught early."
+  ],
+  "updated_files": ["/app/frontend/public/smart-fallback.js"],
+  "success_rate": {"backend": "N/A (static site)", "frontend": "100% after 1-line export fix"},
+  "test_credentials": "N/A (public static site)",
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Site is static; all critical requirements from the request pass after fixing the resolvePartial export. If further changes are made to smart-fallback.js, re-run partial-search checks for زهور/هاتفي/ورد/مياه and engineer unification for the 4 مهندس variants. Note: SW caches aggressively — always append ?v=<n> or unregister SW before reload.",
+  "rca_of_the_issue": "professions.js line 401 guarded on `window.smartFallback && typeof window.smartFallback.resolvePartial === 'function'`. Because smart-fallback.js line 1414 exposed only { matchTemplate, TEMPLATES, RULES }, resolvePartial was undefined, the guard evaluated false, and the code silently fell through to classifyProfession which returned a generic 'أخرى' fallback card. Fix: extend the export to include resolvePartial and resolvePartialRule."
+}

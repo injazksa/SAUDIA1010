@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تم استلام الطلب بنجاح | مكتب تأشيرات السعودية</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; background-color: #f5f5f5; }
+        .success-page-content { padding: 100px 0; min-height: 60vh; }
+        .success-box {
+            text-align: center; padding: 60px 40px; max-width: 700px; margin: 0 auto;
+            background: white; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            border-top: 6px solid #25D366;
+        }
+        .success-box h1 { color: #1a1a2e; margin: 20px 0; font-size: 2.2rem; }
+        .success-box p { font-size: 1.2rem; color: #555; margin-bottom: 30px; line-height: 1.8; }
+        .wa-btn {
+            background: #25D366; color: white; padding: 18px 40px; border-radius: 50px;
+            text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 10px;
+            transition: 0.3s; font-size: 1.2rem; box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        }
+        .wa-btn:hover { background: #128C7E; transform: translateY(-3px); box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4); }
+        .home-link { display: block; margin-top: 25px; color: #1a1a2e; text-decoration: none; font-weight: 600; }
+        .home-link:hover { color: #d4af37; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h2>مكتب تأشيرات السعودية في الأردن</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="index.html#services">الخدمات</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="success-page-content">
+        <div class="container">
+            <div class="success-box">
+                <i class="fas fa-check-circle" style="font-size: 6rem; color: #25D366;"></i>
+                <h1>تم استلام طلبك بنجاح! ✅</h1>
+                <p>
+                    شكراً لثقتك بنا. لإكمال الحجز وتأكيد الموعد فوراً، يرجى الضغط على الزر أدناه لإرسال رسالة التأكيد والدفع عبر واتساب لموظف الخدمة.
+                </p>
+                
+                <a href="#" id="waLink" class="wa-btn">
+                    <i class="fab fa-whatsapp" style="font-size: 1.5rem;"></i> اضغط هنا لتأكيد الدفع والحجز
+                </a>
+
+                <a href="index.html" class="home-link"><i class="fas fa-arrow-right"></i> العودة للصفحة الرئيسية</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 مكتب تأشيرات السعودية في الأردن. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const serviceType = localStorage.getItem('selectedService');
+        let waMessage = "";
+        if (serviceType === 'wafid') {
+            waMessage = `مرحباً، قدمت طلب حجز فحص طبي (وافد) 🏥.\nيرجى تزويدي بطريقة الدفع لاعتماد الطلب.`;
+        } else {
+            waMessage = `مرحباً، قدمت طلب حجز موعد بصمة (تأشير) 👆.\nيرجى تزويدي بطريقة الدفع لاعتماد الطلب.`;
+        }
+        document.getElementById('waLink').href = `https://wa.me/962789881009?text=${encodeURIComponent(waMessage)}`;
+    </script>
+</body>
+</html>

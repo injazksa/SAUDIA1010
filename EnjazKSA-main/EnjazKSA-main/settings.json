@@ -1,0 +1,48 @@
+{
+  "meta_description": "المكتب الأول والمركز المعتمد لإنجاز تأشيرات السعودية في الأردن لجميع المهن وتصديق الوثائق الرسمية.",
+  "site_name": "مكتب تأشيرات السعودية في الأردن",
+  "facebook": "https://www.facebook.com/Saudiavisajo",
+  "hero_slides": [
+    {
+      "image": "images/1000136638.webp",
+      "title": "تصديق الوثائق والشهادات",
+      "link_text": "استكشف خدماتنا",
+      "link_url": "index.html#services"
+    },
+    {
+      "image": "images/1000136637.webp",
+      "title": "إنجاز التأشيرات بسرعة وإتقان",
+      "link_text": "احسب تكلفة معاملتك",
+      "link_url": "calculator.html"
+    },
+    {
+      "image": "images/1000136639.webp",
+      "title": "حجز مواعيد الفحص الطبي (وافد)",
+      "link_text": "حجز موعد طبي",
+      "link_url": "wafid-booking.html"
+    }
+  ],
+  "hero_bg": "images/1000134664.webp",
+  "logo": "assets/logo.png",
+  "phone": "0789881009",
+  "whatsapp": "962789881009",
+  "address": "الأردن، عمان - جبل عمان - الدوار الأول",
+  "news_ticker": [
+    {
+      "text": "تم إنجاز تأشيرة عمل (سائق خاص)"
+    },
+    {
+      "text": "تم تصديق شهادات جامعية - القنصلية"
+    },
+    {
+      "text": "متاح حجز مواعيد بصمة مستعجلة"
+    },
+    {
+      "text": "معتمدون لدى السفارة السعودية لغايات التفويض وإنجاز تأشيرات العمل "
+    },
+    {
+      "text": "تنويه: الفحص الطبي يتطلب حجز مسبق"
+    }
+  ],
+  "email": "info@saudia-visa.com"
+}

@@ -1,0 +1,142 @@
+# Netlify Configuration - Performance & Security Optimized
+
+[build]
+  command = "python3 update_sitemap.py && echo 'Sitemap updated and build complete'"
+  publish = "."
+  functions = "functions"
+
+# Context-specific settings
+[context.production]
+  environment = { NODE_ENV = "production" }
+
+[context.deploy-preview]
+  environment = { NODE_ENV = "development" }
+
+[context.branch-deploy]
+  environment = { NODE_ENV = "development" }
+
+# Redirect from old Netlify subdomain
+[[redirects]]
+  from = "https://rad-arithmetic-a57201.netlify.app/*"
+  to = "https://saudia-visa.com/:splat"
+  status = 301
+  force = true
+
+# Admin panel redirect
+[[redirects]]
+  from = "/admin"
+  to = "/admin/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin/*"
+  to = "/admin/index.html"
+  status = 200
+
+# SPA redirect
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = false
+
+# Security and caching headers for all files
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    Cache-Control = "public, max-age=3600, must-revalidate"
+
+# Cache images for longer period (1 year)
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    X-Content-Type-Options = "nosniff"
+    Content-Security-Policy = "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https:; script-src 'self' 'unsafe-inline' https:; connect-src 'self' https:;"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Cache CSS and JS (1 year with immutable flag)
+[[headers]]
+  for = "/style.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Content-Type = "text/css; charset=utf-8"
+
+[[headers]]
+  for = "/script.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Content-Type = "application/javascript; charset=utf-8"
+
+# Cache JSON data files (1 hour)
+[[headers]]
+  for = "/*.json"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, must-revalidate"
+    Content-Type = "application/json; charset=utf-8"
+
+# HTML files - short cache (5 minutes)
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=300, must-revalidate"
+    Content-Type = "text/html; charset=utf-8"
+
+# Blog posts - medium cache (30 minutes)
+[[headers]]
+  for = "/blog/*"
+  [headers.values]
+    Cache-Control = "public, max-age=1800, must-revalidate"
+    Content-Type = "text/markdown; charset=utf-8"
+
+# Professions data - cache for 1 hour
+[[headers]]
+  for = "/professions.json"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, must-revalidate"
+    Content-Type = "application/json; charset=utf-8"
+
+# Settings - cache for 1 hour
+[[headers]]
+  for = "/settings.json"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, must-revalidate"
+    Content-Type = "application/json; charset=utf-8"
+
+# Security headers for admin panel
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Content-Security-Policy = "default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; script-src 'self' https: 'unsafe-inline' 'unsafe-eval' identity.netlify.com; connect-src 'self' https: api.github.com"
+    Cache-Control = "public, max-age=300, must-revalidate"
+
+# Sitemap and robots.txt
+[[headers]]
+  for = "/sitemap.xml"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+    Content-Type = "application/xml; charset=utf-8"
+
+[[headers]]
+  for = "/robots.txt"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+    Content-Type = "text/plain; charset=utf-8"
+
+# Environment variables
+[env]
+  SITE_NAME = "مكتب تأشيرات السعودية"
+  SITE_URL = "https://saudia-visa.com"
+  NODE_ENV = "production"

@@ -4,7 +4,7 @@
 # ═══════════════════════════════════════════════════════════════
 
 [build]
- publish = "."
+ publish = "frontend/public"
  command = "echo 'Static site - no build needed'"
 
 [build.environment]
@@ -58,6 +58,42 @@
 
 [[redirects]]
  from = "/node_modules/*"
+ to = "/404.html"
+ status = 404
+ force = true
+
+[[redirects]]
+ from = "/package.json"
+ to = "/404.html"
+ status = 404
+ force = true
+
+[[redirects]]
+ from = "/package-lock.json"
+ to = "/404.html"
+ status = 404
+ force = true
+
+[[redirects]]
+ from = "/yarn.lock"
+ to = "/404.html"
+ status = 404
+ force = true
+
+[[redirects]]
+ from = "/tailwind.config.js"
+ to = "/404.html"
+ status = 404
+ force = true
+
+[[redirects]]
+ from = "/design_guidelines.json"
+ to = "/404.html"
+ status = 404
+ force = true
+
+[[redirects]]
+ from = "/scripts/*"
  to = "/404.html"
  status = 404
  force = true
