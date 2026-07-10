@@ -17,7 +17,7 @@ Options -Indexes -MultiViews
 </FilesMatch>
 
 # ── منع الوصول للمجلدات الحساسة ──
-RedirectMatch 404 ^/(admin|admin-secure|backend|frontend|\.git|\.emergent|content)(/.*)?$
+RedirectMatch 404 ^/(admin|admin-secure|backend|frontend|scripts|tests|\.git|\.emergent|content)(/.*)?$
 
 # ── منع محاولات اجتياز المسارات (Path Traversal) وحقن الأوامر ──
 <IfModule mod_rewrite.c>
