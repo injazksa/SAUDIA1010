@@ -10,6 +10,9 @@ http://www.saudia-visa.com/*    https://saudia-visa.com/:splat    301!
 http://saudia-visa.com/*        https://saudia-visa.com/:splat    301!
 https://www.saudia-visa.com/*   https://saudia-visa.com/:splat    301!
 
+# Canonical home URL: redirect the physical file URL to the canonical homepage.
+/index.html                  /                                      301!
+
 # ═══════════════════════════════════════════════════════════════
 # 🔒 حماية الملفات الحساسة — منع أي محاولة قراءة ملفات التكوين
 # ═══════════════════════════════════════════════════════════════

@@ -43,6 +43,9 @@ Allow: /*.png
 User-agent: Google-Extended
 Allow: /
 
+User-agent: GoogleOther
+Allow: /
+
 User-agent: Bingbot
 Allow: /
 
@@ -74,6 +77,18 @@ Allow: /
 User-agent: PerplexityBot
 Allow: /
 
+User-agent: CCBot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
 User-agent: Applebot
 Allow: /
 
@@ -97,12 +112,6 @@ User-agent: SemrushBot
 Disallow: /
 
 User-agent: DotBot
-Disallow: /
-
-User-agent: PetalBot
-Disallow: /
-
-User-agent: Amazonbot
 Disallow: /
 
 # ─── Sitemap & Host ──────────────────────────────────────────
