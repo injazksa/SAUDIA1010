@@ -29,6 +29,7 @@
   const PASSPORT_NEW = 'جواز السفر الجديد + صور شخصية عدد 2 بخلفية بيضاء.';
   // 🛑 البند الختامي الإجباري — يجب أن يكون دائماً آخر بند في أي قائمة
   const VACCINE  = 'الحصول على شهادة مطعوم السحايا.';
+  const AGE_LIMIT = 'يشترط ألا يقل عمر المتعاقد عن 21 عاماً وألا يزيد على 60 عاماً.';
   const AUTH     = 'عمل تفويض إلكتروني للمكتب.';
   const CONTRACT = 'عقد عمل من الشركة السعودية + خطاب إطلاع مختومين من الغرفة التجارية والخارجية السعودية.';
   const CONTRACT_ATTESTED = 'عقد عمل مصدق من الغرفة التجارية والخارجية السعودية.';
@@ -70,7 +71,7 @@
       icon: 'fa-crown',
       reqs: [
         SECURITY,
-        'سجل تجاري ورخصة مهن.',
+        'سجل تجاري ورخصة الاستثمار السعودية (السجل التجاري السعودي مختوم من وزارة الخارجية السعودية).',
         MEDICAL_BIO,
         'عمل تفويض إلكتروني للمكتب من هيئة الاستثمار.',
         VACCINE
@@ -161,10 +162,26 @@
         VACCINE
       ]
     },
-    // مساعد إداري / مراقب جودة — ثانوية + سنة + بدون اعتماد مهني
+    // مساعد إداري / مراقب جودة — ثانوية + سنة + اعتماد مهني مفعّل
     intermediate_admin: {
       label: 'مسار الكوادر المساعدة (الإداريين / المراقبة)',
       icon: 'fa-clipboard-check',
+      reqs: [
+        SECURITY,
+        MILITARY,
+        SECONDARY_SCHOOL,
+        MEDICAL_BIO,
+        ENG_EXP_1Y,
+        CONTRACT,
+        QVP,
+        AUTH,
+        VACCINE
+      ]
+    },
+    // منسق زهور — نفس ترتيب مساعد إداري، من دون اعتماد مهني خاص بالمهنة
+    flower_coordinator: {
+      label: 'مسار منسق الزهور',
+      icon: 'fa-leaf',
       reqs: [
         SECURITY,
         MILITARY,
@@ -184,13 +201,13 @@
         SECURITY,
         MILITARY,
         'إحضار شهادة الصف العاشر.',
-        'خبرة لمدة سنة واحدة بنفس مسمى التأشيرة.',
         MEDICAL_BIO,
+        'خبرة لمدة سنة واحدة بنفس مسمى التأشيرة.',
         CONTRACT_ATTESTED,
         AUTH,
         VACCINE
       ],
-      note: 'هذه المهنة لا تتطلب اعتماداً مهنياً في الوقت الحالي، وقد يطرأ تعديل على هذا الإجراء لاحقاً.'
+      note: 'الاعتماد المهني غير مفعّل حالياً، وقد يتم تفعيله في أي وقت دون إشعار مسبق.'
     },
     // البائع / منسق الزهور — صف عاشر + اعتماد مهني
     seller: {
@@ -200,8 +217,8 @@
         SECURITY,
         MILITARY,
         'إحضار شهادة الصف العاشر.',
-        'خبرة لمدة سنة واحدة بنفس مسمى التأشيرة.',
         MEDICAL_BIO,
+        'خبرة لمدة سنة واحدة بنفس مسمى التأشيرة.',
         CONTRACT_ATTESTED,
         QVP,
         AUTH,
@@ -418,7 +435,7 @@
     // (Must come BEFORE Tier 1 so "رئيس قسم" beats "رئيس")
     {
       id: 'supervisor', template: 'supervisor', tier: 'supervisory',
-      keywords: ['رئيس قسم', 'رئيس شيفت', 'مسؤول قسم', 'مشرف عام', 'مشرف إنتاج', 'مشرف انتاج', 'مشرف موقع', 'مراقب', 'كبير']
+      keywords: ['رئيس قسم', 'رئيس شيفت', 'مسؤول قسم', 'مشرف', 'مشرفة', 'مشرفه', 'مشرف عام', 'مشرف إنتاج', 'مشرف انتاج', 'مشرف مكتب', 'مشرف صيانة', 'مشرفة صيانة', 'مشرف موقع', 'مراقب', 'كبير']
     },
     {
       id: 'technical', template: 'technical', tier: 'supervisory',
@@ -441,10 +458,9 @@
     {
       id: 'sales_rep', template: 'sales_rep', tier: 'management',
       keywords: ['مندوب مبيعات', 'مندوبه مبيعات', 'مندوبة مبيعات', 'مندوب بيع', 'sales rep',
-                 'مشرف مكتب', 'مشرفة مكتب', 'مشرف مكتبي',
-                 'مشرف', 'مشرفة', 'مشرفه']
+                 'مشرف مكتبي']
     },
-    // 🎓 Intermediate Admin / Quality Monitor — Secondary school + 1 year + NO QVP
+    // 🎓 Intermediate Admin / Quality Monitor — Secondary school + 1 year + QVP
     {
       id: 'intermediate_admin', template: 'intermediate_admin', tier: 'management',
       keywords: ['مساعد إداري', 'مساعد اداري', 'مساعدة إدارية', 'مساعده اداريه',
@@ -452,18 +468,22 @@
     },
     // 🛒 Direct Sales — Secondary school + NO QVP + ملاحظة
     {
+      id: 'flower_coordinator', template: 'flower_coordinator', tier: 'management',
+      keywords: ['منسق زهور', 'منسقة زهور', 'منسق ورد']
+    },
+    {
       id: 'family_recruitment', template: 'family_recruitment', tier: 'management',
       keywords: ['استقدام عائلي', 'استقدام عائلي', 'اقامة', 'أقامة', 'إقامة', 'زيارة عائلية']
     },
     {
       id: 'direct_sales', template: 'direct_sales', tier: 'vocational',
-      keywords: ['بائع مباشر', 'بائعة مباشرة', 'بائعه مباشره', 'مندوب توزيع مباشر',
+      keywords: ['بائع مباشر', 'البائع المباشر', 'بائعة مباشرة', 'بائعه مباشره', 'مندوب توزيع مباشر',
+                 'بائع هاتفي', 'بائعة هاتفية', 'بائعه هاتفيه', 'مندوب توزيع مباشر',
                  'بائع زهور', 'بائعة زهور', 'بائع ورد', 'بائعة ورد']
     },
     {
       id: 'seller', template: 'seller', tier: 'vocational',
-      keywords: ['بائع', 'بائعه', 'بائعة', 'بائع متجول', 'بائع تجزئة',
-                 'منسق زهور', 'منسقة زهور', 'منسق ورد', 'كاشير']
+      keywords: ['بائع', 'بائعه', 'بائعة', 'بائع متجول', 'بائع تجزئة', 'كاشير']
     },
     {
       id: 'professor', template: 'professor', tier: 'compliance',
@@ -691,6 +711,15 @@
     const exactExec = ['رئيس تنفيذي', 'مدير عام', 'مستثمر', 'ceo'];
     if (exactExec.includes(norm)) {
       return { id: 'executive', template: 'executive', tier: 'compliance', matched_keyword: norm };
+    }
+
+    // 🧭 أي مسمى يتضمن «مشرف» يستخدم نموذج أخصائي تسويق تماماً.
+    if (norm.includes('مشرف')) {
+      return { id: 'specialist', template: 'specialist', tier: 'management', matched_keyword: 'مشرف' };
+    }
+    // 🌸 منسق الزهور يستخدم ترتيب مساعد إداري من دون اعتماد مهني.
+    if (norm.includes('منسق زهور') || norm.includes('منسقه زهور')) {
+      return { id: 'flower_coordinator', template: 'flower_coordinator', tier: 'management', matched_keyword: 'منسق زهور' };
     }
 
     // 🏢 أي مهنة تبدأ بـ (مدير / رئيس / نائب رئيس) — عدا المستثنين الثلاثة —
@@ -1320,15 +1349,42 @@
       (!noSwap && gender === 'female' && (req.includes('الوثائق العسكرية') || req.includes('مشروحات من القيادة')))
         ? FEMALE_PERMISSION : req
     );
+
+    // تكملة التصديقات بجانب البنود الموجودة، من دون حذف النص الأصلي أو إعادة ترتيبه.
+    reqs = reqs.map((req) => {
+      if (req.includes('وزارة الخارجية الأردنية')) return req;
+      if (/حسن سيرة وسلوك|حسن السيرة والسلوك|السيرة الذاتية/.test(req)) {
+        return req.replace(/\.?$/, '') + ' (مختوم من وزارة الخارجية الأردنية).';
+      }
+      if (/مشروحات الجيش|مشروحات من القيادة|الوثائق العسكرية/.test(req)) {
+        return req.replace(/\.?$/, '') + ' (مختومة من وزارة الخارجية الأردنية).';
+      }
+      if (/الشهادة الجامعية|شهادة جامعية|الشهادة المدرسية|شهادة مدرسية|شهادة الثانوية|شهادة الصف العاشر/.test(req)) {
+        return req.replace(/\.?$/, '') + ' (مختومة من وزارة الخارجية الأردنية).';
+      }
+      if (/\bخبرة\b|خبرة لمدة|خبره/.test(req)) {
+        return req.replace(/\.?$/, '') + ' (مختومة من مكتب العمل ووزارة الخارجية الأردنية).';
+      }
+      if (/المشروعات|المشاريع|مشروعات|مشاريع/.test(req)) {
+        return req.replace(/\.?$/, '') + ' (مختومة من وزارة الخارجية الأردنية).';
+      }
+      return req;
+    });
+
     reqs = distinct(reqs).filter((r) => r !== PASSPORT);
-    // الاستقدام العائلي معاملة إقامة وليس تأشيرة عمل — لا يتطلب مطعوم السحايا
+    // الاستقدام العائلي معاملة إقامة وليس تأشيرة عمل — لا يتطلب مطعوم السحايا.
     if (template.label && template.label.includes('الاستقدام العائلي')) {
-      return reqs.filter((r) => r !== VACCINE);
+      reqs = reqs.filter((r) => r !== VACCINE);
+    } else {
+      // إزالة أي ظهور لبند مطعوم السحايا ثم إعادته في النهاية كبند ختامي إجباري.
+      reqs = reqs.filter((r) => r !== VACCINE);
+      reqs.push(VACCINE);
     }
-    // إزالة أي ظهور لبند مطعوم السحايا ثم إعادته في النهاية كبند ختامي إجباري
-    reqs = reqs.filter((r) => r !== VACCINE);
-    reqs.push(VACCINE);
-    return reqs;
+
+    // بند العمر قبل آخر بند، مع إبقاء آخر بند الأصلي في مكانه الختامي.
+    reqs = reqs.filter((r) => !r.includes('عمر المتعاقد'));
+    if (reqs.length === 0) return [AGE_LIMIT];
+    return [...reqs.slice(0, -1), AGE_LIMIT, reqs[reqs.length - 1]];
   }
 
   function renderRequirementsInline() {

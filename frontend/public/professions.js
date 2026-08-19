@@ -158,6 +158,57 @@ function classifyProfession(inputName) {
 
     if (isGibberish(inputName)) return null;
 
+    // 🔗 Dynamic search aliases: missing profession names use the approved live templates.
+    // This affects only names not already present in professions.json; the existing UI is unchanged.
+    const cloneLoadedTemplate = (referenceNames, options = {}) => {
+        const names = Array.isArray(referenceNames) ? referenceNames : [referenceNames];
+        const ref = professionsData.find(p => names.some(name => normalizeArabic(p.profession_name_ar || p.name_ar || '') === normalizeArabic(name)));
+        if (!ref) return null;
+        let requirements = [...(ref.requirements || [])];
+        if (options.removeAccreditation) {
+            requirements = requirements.filter(req => !/شهادة الاعتماد المهني|الاعتماد المهني/.test(req));
+        }
+        return {
+            ...ref,
+            name_ar: inputName,
+            profession_name_ar: inputName,
+            code: '---',
+            profession_code: '---',
+            requirements,
+            note: options.note || ref.note,
+            isAiGenerated: true
+        };
+    };
+    if (normName.includes('مشرف')) {
+        const supervisorTemplate = cloneLoadedTemplate(['أخصائي تسويق', 'أخصائية تسويق']);
+        if (supervisorTemplate) return supervisorTemplate;
+    }
+    if (normName.includes('منسق زهور')) {
+        const flowerTemplate = cloneLoadedTemplate('مساعد إداري', {
+            removeAccreditation: true,
+            note: undefined
+        });
+        if (flowerTemplate) return flowerTemplate;
+    }
+
+    // 🔗 دعم الصيغ الشائعة ذات أداة التعريف للمسميات غير الموجودة حرفياً في البيانات.
+    // يُعاد استخدام السجل الموثق نفسه، مع إبقاء ملاحظة عدم تفعيل الاعتماد خارج البنود المرقمة.
+    const unavailableSellerNote = 'الاعتماد المهني غير مفعّل حالياً، وقد يتم تفعيله في أي وقت دون إشعار مسبق.';
+    if (/^(?:ال)?بائع\s+(?:ال)?مباشر$/.test(normName)) {
+        const directSellerTemplate = cloneLoadedTemplate('بائع مباشر', {
+            removeAccreditation: true,
+            note: unavailableSellerNote
+        });
+        if (directSellerTemplate) return directSellerTemplate;
+    }
+    if (/^(?:ال)?بائع\s+(?:ال)?هاتفي$/.test(normName)) {
+        const phoneSellerTemplate = cloneLoadedTemplate('بائع هاتفي', {
+            removeAccreditation: true,
+            note: unavailableSellerNote
+        });
+        if (phoneSellerTemplate) return phoneSellerTemplate;
+    }
+
     // 📋 PREDEFINED DOCUMENT TEMPLATES (Fixed Sets)
     const DOCS = {
         BASE: [
@@ -535,6 +586,31 @@ function computeRequirements(profession) {
         else requirements.splice(1, 0, femaleReq);
     }
 
+    // 🧾 تكملة جهات التصديق بجانب النص الموجود، دون حذف أو إعادة ترتيب.
+    const appendCompletion = (text, suffix) => {
+        if (text.includes('وزارة الخارجية الأردنية')) return text;
+        const clean = text.replace(/\.?$/, '');
+        return `${clean} (${suffix}).`;
+    };
+    requirements = requirements.map(text => {
+        if (/حسن سيرة وسلوك|حسن السيرة والسلوك|السيرة الذاتية/.test(text)) {
+            return appendCompletion(text, 'مختوم من وزارة الخارجية الأردنية');
+        }
+        if (/مشروحات الجيش|مشروحات من القيادة|الوثائق العسكرية/.test(text)) {
+            return appendCompletion(text, 'مختومة من وزارة الخارجية الأردنية');
+        }
+        if (/الشهادة الجامعية|شهادة جامعية|الشهادة المدرسية|شهادة مدرسية|شهادة الثانوية|شهادة الصف العاشر/.test(text)) {
+            return appendCompletion(text, 'مختومة من وزارة الخارجية الأردنية');
+        }
+        if (/\bخبرة\b|خبرة لمدة|خبره/.test(text)) {
+            return appendCompletion(text, 'مختومة من مكتب العمل ووزارة الخارجية الأردنية');
+        }
+        if (/المشروعات|المشاريع|مشروعات|مشاريع/.test(text)) {
+            return appendCompletion(text, 'مختومة من وزارة الخارجية الأردنية');
+        }
+        return text;
+    });
+
     // 📌 فصل الملاحظات والتنبيهات عن البنود المرقمة — تُعرض خارج القائمة كملحوظة مستقلة
     let note = profession.note || '';
     const noteItems = requirements.filter(r => /^\s*ملاحظة/.test(r));
@@ -548,6 +624,14 @@ function computeRequirements(profession) {
     const isFamilyRecruitment = name.includes("استقدام") || name.includes("اقامة") || name.includes("إقامة") || code === "FAMILY";
     requirements = requirements.filter(r => r.replace(/\s+/g, ' ').trim() !== VACCINE_ITEM);
     if (!isFamilyRecruitment) requirements.push(VACCINE_ITEM);
+
+    // بند العمر قبل آخر بند موجود، مع إبقاء البند الختامي في مكانه.
+    requirements = requirements.filter(r => !r.includes('عمر المتعاقد'));
+    if (requirements.length === 0) {
+        requirements.push('يشترط ألا يقل عمر المتعاقد عن 21 عاماً وألا يزيد على 60 عاماً.');
+    } else {
+        requirements.splice(requirements.length - 1, 0, 'يشترط ألا يقل عمر المتعاقد عن 21 عاماً وألا يزيد على 60 عاماً.');
+    }
 
     return { name, code, requirements, note };
 }

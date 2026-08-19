@@ -118,7 +118,7 @@
  <span class="calc-label-num">1</span>
  نوع التأشيرة
  </label>
- <select id="visaType" onchange="handleVisaTypeChange" class="calc-select">
+ <select id="visaType" onchange="handleVisaTypeChange()" class="calc-select">
  <option value="work">تأشيرة عمل</option>
  <option value="residence">الإقامة (الاستقدام)</option>
  <option value="visit">تأشيرة زيارة</option>
@@ -136,7 +136,7 @@
  <span class="calc-label-num">2</span>
  تصنيف المهنة
  </label>
- <select id="professionCategory" onchange="handleProfessionChange" class="calc-select">
+ <select id="professionCategory" onchange="handleProfessionChange()" class="calc-select">
  <option value="">— حدد المهنة المطلوبة </option>
 
  <optgroup label="مهن لا تحتاج اعتماد مهني">
@@ -187,7 +187,7 @@
  </label>
  <div class="calc-services">
  <label class="calc-service" for="visaOnly">
- <input type="checkbox" id="visaOnly" onchange="handleVisaOnlyChange">
+ <input type="checkbox" id="visaOnly" onchange="handleVisaOnlyChange()">
  <span class="calc-service-text">
  <span class="calc-service-title">فقط رسوم التأشيرة</span>
  <span class="calc-service-meta">بدون تصديق أو اعتماد مهني</span>
@@ -217,7 +217,7 @@
  </div>
  </div>
  
- <button onclick="calculateCost" class="calc-cta" type="button" data-testid="calculator-submit-btn">
+ <button onclick="calculateCost()" class="calc-cta" type="button" data-testid="calculator-submit-btn">
  <i class="fas fa-calculator"></i>
  احسب التكلفة الآن
  </button>
@@ -234,7 +234,7 @@
  <span id="totalRange"></span>
  <button type="button"
  class="calc-share-btn"
- onclick="openShareSheet"
+ onclick="openShareSheet()"
  aria-label="مشاركة نتيجة الحاسبة"
  title="شارك النتيجة"
  data-testid="calculator-share-btn">
@@ -264,7 +264,7 @@
  </section>
 
  <!-- Share Sheet -->
- <div class="share-sheet-backdrop" id="shareSheetBackdrop" onclick="closeShareSheet"></div>
+ <div class="share-sheet-backdrop" id="shareSheetBackdrop" onclick="closeShareSheet()"></div>
  <div class="share-sheet" id="shareSheet" role="dialog" aria-modal="true" aria-labelledby="shareSheetTitle">
  <div class="share-sheet-handle"></div>
  <h4 class="share-sheet-title" id="shareSheetTitle">شارك التقدير</h4>
@@ -286,17 +286,17 @@
  <span class="share-item-icon email"><i class="fas fa-envelope"></i></span>
  البريد
  </a>
- <button type="button" class="share-item" onclick="copyShareText" data-testid="share-copy">
+ <button type="button" class="share-item" onclick="copyShareText()" data-testid="share-copy">
  <span class="share-item-icon copy"><i class="fas fa-copy"></i></span>
  نسخ
  </button>
- <button type="button" class="share-item" id="shareNativeBtn" onclick="nativeShare" data-testid="share-native" style="display:none;">
+ <button type="button" class="share-item" id="shareNativeBtn" onclick="nativeShare()" data-testid="share-native" style="display:none;">
  <span class="share-item-icon native"><i class="fas fa-share"></i></span>
  مشاركة
  </button>
  </div>
  <div class="share-preview" id="sharePreview"></div>
- <button type="button" class="share-close" onclick="closeShareSheet" data-testid="share-close">إغلاق</button>
+ <button type="button" class="share-close" onclick="closeShareSheet()" data-testid="share-close">إغلاق</button>
  </div>
 
  <!-- Toast -->
@@ -312,7 +312,7 @@
  const professionSection = document.getElementById('professionSection');
  const servicesSection = document.getElementById('servicesSection');
  
- if (visaType === 'work' | visaType === 'residence') {
+ if (visaType === 'work' || visaType === 'residence') {
  professionSection.classList.remove('hidden');
  servicesSection.classList.remove('hidden');
  } else {
@@ -550,7 +550,7 @@
  'government': 'التأشيرة الحكومية',
  'business': 'تأشيرة الأعمال'
  };
- return names[type] | 'التأشيرة';
+ return names[type] || 'التأشيرة';
  }
  
  // Sync segmented radios <-> hidden experience select
@@ -566,10 +566,10 @@
  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  function buildShareText() {
  const visaType = document.getElementById('visaType').value;
- const totalRange = document.getElementById('totalRange').textContent.trim;
+ const totalRange = document.getElementById('totalRange').textContent.trim();
  const breakdownItems = Array.from(
  document.getElementById('breakdown').querySelectorAll('div')
- ).map(d => d.textContent.trim).filter(t => t && !t.startsWith('⚠️'));
+ ).map(d => d.textContent.trim()).filter(t => t && !t.startsWith('⚠️'));
 
  const lines = [
  '💎 تقدير رسوم التأشيرة السعودية',
@@ -590,7 +590,7 @@
  }
 
  function openShareSheet() {
- const text = buildShareText;
+ const text = buildShareText();
  const url = 'https://saudia-visa.com/calculator.html';
  const encoded = encodeURIComponent(text);
 
@@ -629,7 +629,7 @@
  }
 
  async function copyShareText() {
- const text = buildShareText;
+ const text = buildShareText();
  try {
  await navigator.clipboard.writeText(text);
  showToast('تم نسخ النتيجة!');
@@ -638,7 +638,7 @@
  const ta = document.createElement('textarea');
  ta.value = text;
  document.body.appendChild(ta);
- ta.select;
+ ta.select();
  try { document.execCommand('copy'); showToast('تم نسخ النتيجة!'); }
  catch (err) { showToast('تعذّر النسخ'); }
  document.body.removeChild(ta);
@@ -650,20 +650,20 @@
  try {
  await navigator.share({
  title: 'تقدير رسوم التأشيرة السعودية',
- text: buildShareText,
+ text: buildShareText(),
  url: 'https://saudia-visa.com/calculator.html'
  });
- closeShareSheet;
+ closeShareSheet();
  } catch (e) { /* user cancelled */ }
  }
 
  // ESC closes the sheet
  document.addEventListener('keydown', (e) => {
- if (e.key === 'Escape') closeShareSheet;
+ if (e.key === 'Escape') closeShareSheet();
  });
 
  // Initialize
- handleVisaTypeChange;
+ handleVisaTypeChange();
  </script>
  
  <!-- Footer -->
