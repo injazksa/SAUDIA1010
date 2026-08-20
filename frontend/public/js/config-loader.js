@@ -22,7 +22,7 @@
 (function() {
  'use strict';
  const SETTINGS_URL = '/content/settings.json';
- const CACHE_KEY = 'sv_settings_v1';
+ const CACHE_KEY = 'sv_settings_v2';
  const CACHE_TTL = 10 * 60 * 1000; // 10 دقائق
 
  async function loadSettings() {
@@ -99,12 +99,9 @@
  const color = i % 2 === 0 ? 'text-white' : 'text-gold';
  return `<span class="${color} text-sm font-medium whitespace-nowrap">${escapeHtml(it.text)}</span>`;
  }).join('\n');
- // كرّر المحتوى عدة مرات لتدفق تلفزيوني مستمر بلا فجوة
+ // مجموعتان متطابقتان تماماً لمسار تلفزيوني مستمر بلا توقف أو فراغ
  const oneSet = build();
- const repeats = items.length <= 3 ? 6 : items.length <= 5 ? 4 : 2;
- let _h = '';
- for (let r = 0; r < repeats; r++) _h += oneSet + '\n';
- tickerBox.innerHTML = _h;
+ tickerBox.innerHTML = `<div class="ticker-group">${oneSet}</div><div class="ticker-group" aria-hidden="true">${oneSet}</div>`;
  }
 
  // أيقونات التواصل الاجتماعي: أظهرها فقط إن كان لها رابط مضبوط في اللوحة

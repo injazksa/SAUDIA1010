@@ -18,7 +18,7 @@ html, body {
  -webkit-overflow-scrolling: touch; /* iOS smooth scroll */
 }
 
-/* News Ticker Animation */
+/* News Ticker Animation — continuous TV-style loop */
 @keyframes scroll {
  0% {
  transform: translateX(0);
@@ -29,29 +29,43 @@ html, body {
 }
 
 .animate-scroll {
- animation: scroll 30s linear infinite;
+ animation: scroll 34s linear infinite;
  will-change: transform;
 }
 
-/* News Ticker - Prevent Overflow + Seamless continuous flow */
+/* News Ticker — two identical groups make the loop seamless */
 .news-ticker {
  width: 100%;
  max-width: 100vw;
  overflow: hidden;
 }
 
-.news-ticker .animate-scroll {
- /* يضمن استمرار التدفق بلا فجوة مهما كان عرض الشاشة */
+.news-ticker .ticker-track {
+ display: flex;
+ flex-direction: row;
+ direction: ltr;
+ width: max-content;
  min-width: max-content;
 }
 
+.news-ticker .ticker-group {
+ display: inline-flex;
+ flex: 0 0 auto;
+ align-items: center;
+ gap: 4rem;
+ direction: rtl;
+ min-width: max-content;
+}
+
+/* لا يتوقف الشريط عند مرور المؤشر؛ يستمر مثل شريط الأخبار التلفزيوني */
 .news-ticker:hover .animate-scroll {
- animation-play-state: paused;
+ animation-play-state: running;
 }
 
 /* على الهاتف: سرعة أنسب للقراءة */
 @media (max-width: 640px) {
- .animate-scroll { animation-duration: 22s; }
+ .animate-scroll { animation-duration: 26s; }
+ .news-ticker .ticker-group { gap: 2.5rem; }
 }
 
 /* Custom Scrollbar */

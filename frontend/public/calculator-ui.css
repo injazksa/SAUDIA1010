@@ -307,7 +307,15 @@
  justify-content: center;
  gap: 0.5rem;
 }
-.calc-cta:hover {
+ .calc-cta-label {
+ display: inline-block;
+ color: #fff;
+ opacity: 1;
+ visibility: visible;
+ white-space: nowrap;
+ }
+
+ .calc-cta:hover {
  transform: translateY(-2px);
  box-shadow:
  0 8px 22px rgba(201, 163, 94, 0.45),
