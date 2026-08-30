@@ -22,6 +22,11 @@
   const resultTitle = document.querySelector('#attestationResultTitle');
   const resultSummary = document.querySelector('#attestationResultSummary');
   const resultList = document.querySelector('#attestationResultList');
+  const printSheet = document.querySelector('#attestationPrintSheet');
+  const printTitle = document.querySelector('#attestationPrintTitle');
+  const printSubtitle = document.querySelector('#attestationPrintSubtitle');
+  const printContent = document.querySelector('#attestationPrintContent');
+  const printDisclaimer = document.querySelector('#attestationPrintDisclaimer');
   const originalWarning = document.querySelector('#originalDocumentWarning');
   const contextHint = document.querySelector('#attestationContextHint');
   const copyButton = document.querySelector('#copyAttestationResult');
@@ -32,6 +37,7 @@
     company: document.querySelector('#companyFields'),
     profession: document.querySelector('#attestationProfessionField'),
   };
+  let currentResultData = null;
 
   const countryLabels = {
     jordan: ['الأردن', 'Jordan'],
@@ -76,12 +82,31 @@
   const normalize = (value) => String(value || '').trim().toLowerCase();
 
   function ruleForProfession(value) {
-    const name = normalize(value);
-    const direct = Object.keys(professionRules).find((key) => name === normalize(key));
-    if (direct) return { name: direct, ...professionRules[direct] };
-    const pattern = Object.keys(professionRules).find((key) => name.includes(normalize(key)));
-    if (pattern) return { name: `مسار ${pattern}`, displayName: `${translate(pattern)} pathway`, ...professionRules[pattern] };
-    return { name: value || 'غير محددة', displayName: translate(value || 'غير محددة'), group: ['تحتاج مراجعة', 'Needs review'], years: null };
+    const input = String(value || '').trim();
+    const name = normalize(input);
+    const englishAliases = {
+      'administrative assistant': 'مساعد إداري',
+      'quality controller': 'مراقب جودة',
+      'seller': 'بائع',
+      'direct seller': 'بائع مباشر',
+      'florist': 'منسق زهور',
+      'product coordinator': 'منسق منتجات',
+      'supervisor': 'مشرف',
+      'accountant': 'محاسب',
+      'marketing specialist': 'أخصائي',
+      'specialist': 'أخصائي',
+      'engineer': 'مهندس',
+      'manager': 'مدير',
+      'worker': 'عامل',
+      'general labour': 'عامل',
+    };
+    const canonical = englishAliases[name] || input;
+    const canonicalName = normalize(canonical);
+    const direct = Object.keys(professionRules).find((key) => canonicalName === normalize(key));
+    if (direct) return { name: direct, displayName: input || (isEnglish() ? translate(direct) : direct), ...professionRules[direct] };
+    const pattern = Object.keys(professionRules).find((key) => canonicalName.includes(normalize(key)));
+    if (pattern) return { name: pattern, displayName: input || (isEnglish() ? `${translate(pattern)} pathway` : pattern), ...professionRules[pattern] };
+    return { name: input || 'غير محددة', displayName: isEnglish() ? (input || 'Not specified') : (input || 'غير محددة'), group: ['تحتاج مراجعة', 'Needs review'], years: null };
   }
 
   function updateVisibility() {
@@ -198,11 +223,27 @@
     return { type, country, items };
   }
 
+  function preparePrint(data) {
+    if (!printSheet || !printTitle || !printSubtitle || !printContent || !printDisclaimer) return;
+    const title = `${tr('مسار تصديق', 'Attestation route')}: ${labelFor(documentLabels, data.type)}`;
+    const purposeText = purpose.options[purpose.selectedIndex]?.text || tr('غير محدد', 'Not specified');
+    const countryText = labelFor(countryLabels, data.country);
+    const professionText = data.type === 'experience' && profession.value.trim()
+      ? ` ${tr('المهنة المرتبطة', 'Related profession')}: ${escapeHtml(profession.value.trim())}.`
+      : '';
+    printTitle.textContent = title;
+    printSubtitle.textContent = tr('مكتب تأشيرات السعودية في الأردن — ملخص إرشادي', 'Saudi Visa Office in Jordan — Guidance summary');
+    printContent.innerHTML = `<p><strong>${escapeHtml(labelFor(documentLabels, data.type))}</strong> — ${tr('بلد الإصدار', 'Country of issue')}: ${escapeHtml(countryText)} — ${tr('الغرض', 'Purpose')}: ${escapeHtml(purposeText)}.${professionText}</p><ol>${data.items.map((item) => `<li><strong>${escapeHtml(item.title)}</strong><br><span>${escapeHtml(item.note)}</span></li>`).join('')}</ol>`;
+    printDisclaimer.textContent = tr('هذه ورقة إرشادية مبنية على الاختيارات المدخلة. يجب مراجعة المكتب والجهة المستفيدة قبل تسليم الأصل أو دفع الرسوم.', 'This is a guidance sheet based on the selected options. Confirm the route with the office and receiving authority before handing over an original document or paying fees.');
+  }
+
   function render() {
     const data = buildResult();
+    currentResultData = data;
     resultTitle.textContent = `${tr('مسار تصديق', 'Attestation route')}: ${labelFor(documentLabels, data.type)}`;
     resultSummary.textContent = tr('هذه نتيجة إرشادية مبنية على اختياراتك. راجع المكتب والجهة المستفيدة قبل دفع رسوم أو تسليم أصل الوثيقة.', 'This is guidance based on your selections. Contact the office and receiving authority before paying fees or handing over an original document.');
     resultList.innerHTML = data.items.map((item) => `<div class="sv-result-item"><strong>${escapeHtml(item.title)}</strong><span>${item.note}</span></div>`).join('');
+    preparePrint(data);
     result.hidden = false;
     result.classList.add('is-visible');
     result.focus({ preventScroll: false });
@@ -222,7 +263,13 @@
     catch (_) { copyButton.textContent = tr('حدد النص وانسخه يدويًا', 'Select and copy the text manually'); }
     window.setTimeout(() => { copyButton.textContent = tr('نسخ مسار التصديق', 'Copy attestation route'); }, 1800);
   });
-  printButton.addEventListener('click', () => { if (!result.hidden) { document.body.classList.add('sv-printing'); window.print(); window.setTimeout(() => document.body.classList.remove('sv-printing'), 800); } });
+  printButton.addEventListener('click', () => {
+    if (result.hidden || !currentResultData) return;
+    preparePrint(currentResultData);
+    document.body.classList.add('sv-attestation-printing');
+    window.print();
+    window.setTimeout(() => document.body.classList.remove('sv-attestation-printing'), 800);
+  });
   document.addEventListener('sv:languagechange', () => { updateVisibility(); if (!result.hidden) render(); });
   updateVisibility();
 })();

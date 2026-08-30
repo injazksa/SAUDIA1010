@@ -657,11 +657,19 @@
  // منع التكرار
  if (document.getElementById('uh-header')) return;
 
- // قائمة الروابط الموحّدة
- const NAV_ITEMS = [
+ // قائمة الروابط الموحّدة — عربية في الصفحات العربية وإنجليزية في صفحات English Services
+ const isEnglishPage = /^\/en(?:\/|$)/i.test(location.pathname) || (document.documentElement.lang || '').toLowerCase().startsWith('en');
+ const NAV_ITEMS = isEnglishPage ? [
+ { href: '/en/index.html', label: 'English Services', icon: 'fa-globe' },
+ { href: '/en/about.html', label: 'About Us', icon: 'fa-building' },
+ { href: '/en/saudi-visa-processing-partner-jordan.html', label: 'For Companies & Partners', icon: 'fa-city' },
+ { href: '/saudi-work-visa-eligibility.html', label: 'Eligibility Checker', icon: 'fa-list-check' },
+ { href: '/saudi-document-attestation-jordan.html', label: 'Document Attestation', icon: 'fa-file-signature' },
+ { href: '/professions.html', label: 'Professions & Documents', icon: 'fa-list-check' }
+ ] : [
  { href: '/index.html', label: 'الرئيسية', icon: 'fa-home' },
  { href: '/about.html', label: 'من نحن', icon: 'fa-building' },
- { href: '/index.html#services',label: 'خدماتنا', icon: 'fa-briefcase' },
+ { href: '/index.html#services', label: 'خدماتنا', icon: 'fa-briefcase' },
  { href: '/corporate.html', label: 'خدمات الشركات', icon: 'fa-city' },
  { href: '/professions.html', label: 'المهن والأوراق', icon: 'fa-list-check' },
  { href: '/professional.html', label: 'الاعتماد المهني (QVP)', icon: 'fa-user-check' },
@@ -669,9 +677,24 @@
  { href: '/certificates.html', label: 'تصديق الشهادات', icon: 'fa-certificate' },
  { href: '/work-visa.html', label: 'تأشيرة العمل', icon: 'fa-passport' },
  { href: '/calculator.html', label: 'حاسبة الرسوم', icon: 'fa-calculator' },
- { href: '/other-services.html',label: 'خدمات أخرى', icon: 'fa-concierge-bell' },
+ { href: '/other-services.html', label: 'خدمات أخرى', icon: 'fa-concierge-bell' },
  { href: '/blog.html', label: 'المدونة', icon: 'fa-newspaper' },
  { href: '/faq.html', label: 'الأسئلة الشائعة', icon: 'fa-circle-question' }
+ ];
+ const DESKTOP_NAV_ITEMS = isEnglishPage ? [
+ { href: '/en/index.html', label: 'English Services' },
+ { href: '/en/about.html', label: 'About Us' },
+ { href: '/en/saudi-visa-processing-partner-jordan.html', label: 'B2B Services' },
+ { href: '/saudi-work-visa-eligibility.html', label: 'Eligibility' },
+ { href: '/saudi-document-attestation-jordan.html', label: 'Attestation' },
+ { href: '/professions.html', label: 'Professions' }
+ ] : [
+ { href: '/index.html', label: 'الرئيسية' },
+ { href: '/professions.html', label: 'المهن والأوراق' },
+ { href: '/work-visa.html', label: 'تأشيرة العمل' },
+ { href: '/saudi-document-attestation-jordan.html', label: 'دليل التصديق' },
+ { href: '/calculator.html', label: 'حاسبة الرسوم' },
+ { href: '/en/index.html', label: 'English Services' }
  ];
 
  // أزل: الهيدر/الناف الموجود مسبقاً (القديم) + فتات الخبز (breadcrumb)
@@ -709,11 +732,15 @@
  header.setAttribute('data-testid', 'unified-header');
  header.innerHTML = `
  <div class="uh-bar">
- <a href="/" class="uh-brand" data-testid="uh-brand">
- <img src="/icons/logo-192.png" alt="مكتب تأشيرات السعودية في الأردن" class="uh-logo">
- <span class="uh-title">مكتب تأشيرات السعودية<span class="uh-title-sub"> في الأردن</span></span>
+ <a href="${isEnglishPage ? '/en/index.html' : '/'}" class="uh-brand" data-testid="uh-brand">
+ <img src="/icons/logo-192.png" alt="${isEnglishPage ? 'Saudi Visa Services in Jordan' : 'مكتب تأشيرات السعودية في الأردن'}" class="uh-logo">
+ <span class="uh-title">${isEnglishPage ? 'Saudi Visa Services' : 'مكتب تأشيرات السعودية'}<span class="uh-title-sub">${isEnglishPage ? ' in Jordan' : ' في الأردن'}</span></span>
  </a>
- <button type="button" id="uh-toggle" class="uh-toggle" aria-label="فتح القائمة" aria-expanded="false" aria-controls="uh-drawer" data-testid="uh-menu-toggle">
+ <nav class="uh-desktop-nav" aria-label="${isEnglishPage ? 'Main navigation' : 'التنقل الرئيسي'}">
+ ${DESKTOP_NAV_ITEMS.map(it => `<a href="${it.href}">${it.label}</a>`).join('')}
+ <a class="uh-desktop-cta" href="${isEnglishPage ? '/en/index.html#contact' : '/index.html#contact'}">${isEnglishPage ? 'Contact us' : 'تواصل معنا'}</a>
+ </nav>
+ <button type="button" id="uh-toggle" class="uh-toggle" aria-label="${isEnglishPage ? 'Open menu' : 'فتح القائمة'}" aria-expanded="false" aria-controls="uh-drawer" data-testid="uh-menu-toggle">
  <span class="uh-bars"><span></span><span></span><span></span></span>
  </button>
  </div>
@@ -760,6 +787,13 @@
 
  // ضع الرابط الحالي نشطاً
  const currentPath = location.pathname.replace(/\/+$/, '') || '/';
+ header.querySelectorAll('.uh-desktop-nav a').forEach(a => {
+ const hrefPath = (new URL(a.getAttribute('href'), location.origin)).pathname.replace(/\/+$/, '') || '/';
+ if (!a.classList.contains('uh-desktop-cta') && hrefPath === currentPath) {
+  a.classList.add('is-active');
+  a.setAttribute('aria-current', 'page');
+ }
+ });
  drawer.querySelectorAll('.uh-nav a').forEach(a => {
  const hrefPath = (new URL(a.getAttribute('href'), location.origin)).pathname.replace(/\/+$/, '') || '/';
  if (hrefPath === currentPath) a.classList.add('is-active');
@@ -813,8 +847,25 @@
  #uh-header .uh-brand {
  display: inline-flex; align-items: center; gap: 10px;
  text-decoration: none; color: #1B2A41;
+ flex: 0 0 auto; min-width: 0;
  }
  #uh-header .uh-logo { height: 38px; width: auto; display: block; }
+ #uh-header .uh-desktop-nav {
+ display: flex; align-items: center; justify-content: flex-end; gap: 16px;
+ flex: 1 1 auto; min-width: 0; flex-wrap: wrap;
+ }
+ #uh-header .uh-desktop-nav a {
+ color: #1B2A41; text-decoration: none; font-size: 12.5px; font-weight: 700;
+ white-space: nowrap; transition: color .2s ease, transform .2s ease;
+ }
+ #uh-header .uh-desktop-nav a:hover,
+ #uh-header .uh-desktop-nav a:focus-visible,
+ #uh-header .uh-desktop-nav a.is-active { color: #C9A35E; }
+ #uh-header .uh-desktop-nav .uh-desktop-cta {
+ background: #C9A35E; color: #fff; border-radius: 9px; padding: 9px 12px;
+ }
+ #uh-header .uh-desktop-nav .uh-desktop-cta:hover,
+ #uh-header .uh-desktop-nav .uh-desktop-cta:focus-visible { color: #fff; background: #B7893D; transform: translateY(-1px); }
  #uh-header .uh-title { font-weight: 800; font-size: 13px; line-height: 1.25; color: #1B2A41; letter-spacing: -.2px; }
  #uh-header .uh-title-sub { color: #C9A35E; font-weight: 700; }
  @media (min-width: 640px) { #uh-header .uh-title { font-size: 15px; } #uh-header .uh-logo { height: 42px; } }
@@ -822,7 +873,7 @@
  #uh-header .uh-toggle {
  width: 44px; height: 44px; border-radius: 12px;
  background: #1B2A41; color: #fff;
- display: inline-flex; align-items: center; justify-content: center;
+ display: none; align-items: center; justify-content: center;
  border: 1px solid transparent; cursor: pointer;
  transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
  box-shadow: 0 6px 14px rgba(27,42,65,.18);
@@ -911,6 +962,13 @@
  #uh-drawer .uh-cta-wa { background: #25D366; color: #fff; }
  #uh-drawer .uh-cta-wa:hover { background: #1DB954; transform: translateY(-1px); }
 
+ @media (max-width: 1050px) {
+ #uh-header .uh-desktop-nav { display: none; }
+ #uh-header .uh-bar { width: 100%; box-sizing: border-box; }
+ #uh-header .uh-brand { flex: 1 1 auto; min-width: 0; }
+ #uh-header .uh-title { min-width: 0; overflow-wrap: anywhere; }
+ #uh-header .uh-toggle { display: inline-flex; flex: 0 0 44px; }
+ }
  @media (prefers-reduced-motion: reduce) {
  #uh-drawer, #uh-backdrop, #uh-header .uh-toggle, #uh-drawer .uh-nav a { transition: none !important; }
  }

@@ -147,6 +147,20 @@
   }
   /* Smooth focus when scrolling to fallback panel */
   #smart-fallback-panel:not(.hidden) { scroll-margin-top: 80px; }
+  /* Keep the profession dialog inside the viewport; only its document body scrolls. */
+  #professionModal [data-profession-modal-dialog] {
+    max-height: calc(100vh - 1rem);
+  }
+  @media (min-width: 640px) {
+    #professionModal [data-profession-modal-dialog] {
+      max-height: 90vh;
+    }
+  }
+  #professionModal [data-profession-modal-scroll] {
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+  }
+
   /* Hide vertical scrollbar on modals on mobile for cleaner look */
   @media (max-width: 768px) {
     #generated-sheet-modal::-webkit-scrollbar,
@@ -454,10 +468,10 @@
  </section>
  
  <!-- Profession Details Modal -->
- <div id="professionModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+ <div id="professionModal" class="hidden fixed inset-0 z-50 flex items-start sm:items-center justify-center p-2 sm:p-4 overflow-y-auto overscroll-contain" role="dialog" aria-modal="true" aria-hidden="true">
  <div class="absolute inset-0 bg-gray-900 bg-opacity-75 transition-opacity" onclick="closeProfessionModal()"></div>
  
- <div class="relative bg-white rounded-2xl text-right overflow-hidden shadow-2xl transform transition-all w-full max-w-lg sm:max-w-4xl max-h-[90vh] overflow-y-auto z-10">
+ <div class="relative bg-white rounded-2xl text-right overflow-hidden shadow-2xl transform transition-all w-full max-w-lg sm:max-w-4xl max-h-[calc(100dvh-1rem)] sm:max-h-[90vh] flex flex-col z-10" data-profession-modal-dialog>
  <div class="bg-gradient-to-r from-navy to-navy-dark px-4 sm:px-8 py-4 sm:py-6 text-white relative">
  <button type="button" onclick="closeProfessionModal()" data-testid="close-profession-modal" aria-label="إغلاق" class="absolute top-3 left-3 w-14 h-14 flex items-center justify-center rounded-full bg-white/15 hover:bg-white/30 active:bg-white/40 text-white text-2xl transition-all touch-manipulation z-10">
  <i class="fas fa-times pointer-events-none"></i>
@@ -468,7 +482,7 @@
  </div>
  </div>
  
- <div class="px-4 sm:px-8 py-4 sm:py-6">
+ <div class="px-4 sm:px-8 py-4 sm:py-6 flex-1 min-h-0 overflow-y-auto overscroll-contain" data-profession-modal-scroll tabindex="0">
  <div class="mb-4 sm:mb-6">
  <h4 class="text-base sm:text-xl font-bold text-navy mb-3 sm:mb-4 flex items-center gap-2">
  <i class="fas fa-file-alt text-gold"></i>
@@ -494,11 +508,11 @@
  </p>
  </div>
  
- <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
+ <div class="sticky bottom-0 z-10 -mx-4 sm:-mx-8 px-4 sm:px-8 pt-3 pb-1 bg-white/95 backdrop-blur-sm border-t border-gray-100 flex flex-col sm:flex-row gap-2 sm:gap-3">
  <button 
  onclick="printProfessionDetails()" 
  data-testid="print-profession-btn"
- class="flex-1 bg-gold hover:bg-gold-light text-white px-4 sm:px-6 py-3 sm:py-4 rounded-xl text-sm sm:text-base font-bold transition-all hover:-translate-y-1 shadow-lg flex items-center justify-center gap-2">
+ class="flex-1 bg-gold hover:bg-gold-light text-white px-3 sm:px-5 py-2.5 sm:py-3 rounded-xl text-sm sm:text-base font-bold transition-all hover:-translate-y-1 shadow-lg flex items-center justify-center gap-2">
  <i class="fas fa-print"></i>
  طباعة الأوراق المطلوبة
  </button>
@@ -608,12 +622,12 @@
  </footer>
  
  <script src="script.js?v=20260829-nationality-rules-14" defer></script>
- <script src="professions.js?v=20260829-nationality-rules-14" defer></script>
+ <script src="professions.js?v=20260830-modal-scroll-fix-2" defer></script>
  <!-- 🧠 Smart Fallback System (Task 12) — يولّد أوراق المهن المفقودة تلقائياً -->
  <script src="/smart-fallback.js?v=20260829-nationality-rules-14" defer></script>
 
  <!-- ⚡ Core + Security (consolidated - 2 files instead of 8) -->
- <script src="/core.js" defer></script>
+ <script src="/core.js?v=20260830-header-mobile-fix-1" defer></script>
  <script src="/security.js" defer></script>
 
  <script src="/js/config-loader.js" defer></script>

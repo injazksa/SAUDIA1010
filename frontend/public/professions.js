@@ -4,6 +4,7 @@ let renderedCount = 0;
 const BATCH_SIZE = 30;
 let currentProfession = null;
 let professionModalScrollY = 0; // ✅ حفظ موضع التمرير عند فتح النافذة
+let professionModalBodyState = null;
 
 // Load professions data on page load
 document.addEventListener('DOMContentLoaded', function() {
@@ -54,6 +55,12 @@ document.addEventListener('DOMContentLoaded', function() {
             if (source[idx]) toggleProfessionInline(card, source[idx]);
         });
     }
+});
+
+document.addEventListener('keydown', function(event) {
+    if (event.key !== 'Escape') return;
+    const modal = document.getElementById('professionModal');
+    if (modal && !modal.classList.contains('hidden')) closeProfessionModal();
 });
 
 // Load professions from JSON file
@@ -953,19 +960,45 @@ function showProfessionDetails(profession) {
     }
 
     const modal = document.getElementById('professionModal');
-    professionModalScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+    const openingModal = modal.classList.contains('hidden');
+    if (openingModal) {
+        professionModalScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+        professionModalBodyState = {
+            position: document.body.style.position,
+            top: document.body.style.top,
+            left: document.body.style.left,
+            right: document.body.style.right,
+            width: document.body.style.width,
+            overflow: document.body.style.overflow
+        };
+        document.documentElement.classList.add('overflow-hidden');
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${professionModalScrollY}px`;
+        document.body.style.left = '0';
+        document.body.style.right = '0';
+        document.body.style.width = '100%';
+        document.body.style.overflow = 'hidden';
+    }
     modal.classList.remove('hidden');
-    document.body.style.width = '100%';
-    document.body.classList.add('overflow-hidden');
+    modal.setAttribute('aria-hidden', 'false');
+    if (openingModal) modal.querySelector('[data-profession-modal-scroll]')?.focus({ preventScroll: true });
 }
 
 function closeProfessionModal() {
-    document.getElementById('professionModal').classList.add('hidden');
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.width = '';
-    document.body.classList.remove('overflow-hidden');
-    // window.scrollTo(0, professionModalScrollY); // Not needed if we don't fix position // ✅ استعادة موضع التمرير
+    const modal = document.getElementById('professionModal');
+    if (!modal) return;
+    modal.classList.add('hidden');
+    modal.setAttribute('aria-hidden', 'true');
+    document.documentElement.classList.remove('overflow-hidden');
+    const state = professionModalBodyState || {};
+    document.body.style.position = state.position || '';
+    document.body.style.top = state.top || '';
+    document.body.style.left = state.left || '';
+    document.body.style.right = state.right || '';
+    document.body.style.width = state.width || '';
+    document.body.style.overflow = state.overflow || '';
+    professionModalBodyState = null;
+    window.scrollTo(0, professionModalScrollY);
 }
 
 function debounce(func, wait) {

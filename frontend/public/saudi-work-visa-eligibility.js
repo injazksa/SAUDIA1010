@@ -10,11 +10,20 @@
   const nationalityEl = $('nationality');
   const residencyField = $('residencyField');
   const residencyEl = $('jordanResidency');
+  const residencyLabelEl = residencyField.querySelector('label');
+  const residencyHintEl = residencyField.querySelector('small');
+  const employmentDocumentsField = $('employmentDocumentsField');
+  const employmentDocumentsEl = $('employmentDocuments');
   const syrianExceptionField = $('syrianExceptionField');
   const syrianExceptionEl = $('syrianException');
   const professionField = $('specificProfessionField');
   const professionEl = $('profession');
   const professionOptions = $('professionOptions');
+  const experienceTitleField = $('experienceTitleField');
+  const experienceTitleEl = $('experienceTitle');
+  const engineeringFields = $('engineeringFields');
+  const graduationYearsEl = $('graduationYears');
+  const saudiBornEl = $('saudiBorn');
   const professionHint = $('professionHint');
   const investorField = $('investorField');
   const investorDocumentsEl = $('investorDocuments');
@@ -137,19 +146,25 @@
   function isInvestorProfession(name) { return isInvestorName(name); }
   function isEngineeringProfessionName(name) { return /مهندس|هندسه|هندسي/.test(normalize(name)); }
   function isMedicalProfessionName(name) { return /طبيب|دكتور|طبيبه|صيدلي|صيدله|ممرض|ممرضه|تمريض|مختبر طبي/.test(normalize(name)); }
+  function titleMatches(record, value) {
+    const entered = normalize(value);
+    if (!entered || !record) return false;
+    return [recordName(record), record?.name_en].some((name) => normalize(name) === entered);
+  }
 
   function getProfile(record) {
     const name = recordName(record);
     const text = requirementsText(record);
     const normName = normalize(name);
-    const isGeneralManager = normName === normalize('مدير عام');
+    const investorRole = isInvestorName(name);
+    const isGeneralManager = investorRole;
     const explicitEducation = /الشهادة الجامعية|جامعية|بكالوريوس|كشف العلامات/.test(text)
       ? 'university'
       : (/الثانوية|ثانوية/.test(text) ? 'secondary' : (/الصف العاشر|الشهادة المدرسية|شهادة الصف/.test(text) ? 'school' : null));
-    const education = explicitEducation || (['الاختصاصيون', 'المدراء'].includes(record?.category) ? 'university' : (record?.category === 'الفنيون' ? 'secondary' : (['العمال', 'الحرفيون'].includes(record?.category) ? 'school' : null)));
-    const experience = /خبرة[^.،]*سنتين|خبرة[^.،]*2/.test(text) ? 2 : (/خبرة/.test(text) ? 1 : 0);
-    const accreditation = /الاعتماد المهني|فحص مهني|QVP/.test(text);
-    const executiveDocuments = /رخصة الاستثمار|السجل التجاري السعودي/.test(text) || isInvestorName(name);
+    const education = investorRole ? null : (explicitEducation || (['الاختصاصيون', 'المدراء'].includes(record?.category) ? 'university' : (record?.category === 'الفنيون' ? 'secondary' : (['العمال', 'الحرفيون'].includes(record?.category) ? 'school' : null))));
+    const experience = investorRole ? 0 : (/خبرة[^.،]*سنتين|خبرة[^.،]*2/.test(text) ? 2 : (/خبرة/.test(text) ? 1 : 0));
+    const accreditation = investorRole ? false : /الاعتماد المهني|فحص مهني|QVP/.test(text);
+    const executiveDocuments = investorRole || /رخصة الاستثمار|السجل التجاري السعودي/.test(text);
     return {
       name,
       category: record?.category || 'غير مصنف',
@@ -176,7 +191,7 @@
       const barber = professions.find((record) => normalize(recordName(record)) === normalize('حلاق')) || professions.find((record) => record?.gender === 'أنثى');
       if (barber) return { ...barber, name_ar: value, profession_name_ar: value, gender: 'أنثى', code: '---', profession_code: '---', slug: 'مصفف-شعر' };
     }
-    const exact = professions.find((record) => normalize(recordName(record)) === query);
+    const exact = professions.find((record) => [recordName(record), record?.name_en].some((value) => normalize(value) === query));
     if (exact) return exact;
     if (query === normalize('منسق منتجات')) {
       const quality = professions.find((record) => normalize(recordName(record)).includes(normalize('مراقب جودة')))
@@ -209,10 +224,27 @@
   }
 
   function syncResidencyFields() {
-    const shouldAsk = nationalityEl.value && !isJordanian();
+    const shouldAsk = Boolean(nationalityEl.value && !isJordanian());
+    const syrian = shouldAsk && isSyrian();
     residencyField.hidden = !shouldAsk;
+    employmentDocumentsField.hidden = !shouldAsk;
+    if (syrian) {
+      residencyLabelEl.textContent = tr('3. اختر حالة تقديمك كسوري في الأردن', '3. Choose your Syrian application status in Jordan');
+      residencyHintEl.textContent = tr('اختر مقيمًا بإقامة سارية أو غير مقيم لتظهر لك خانة الاستثناء الخاصة بالسوري فقط.', 'Choose resident with valid residence or non-resident to show the Syrian-specific exception field.');
+      residencyEl.options[1].textContent = tr('مقيم في الأردن بإقامة سارية', 'Resident in Jordan with valid residence');
+      residencyEl.options[2].textContent = tr('غير مقيم في الأردن — أحتاج مسار الاستثناء', 'Not resident in Jordan — I need the exception route');
+    } else {
+      residencyLabelEl.textContent = tr('3. هل لديك إقامة سارية في الأردن؟', '3. Do you have valid residence in Jordan?');
+      residencyHintEl.textContent = tr('هذا السؤال يظهر لغير الأردني عند اختيار الأردن/عمّان كجهة للتقديم.', 'This question appears for non-Jordanian applicants applying from Amman, Jordan.');
+      residencyEl.options[0].textContent = tr('اختر الإجابة', 'Choose an answer');
+      residencyEl.options[1].textContent = tr('نعم، لدي إقامة سارية', 'Yes, I have valid residence');
+      residencyEl.options[2].textContent = tr('لا، لا توجد إقامة سارية', 'No, I do not have valid residence');
+    }
+    residencyEl.required = shouldAsk;
+    employmentDocumentsEl.required = shouldAsk;
     if (!shouldAsk) {
       residencyEl.value = '';
+      employmentDocumentsEl.value = '';
       syrianExceptionEl.value = '';
       syrianExceptionField.hidden = true;
       return;
@@ -228,6 +260,16 @@
     recommendationsPanel.hidden = true;
     recommendationGrid.innerHTML = '';
     professionField.hidden = recommendationMode;
+    experienceTitleField.hidden = true;
+    experienceTitleEl.required = false;
+    engineeringFields.hidden = true;
+    graduationYearsEl.required = false;
+    saudiBornEl.required = false;
+    if (recommendationMode) {
+      experienceTitleEl.value = '';
+      graduationYearsEl.value = '';
+      saudiBornEl.value = '';
+    }
     professionEl.required = !recommendationMode;
     educationEl.required = recommendationMode;
     if (recommendationMode) {
@@ -235,10 +277,12 @@
       educationField.hidden = false;
       experienceField.hidden = false;
       accreditationField.hidden = false;
-      investorField.hidden = educationEl.value !== 'none' && educationEl.value !== 'school' && educationEl.value !== 'secondary' && educationEl.value !== 'diploma';
+      investorField.hidden = true;
+      investorDocumentsEl.required = false;
     } else {
       modeHelp.textContent = tr('اختر المهنة من بيانات الموقع، ثم نعرض لك المؤهل والخبرة والاعتماد والأوراق المرتبطة بها.', 'Choose a profession from the site data and we will show its education, experience, verification and document requirements.');
       investorField.hidden = true;
+      investorDocumentsEl.required = false;
       updateProfessionFields();
     }
   }
@@ -251,14 +295,48 @@
       experienceField.hidden = false;
       accreditationField.hidden = false;
       investorField.hidden = true;
+      investorDocumentsEl.required = false;
+      experienceTitleField.hidden = true;
+      experienceTitleEl.required = false;
+      experienceTitleEl.value = '';
+      engineeringFields.hidden = true;
+      graduationYearsEl.required = false;
+      saudiBornEl.required = false;
+      graduationYearsEl.value = '';
+      saudiBornEl.value = '';
       professionHint.textContent = tr('اكتب المسمى الأقرب لما هو مكتوب في عقد العمل أو التأشيرة، ثم اختره من الاقتراحات.', 'Type the title closest to the wording on your employment document or visa, then choose a suggestion.');
       return;
     }
     const profile = getProfile(selectedRecord);
-    investorField.hidden = !profile.executiveDocuments;
-    educationField.hidden = !profile.education;
-    experienceField.hidden = !profile.experience;
-    accreditationField.hidden = !profile.accreditation;
+    const executive = profile.executiveDocuments;
+    investorField.hidden = !executive;
+    investorDocumentsEl.required = executive;
+    if (!executive) investorDocumentsEl.value = '';
+    educationField.hidden = executive || !profile.education;
+    experienceField.hidden = executive || !profile.experience;
+    accreditationField.hidden = executive || !profile.accreditation;
+    experienceTitleField.hidden = executive || !profile.experience;
+    experienceTitleEl.required = !executive && Boolean(profile.experience);
+    if (executive || !profile.experience) experienceTitleEl.value = '';
+    const engineering = !executive && isEngineeringProfessionName(profile.name);
+    engineeringFields.hidden = !engineering;
+    graduationYearsEl.required = engineering;
+    saudiBornEl.required = engineering;
+    if (!engineering) {
+      graduationYearsEl.value = '';
+      saudiBornEl.value = '';
+    }
+    if (executive) {
+      educationEl.value = '';
+      experienceEl.value = '';
+      accreditationEl.value = '';
+      experienceTitleEl.value = '';
+      graduationYearsEl.value = '';
+      saudiBornEl.value = '';
+      educationEl.required = false;
+      experienceEl.required = false;
+      accreditationEl.required = false;
+    }
     professionHint.textContent = profile.executiveDocuments
       ? tr('هذه المهنة لها مستندات إدارية خاصة؛ ستظهر في نتيجة الفحص.', 'This profession has special administrative documents, which will appear in the result.')
       : tr('تم العثور على المسمى في بيانات المهن، وسيُقارن الفحص بمتطلباته.', 'This title was found in the profession data and will be checked against its requirements.');
@@ -423,16 +501,57 @@
     documentsPanel.hidden = false;
   }
 
-  function renderResult(state, title, summary, issues) {
+  function renderResult(state, title, summary, issues = [], completed = [], review = [], nextSteps = [], optionalAgeText = '') {
     result.dataset.state = state;
+    result.hidden = false;
     resultTitle.textContent = title;
     resultSummary.textContent = summary;
     resultList.innerHTML = '';
-    issues.forEach((issue) => {
+    resultList.hidden = true;
+
+    const requiredGroup = $('requiredGroup');
+    const reviewGroup = $('reviewGroup');
+    const completeGroup = $('completeGroup');
+    const guide = $('resultGuide');
+    const fillTextList = (list, values) => {
+      list.replaceChildren();
+      values.forEach((value) => {
+        const li = document.createElement('li');
+        li.textContent = value;
+        list.appendChild(li);
+      });
+    };
+    fillTextList($('requiredList'), issues);
+    fillTextList($('reviewList'), review);
+    fillTextList($('completeList'), completed);
+    requiredGroup.hidden = issues.length === 0;
+    reviewGroup.hidden = review.length === 0;
+    completeGroup.hidden = completed.length === 0;
+    guide.hidden = !(issues.length || review.length || completed.length);
+    requiredGroup.querySelector('h4').textContent = tr('يجب استكماله قبل المتابعة', 'Complete before continuing');
+    reviewGroup.querySelector('h4').textContent = tr('يحتاج مراجعة أو تأكيدًا', 'Needs review or confirmation');
+    completeGroup.querySelector('h4').textContent = tr('تم اجتيازه في هذا الفحص', 'Passed in this check');
+
+    const optionalAgeNote = $('optionalAgeNote');
+    optionalAgeNote.textContent = optionalAgeText;
+    optionalAgeNote.hidden = !optionalAgeText;
+    const nextStepsBox = $('resultNextSteps');
+    const nextStepsList = $('nextStepsList');
+    nextStepsList.replaceChildren();
+    nextSteps.forEach((step) => {
       const li = document.createElement('li');
-      li.textContent = issue;
-      resultList.appendChild(li);
+      if (typeof step === 'string') li.textContent = step;
+      else {
+        const link = document.createElement('a');
+        link.href = step.href;
+        link.textContent = step.label;
+        li.appendChild(link);
+      }
+      nextStepsList.appendChild(li);
     });
+    nextStepsBox.querySelector('h4').textContent = tr('ماذا تفعل الآن؟', 'What to do next');
+    nextStepsBox.hidden = nextSteps.length === 0;
+
     result.classList.add('is-visible');
     result.focus({ preventScroll: false });
   }
@@ -451,6 +570,7 @@
       } else if (residencyEl.value !== 'yes') {
         addIssue(issues, tr('عند التقديم من الأردن، يحتاج غير الأردني إلى إقامة أردنية سارية في الفحص الأولي.', 'When applying from Jordan, a non-Jordanian applicant generally needs valid Jordanian residence for this check.'));
       }
+      if (employmentDocumentsEl.value !== 'yes') addIssue(issues, tr('لغير الأردني: يجب تأكيد توفر عقد العمل وخطاب الاطلاع قبل متابعة الفحص.', 'For non-Jordanian applicants: confirm that the employment contract and authorization letter are available before continuing the check.'));
     }
   }
 
@@ -524,29 +644,64 @@
   }
 
   function validateEligibility(event) {
-    event.preventDefault();
+    if (event) event.preventDefault();
     syncResidencyFields();
     syncModeFields();
     selectedRecord = findProfession(professionEl.value);
     const issues = [];
     const cautions = [];
+    const completed = [];
+    const ageOptionalText = birthDateEl.value ? '' : tr('حساب العمر اختياري؛ ترك تاريخ الميلاد فارغًا لا يُعد نقصًا في هذا الفحص.', 'The age check is optional; leaving the date of birth blank is not treated as a missing requirement.');
     residencyIssues(issues);
     const age = birthDateEl.value ? showAgeCalculation() : null;
-    if (!birthDateEl.value) addIssue(cautions, tr('لم يتم إدخال تاريخ الميلاد؛ لذلك ستبقى نتيجة العمر بحاجة إلى تأكيد اختياري.', 'No date of birth was entered, so the age result remains subject to optional confirmation.'));
+    if (birthDateEl.value && !age) addIssue(issues, tr('تحقق من تاريخ الميلاد وتاريخ الحساب قبل متابعة الفحص.', 'Check the date of birth and calculation date before continuing.'));
+
+    if (nationalityEl.value) {
+      if (isJordanian()) completed.push(tr('الجنسية الأردنية: لا يظهر سؤال الإقامة الأردنية ولا استثناء غير المقيم.', 'Jordanian nationality: the Jordan residence and non-resident exception questions do not apply.'));
+      else if (residencyEl.value === 'yes') completed.push(tr('الإقامة الأردنية السارية لغير الأردني', 'Valid Jordanian residence for a non-Jordanian applicant'));
+      if (!isJordanian() && employmentDocumentsEl.value === 'yes') completed.push(tr('تأكيد عقد العمل وخطاب الاطلاع', 'Employment contract and authorization letter confirmed'));
+      if (isSyrian() && residencyEl.value === 'no' && syrianExceptionEl.value === 'yes') completed.push(tr('تأكيد مستند أو خطاب اطلاع الاستثناء السوري غير المقيم', 'Syrian non-resident exception document or authorization letter confirmed'));
+    }
 
     if (checkModeEl.value === 'recommend') {
       if (!educationEl.value) addIssue(issues, tr('اختر أعلى مؤهل دراسي حتى نعرض المهن التي تناسبك.', 'Choose your highest education level so we can show matching professions.'));
+      else completed.push(tr('تم تحديد أعلى مؤهل دراسي لمسار الاقتراح.', 'Highest education level selected for recommendation mode.'));
       if (age && age.years < 21) addIssue(issues, tr('لم يتم إتمام 21 سنة بعد، وهذا شرط أساسي لهذه المعاملة.', 'You have not reached 21 yet, which is a required condition for this application.'));
+      else if (age) completed.push(tr('العمر يحقق الحد الأدنى الظاهر في هذا الفحص.', 'The age meets the minimum shown in this check.'));
       const matches = issues.length ? [] : runRecommendation(age, cautions);
-      if (issues.length) renderResult('danger', tr('أكمل البيانات الأساسية أولاً', 'Complete the required details first'), tr('نحتاج إلى بعض البيانات قبل اقتراح المهن المناسبة.', 'We need a few details before suggesting suitable professions.'), issues);
-      else if (matches.length) renderResult(cautions.length ? 'warning' : 'success', tr('المهن الأقرب إلى بياناتك', 'Professions closest to your details'), tr('هذه اقتراحات أولية حسب الجنسية والعمر والمؤهل والخبرة والاعتماد. افتح أي بطاقة لمعرفة الأوراق وطباعة القائمة.', 'These suggestions are based on nationality, age, education, experience and professional verification. Open a card to view and print its documents.'), cautions);
-      else renderResult('warning', tr('لم نجد مطابقة كاملة حالياً', 'No complete match found at this time'), tr('لم نجد مهنة تطابق كل البيانات المدخلة؛ يمكنك مراجعة المكتب لاختيار مسار آخر.', 'No profession matched all of the details entered. Contact the office to review another pathway.'), cautions);
+      const nextSteps = [{ href: '/professions.html', label: tr('فتح صفحة المهن والأوراق', 'Open professions and documents') }, { href: '/saudi-work-visa-file-readiness.html', label: tr('فتح مراجعة جاهزية ملف العمل', 'Open work-file readiness review') }];
+      if (issues.length) renderResult('danger', tr('أكمل البيانات الأساسية أولاً', 'Complete the required details first'), tr('نحتاج إلى بعض البيانات قبل اقتراح المهن المناسبة.', 'We need a few details before suggesting suitable professions.'), issues, completed, cautions, nextSteps, ageOptionalText);
+      else if (matches.length) renderResult(cautions.length ? 'warning' : 'success', tr('المهن الأقرب إلى بياناتك', 'Professions closest to your details'), tr('هذه اقتراحات أولية حسب الجنسية والعمر والمؤهل والخبرة والاعتماد. افتح أي بطاقة لمعرفة الأوراق وطباعة القائمة.', 'These suggestions are based on nationality, age, education, experience and professional verification. Open a card to view and print its documents.'), [], [...completed, tr('تمت مطابقة بياناتك الأولية مع سجلات المهن.', 'Your initial details were matched against the profession records.')], cautions, nextSteps, ageOptionalText);
+      else renderResult('warning', tr('لم نجد مطابقة كاملة حالياً', 'No complete match found at this time'), tr('لم نجد مهنة تطابق كل البيانات المدخلة؛ يمكنك مراجعة المكتب لاختيار مسار آخر.', 'No profession matched all of the details entered. Contact the office to review another pathway.'), [], completed, cautions, nextSteps, ageOptionalText);
       return;
     }
 
+    const nextSteps = [{ href: '/professions.html', label: tr('فتح صفحة المهن والأوراق', 'Open professions and documents') }, { href: '/saudi-document-attestation-jordan.html', label: tr('قراءة دليل تصديق الوثائق', 'Read the document-attestation guide') }, { href: '/saudi-work-visa-file-readiness.html', label: tr('فتح مراجعة جاهزية ملف العمل', 'Open work-file readiness review') }];
     if (!professionEl.value || !selectedRecord) addIssue(issues, tr('اكتب مهنة موجودة في القائمة حتى تتم مقارنة متطلباتها بدقة.', 'Enter a profession from the list so its requirements can be checked accurately.'));
     if (selectedRecord) {
       const profile = getProfile(selectedRecord);
+      completed.push(tr(`تم العثور على المهنة: ${displayName(selectedRecord)}.`, `Profession found: ${displayName(selectedRecord)}.`));
+      if (age && ageEligible(profile, age)) completed.push(tr('العمر يحقق حدود الفحص للمهنة المختارة.', 'The age meets the check limits for the selected profession.'));
+      if (profile.education && compareEducation(profile.education, educationEl.value)) completed.push(tr('المؤهل المختار يوافق الحد الظاهر للمهنة.', 'The selected education meets the level shown for the profession.'));
+      else if (!profile.education) completed.push(tr('لا يظهر للمهنة شرط مؤهل محدد في السجل.', 'The record does not show a specific education requirement for this profession.'));
+      if (profile.experience === 0) completed.push(tr('لا تظهر خبرة إلزامية للمهنة في السجل.', 'The record does not show mandatory experience for this profession.'));
+      else {
+        if (!experienceTitleEl.value.trim()) addIssue(issues, tr('اكتب المسمى الوظيفي كما يظهر في شهادة الخبرة حتى نتحقق من مطابقته لمهنة التأشيرة.', 'Enter the job title shown on the experience letter so it can be compared with the visa profession.'));
+        else if (!titleMatches(selectedRecord, experienceTitleEl.value)) addIssue(issues, tr(`مسمى الخبرة «${experienceTitleEl.value.trim()}» لا يطابق مهنة التأشيرة «${recordName(selectedRecord)}».`, `The experience title “${experienceTitleEl.value.trim()}” does not match the visa profession “${displayName(selectedRecord)}”.`));
+        else completed.push(tr('مسمى الخبرة يطابق مسمى مهنة التأشيرة.', 'The experience title matches the visa profession title.'));
+        if ((profile.experience === 1 && ['1', '2', 'more2'].includes(experienceEl.value)) || (profile.experience === 2 && ['2', 'more2'].includes(experienceEl.value))) completed.push(tr('مدة الخبرة المدخلة توافق الحد المطلوب.', 'The entered experience period meets the required minimum.'));
+      }
+      if (!profile.accreditation) completed.push(tr('لا يظهر شرط اعتماد مهني محدد لهذه المهنة في السجل الحالي.', 'No specific professional-verification requirement appears for this profession in the current record.'));
+      else if (accreditationEl.value === 'yes') completed.push(tr('تم تأكيد الاعتماد أو الفحص المهني المطلوب.', 'The required professional verification or assessment was confirmed.'));
+      if (profile.executiveDocuments && investorDocumentsEl.value === 'yes') completed.push(tr('تم تأكيد مستندات المسار الاستثماري ووجود الاسم في السجل التجاري السعودي.', 'Saudi investor documents and the applicant’s name in the commercial registration were confirmed.'));
+
+      if (isEngineeringProfessionName(profile.name)) {
+        const graduationYears = graduationYearsEl.value === '' ? null : Number(graduationYearsEl.value);
+        if (graduationYears === null || !Number.isFinite(graduationYears)) addIssue(issues, tr('أدخل عدد السنوات المكتملة منذ التخرج للمهنة الهندسية.', 'Enter the completed years since graduation for the engineering profession.'));
+        else if (graduationYears > 5) completed.push(tr('مدة التخرج الهندسية تتجاوز خمس سنوات.', 'The engineering graduation period is more than five years.'));
+        else if (saudiBornEl.value === 'yes') cautions.push(tr('مدة التخرج أقل من أو تساوي خمس سنوات؛ لا يعتمد الاستثناء لمواليد السعودية إلا بعد تأكيد الجهة المختصة.', 'The graduation period is five years or less; the Saudi-born exception must be confirmed by the competent authority.'));
+        else addIssue(issues, tr('المهنة الهندسية تحتاج إلى تخرج منذ أكثر من خمس سنوات، ما لم يثبت استثناء مواليد السعودية.', 'The engineering profession requires graduation more than five years ago unless the Saudi-born exception is confirmed.'));
+      }
       if (age && !ageEligible(profile, age)) {
         addIssue(issues, profile.isGeneralManager ? tr('لم يتم إتمام 21 سنة بعد، والمدير العام يجب أن يكون قد أتم 21 سنة.', 'You have not reached 21 yet; a General Manager must be at least 21.') : (age.years < 21 ? tr('لم يتم إتمام 21 سنة بعد، وهذا شرط أساسي.', 'You have not reached 21 yet, which is required.') : tr('العمر 60 سنة أو أكثر، وهذه المهنة العادية تشترط أن يكون العمر أقل من 60 سنة.', 'The age is 60 or above; ordinary professions require an age under 60.')));
       }
@@ -558,9 +713,9 @@
       renderDocuments(selectedRecord);
     }
 
-    if (issues.length) renderResult('danger', tr('توجد شروط تحتاج إلى استكمال أو مراجعة', 'Some requirements need completion or review'), tr('تظهر الأسباب أسفل النتيجة، ويمكنك تعديل البيانات ثم إعادة الفحص.', 'The reasons appear below. You can update your details and run the check again.'), [...issues, ...cautions]);
-    else if (cautions.length) renderResult('warning', tr('توافق مع ضرورة تأكيد بعض البيانات', 'Matches subject to confirmation'), tr('لم يظهر مانع واضح، لكن راجع الملاحظات والأوراق الخاصة قبل البدء.', 'No clear obstacle appeared, but review the notes and profession documents before proceeding.'), cautions);
-    else renderResult('success', tr('متوافق مع متطلبات الفحص', 'Matches the check requirements'), tr('لم تظهر مشكلة واضحة في البيانات المدخلة. افتح قائمة الأوراق وراجع مصدر كل مستند قبل التقديم.', 'No clear issue appeared in the details entered. Open the document list and review each document source before applying.'), []);
+    const review = [...cautions, tr('هذه نتيجة إرشادية؛ القرار النهائي يعود للجهات الرسمية وصاحب العمل وصحة الوثائق.', 'This is guidance only; the final decision depends on official authorities, the employer and valid documents.')];
+    if (issues.length) renderResult('danger', tr('توجد شروط تحتاج إلى استكمال أو مراجعة', 'Some requirements need completion or review'), tr('تظهر الأسباب أسفل النتيجة، ويمكنك تعديل البيانات ثم إعادة الفحص.', 'The reasons appear below. You can update your details and run the check again.'), issues, completed, review, nextSteps, ageOptionalText);
+    else renderResult('success', tr('متوافق مع متطلبات الفحص', 'Matches the check requirements'), tr('لم تظهر مشكلة واضحة في البيانات المدخلة. افتح قائمة الأوراق وراجع مصدر كل مستند قبل التقديم.', 'No clear issue appeared in the details entered. Open the document list and review each document source before applying.'), [], completed, review, nextSteps, ageOptionalText);
   }
 
   function documentText() {

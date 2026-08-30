@@ -28,10 +28,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/new-seo-pages.css">
+  <link rel="stylesheet" href="/new-seo-pages.css?v=20260830-mobile-layout-2">
   <script src="/schema-markup.js" defer></script>
   <script src="/bilingual-translations.js" defer></script>
-  <script src="/bilingual-pages.js" defer></script>
+  <script src="/bilingual-pages.js?v=20260830-language-6" defer></script>
   <script src="/js/config-loader.js?v=20260820-ticker" defer></script>
   <script type="application/ld+json">
   {
@@ -155,21 +155,44 @@
                   <small>وجود الاستثناء لا يعني صدور التأشيرة؛ يجب مراجعة نوع المعاملة والجهة المختصة.</small>
                 </div>
 
+                <div class="sv-field sv-field-full" id="employmentDocumentsField" hidden>
+                  <label for="employmentDocuments">هل لديك عقد العمل وخطاب الاطلاع؟</label>
+                  <select id="employmentDocuments" name="employmentDocuments">
+                    <option value="">اختر الإجابة</option>
+                    <option value="yes">نعم، لدي عقد العمل وخطاب الاطلاع</option>
+                    <option value="no">لا، أحدهما أو كلاهما غير متوفر</option>
+                    <option value="unknown">غير متأكد من المطلوب</option>
+                  </select>
+                  <small>يظهر هذا السؤال لغير الأردني. أما السوري غير المقيم، فيظهر له أيضًا سؤال الاستثناء الخاص بالإقامة إلى جانب متطلبات ملف العمل.</small>
+                </div>
+
                 <div class="sv-field sv-field-full" id="specificProfessionField">
                   <label for="profession">3. ما المهنة التي تريد التقديم عليها؟</label>
                   <input id="profession" name="profession" list="professionOptions" autocomplete="off" placeholder="اكتب أو اختر المسمى الوظيفي" required>
                   <datalist id="professionOptions"></datalist>
                   <small id="professionHint">اختر المسمى الأقرب لما هو مكتوب في عقد العمل أو التأشيرة.</small>
                 </div>
+                <div class="sv-field sv-field-full" id="experienceTitleField" hidden>
+                  <label for="experienceTitle">4. ما المسمى الوظيفي في شهادة الخبرة؟</label>
+                  <input id="experienceTitle" name="experienceTitle" autocomplete="off" placeholder="اكتب المسمى كما يظهر في شهادة الخبرة">
+                  <small>يجب أن يطابق مسمى المهنة في التأشيرة أو يكون مطابقًا له فعليًا؛ خبرة محاسب لا تثبت مهنة أخصائي تسويق مثلًا.</small>
+                </div>
+
+                <div class="sv-field sv-field-full" id="engineeringFields" hidden>
+                  <div class="sv-checker-grid">
+                    <label class="sv-field"><span>مدة التخرج من الجامعة بالسنوات</span><input id="graduationYears" name="graduationYears" type="number" min="0" max="80" step="0.1" inputmode="decimal" placeholder="مثال: 6"><small>للمهنة الهندسية: يجب أن تكون المدة أكثر من 5 سنوات، إلا إذا انطبق استثناء مواليد السعودية ويحتاج تأكيد الجهة المختصة.</small></label>
+                    <label class="sv-field"><span>هل ينطبق استثناء مواليد السعودية؟</span><select id="saudiBorn" name="saudiBorn"><option value="">اختر الحالة</option><option value="yes">نعم، ينطبق حسب ما أعرف</option><option value="no">لا</option><option value="review">أحتاج التحقق من الاستثناء</option></select></label>
+                  </div>
+                </div>
 
                 <div class="sv-field sv-field-full" id="investorField" hidden>
-                  <label for="investorDocuments">هل لديك رخصة استثمار سعودية واسمك مثبت في السجل التجاري السعودي؟</label>
+                  <label for="investorDocuments">هل لديك رخصة الاستثمار السعودية وسجل تجاري سعودي باسمك ومختوم من الخارجية السعودية؟</label>
                   <select id="investorDocuments" name="investorDocuments">
                     <option value="">اختر الإجابة</option>
-                    <option value="yes">نعم، لدي المستندات والاسم مثبت</option>
+                    <option value="yes">نعم، لدي الرخصة والسجل المختوم والاسم مثبت</option>
                     <option value="no">لا، لا تتوفر لدي حالياً</option>
                   </select>
-                  <small>هذا المسار مخصص للمستثمر أو صاحب المنشأة، ولا يعني أن عدم وجود المؤهل الجامعي يكفي وحده.</small>
+                  <small>هذا المسار مخصص لمدير عام أو رئيس تنفيذي أو رئيس مجلس إدارة عند انطباقه، ويحتاج إثبات الاسم في السجل التجاري السعودي ورخصة الاستثمار والسجل المختوم حسب الجهة المختصة.</small>
                 </div>
 
                 <div class="sv-field" id="educationField">
@@ -229,10 +252,29 @@
               </div>
             </form>
 
-              <div id="eligibilityResult" class="sv-result" aria-live="polite" tabindex="-1">
+              <div id="eligibilityResult" class="sv-result" aria-live="polite" tabindex="-1" hidden>
               <h3 id="resultTitle">نتيجة الفحص</h3>
               <p id="resultSummary"></p>
-              <ul id="resultList"></ul>
+              <div id="resultGuide" class="sv-result-guide" hidden>
+                <section id="requiredGroup" class="sv-result-group sv-result-group-required" hidden>
+                  <h4>يجب استكماله قبل المتابعة</h4>
+                  <ol id="requiredList"></ol>
+                </section>
+                <section id="reviewGroup" class="sv-result-group sv-result-group-review" hidden>
+                  <h4>يحتاج مراجعة أو تأكيدًا</h4>
+                  <ol id="reviewList"></ol>
+                </section>
+                <section id="completeGroup" class="sv-result-group sv-result-group-complete" hidden>
+                  <h4>تم اجتيازه في هذا الفحص</h4>
+                  <ol id="completeList"></ol>
+                </section>
+                <p id="optionalAgeNote" class="sv-result-optional" hidden></p>
+              </div>
+              <ul id="resultList" class="sv-result-legacy-list" hidden></ul>
+              <div id="resultNextSteps" class="sv-result-next-steps" hidden>
+                <h4>ماذا تفعل الآن؟</h4>
+                <ol id="nextStepsList"></ol>
+              </div>
               <div id="recommendationsPanel" hidden>
                 <h3>المهن الأقرب إلى بياناتك</h3>
                 <p>هذه اقتراحات أولية مبنية على المؤهل والخبرة والعمر والجنسية؛ افتح كل مهنة لقراءة أوراقها كاملة.</p>
@@ -359,7 +401,7 @@
       <div class="sv-footer-bottom"><span>© مكتب تأشيرات السعودية في الأردن</span><a href="/privacy.html">سياسة الخصوصية</a></div>
     </div>
   </footer>
-  <script src="/saudi-work-visa-eligibility.js?v=20260829-nationality-rules-6" defer></script>
+  <script src="/saudi-work-visa-eligibility.js?v=20260830-result-groups-9" defer></script>
   <script src="/site-share.js?v=20260829-share-1" defer></script>
 </body>
 </html>
