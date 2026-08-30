@@ -21,10 +21,10 @@
  
  <!-- SEO Meta Tags - Optimized for AI & Search Engines -->
 	 <title>مكتب تأشيرات السعودية في الأردن | تأشيرات عمل وتصديقات</title>
-	 <meta name="description" content="مكتب تأشيرات السعودية في الأردن لخدمات تأشيرات العمل السعودية، تصديق الشهادات والوثائق، والاعتماد المهني. تواصل معنا من جبل عمان.">
+	 <meta name="description" content="مكتب تأشيرات السعودية في الأردن لمتابعة تأشيرات العمل من الأردن، تصديق الشهادات والخبرة، الاعتماد المهني، وفحص وافد، مع شرح الاستعلام والطباعة. تواصل مع المكتب من جبل عمان.">
  <!-- ✅ Google Search Console: استبدل XXXX برمز التحقق من لوحة GSC -->
  <meta name="google-site-verification" content="mrj5IB4BmGWrzriBOnJuE9oMx02sWwvJtlwKRAez4r8">
-	 <meta name="keywords" content="مكتب تأشيرات السعودية في الأردن, تأشيرات العمل السعودية من الأردن, تصديق الشهادات للسعودية, الاعتماد المهني QVP, تأشيرة عمل سعودية, جبل عمان">
+	 <meta name="keywords" content="مكتب تأشيرات السعودية في الأردن, مكتب تأشيرات السعودية, تأشيرات العمل السعودية من الأردن, تأشيرة عمل سعودية, أوراق تأشيرة العمل, تصديق الشهادات للسعودية من الأردن, تصديق شهادة الخبرة, الاعتماد المهني QVP, فحص وافد من الأردن, الاستعلام عن التأشيرة السعودية, طباعة التأشيرة السعودية, جبل عمان">
  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
  <meta name="googlebot" content="index, follow">
  <meta name="author" content="مكتب تأشيرات السعودية - إنجاز">
@@ -44,7 +44,7 @@
  <meta property="og:url" content="https://saudia-visa.com/">
  <meta property="og:site_name" content="مكتب تأشيرات السعودية في الأردن">
 	 <meta property="og:title" content="مكتب تأشيرات السعودية في الأردن | تأشيرات عمل وتصديقات">
-	 <meta property="og:description" content="خدمات تأشيرات العمل السعودية والتصديقات والاعتماد المهني من الأردن. المكتب في جبل عمان للتواصل والاستفسار.">
+	 <meta property="og:description" content="مكتب تأشيرات السعودية في الأردن لمتابعة تأشيرات العمل من الأردن، وتصديق الشهادات والخبرة، والاعتماد المهني، وفحص وافد، مع شرح الاستعلام والطباعة.">
  <meta property="og:image" content="https://saudia-visa.com/images/og-cover.png">
     <meta property="og:image:type" content="image/png">
     <meta property="og:image:width" content="1200">
@@ -54,7 +54,7 @@
  <!-- Twitter Card -->
  <meta name="twitter:card" content="summary_large_image">
 	 <meta name="twitter:title" content="مكتب تأشيرات السعودية في الأردن | تأشيرات عمل وتصديقات">
-	 <meta name="twitter:description" content="تأشيرات عمل سعودية وتصديق وثائق واعتماد مهني من الأردن. تواصل مع مكتب تأشيرات السعودية في جبل عمان.">
+	 <meta name="twitter:description" content="مكتب تأشيرات السعودية في الأردن لمتابعة تأشيرات العمل وتصديق الشهادات والخبرة والاعتماد المهني وفحص وافد من جبل عمان.">
  <meta name="twitter:image" content="https://saudia-visa.com/images/og-cover.png">
  
  <!-- PWA Manifest -->
@@ -116,6 +116,95 @@
  background-color: #f9fafb;
  }
  
+ /* Header visibility: show concise desktop navigation, keep the menu button for mobile. */
+ .site-desktop-nav { display: none !important; }
+ .site-mobile-menu-button { display: block !important; }
+ @media (min-width: 1024px) {
+   .site-desktop-nav { display: flex !important; }
+   .site-mobile-menu-button { display: none !important; }
+ }
+ @media (max-width: 1023px) {
+   .site-desktop-nav { display: none !important; }
+   .site-mobile-menu-button { display: block !important; }
+ }
+
+  /* Keep the Start Here label readable instead of letting the flex row squeeze it. */
+  .homepage-hero-start {
+    white-space: nowrap;
+    flex: 0 0 auto;
+    min-width: 158px;
+    line-height: 1.2;
+  }
+  .homepage-hero-start i { flex: 0 0 auto; }
+
+  /* Quick paths: clear click targets without crowding the legacy hero. */
+  .homepage-quick-actions {
+   display: flex;
+   flex-wrap: wrap;
+   gap: .55rem;
+   align-items: stretch;
+   margin-top: 1.25rem;
+ }
+ .homepage-quick-link {
+   display: inline-flex;
+   align-items: center;
+   gap: .5rem;
+   min-height: 2.7rem;
+   padding: .48rem .76rem;
+   border: 1px solid rgba(255,255,255,.28);
+   border-radius: .78rem;
+   color: #fff;
+   background: rgba(11, 28, 52, .34);
+   text-decoration: none;
+   font-size: .84rem;
+   font-weight: 800;
+   line-height: 1.25;
+   transition: background-color .2s ease, border-color .2s ease, transform .2s ease;
+ }
+ .homepage-quick-link small {
+   display: inline-block;
+   color: rgba(255,255,255,.72);
+   font-size: .72rem;
+   font-weight: 600;
+   white-space: nowrap;
+ }
+ .homepage-quick-link:hover,
+ .homepage-quick-link:focus-visible {
+   background: rgba(255,255,255,.12);
+   border-color: rgba(207,169,87,.78);
+   transform: translateY(-1px);
+   outline: 2px solid rgba(207,169,87,.25);
+   outline-offset: 2px;
+ }
+ .homepage-english-entry {
+   display: inline-flex;
+   align-items: center;
+   gap: .42rem;
+   padding: .48rem .82rem;
+   border: 1px solid rgba(207, 169, 87, .9);
+   border-radius: 999px;
+   color: #f2d28c;
+   background: rgba(207, 169, 87, .10);
+   font-weight: 800;
+   letter-spacing: .01em;
+   text-decoration: none;
+   box-shadow: 0 0 0 1px rgba(207, 169, 87, .08), 0 6px 18px rgba(0, 0, 0, .10);
+   transition: background-color .2s ease, color .2s ease, transform .2s ease;
+ }
+ .homepage-english-entry:hover,
+ .homepage-english-entry:focus-visible {
+   color: #fff;
+   background: rgba(207, 169, 87, .24);
+   transform: translateY(-1px);
+   outline: 2px solid rgba(207, 169, 87, .35);
+   outline-offset: 2px;
+ }
+ @media (max-width: 640px) {
+   .homepage-quick-actions { display: grid; grid-template-columns: 1fr; gap: .5rem; }
+   .homepage-quick-link { justify-content: space-between; width: 100%; font-size: .82rem; }
+   .homepage-english-entry { font-size: .82rem; padding: .42rem .68rem; }
+ }
+
  /* Prevent flash of unstyled content */.hero-slide {
  opacity: 0;
  transition: opacity 1.5s ease-in-out;
@@ -203,7 +292,7 @@
     <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2499298600459646&ev=PageView&noscript=1"/></noscript>
 
 
-    <!-- 🔍 FAQ Schema (Featured Snippets boost) -->
+    <!-- FAQ Schema: mirrors the visible homepage FAQ answers -->
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -211,51 +300,43 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "كم تستغرق تأشيرة العمل السعودية من الأردن؟",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "تستغرق تأشيرة العمل السعودية للأردنيين عادةً من 15 إلى 30 يوم عمل من تاريخ اكتمال الأوراق والفحص الطبي والاعتماد المهني QVP إن وجد. الحالات المعقدة (مثل المهن الطبية التي تتطلب DataFlow و ممارس بلس) قد تمتد لـ 60-90 يوم."
-      }
+      "name": "هل مكتبكم معتمد رسمياً من السفارة السعودية في عمان؟",
+      "acceptedAnswer": {"@type": "Answer", "text": "نعم، نحن مكتب معتمد رسمياً من السفارة السعودية في الأردن، ونعمل كمركز متخصص لإنجاز معاملات التأشيرات والتصديقات والاعتماد المهني (QVP) وفق متطلبات كل معاملة، مع بقاء القرار النهائي للجهة المختصة."}
     },
     {
       "@type": "Question",
-      "name": "ما هي شروط تأشيرة العمل السعودية للأردنيين 2026؟",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "الشروط الأساسية: 1) جواز سفر ساري لمدة 6 أشهر، 2) عقد عمل من شركة سعودية مرخصة، 3) شهادة حسن السيرة والسلوك من المخابرات العامة، 4) الفحص الطبي المعتمد، 5) شهادة مطعوم السحايا الرباعي، 6) للذكور: الوثائق العسكرية، 7) للنساء: عدم ممانعة ولي الأمر، 8) شهادة الاعتماد المهني QVP لبعض المهن."
-      }
+      "name": "ما هي الأوراق المطلوبة لتأشيرة العمل السعودية؟",
+      "acceptedAnswer": {"@type": "Answer", "text": "تختلف الأوراق المطلوبة حسب المهنة، ولكن بشكل عام تشمل: جواز سفر ساري المفعول، صوراً شخصية حديثة، الفحص الطبي المعتمد، الشهادات الأكاديمية والخبرات العملية، وتفويضاً إلكترونياً عند انطباقه. يمكنك البحث عن مهنتك في قسم المهن والأوراق المطلوبة لمعرفة التفاصيل."}
     },
     {
       "@type": "Question",
-      "name": "كم رسوم تأشيرة العمل السعودية من الأردن؟",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "تتفاوت الرسوم حسب: نوع التأشيرة (عامة/مهنية)، مدة الإقامة (1-5 سنوات)، نوع المهنة، وسرعة الإنجاز (عادية/مستعجلة). الرسوم الحكومية الأساسية تبدأ من ~300 دينار أردني وقد تصل لـ 800+ دينار للحالات الكاملة. تواصل معنا عبر واتساب لفاتورة دقيقة."
-      }
+      "name": "كم تستغرق عملية تصديق الشهادات من السفارة السعودية؟",
+      "acceptedAnswer": {"@type": "Answer", "text": "تختلف مدة تصديق الشهادات حسب نوع الوثيقة، والجهات الأردنية المطلوبة، واكتمال الأختام والمستندات. نراجع معك الخطوات المطلوبة ونتابع المعاملة وفق حالتها، من دون تحديد مدة ثابتة قبل فحص الملف."}
     },
     {
       "@type": "Question",
-      "name": "ما هو DataFlow وهل أحتاجه؟",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "DataFlow Report هو تقرير التحقق من صحة الشهادات الجامعية والخبرات المهنية. مطلوب إلزامياً للأطباء، الصيادلة، الممرضين، أخصائيي المختبرات والأشعة، والمعلمين. التكلفة 800-1200 ريال سعودي والمدة 4-8 أسابيع. اطلع على دليلنا الشامل لـ DataFlow."
-      }
+      "name": "هل يمكنني حجز موعد للسفارة السعودية من خلال مكتبكم؟",
+      "acceptedAnswer": {"@type": "Answer", "text": "نوضح لك طريقة حجز الموعد والملف المطلوب، ونساعد في مراجعة المستندات وتجهيزها وفق المعلومات المتاحة من الجهة المختصة، مع بقاء قبول الموعد والمعاملة للجهة الرسمية."}
     },
     {
       "@type": "Question",
-      "name": "هل يمكنني تقديم طلب تأشيرة العمل بنفسي بدون مكتب؟",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "تقنياً نعم، لكن نسبة الرفض ترتفع كثيراً بسبب أخطاء في الأوراق، الترجمة، التصديقات، أو ملء الاستمارات. مكتبنا المعتمد يضمن إنجاز التأشيرة من المرة الأولى ويوفر عليك الوقت والمال والتكاليف الإضافية للحالات المرفوضة."
-      }
+      "name": "ما هي تكلفة خدماتكم؟",
+      "acceptedAnswer": {"@type": "Answer", "text": "التكلفة تختلف حسب نوع الخدمة والمهنة والرسوم الحكومية المطلوبة. يمكنك استخدام حاسبة الرسوم للتقدير الأولي، ثم التواصل معنا لتأكيد تفاصيل الخدمة والتكلفة قبل البدء."}
     },
     {
       "@type": "Question",
-      "name": "ما الفرق بين تأشيرة العمل وتأشيرة الزيارة العائلية؟",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "تأشيرة العمل (Work Visa): للسعوديين الذين لديهم عقد عمل في شركة سعودية، تمنح إقامة طويلة (1-5 سنوات). تأشيرة الزيارة العائلية (Family Visit): لرؤية الأقارب من الدرجة الأولى، تمنح إقامة قصيرة (90 يوم). الاستقدام العائلي (Family Sponsorship): لأبناء وزوجات المقيمين في السعودية."
-      }
+      "name": "هل تقدمون استشارات مجانية؟",
+      "acceptedAnswer": {"@type": "Answer", "text": "يمكنك التواصل معنا عبر واتساب أو الهاتف للاستفسار عن الخدمة المناسبة وتجهيز الملف قبل البدء بالمعاملة، وسيرد عليك الفريق وفق أوقات التواصل المتاحة."}
+    },
+    {
+      "@type": "Question",
+      "name": "هل تقدمون خدمات لجميع المهن؟",
+      "acceptedAnswer": {"@type": "Answer", "text": "نعم، نقدم خدمات تأشيرات العمل لأكثر من 980 مهنة معتمدة في قاعدة بياناتنا. يمكنك البحث عن مهنتك والتعرف على الأوراق المطلوبة بالتفصيل."}
+    },
+    {
+      "@type": "Question",
+      "name": "كيف يمكنني التواصل معكم؟",
+      "acceptedAnswer": {"@type": "Answer", "text": "يمكنك التواصل معنا عبر واتساب أو الاتصال الهاتفي أو البريد الإلكتروني Visa@saudia-visa.com، أو زيارتنا في مكتبنا بعمان، الدوار الأول، جبل عمان."}
     }
   ]
 }
@@ -319,22 +400,17 @@
  </div>
  
  <!-- Desktop Navigation -->
- <nav class="hidden lg:flex items-center space-x-4 space-x-reverse">
- <a href="#home" data-testid="nav-home" class="text-sm text-navy hover:text-gold transition-colors font-medium">الرئيسية</a>
- <a href="about.html" data-testid="nav-about" class="text-sm text-navy hover:text-gold transition-colors font-medium">من نحن</a>
- <a href="#services" data-testid="nav-services" class="text-sm text-navy hover:text-gold transition-colors font-medium">خدماتنا</a>
- <a href="corporate.html" data-testid="nav-corporate" class="text-sm text-navy hover:text-gold transition-colors font-medium">خدمات الشركات</a>
- <a href="professions.html" data-testid="nav-professions" class="text-sm text-navy hover:text-gold transition-colors font-medium">المهن</a>
- <a href="calculator.html" data-testid="nav-calculator" class="text-sm text-navy hover:text-gold transition-colors font-medium">حاسبة الرسوم</a>
- <a href="blog.html" data-testid="nav-blog" class="text-sm text-navy hover:text-gold transition-colors font-medium">المدونة</a>
- <a href="faq.html" data-testid="nav-faq" class="text-sm text-navy hover:text-gold transition-colors font-medium">الأسئلة الشائعة</a>
- <a href="#contact" data-testid="nav-contact-cta" class="bg-gold hover:bg-gold-light text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all hover:-translate-y-0.5 shadow-lg">
- تواصل معنا
- </a>
+ <nav class="site-desktop-nav items-center gap-5" aria-label="روابط الموقع الأساسية">
+ <a href="#home" data-testid="nav-home" class="text-sm text-navy hover:text-gold transition-colors font-semibold">الرئيسية</a>
+ <a href="about.html" data-testid="nav-about" class="text-sm text-navy hover:text-gold transition-colors font-semibold">من نحن</a>
+ <a href="saudi-work-visa-eligibility.html" data-testid="nav-eligibility" class="text-sm text-navy hover:text-gold transition-colors font-semibold">الأهلية</a>
+ <a href="professions.html" data-testid="nav-professions" class="text-sm text-navy hover:text-gold transition-colors font-semibold">المهن والأوراق</a>
+ <a href="corporate.html" data-testid="nav-corporate" class="text-sm text-navy hover:text-gold transition-colors font-semibold">للشركات وB2B</a>
+ <a href="#contact" data-testid="nav-contact-cta" class="bg-gold hover:bg-gold-light text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all hover:-translate-y-0.5 shadow-lg">تواصل معنا</a>
  </nav>
  
  <!-- Mobile Menu Button -->
- <button id="mobile-menu-btn" data-testid="mobile-menu-btn" class="lg:hidden p-2 text-navy">
+ <button id="mobile-menu-btn" data-testid="mobile-menu-btn" class="site-mobile-menu-button p-2 text-navy">
  <i class="fas fa-bars text-xl"></i>
  </button>
  </div>
@@ -349,6 +425,9 @@
  <a href="corporate.html" class="block py-2 text-navy hover:text-gold transition-colors font-medium">خدمات الشركات</a>
  <a href="professions.html" class="block py-2 text-navy hover:text-gold transition-colors font-medium">المهن والأوراق</a>
  <a href="calculator.html" class="block py-2 text-navy hover:text-gold transition-colors font-medium">حاسبة الرسوم</a>
+ <a href="saudi-work-visa-eligibility.html" class="block py-2 text-navy hover:text-gold transition-colors font-medium">تحقق من الأهلية</a>
+ <a href="saudi-visa-inquiry-print.html" class="block py-2 text-navy hover:text-gold transition-colors font-medium">الاستعلام والطباعة</a>
+ <a href="en/index.html" class="block py-2 text-navy hover:text-gold transition-colors font-medium" lang="en" dir="ltr">English Services</a>
  <a href="blog.html" class="block py-2 text-navy hover:text-gold transition-colors font-medium">المدونة</a>
  <a href="faq.html" class="block py-2 text-navy hover:text-gold transition-colors font-medium">الأسئلة الشائعة</a>
  <a href="#contact" class="block bg-gold text-white px-6 py-3 rounded-lg font-semibold text-center">تواصل معنا</a>
@@ -367,7 +446,7 @@
  <span class="text-gold text-sm font-medium whitespace-nowrap">📜 تصديق الشهادات الجامعية والوثائق الرسمية والمصادقات للسعودية</span>
  <span class="text-white text-sm font-medium whitespace-nowrap">🎓 الاعتماد المهني السعودي QVP — التحقق من المهنة والأوراق المطلوبة</span>
  <span class="text-gold text-sm font-medium whitespace-nowrap">🧮 حاسبة رسوم التأشيرات السعودية وتقدير التكلفة من الأردن</span>
- <span class="text-white text-sm font-medium whitespace-nowrap">⚡ إنجاز سريع ومتابعة المعاملة واستشارة عبر واتساب</span>
+ <span class="text-white text-sm font-medium whitespace-nowrap">⚡ إنجاز ومتابعة المعاملة واستشارة عبر واتساب</span>
  </div>
  <div class="ticker-group" aria-hidden="true">
  <span class="text-white text-sm font-medium whitespace-nowrap">🏛️ مكتب تأشيرات السعودية في الأردن — مكتب معتمد للسفارة السعودية</span>
@@ -376,7 +455,7 @@
  <span class="text-gold text-sm font-medium whitespace-nowrap">📜 تصديق الشهادات الجامعية والوثائق الرسمية والمصادقات للسعودية</span>
  <span class="text-white text-sm font-medium whitespace-nowrap">🎓 الاعتماد المهني السعودي QVP — التحقق من المهنة والأوراق المطلوبة</span>
  <span class="text-gold text-sm font-medium whitespace-nowrap">🧮 حاسبة رسوم التأشيرات السعودية وتقدير التكلفة من الأردن</span>
- <span class="text-white text-sm font-medium whitespace-nowrap">⚡ إنجاز سريع ومتابعة المعاملة واستشارة عبر واتساب</span>
+ <span class="text-white text-sm font-medium whitespace-nowrap">⚡ إنجاز ومتابعة المعاملة واستشارة عبر واتساب</span>
  </div>
  </div>
  </div>
@@ -433,22 +512,33 @@
  </h1>
  
  <p class="text-xl sm:text-2xl text-gray-200 mb-8 leading-relaxed">
- <strong>المركز المعتمد من السفارة السعودية</strong> لغايات التفويض وإنجاز <strong>تأشيرات العمل لجميع المهن</strong>. خدمات التصديقات والاعتماد المهني بدقة 100%
+ <strong>المركز المعتمد من السفارة السعودية</strong> لغايات التفويض وإنجاز <strong>تأشيرات العمل لجميع المهن</strong>. خدمات التصديقات والاعتماد المهني مع مراجعة دقيقة
  </p>
  
  <div class="flex flex-col sm:flex-row gap-4">
- <a href="professions.html" 
- data-testid="hero-cta-professions"
+ <a href="saudi-work-visa-eligibility.html"
+ data-testid="hero-cta-eligibility"
  class="inline-flex items-center justify-center px-8 py-4 bg-gold hover:bg-gold-light text-white text-lg font-bold rounded-xl transition-all hover:-translate-y-1 shadow-2xl">
- <i class="fas fa-search ml-3"></i>
- ابحث عن مهنتك
+ <i class="fas fa-shield-check ml-3"></i>
+ تحقق من أهلية ومتطلبات تأشيرة العمل
  </a>
- <a href="#services" 
- data-testid="hero-cta-services"
- class="inline-flex items-center justify-center px-8 py-4 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white text-lg font-bold rounded-xl border-2 border-white/30 transition-all">
- <i class="fas fa-concierge-bell ml-3"></i>
- تعرف على خدماتنا
+ <a href="start-here.html"
+ data-testid="hero-cta-start-here"
+  class="homepage-hero-start inline-flex items-center justify-center px-8 py-4 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white text-lg font-bold rounded-xl border-2 border-white/30 transition-all">
+  <i class="fas fa-route ml-3"></i>
+ ابدأ من هنا
  </a>
+ <div class="homepage-quick-actions" aria-label="مسارات سريعة">
+ <a href="saudi-visa-inquiry-print.html" class="homepage-quick-link" aria-label="اضغط هنا للاستعلام عن التأشيرة وطباعتها">
+   <span>الاستعلام عن التأشيرة وطباعتها</span><small>اضغط هنا ←</small>
+ </a>
+ <a href="corporate.html" class="homepage-quick-link" aria-label="اضغط هنا لخدمات الشركات والوكالات">
+   <span>للشركات والوكالات</span><small>اضغط هنا للشراكات ←</small>
+ </a>
+ <a href="en/index.html" class="homepage-quick-link homepage-english-entry" lang="en" dir="ltr" aria-label="Open English Services">
+   <span>English Services</span><small>Open page ↗</small>
+ </a>
+ </div>
  </div>
  
  <!-- Stats -->
@@ -492,14 +582,14 @@
  
  <div class="text-center p-6 rounded-2xl bg-gray-50 hover:bg-gold/5 transition-colors border border-transparent hover:border-gold/30">
  <div class="text-4xl mb-3">⚡</div>
- <div class="font-bold text-navy text-sm mb-1">الأسرع</div>
- <div class="text-xs text-gray-600">5-7 أيام عمل</div>
+ <div class="font-bold text-navy text-sm mb-1">إنجاز منظم</div>
+ <div class="text-xs text-gray-600">حسب متطلبات المعاملة</div>
  </div>
  
  <div class="text-center p-6 rounded-2xl bg-gray-50 hover:bg-gold/5 transition-colors border border-transparent hover:border-gold/30">
  <div class="text-4xl mb-3">🎯</div>
  <div class="font-bold text-navy text-sm mb-1">دقة عالية</div>
- <div class="text-xs text-gray-600">معدل نجاح 100%</div>
+ <div class="text-xs text-gray-600">مراجعة دقيقة</div>
  </div>
  
  <div class="text-center p-6 rounded-2xl bg-gray-50 hover:bg-gold/5 transition-colors border border-transparent hover:border-gold/30">
@@ -510,14 +600,14 @@
  
  <div class="text-center p-6 rounded-2xl bg-gray-50 hover:bg-gold/5 transition-colors border border-transparent hover:border-gold/30">
  <div class="text-4xl mb-3">📱</div>
- <div class="font-bold text-navy text-sm mb-1">دعم 24/7</div>
- <div class="text-xs text-gray-600">واتساب وهاتف فوري</div>
+ <div class="font-bold text-navy text-sm mb-1">تواصل مباشر</div>
+ <div class="text-xs text-gray-600">واتساب وهاتف وبريد</div>
  </div>
  
  <div class="text-center p-6 rounded-2xl bg-gray-50 hover:bg-gold/5 transition-colors border border-transparent hover:border-gold/30">
  <div class="text-4xl mb-3">🏆</div>
- <div class="font-bold text-navy text-sm mb-1">الأول والأفضل</div>
- <div class="text-xs text-gray-600">الخيار الموثوق</div>
+ <div class="font-bold text-navy text-sm mb-1">خدمة منظمة</div>
+ <div class="text-xs text-gray-600">خطوات واضحة</div>
  </div>
  </div>
  </div>
@@ -540,7 +630,7 @@
  </p>
  
  <p>
- نحن <strong>المكتب الأول المتخصص والمرخص</strong> في الأردن لإنجاز كافة معاملات <strong>تأشيرات العمل السعودية</strong>، <strong>تصديق الشهادات الجامعية والوثائق الرسمية</strong> من السفارة السعودية، و<strong>الاعتماد المهني السعودي (إنجاز)</strong> بأعلى معايير الدقة والاحترافية.
+ نقدم في الأردن خدمات المساعدة في معاملات <strong>تأشيرات العمل السعودية</strong>، و<strong>تصديق الشهادات الجامعية والوثائق الرسمية</strong>، و<strong>الاعتماد والتحقق المهني</strong> بحسب متطلبات كل معاملة. كما نوضح خطوات <strong>فحص وافد الطبي من الأردن</strong> وروابط <strong>الاستعلام عن التأشيرة السعودية وطباعتها</strong> من الجهات الرسمية.
  </p>
  
  <div class="bg-gradient-to-r from-red-50 to-orange-50 border-r-4 border-red-500 p-5 md:p-6 rounded-lg">
@@ -554,11 +644,11 @@
  </div>
  
  <p>
- بفضل خبرتنا الطويلة التي تمتد لأكثر من <strong>10 سنوات</strong> كشريك موثوق <strong>للسفارة السعودية</strong>، نضمن لك <strong>سرعة الإنجاز</strong> (5-7 أيام عمل فقط)، <strong>دقة 100%</strong> في جميع المعاملات، و<strong>قبول مضمون</strong> من المرة الأولى بدون أي تأخير أو رفض.
+ نراجع بياناتك ومستنداتك ونوضح الخطوات المطلوبة ونساعد في متابعة المعاملة وفق متطلبات الجهة المختصة. لا نضمن صدور التأشيرة أو قبول الطلب؛ فالقرار النهائي يعود إلى الجهات الرسمية.
  </p>
  
  <div class="bg-gradient-to-r from-gold/10 to-transparent border-r-4 border-gold p-5 md:p-6 rounded-lg">
- <p class="font-bold text-navy text-lg md:text-xl mb-2">لماذا نحن الخيار الأول؟</p>
+ <p class="font-bold text-navy text-lg md:text-xl mb-2">لماذا يختارنا العملاء؟</p>
  <ul class="space-y-2 text-gray-700">
  <li class="flex items-start gap-2">
  <i class="fas fa-check-circle text-gold mt-1"></i>
@@ -566,25 +656,25 @@
  </li>
  <li class="flex items-start gap-2">
  <i class="fas fa-check-circle text-gold mt-1"></i>
- <span><strong>980 مهنة معتمدة</strong> مع قاعدة بيانات شاملة للأوراق المطلوبة</span>
+ <span><strong>قاعدة واسعة للمهن</strong> مع معلومات عن الأوراق المطلوبة لكل مهنة</span>
  </li>
  <li class="flex items-start gap-2">
  <i class="fas fa-check-circle text-gold mt-1"></i>
- <span><strong>فريق متخصص</strong> يتابع معاملتك حتى الموافقة النهائية</span>
+ <span><strong>متابعة منظمة</strong> للخطوات المطلوبة حتى اكتمال الإجراء</span>
  </li>
  <li class="flex items-start gap-2">
  <i class="fas fa-check-circle text-gold mt-1"></i>
- <span><strong>1250+ عميل راضٍ</strong> وثقوا بخدماتنا المتميزة</span>
+ <span><strong>شرح واضح</strong> لمتطلبات الأوراق وخطوات المعاملة</span>
  </li>
  <li class="flex items-start gap-2">
  <i class="fas fa-check-circle text-gold mt-1"></i>
- <span><strong>دعم فوري 24/7</strong> عبر واتساب والهاتف</span>
+ <span><strong>قنوات تواصل مباشرة</strong> عبر واتساب والهاتف والبريد</span>
  </li>
  </ul>
  </div>
  
  <p class="text-navy font-semibold text-base md:text-lg">
- نحن نفخر بكوننا <strong>المكتب الأكثر ثقة واحترافية</strong> في المملكة الأردنية الهاشمية لجميع خدمات <strong>التأشيرات السعودية</strong>، <strong>التصديقات</strong>، و<strong>الاعتماد المهني</strong>.
+ نحرص على تقديم شرح واضح ومراجعة منظمة لخدمات <strong>التأشيرات السعودية</strong>، <strong>التصديقات</strong>، و<strong>الاعتماد المهني</strong> بحسب كل حالة.
  </p>
  </div>
  
@@ -612,12 +702,12 @@
  <!-- Stats Cards -->
  <div class="absolute -bottom-6 -left-6 right-6 grid grid-cols-2 gap-4">
  <div class="bg-white rounded-xl p-4 shadow-xl border-t-4 border-gold">
- <div class="text-3xl font-bold text-gold mb-1">100%</div>
- <div class="text-sm text-gray-600">معدل النجاح</div>
+ <div class="text-3xl font-bold text-gold mb-1">✓</div>
+ <div class="text-sm text-gray-600">مراجعة دقيقة</div>
  </div>
  <div class="bg-white rounded-xl p-4 shadow-xl border-t-4 border-navy">
- <div class="text-3xl font-bold text-navy mb-1">5-7</div>
- <div class="text-sm text-gray-600">أيام إنجاز</div>
+ <div class="text-3xl font-bold text-navy mb-1">↗</div>
+ <div class="text-sm text-gray-600">إنجاز ومتابعة</div>
  </div>
  </div>
  </div>
@@ -674,7 +764,7 @@
  </div>
  <h3 class="text-xl md:text-2xl font-bold text-navy mb-3 md:mb-4">الاعتماد المهني (QVP)</h3>
  <p class="text-sm md:text-base text-gray-600 mb-5 md:mb-6 leading-relaxed">
- إجراءات الاعتماد المهني (QVP) لجميع المهن والشركات بدقة عالية تضمن قبول المعاملة من المرة الأولى.
+ إجراءات الاعتماد المهني (QVP) للمهن والشركات مع مراجعة المتطلبات والمستندات بحسب كل معاملة.
  </p>
  <a href="professional.html" data-testid="service-link-professional" class="inline-flex items-center text-gold font-semibold hover:gap-3 transition-all">
  تفاصيل الخدمة
@@ -704,7 +794,7 @@
  </div>
  <h3 class="text-xl md:text-2xl font-bold text-navy mb-3 md:mb-4">حاسبة رسوم التأشيرات</h3>
  <p class="text-sm md:text-base text-gray-600 mb-5 md:mb-6 leading-relaxed">
- أداة سريعة وذكية لمعرفة التكلفة التقديرية الكاملة (الرسوم الحكومية + رسوم الإنجاز) قبل البدء بالمعاملة.
+ أداة تقديرية لمعرفة التكلفة الكاملة (الرسوم الحكومية + رسوم الإنجاز) قبل البدء بالمعاملة.
  </p>
  <a href="calculator.html" data-testid="service-link-calculator" class="inline-flex items-center text-gold font-semibold hover:gap-3 transition-all">
  احسب التكلفة الآن
@@ -803,7 +893,7 @@
  <h3 class="text-lg md:text-xl font-bold text-navy mb-3 leading-tight hover:text-gold transition-colors line-clamp-2">
  <a href="post.html?id=certificate-attestation-guide" rel="nofollow">تصديق الشهادات من السفارة السعودية: الدليل الكامل</a>
  </h3>
- <p class="text-sm md:text-base text-gray-600 mb-4 md:mb-5 leading-relaxed line-clamp-2">دليل تفصيلي لتصديق جميع أنواع الشهادات والوثائق الرسمية بأسرع وقت وأفضل سعر</p>
+ <p class="text-sm md:text-base text-gray-600 mb-4 md:mb-5 leading-relaxed line-clamp-2">دليل تفصيلي لتصديق الشهادات والوثائق الرسمية وفق متطلبات كل معاملة</p>
  <a href="post.html?id=certificate-attestation-guide" class="inline-flex items-center text-gold font-bold hover:gap-3 transition-all group-hover:gap-3" rel="nofollow">
  اقرأ المزيد
  <i class="fas fa-arrow-left mr-2 transition-all"></i>
@@ -1024,7 +1114,7 @@
  </button>
  <div class="faq-answer hidden px-6 py-5 bg-gray-50 border-t border-gray-200">
  <p class="text-gray-700 leading-relaxed">
- نعم، نحن مكتب معتمد رسمياً من السفارة السعودية في الأردن، ونعمل كمركز متخصص لإنجاز كافة المعاملات المتعلقة بالتأشيرات والتصديقات والاعتماد المهني (QVP)، مما يضمن لك أعلى معايير الموثوقية والدقة في كافة الإجراءات.
+ نعم، نحن مكتب معتمد رسمياً من السفارة السعودية في الأردن، ونعمل كمركز متخصص لإنجاز معاملات التأشيرات والتصديقات والاعتماد المهني (QVP) وفق متطلبات كل معاملة، مع بقاء القرار النهائي للجهة المختصة.
  </p>
  </div>
  </div>
@@ -1050,7 +1140,7 @@
  </button>
  <div class="faq-answer hidden px-6 py-5 bg-gray-50 border-t border-gray-200">
  <p class="text-gray-700 leading-relaxed">
- تستغرق عملية التصديق عادةً من 3 إلى 5 أيام عمل، وذلك بعد استكمال كافة التصديقات المطلوبة من الجهات الأردنية المعنية (التعليم العالي أو التربية والتعليم والخارجية الأردنية). نحن نقوم بمتابعة المعاملة حتى إتمامها بنجاح.
+ تختلف مدة تصديق الشهادات حسب نوع الوثيقة، والجهات الأردنية المطلوبة، واكتمال الأختام والمستندات. نراجع معك الخطوات المطلوبة ونتابع المعاملة وفق حالتها، من دون تحديد مدة ثابتة قبل فحص الملف.
  </p>
  </div>
  </div>
@@ -1063,7 +1153,7 @@
  </button>
  <div class="faq-answer hidden px-6 py-5 bg-gray-50 border-t border-gray-200">
  <p class="text-gray-700 leading-relaxed">
- نعم، نقوم بحجز المواعيد نيابة عنك وتجهيز كافة الملفات المطلوبة وفقاً لمعايير السفارة لضمان قبول المعاملة من المرة الأولى دون أي تأخير أو رفض.
+ نوضح لك طريقة حجز الموعد والملف المطلوب، ونساعد في مراجعة المستندات وتجهيزها وفق المعلومات المتاحة من الجهة المختصة، مع بقاء قبول الموعد والمعاملة للجهة الرسمية.
  </p>
  </div>
  </div>
@@ -1076,7 +1166,7 @@
  </button>
  <div class="faq-answer hidden px-6 py-5 bg-gray-50 border-t border-gray-200">
  <p class="text-gray-700 leading-relaxed">
- التكلفة تختلف حسب نوع الخدمة والمهنة. يمكنك استخدام "حاسبة الرسوم" للحصول على تقدير دقيق للتكلفة الإجمالية (الرسوم الحكومية + رسوم المكتب). نحن نضمن أسعاراً تنافسية مع أعلى مستوى من الخدمة.
+ التكلفة تختلف حسب نوع الخدمة والمهنة والرسوم الحكومية المطلوبة. يمكنك استخدام «حاسبة الرسوم» للتقدير الأولي، ثم التواصل معنا لتأكيد تفاصيل الخدمة والتكلفة قبل البدء.
  </p>
  </div>
  </div>
@@ -1089,7 +1179,7 @@
  </button>
  <div class="faq-answer hidden px-6 py-5 bg-gray-50 border-t border-gray-200">
  <p class="text-gray-700 leading-relaxed">
- نعم، فريقنا متاح للاستشارات المجانية على مدار 24/7 عبر الواتساب والهاتف لمساعدتك في اختيار الخدمة المناسبة والإجابة على جميع استفساراتك قبل البدء بالمعاملة.
+ يمكنك التواصل معنا عبر واتساب أو الهاتف للاستفسار عن الخدمة المناسبة وتجهيز الملف قبل البدء بالمعاملة، وسيرد عليك الفريق وفق أوقات التواصل المتاحة.
  </p>
  </div>
  </div>
@@ -1154,8 +1244,8 @@
  <i class="fab fa-whatsapp text-white text-2xl"></i>
  </div>
  <div>
- <div class="font-bold text-lg mb-1">واتساب سريع</div>
- <div class="text-gray-300 mb-2">رد فوري على استفساراتكم</div>
+ <div class="font-bold text-lg mb-1">واتساب مباشر</div>
+ <div class="text-gray-300 mb-2">للاستفسارات ومراجعة الخدمة المناسبة</div>
  <div class="text-gold font-bold text-lg">0789881009</div>
  </div>
  </a>
@@ -1242,7 +1332,7 @@
  <span class="text-gold">إنجاز</span> السعودية
  </h3>
  <p class="text-gray-400 mb-6 leading-relaxed">
- المكتب المعتمد الأول في الأردن لإنجاز كافة معاملات السفارة السعودية بدقة واحترافية متناهية.
+ مكتب معتمد في الأردن لإنجاز معاملات التأشيرات والتصديقات والاعتماد المهني بدقة واحترافية.
  </p>
  <div class="flex gap-3" data-social-icons>
  <a href="https://www.facebook.com/Saudiavisajo" data-social="facebook" target="_blank" class="w-10 h-10 bg-white/10 hover:bg-gold rounded-lg flex items-center justify-center transition-colors" rel="noopener noreferrer" aria-label="فيسبوك">
@@ -1274,12 +1364,18 @@
  <li><a href="#services" class="text-gray-400 hover:text-gold transition-colors">خدماتنا</a></li>
  <li><a href="professions.html" class="text-gray-400 hover:text-gold transition-colors">المهن والأوراق</a></li>
  <li><a href="calculator.html" class="text-gray-400 hover:text-gold transition-colors">حاسبة الرسوم</a></li>
+ <li><a href="saudi-work-visa-eligibility.html" class="text-gray-400 hover:text-gold transition-colors">التحقق من الأهلية</a></li>
+ <li><a href="saudi-visa-inquiry-print.html" class="text-gray-400 hover:text-gold transition-colors">الاستعلام والطباعة</a></li>
+ <li><a href="en/index.html" class="text-gray-400 hover:text-gold transition-colors" lang="en" dir="ltr">English Services</a></li>
+ <li><a href="en/about.html" class="text-gray-400 hover:text-gold transition-colors" lang="en" dir="ltr">About Us</a></li>
  <li><a href="corporate.html" class="text-gray-400 hover:text-gold transition-colors">خدمات الشركات</a></li>
  <li><a href="blog.html" class="text-gray-400 hover:text-gold transition-colors">المدونة</a></li>
 <li><a href="about.html" class="text-gray-400 hover:text-gold transition-colors" data-testid="footer-link-office-info">من نحن - معتمدون للسفارة السعودية</a></li>
 <li><a href="pillar-dataflow.html" class="text-gray-400 hover:text-gold transition-colors" data-testid="footer-link-dataflow">دليل DataFlow الشامل 2026</a></li>
 <li><a href="pillar-mumaris-plus.html" class="text-gray-400 hover:text-gold transition-colors" data-testid="footer-link-mumaris">دليل ممارس بلس Mumaris+</a></li>
  <li><a href="faq.html" class="text-gray-400 hover:text-gold transition-colors">الأسئلة الشائعة</a></li>
+ <li><a href="saudi-document-attestation-jordan.html" class="text-gray-400 hover:text-gold transition-colors">دليل تصديق الأوراق</a></li>
+ <li><a href="en/index.html" class="text-gray-400 hover:text-gold transition-colors" lang="en" dir="ltr">English Services</a></li>
  <li><a href="#contact" class="text-gray-400 hover:text-gold transition-colors">تواصل معنا</a></li>
  </ul>
  </div>
@@ -1290,6 +1386,7 @@
  <ul class="space-y-3">
  <li><a href="work-visa.html" data-no-instant class="text-gray-400 hover:text-gold transition-colors">تأشيرات العمل</a></li>
  <li><a href="certificates.html" class="text-gray-400 hover:text-gold transition-colors">تصديق الشهادات</a></li>
+ <li><a href="saudi-document-attestation-jordan.html" class="text-gray-400 hover:text-gold transition-colors">دليل تصديق الأوراق</a></li>
  <li><a href="professional.html" class="text-gray-400 hover:text-gold transition-colors">الاعتماد المهني (إنجاز)</a></li>
  <li><a href="saudi-labor-exam-jordan.html" class="text-gray-400 hover:text-gold transition-colors">اختبار الهيئة السعودية</a></li>
  <li><a href="other-services.html" class="text-gray-400 hover:text-gold transition-colors">خدمات أخرى</a></li>

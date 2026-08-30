@@ -1,9 +1,12 @@
 // Print Function for Profession Documents
-function printProfessionDocument(professionCode, professionName, requirements) {
+function printProfessionDocument(professionCode, professionName, requirements, selectedNationality = '') {
  // 🛑 حارس إجباري: ضمان أن بند مطعوم السحايا هو البند الختامي الأخير في أي مستند مطبوع
  // (يُستثنى الاستقدام العائلي لأنه معاملة إقامة وليس تأشيرة عمل)
  const VACCINE_ITEM = 'الحصول على شهادة مطعوم السحايا.';
  const isFamilyDoc = (professionName || '').includes('استقدام') || (professionName || '').includes('اقامة') || (professionName || '').includes('إقامة') || professionCode === 'FAMILY';
+ const nationalityFromPage = selectedNationality || document.getElementById('nationalityFilter')?.value || '';
+ const otherNationality = document.getElementById('otherNationality')?.value || '';
+ const printNationality = nationalityFromPage === 'other' ? otherNationality : nationalityFromPage;
  requirements = (requirements || []).filter(r => r.replace(/\s+/g, ' ').trim() !== VACCINE_ITEM);
  if (!isFamilyDoc) {
    requirements.push(VACCINE_ITEM);
@@ -145,9 +148,10 @@ function printProfessionDocument(professionCode, professionName, requirements) {
 	 </div>
 	 
 		 <div class="profession-info">
-		 <span><strong>المهنة:</strong> ${professionName}</span>
-		 <span><strong>رمز المهنة:</strong> ${professionCode}</span>
-		 <span><strong>التاريخ:</strong> ${new Date().toLocaleDateString('ar-SA')}</span>
+<span><strong>المهنة:</strong> ${professionName}</span>
+			 ${printNationality && printNationality !== 'الأردن' ? `<span><strong>الجنسية:</strong> ${printNationality}</span>` : ''}
+			 <span><strong>رمز المهنة:</strong> ${professionCode}</span>
+			 <span><strong>التاريخ:</strong> ${new Date().toLocaleDateString('ar-SA')}</span>
 		 </div>
 	 
 	 <h2>الأوراق والمستندات المطلوبة:</h2>

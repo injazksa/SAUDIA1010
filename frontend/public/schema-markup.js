@@ -16,7 +16,7 @@
     logo: BASE_URL + '/icons/logo-512.png',
     image: BASE_URL + '/images/og-cover.png',
     telephone: '+962789881009',
-    email: 'Info@saudia-visa.com',
+    email: 'Visa@saudia-visa.com',
     address: {
       streetAddress: 'الدوار الأول - جبل عمان',
       addressLocality: 'عمان',

@@ -1,119 +1,35 @@
-# ═══════════════════════════════════════════════════════════════
-# robots.txt — مكتب تأشيرات السعودية | saudia-visa.com
-# السماح لجميع محركات البحث وبوتات الذكاء الاصطناعي
-# ═══════════════════════════════════════════════════════════════
+# robots.txt for saudia-visa.com
+# Public pages, profession records, guides and English services may be crawled.
+# The wildcard policy applies to compliant search and AI crawlers.
 
-# ─── السماح لكل البوتات المشروعة ────────────────────────────
 User-agent: *
 Allow: /
-Allow: /*.css
-Allow: /*.js
-Allow: /*.webp
-Allow: /*.png
-Allow: /*.jpg
-Allow: /*.svg
-Allow: /*.woff2
+Allow: /content/
+Allow: /en/
+Allow: /p/
+Allow: /blog/
+Allow: /images/
+Allow: /icons/
+
+# Keep administration, repository and server-side files out of public crawling.
+Disallow: /admin/
 Disallow: /admin-secure/
-Disallow: /content/
 Disallow: /backend/
-Disallow: /frontend/
-Disallow: /.netlify/
 Disallow: /.git/
 Disallow: /.emergent/
+Disallow: /.netlify/
 Disallow: /.env
+Disallow: /node_modules/
+Disallow: /scripts/
+Disallow: /*.py$
+Disallow: /*.md$
 Disallow: /*.yml$
 Disallow: /*.yaml$
 Disallow: /*.toml$
 Disallow: /*.config.js$
+Disallow: /package.json
+Disallow: /package-lock.json
 Disallow: /post.html
 Disallow: /post$
-Crawl-delay: 0
 
-# ─── Google ──────────────────────────────────────────────────
-User-agent: Googlebot
-Allow: /
-Crawl-delay: 0
-
-User-agent: Googlebot-Image
-Allow: /images/
-Allow: /icons/
-Allow: /*.webp
-Allow: /*.png
-
-User-agent: Google-Extended
-Allow: /
-
-User-agent: GoogleOther
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: DuckDuckBot
-Allow: /
-
-User-agent: YandexBot
-Allow: /
-
-# ─── AI Crawlers ─────────────────────────────────────────────
-User-agent: GPTBot
-Allow: /
-
-User-agent: ChatGPT-User
-Allow: /
-
-User-agent: OAI-SearchBot
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
-
-User-agent: Claude-Web
-Allow: /
-
-User-agent: anthropic-ai
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
-User-agent: CCBot
-Allow: /
-
-User-agent: cohere-ai
-Allow: /
-
-User-agent: Diffbot
-Allow: /
-
-User-agent: YouBot
-Allow: /
-
-User-agent: Applebot
-Allow: /
-
-User-agent: Applebot-Extended
-Allow: /
-
-User-agent: meta-externalagent
-Allow: /
-
-User-agent: Bytespider
-Allow: /
-
-# ─── بوتات ضارة ──────────────────────────────────────────────
-User-agent: MJ12bot
-Disallow: /
-
-User-agent: AhrefsBot
-Disallow: /
-
-User-agent: SemrushBot
-Disallow: /
-
-User-agent: DotBot
-Disallow: /
-
-# ─── Sitemap & Host ──────────────────────────────────────────
 Sitemap: https://saudia-visa.com/sitemap.xml
-Host: https://saudia-visa.com

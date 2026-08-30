@@ -24,8 +24,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // Gender filter event listener
     const genderFilter = document.getElementById('genderFilter');
     if (genderFilter) {
-        genderFilter.addEventListener('change', filterProfessions);
+        genderFilter.addEventListener('change', () => {
+            filterProfessions();
+            refreshOpenProfessionDetails();
+        });
     }
+
+    const nationalityFilter = document.getElementById('nationalityFilter');
+    const residencyFilter = document.getElementById('residencyFilter');
+    const otherNationality = document.getElementById('otherNationality');
+    if (nationalityFilter) nationalityFilter.addEventListener('change', () => {
+        syncNationalityControls();
+        refreshOpenProfessionDetails();
+    });
+    if (residencyFilter) residencyFilter.addEventListener('change', refreshOpenProfessionDetails);
+    if (otherNationality) otherNationality.addEventListener('input', refreshOpenProfessionDetails);
+    syncNationalityControls();
 
     // ⚡ Event delegation للكروت
     const grid = document.getElementById('professionsGrid');
@@ -122,14 +136,15 @@ function isGibberish(input) {
     if (!/[\u0600-\u06FFa-z]/.test(norm)) return true;
 
     const nonsensicalPatterns = [
-        "انا", "مين", "شو", "وين", "ليش", "مش", "انت", "لا", "ميسي", "رونالدو", "بطيخ", 
+        "انا", "مين", "شو", "وين", "ليش", "انت", "لا", "ميسي", "رونالدو", "بطيخ",
         "كلب", "حيوان", "حمار", "خيل", "ابن", "ملعون", "طيز", "منيك", "شرموط", "عرص",
         "asd", "qwe", "zxc", "123", "مطرب", "مغني", "فنان", "سعفون", "جربان", "جرابين",
         "قحبة", "كس", "شلن", "مرا الملعون", "الشراميط", "المنيك", "طيزري", "طيزي",
         "ليش مين انا", "شو وين", "مش انت", "لاللا", "مواصفات الكلب", "ابن الكلب"
     ];
     
-    if (nonsensicalPatterns.some(p => norm.includes(p))) return true;
+    const words = norm.split(/\s+/).filter(Boolean);
+    if (nonsensicalPatterns.some(p => p.includes(' ') ? norm.includes(p) : p.length <= 3 ? words.includes(p) : norm.includes(p))) return true;
     
     // Check for fake job compounds
     const fakeCompounds = ["مهندس انا", "مهندس بيت", "عامل مصري", "عامل برميل", "عامل تنين", "عامل فقط", "عامل عام", "عامل عملة", "عامل زريعه", "عامل طوب", "مهندس مجاري", "مهندسين كنادر", "كندرجي"];
@@ -369,9 +384,9 @@ function classifyProfession(inputName) {
         }
     }
     // 7. CRAFTS & PERSONAL SERVICES
-    else if (normName.includes("مصفف شعر") || normName.includes("حلاق") || normName.includes("طاهي") || normName.includes("شيف") || normName.includes("حداد") || normName.includes("نجار") || normName.includes("كهربائي") || normName.includes("سباك") || normName.includes("ميكانيكي") || normName.includes("ميكانيك") || normName.includes("دهان") || normName.includes("بلاط") || normName.includes("نقاش") || normName.includes("لحام") || normName.includes("خياط") || normName.includes("تكييف") || normName.includes("تبريد") || normName.includes("تمديدات")) {
+    else if (normName.includes("مصفف شعر") || normName.includes("مصففه شعر") || normName.includes("حلاق") || normName.includes("طاهي") || normName.includes("شيف") || normName.includes("حداد") || normName.includes("نجار") || normName.includes("كهربائي") || normName.includes("سباك") || normName.includes("ميكانيكي") || normName.includes("ميكانيك") || normName.includes("دهان") || normName.includes("بلاط") || normName.includes("نقاش") || normName.includes("لحام") || normName.includes("خياط") || normName.includes("تكييف") || normName.includes("تبريد") || normName.includes("تمديدات")) {
         category = "الحرفيون";
-        if (normName.includes("مصفف شعر")) {
+        if (normName.includes("مصفف شعر") || normName.includes("مصففه شعر")) {
             role = "Hair Stylist";
             finalReqs.splice(2, 0, "إحضار شهادة الثانوية العامة (الأصل)", "خبرة لمدة سنة واحدة بنفس مسمى التأشيرة", "شهادة مزاولة مهنة", "الحصول على شهادة الاعتماد المهني");
         } else {
@@ -379,8 +394,20 @@ function classifyProfession(inputName) {
             finalReqs.splice(2, 0, "إحضار الشهادة المدرسية (الأصل)", "خبرة لمدة سنة واحدة بنفس مسمى التأشيرة", "شهادة مزاولة مهنة", "الحصول على شهادة الاعتماد المهني");
         }
     }
-    // 8. GENERAL LABOUR SECTOR — نفس أوراق (عامل تحميل وتنزيل) تماماً دون بند التصديقات المرقم،
-    // ولأن شرط الفحص المهني غير محدد بعد لهذه المهن تظهر ملاحظة التحقق خارج البنود المرقمة
+    // 8. FIXED PROFESSIONAL-VERIFICATION LABOUR TITLES — keep these requirements in the fallback classifier too.
+    else if (normName.includes("عامل تحميل وتنزيل") || normName.includes("عامل شحن وتفريغ") || normName === "تحميل وتنزيل" || normName === "شحن وتفريغ") {
+        category = "العمال";
+        role = "Loading and Unloading Worker";
+        finalReqs.splice(4, 0, "التقديم على الاعتماد المهني السعودي.");
+    }
+    else if ((normName.includes("counter") || normName.includes("كاونتر") || normName.includes("كونتر")) &&
+             (normName.includes("مأكولات") || normName.includes("ماكولات") || normName.includes("مشروبات") || normName.includes("اطعمه") || normName.includes("اغذيه"))) {
+        category = "العمال";
+        role = "Food and Beverage Counter Worker";
+        finalReqs.splice(4, 0, "التقديم على الاعتماد المهني السعودي أو الفحص المهني.");
+        inputName = "عامل كاونتر مأكولات ومشروبات";
+    }
+    // 9. GENERAL LABOUR SECTOR — keep the general note for other labour titles.
     else if (normName.includes("عامل") || normName.includes("تحميل") || normName.includes("تنزيل") || normName.includes("تغليف") || normName.includes("مخزن") || normName.includes("تنظيف") || normName.includes("فراش")) {
         return {
             name_ar: inputName,
@@ -401,7 +428,7 @@ function classifyProfession(inputName) {
             isAiGenerated: true
         };
     }
-    // 9. FAMILY RECRUITMENT
+    // 10. FAMILY RECRUITMENT
     else if (normName.includes("استقدام") || normName.includes("اقامة") || normName.includes("أقامة") || normName.includes("زيارة")) {
         category = "المعاملات العائلية";
         role = "Family Recruitment";
@@ -569,49 +596,132 @@ function createProfessionCard(profession, index) {
     `;
 }
 
-// يحسب الأوراق المطلوبة لمهنة (مع منطق الجنس وحارس مطعوم السحايا الختامي)
-function computeRequirements(profession) {
+// يحسب الأوراق المطلوبة لمهنة (مع الجنسية والإقامة والجنس وحارس مطعوم السحايا الختامي)
+function normalizeNationality(text) {
+    return normalizeArabic(text || '');
+}
+
+function selectedNationalityContext() {
+    const selector = document.getElementById('nationalityFilter');
+    const other = document.getElementById('otherNationality');
+    const selected = selector?.value || 'الأردن';
+    const label = selected === 'other' ? (other?.value || 'جنسية أخرى') : selected;
+    const norm = normalizeNationality(label);
+    return {
+        nationality: label,
+        isJordanian: norm.includes('اردن'),
+        isSyrian: norm.includes('سوريا'),
+        residency: document.getElementById('residencyFilter')?.value || 'unknown'
+    };
+}
+
+function syncNationalityControls() {
+    const selector = document.getElementById('nationalityFilter');
+    const wrap = document.getElementById('otherNationalityWrap');
+    if (!selector || !wrap) return;
+    wrap.classList.toggle('hidden', selector.value !== 'other');
+}
+
+function isFemaleProfession(profession, name) {
+    const normalized = normalizeArabic(name || '');
+    return profession?.gender === 'أنثى' || /مصفف\s*شعر|مصففه\s*شعر/.test(normalized);
+}
+
+function femaleRequirement() {
+    return "عدم ممانعة من ولي الأمر (للمتزوجة: شهادة زواج + عدم ممانعة الزوج + صورة جوازه) (للعزباء: عدم ممانعة ولي الأمر + قيد فردي + صورة جوازه)";
+}
+
+function isEngineeringProfessionName(name) {
+    return /مهندس|هندسه|هندسي/.test(normalizeArabic(name));
+}
+
+function isMedicalProfessionName(name) {
+    return /طبيب|دكتور|طبيبه|صيدلي|صيدله|ممرض|ممرضه|تمريض|مختبر طبي/.test(normalizeArabic(name));
+}
+
+function isUniversityDocument(text) {
+    return /الشهادة الجامعية|شهادة جامعية|المؤهل الجامعي|المؤهل العلمي/.test(text);
+}
+
+function adjustEducationCopyRule(text, name, isJordanian) {
+    if (!isUniversityDocument(text)) return text;
+    const specialist = isEngineeringProfessionName(name) || isMedicalProfessionName(name);
+    if (specialist) {
+        let result = text.replace(/إحضار\s+الشهادة الجامعية(?:\s*\(الأصل\))?/, 'إحضار أصل الشهادة الجامعية مع صور عنها');
+        result = result.replace(/وكشف العلامات\s+الأصل/, 'وكشف العلامات: الأصل مع صور عنها');
+        if (!/أصل الشهادة الجامعية مع صور عنها/.test(result)) result = `${result} (أصل الشهادة الجامعية مع صور عنها)`;
+        return result;
+    }
+    let result = text.replace(/\(\s*الأصل\s*\)/g, '(صورة)').replace(/\bالأصل\b/g, 'صورة');
+    if (/^إحضار\s+الشهادة الجامعية/.test(result) && !/صورة عن/.test(result)) result = result.replace(/^إحضار\s+الشهادة الجامعية/, 'إحضار صورة عن الشهادة الجامعية');
+    return result;
+}
+
+function adjustExperienceRule(text, context) {
+    if (!/خبرة|خبره/.test(text)) return text;
+    const duration = text.split('(')[0].replace(/[،.\s]+$/, '').trim();
+    if (context.isJordanian) return text;
+    const guidance = context.isSyrian
+        ? 'الخبرة حسب بلد الإصدار: إذا كانت صادرة من سوريا تُختم حسب الأصول من الجهة المصدرة والخارجية السورية، ثم سفارة الأردن في سوريا والخارجية الأردنية في عمّان؛ وإذا كانت صادرة من الأردن تُختم حسب الأصول من الجهات الأردنية المطلوبة؛ وإذا كانت صادرة من السعودية تُقبل صورة عنها بعد أختامها المطلوبة.'
+        : 'الخبرة حسب بلد الإصدار: إذا كانت صادرة من السعودية تُقبل صورة عنها بعد أختامها المطلوبة؛ وإذا كانت صادرة من الأردن تُختم حسب الأصول من الجهات الأردنية؛ وإذا كانت صادرة من بلد آخر تُصدق من جهة الإصدار وخارجيتها والجهات المطلوبة في الأردن.';
+    return `${duration}، ${guidance}`.replace(/\.{2,}$/g, '.');
+}
+
+function normalizeEmploymentDocuments(requirements) {
+    const contractIdx = requirements.findIndex(r => /عقد\s*العمل|عقد عمل/.test(r));
+    if (contractIdx === -1) return requirements;
+    requirements[contractIdx] = 'عقد العمل السعودي: تُقبل صورة عنه، ويكون مختوماً من الغرفة التجارية السعودية ووزارة الخارجية السعودية.';
+    const letterIdx = requirements.findIndex(r => /خطاب\s*الاطلاع/.test(r));
+    const letter = 'خطاب الاطلاع من الشركة السعودية: تُقبل صورة عنه، ويكون مختوماً من الغرفة التجارية السعودية ووزارة الخارجية السعودية.';
+    if (letterIdx === -1) requirements.splice(contractIdx + 1, 0, letter);
+    else requirements[letterIdx] = letter;
+    return requirements;
+}
+
+function nationalityAdditions(profession, name, context) {
+    const additions = [];
+    const female = isFemaleProfession(profession, name);
+    const isEngineer = isEngineeringProfessionName(name);
+    const isDoctor = isMedicalProfessionName(name);
+
+    if (!context.isJordanian) {
+        if (context.isSyrian) additions.push('قيد عائلي أو بيان فردي سوري مصدق حسب الأصول من الجهات المختصة.');
+        if (isEngineer && context.isSyrian) additions.push('عضوية وتسجيل مهني من النقابة أو الجهة الهندسية السورية في بلد الإصدار.');
+        if (isDoctor && context.isSyrian) additions.push('شهادة الترخيص من سوريا، ووثيقة من نقابة الأطباء في سوريا، وSyrian Board.');
+        if (context.residency === 'resident') additions.push(`بطاقة إقامة أردنية سارية المفعول للجنسية ${context.nationality}.`);
+    }
+    return additions;
+}
+
+function computeJordanRequirements(profession) {
     const name = profession.profession_name_ar || profession.name_ar || '';
     const code = profession.code || '';
-    let requirements = [...(profession.requirements || [])];
-
+    let requirements = [...(profession._baseRequirements || profession.requirements || [])];
     const selectedGender = (document.getElementById('genderFilter') || {}).value;
     const seniorPositions = ['مدير', 'رئيس', 'تنفيذي', 'مهندس', 'طبيب'];
     const isSenior = seniorPositions.some(pos => name.includes(pos));
 
     if (selectedGender === 'female' && !isSenior) {
-        const femaleReq = "عدم ممانعة من ولي الأمر (للمتزوجة: شهادة زواج + عدم ممانعة الزوج + صورة جوازه) (للعزباء: عدم ممانعة ولي الأمر + قيد فردي + صورة جوازه)";
-        const milIdx = requirements.findIndex(r => r.includes("الوثائق العسكرية"));
+        const femaleReq = femaleRequirement();
+        const milIdx = requirements.findIndex(r => /الوثائق العسكرية|مشروحات الجيش|مشروحات من القيادة/.test(r));
         if (milIdx !== -1) requirements[milIdx] = femaleReq;
         else requirements.splice(1, 0, femaleReq);
     }
 
-    // 🧾 تكملة جهات التصديق بجانب النص الموجود، دون حذف أو إعادة ترتيب.
     const appendCompletion = (text, suffix) => {
         if (text.includes('وزارة الخارجية الأردنية')) return text;
         const clean = text.replace(/\.?$/, '');
         return `${clean} (${suffix}).`;
     };
     requirements = requirements.map(text => {
-        if (/حسن سيرة وسلوك|حسن السيرة والسلوك|السيرة الذاتية/.test(text)) {
-            return appendCompletion(text, 'مختوم من وزارة الخارجية الأردنية');
-        }
-        if (/مشروحات الجيش|مشروحات من القيادة|الوثائق العسكرية/.test(text)) {
-            return appendCompletion(text, 'مختومة من وزارة الخارجية الأردنية');
-        }
-        if (/الشهادة الجامعية|شهادة جامعية|الشهادة المدرسية|شهادة مدرسية|شهادة الثانوية|شهادة الصف العاشر/.test(text)) {
-            return appendCompletion(text, 'مختومة من وزارة الخارجية الأردنية');
-        }
-        if (/\bخبرة\b|خبرة لمدة|خبره/.test(text)) {
-            return appendCompletion(text, 'مختومة من مكتب العمل ووزارة الخارجية الأردنية');
-        }
-        if (/المشروعات|المشاريع|مشروعات|مشاريع/.test(text)) {
-            return appendCompletion(text, 'مختومة من وزارة الخارجية الأردنية');
-        }
+        if (/حسن سيرة وسلوك|حسن السيرة والسلوك|السيرة الذاتية/.test(text)) return appendCompletion(text, 'مختوم من وزارة الخارجية الأردنية');
+        if (/مشروحات الجيش|مشروحات من القيادة|الوثائق العسكرية/.test(text)) return appendCompletion(text, 'مختومة من وزارة الخارجية الأردنية');
+        if (/الشهادة الجامعية|شهادة جامعية|الشهادة المدرسية|شهادة مدرسية|شهادة الثانوية|شهادة الصف العاشر/.test(text)) return appendCompletion(text, 'مختومة من وزارة الخارجية الأردنية');
+        if (/\bخبرة\b|خبرة لمدة|خبره/.test(text)) return appendCompletion(text, 'مختومة من مكتب العمل ووزارة الخارجية الأردنية');
+        if (/المشروعات|المشاريع|مشروعات|مشاريع/.test(text)) return appendCompletion(text, 'مختومة من وزارة الخارجية الأردنية');
         return text;
     });
 
-    // 📌 فصل الملاحظات والتنبيهات عن البنود المرقمة — تُعرض خارج القائمة كملحوظة مستقلة
     let note = profession.note || '';
     const noteItems = requirements.filter(r => /^\s*ملاحظة/.test(r));
     if (noteItems.length) {
@@ -620,20 +730,115 @@ function computeRequirements(profession) {
         note = [note].concat(cleaned).filter(Boolean).join(' • ');
     }
 
+    const VACCINE_ITEM = 'الحصول على شهادة مطعوم السحايا.';
+    const isFamilyRecruitment = name.includes('استقدام') || name.includes('اقامة') || name.includes('إقامة') || code === 'FAMILY';
+    requirements = requirements.filter(r => r.replace(/\s+/g, ' ').trim() !== VACCINE_ITEM);
+    if (!isFamilyRecruitment) requirements.push(VACCINE_ITEM);
+    requirements = requirements.filter(r => !r.includes('عمر المتعاقد'));
+    if (requirements.length === 0) requirements.push('يشترط ألا يقل عمر المتعاقد عن 21 عاماً وألا يزيد على 60 عاماً.');
+    else requirements.splice(requirements.length - 1, 0, 'يشترط ألا يقل عمر المتعاقد عن 21 عاماً وألا يزيد على 60 عاماً.');
+
+    return { name, code, requirements, note };
+}
+
+function computeRequirements(profession) {
+    const name = profession.profession_name_ar || profession.name_ar || '';
+    const code = profession.code || '';
+    const baseRequirements = profession._baseRequirements || profession.requirements || [];
+    let requirements = [...baseRequirements];
+
+    const selectedGender = (document.getElementById('genderFilter') || {}).value;
+    const context = selectedNationalityContext();
+    const nonResident = context.residency === 'no' || context.residency === 'not-resident';
+    const female = isFemaleProfession(profession, name) || selectedGender === 'female';
+
+    // الأردن يبقى على قاعدة النسخة المحفوظة قبل قواعد الجنسية؛ الإضافات الجديدة لغير الأردني فقط.
+    if (context.isJordanian) {
+        const jordan = computeJordanRequirements(profession);
+        return { ...jordan, nationality: context.nationality, isJordanian: true };
+    }
+
+    if (female || !context.isJordanian) {
+        const milIdx = requirements.findIndex(r => /الوثائق العسكرية|مشروحات الجيش|مشروحات من القيادة/.test(r));
+        if (milIdx !== -1) {
+            if (female) requirements[milIdx] = femaleRequirement();
+            else requirements.splice(milIdx, 1);
+        } else if (female) {
+            requirements.splice(1, 0, femaleRequirement());
+        }
+    }
+
+    const conductIdx = requirements.findIndex(r => /حسن سيرة وسلوك|حسن السيرة والسلوك|السيرة الذاتية/.test(r));
+    if (!context.isJordanian && conductIdx !== -1) {
+        requirements[conductIdx] = context.isSyrian && nonResident
+            ? 'لا حكم عليه من سوريا، مختوم من الخارجية السورية ثم السفارة الأردنية في سوريا ثم وزارة الخارجية الأردنية في عمّان.'
+            : context.residency === 'resident'
+                ? 'حسن سيرة وسلوك من المخابرات العامة الأردنية، بالحضور الشخصي أمام الجهة المختصة، وليس من خلال تطبيق سند.'
+                : 'حسن السيرة والسلوك من بلد الإصدار، مصدق حسب الأصول من الجهة المصدرة وخارجية بلد الإصدار عند اللزوم.';
+    }
+
+    const appendCompletion = (text, suffix) => {
+        if (text.includes('وزارة الخارجية الأردنية')) return text;
+        const clean = text.replace(/\.?$/, '');
+        return `${clean} (${suffix}).`;
+    };
+    requirements = requirements.map(text => {
+        if (/حسن سيرة وسلوك|حسن السيرة والسلوك|السيرة الذاتية/.test(text)) {
+            return context.isJordanian ? appendCompletion(text, 'مختوم من وزارة الخارجية الأردنية') : text;
+        }
+        if (/مشروحات الجيش|مشروحات من القيادة|الوثائق العسكرية/.test(text)) {
+            return context.isJordanian ? appendCompletion(text, 'مختومة من وزارة الخارجية الأردنية') : text;
+        }
+        if (isUniversityDocument(text) || /الشهادة المدرسية|شهادة مدرسية|شهادة الثانوية|شهادة الصف العاشر/.test(text)) {
+            let result = adjustEducationCopyRule(text, name, context.isJordanian);
+            if (!context.isJordanian) result = result.replace(/\s*\(مختومة من وزارة الخارجية الأردنية\)\.?/g, '') + ' وتُصدق حسب الأصول من بلد الإصدار والجهات المطلوبة عند تقديمها في عمّان.';
+            else result = appendCompletion(result, 'مختومة من وزارة الخارجية الأردنية');
+            return result;
+        }
+        if (/خبرة|خبره/.test(text)) return adjustExperienceRule(context.isJordanian ? appendCompletion(text, 'مختومة من مكتب العمل ووزارة الخارجية الأردنية') : text, context);
+        if (/المشروعات|المشاريع|مشروعات|مشاريع/.test(text)) return context.isJordanian ? appendCompletion(text, 'مختومة من وزارة الخارجية الأردنية') : text;
+        return text;
+    });
+
+    if (!context.isJordanian) requirements = normalizeEmploymentDocuments(requirements);
+    const contextAdditions = nationalityAdditions(profession, name, context);
+    requirements = requirements.filter(text => !contextAdditions.includes(text));
+
+    let note = profession.note || '';
+    const noteItems = requirements.filter(r => /^\s*ملاحظة/.test(r));
+    if (noteItems.length) {
+        requirements = requirements.filter(r => !/^\s*ملاحظة/.test(r));
+        const cleaned = noteItems.map(n => n.replace(/^\s*ملاحظة(\s+هامة\s+جداً)?\s*[:：]?\s*/, '').trim());
+        note = [note].concat(cleaned).filter(Boolean).join(' • ');
+    }
+
+    if (!context.isJordanian && nonResident && !context.isSyrian) {
+        note = [note, `لا يمكن استكمال التقديم من الأردن دون إقامة أردنية سارية للجنسية ${context.nationality}. يجب مراجعة جهة التقديم قبل تجهيز الأوراق.`].filter(Boolean).join(' • ');
+    } else if (context.isSyrian && nonResident) {
+        note = [note, 'معاملة السوري غير المقيم مشروطة حاليًا؛ يجب تأكيدها مع المكتب والجهة المختصة قبل التقديم.'].filter(Boolean).join(' • ');
+    }
+
     const VACCINE_ITEM = "الحصول على شهادة مطعوم السحايا.";
     const isFamilyRecruitment = name.includes("استقدام") || name.includes("اقامة") || name.includes("إقامة") || code === "FAMILY";
     requirements = requirements.filter(r => r.replace(/\s+/g, ' ').trim() !== VACCINE_ITEM);
-    if (!isFamilyRecruitment) requirements.push(VACCINE_ITEM);
 
-    // بند العمر قبل آخر بند موجود، مع إبقاء البند الختامي في مكانه.
     requirements = requirements.filter(r => !r.includes('عمر المتعاقد'));
-    if (requirements.length === 0) {
-        requirements.push('يشترط ألا يقل عمر المتعاقد عن 21 عاماً وألا يزيد على 60 عاماً.');
-    } else {
-        requirements.splice(requirements.length - 1, 0, 'يشترط ألا يقل عمر المتعاقد عن 21 عاماً وألا يزيد على 60 عاماً.');
-    }
+    if (requirements.length === 0) requirements.push('يشترط ألا يقل عمر المتعاقد عن 21 عاماً وألا يزيد على 60 عاماً.');
+    else requirements.splice(requirements.length - 1, 0, 'يشترط ألا يقل عمر المتعاقد عن 21 عاماً وألا يزيد على 60 عاماً.');
 
-    return { name, code, requirements, note };
+    if (!isFamilyRecruitment) requirements.push(VACCINE_ITEM);
+    if (contextAdditions.length) requirements.push(...contextAdditions);
+
+    return { name, code, requirements, note, nationality: context.nationality, isJordanian: context.isJordanian };
+}
+
+function refreshOpenProfessionDetails() {
+    syncNationalityControls();
+    if (!currentProfession) return;
+    const modal = document.getElementById('professionModal');
+    if (modal && !modal.classList.contains('hidden')) {
+        showProfessionDetails(currentProfession);
+    }
 }
 
 // 🔽 يعرض/يطوي الأوراق المطلوبة تحت بطاقة المهنة مباشرة (Inline)
@@ -657,8 +862,8 @@ function toggleProfessionInline(card, profession) {
         return;
     }
 
-    const { name, code, requirements, note } = computeRequirements(profession);
-    currentProfession = { ...profession, requirements };
+    const { name, code, requirements, note, nationality } = computeRequirements(profession);
+    currentProfession = { ...profession, _baseRequirements: profession._baseRequirements || [...(profession.requirements || [])], requirements, nationality };
 
     const list = requirements.map((r, i) => `
         <li class="flex gap-2 py-1.5 text-sm text-gray-700 leading-relaxed">
@@ -707,7 +912,7 @@ function toggleProfessionInline(card, profession) {
 function printInlineProfession(btn) {
     const box = btn.closest('.prof-inline-details');
     if (box && box._requirements) {
-        printProfessionDocument(box._profCode, box._profName, [...box._requirements]);
+        printProfessionDocument(box._profCode, box._profName, [...box._requirements], currentProfession?.nationality);
     }
 }
 
@@ -726,8 +931,8 @@ function closeInlineProfession(btn) {
 
 function showProfessionDetails(profession) {
     // استخدام computeRequirements لضمان نفس منطق الأوراق (الجنس + الملاحظة + السحايا الختامي)
-    const { name, code, requirements, note } = computeRequirements(profession);
-    currentProfession = { ...profession, requirements };
+    const { name, code, requirements, note, nationality } = computeRequirements(profession);
+    currentProfession = { ...profession, _baseRequirements: profession._baseRequirements || [...(profession.requirements || [])], requirements, nationality };
 
     document.getElementById('modalProfessionName').textContent = name;
     document.getElementById('modalProfessionCode').textContent = code;
@@ -797,12 +1002,15 @@ function escapeHtml(s) {
 
 function printProfessionDetails() {
     if (!currentProfession) return;
-    const name = currentProfession.profession_name_ar || currentProfession.name_ar;
-    const code = currentProfession.code;
-    const requirements = Array.from(document.querySelectorAll('#modalRequirementsList li')).map(li => li.textContent);
-    
+    const fresh = computeRequirements(currentProfession);
+    currentProfession = { ...currentProfession, requirements: fresh.requirements, nationality: fresh.nationality, isJordanian: fresh.isJordanian };
+    const name = fresh.name;
+    const code = fresh.code;
+    const requirements = fresh.requirements;
+    const printableNationality = fresh.isJordanian ? '' : fresh.nationality;
+
     if (typeof window.printProfessionDocument === 'function') {
-        window.printProfessionDocument(code, name, requirements);
+        window.printProfessionDocument(code, name, requirements, printableNationality);
     } else {
         window.print();
     }

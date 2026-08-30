@@ -62,11 +62,19 @@
  case 'phone_href': if (el.tagName === 'A' && settings.phone) el.setAttribute('href', 'tel:' + settings.phone); break;
  case 'phone_display': applyText(el, settings.phone_display || settings.phone); break;
  case 'whatsapp_url':
- if (el.tagName === 'A' && settings.whatsapp) el.setAttribute('href', 'https://wa.me/' + settings.whatsapp);
+ if (el.tagName === 'A' && settings.whatsapp) {
+ const message = el.getAttribute('data-whatsapp-message');
+ const base = 'https://wa.me/' + settings.whatsapp;
+ el.setAttribute('href', message ? base + '?text=' + encodeURIComponent(message) : base);
+ }
  break;
  case 'email': applyText(el, settings.email); break;
  case 'email_url':
- if (el.tagName === 'A' && settings.email) el.setAttribute('href', 'mailto:' + settings.email);
+ if (el.tagName === 'A' && settings.email) {
+ const currentHref = el.getAttribute('href') || '';
+ const query = currentHref.includes('?') ? currentHref.slice(currentHref.indexOf('?')) : '';
+ el.setAttribute('href', 'mailto:' + settings.email + query);
+ }
  break;
  case 'address': applyText(el, settings.address); break;
  case 'address_short': applyText(el, settings.address_short); break;

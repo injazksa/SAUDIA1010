@@ -57,6 +57,15 @@ https://www.saudia-visa.com/*   https://saudia-visa.com/:splat    301!
 /terms             /terms.html            200
 /disclaimer        /disclaimer.html       200
 
+# Wafid medical guidance clean route
+/wafid-medical-exam        /saudi-medical-exam-jordan.html   200
+
+# Work-visa file-readiness clean route → canonical page
+/saudi-work-visa-file-readiness    /saudi-work-visa-file-readiness.html   301!
+
+# UAE embassy document-attestation alias → dedicated canonical page
+/uae-embassy-attestation-jordan   /uae-embassy-attestation-jordan.html   301!
+
 # Blog post friendly URLs
 /blog/umrah              /blog/umrah-visa-guide-2026.html      200
 /blog/work               /blog/work-visa-comprehensive-2026.html 200

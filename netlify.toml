@@ -239,6 +239,26 @@
  to = "/disclaimer.html"
  status = 200
 
+# ─── صفحة وافد الطبية ─────────────────────────────────────────
+[[redirects]]
+ from = "/wafid-medical-exam"
+ to = "/saudi-medical-exam-jordan.html"
+ status = 200
+
+# ─── صفحة جاهزية ملف تأشيرة العمل ───────────────────────────────
+[[redirects]]
+ from = "/saudi-work-visa-file-readiness"
+ to = "/saudi-work-visa-file-readiness.html"
+ status = 301
+ force = true
+
+# ─── خدمة تصديق مستندات سفارة الإمارات: alias إلى الصفحة المتخصصة ───
+[[redirects]]
+ from = "/uae-embassy-attestation-jordan"
+ to = "/uae-embassy-attestation-jordan.html"
+ status = 301
+ force = true
+
 # ─── روابط مدونة نظيفة ───────────────────────────────────────
 [[redirects]]
  from = "/blog/umrah"
@@ -259,6 +279,92 @@
  from = "/blog/family"
  to = "/blog/family-sponsorship-guide.html"
  status = 200
+
+# ─── New SEO page aliases: one canonical destination per intent ───
+[[redirects]]
+ from = "/saudi-work-visa-eligibility"
+ to = "/saudi-work-visa-eligibility.html"
+ status = 301
+ force = true
+
+[[redirects]]
+ from = "/work-visa-eligibility"
+ to = "/saudi-work-visa-eligibility.html"
+ status = 301
+ force = true
+
+[[redirects]]
+ from = "/saudi-visa-inquiry"
+ to = "/saudi-visa-inquiry-print.html"
+ status = 301
+ force = true
+
+[[redirects]]
+ from = "/visa-inquiry"
+ to = "/saudi-visa-inquiry-print.html"
+ status = 301
+ force = true
+
+[[redirects]]
+ from = "/visa-inquiry-print"
+ to = "/saudi-visa-inquiry-print.html"
+ status = 301
+ force = true
+
+[[redirects]]
+ from = "/saudi-document-attestation"
+ to = "/saudi-document-attestation-jordan.html"
+ status = 301
+ force = true
+
+[[redirects]]
+ from = "/document-attestation"
+ to = "/saudi-document-attestation-jordan.html"
+ status = 301
+ force = true
+
+[[redirects]]
+ from = "/en"
+ to = "/en/index.html"
+ status = 301
+ force = true
+
+[[redirects]]
+ from = "/en/about"
+ to = "/en/about.html"
+ status = 301
+ force = true
+
+# ─── New SEO page aliases: English and explicit canonical destinations ───
+[[redirects]]
+ from = "/saudi-visa-inquiry-print"
+ to = "/saudi-visa-inquiry-print.html"
+ status = 301
+ force = true
+
+[[redirects]]
+ from = "/saudi-document-attestation-jordan"
+ to = "/saudi-document-attestation-jordan.html"
+ status = 301
+ force = true
+
+[[redirects]]
+ from = "/en/services"
+ to = "/en/index.html"
+ status = 301
+ force = true
+
+[[redirects]]
+ from = "/en/saudi-visa-processing-partner-jordan"
+ to = "/en/saudi-visa-processing-partner-jordan.html"
+ status = 301
+ force = true
+
+[[redirects]]
+ from = "/en/about-us"
+ to = "/en/about.html"
+ status = 301
+ force = true
 
 # ─── 404 fallback ────────────────────────────────────────────
 [[redirects]]

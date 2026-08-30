@@ -31,7 +31,8 @@
   const VACCINE  = 'الحصول على شهادة مطعوم السحايا.';
   const AGE_LIMIT = 'يشترط ألا يقل عمر المتعاقد عن 21 عاماً وألا يزيد على 60 عاماً.';
   const AUTH     = 'عمل تفويض إلكتروني للمكتب.';
-  const CONTRACT = 'عقد عمل من الشركة السعودية + خطاب إطلاع مختومين من الغرفة التجارية والخارجية السعودية.';
+  const CONTRACT = 'عقد العمل من الشركة السعودية: تُقبل صورة عنه، ويكون مختوماً من الغرفة التجارية السعودية ووزارة الخارجية السعودية.';
+  const AUTHORIZATION_LETTER = 'خطاب الاطلاع من الشركة السعودية: تُقبل صورة عنه، ويكون مختوماً من الغرفة التجارية السعودية ووزارة الخارجية السعودية.';
   const CONTRACT_ATTESTED = 'عقد عمل مصدق من الغرفة التجارية والخارجية السعودية.';
   const CONTRACT_DOMESTIC = 'عقد عمل مصدق من الغرفة التجارية والخارجية السعودية.';
   const QVP      = 'الحصول على شهادة الاعتماد المهني.';
@@ -273,6 +274,34 @@
       ]
     },
     // 3. تصنيف المهن العمالية والفنية العامة — ملاحظة الفحص المهني تظهر خارج البنود (شرط غير محدد بعد)
+    loading_unloading: {
+      label: 'مسار عامل التحميل والتنزيل',
+      icon: 'fa-boxes-stacked',
+      reqs: [
+        SECURITY,
+        MILITARY,
+        SCHOOL,
+        MEDICAL_BIO_NEW,
+        CONTRACT_ATTESTED,
+        'التقديم على الاعتماد المهني السعودي.',
+        AUTH,
+        VACCINE
+      ]
+    },
+    food_counter: {
+      label: 'مسار عامل كاونتر مأكولات ومشروبات',
+      icon: 'fa-utensils',
+      reqs: [
+        SECURITY,
+        MILITARY,
+        SCHOOL,
+        MEDICAL_BIO_NEW,
+        CONTRACT_ATTESTED,
+        'التقديم على الاعتماد المهني السعودي أو الفحص المهني.',
+        AUTH,
+        VACCINE
+      ]
+    },
     labor: {
       label: 'مسار العمالة التشغيلية',
       icon: 'fa-people-carry-box',
@@ -513,6 +542,18 @@
 
     // ─── TIER 3: VOCATIONAL / TRADE / LABOR ───
     {
+      id: 'loading_unloading', template: 'loading_unloading', tier: 'vocational',
+      keywords: ['عامل تحميل وتنزيل', 'عامل شحن وتفريغ', 'تحميل وتنزيل', 'شحن وتفريغ']
+    },
+    {
+      id: 'food_counter', template: 'food_counter', tier: 'vocational',
+      keywords: [
+        'عامل كاونتر مأكولات ومشروبات', 'عامل Counter مأكولات ومشروبات', 'عامل counter مأكولات ومشروبات',
+        'عامل كونتر مأكولات ومشروبات',
+        'عامل مأكولات ومشروبات', 'Counter مأكولات ومشروبات', 'كاونتر مأكولات ومشروبات'
+      ]
+    },
+    {
       id: 'labor_no_qvp', template: 'labor_no_qvp', tier: 'vocational',
       keywords: [
         'عامل وضع ملصقات', 'ملصقات',
@@ -713,6 +754,13 @@
       return { id: 'executive', template: 'executive', tier: 'compliance', matched_keyword: norm };
     }
 
+    // مسميات عمالية محددة لها متطلب اعتماد/فحص مهني ثابت، وتسبق قالب «عامل» العام.
+    if (norm.includes('عامل تحميل وتنزيل') || norm.includes('عامل شحن وتفريغ') || norm === 'تحميل وتنزيل' || norm === 'شحن وتفريغ') {
+      return { id: 'loading_unloading', template: 'loading_unloading', tier: 'vocational', matched_keyword: 'عامل تحميل وتنزيل' };
+    }
+    if ((norm.includes('counter') || norm.includes('كاونتر') || norm.includes('كونتر')) && (norm.includes('مأكولات') || norm.includes('مشروبات') || norm.includes('اطعمه') || norm.includes('اغذيه'))) {
+      return { id: 'food_counter', template: 'food_counter', tier: 'vocational', matched_keyword: 'عامل كاونتر مأكولات ومشروبات' };
+    }
     // 🧭 أي مسمى يتضمن «مشرف» يستخدم نموذج أخصائي تسويق تماماً.
     if (norm.includes('مشرف')) {
       return { id: 'specialist', template: 'specialist', tier: 'management', matched_keyword: 'مشرف' };
@@ -991,6 +1039,15 @@
     const genericTitles = ['مهندس', 'مهندسه', 'مدير', 'مديره', 'اخصائي', 'اخصائيه', 'فني', 'فنيه', 'مشرف', 'مشرفه', 'مندوب', 'مندوبه'];
     if (genericTitles.includes(norm)) {
         return { valid: false, reason: 'generic_title' };
+    }
+
+    // المسمى المحدد لعامل Counter يُقبل بالعربية أو بصيغة الاسم المتداولة المختلطة.
+    // لا نفتح قبول الإنجليزية عمومًا؛ الاستثناء لهذا المسمى فقط.
+    const hasFoodWords = (norm.includes('مأكولات') || norm.includes('ماكولات')) && norm.includes('مشروبات');
+    const isFoodCounter = hasFoodWords &&
+      (norm.includes('counter') || norm.includes('كاونتر') || norm.includes('كونتر') || norm === 'عامل مأكولات ومشروبات' || norm === 'عامل ماكولات ومشروبات');
+    if (isFoodCounter) {
+      return { valid: true, reason: 'matched_food_counter' };
     }
 
     // 🔤 رفض الإدخال بالإنجليزية/اللاتينية كلياً وطلب الكتابة بالعربية
@@ -1343,48 +1400,67 @@
 
   // 🛑 المُنفِّذ المركزي: تبديل الجنس + إزالة التكرار + ضمان أن مطعوم السحايا
   // هو البند الختامي الإجباري الأخير في أي قائمة (مخزّنة أو مولّدة ذكياً).
-  function finalizeReqs(template, gender) {
+  function finalizeReqs(template, gender, userTitle = '') {
     const noSwap = template.genderLocked || template.forcedGender;
+    const context = typeof selectedNationalityContext === 'function' ? selectedNationalityContext() : { isJordanian: true, isSyrian: false, residency: 'unknown', nationality: 'الأردن' };
+    const nonResident = context.residency === 'no' || context.residency === 'not-resident';
+    const title = userTitle || template.label || '';
+    const specialist = /مهندس|هندسه|هندسي|طبيب|دكتور|طبيبه|صيدلي|صيدله|ممرض|ممرضه|تمريض|مختبر طبي/.test(normalizeArabic(title));
     let reqs = template.reqs.map((req) =>
       (!noSwap && gender === 'female' && (req.includes('الوثائق العسكرية') || req.includes('مشروحات من القيادة')))
         ? FEMALE_PERMISSION : req
     );
 
-    // تكملة التصديقات بجانب البنود الموجودة، من دون حذف النص الأصلي أو إعادة ترتيبه.
+    if (!context.isJordanian) {
+      const military = reqs.findIndex((req) => /الوثائق العسكرية|مشروحات الجيش|مشروحات من القيادة/.test(req));
+      if (military !== -1) reqs.splice(military, 1);
+      const conduct = reqs.findIndex((req) => /حسن سيرة وسلوك|حسن السيرة والسلوك|السيرة الذاتية/.test(req));
+      if (conduct !== -1) {
+        reqs[conduct] = context.isSyrian && nonResident
+          ? 'لا حكم عليه من سوريا، مختوم من الخارجية السورية ثم السفارة الأردنية في سوريا ثم وزارة الخارجية الأردنية في عمّان.'
+          : context.residency === 'resident'
+            ? 'حسن سيرة وسلوك من المخابرات العامة الأردنية، بالحضور الشخصي أمام الجهة المختصة، وليس من خلال تطبيق سند.'
+            : 'حسن السيرة والسلوك من بلد الإصدار، مصدق حسب الأصول من الجهة المصدرة وخارجية بلد الإصدار عند اللزوم.';
+      }
+    }
+
+    // عقد العمل وخطاب الاطلاع بندان منفصلان، وتُقبل صورة كل منهما حسب توجيه المكتب.
+    const contractIdx = reqs.findIndex((req) => /عقد\s*العمل|عقد عمل/.test(req));
+    if (contractIdx !== -1) {
+      reqs[contractIdx] = CONTRACT;
+      const letterIdx = reqs.findIndex((req) => /خطاب\s*الاطلاع/.test(req));
+      if (letterIdx === -1) reqs.splice(contractIdx + 1, 0, AUTHORIZATION_LETTER);
+      else reqs[letterIdx] = AUTHORIZATION_LETTER;
+    }
+
+    // التصديقات تُبقى للأردني كما هي، وتُصاغ لغير الأردني حسب بلد الإصدار.
     reqs = reqs.map((req) => {
-      if (req.includes('وزارة الخارجية الأردنية')) return req;
-      if (/حسن سيرة وسلوك|حسن السيرة والسلوك|السيرة الذاتية/.test(req)) {
-        return req.replace(/\.?$/, '') + ' (مختوم من وزارة الخارجية الأردنية).';
+      if (/الشهادة الجامعية|شهادة جامعية|المؤهل الجامعي|المؤهل العلمي/.test(req)) {
+        if (!specialist) return req.replace(/\(\s*الأصل\s*\)/g, '(صورة)').replace(/\bالأصل\b/g, 'صورة').replace(/^إحضار\s+الشهادة الجامعية/, 'إحضار صورة عن الشهادة الجامعية');
+        return req.includes('أصل') ? req : `${req} (أصل الشهادة الجامعية مع صور عنها)`;
       }
-      if (/مشروحات الجيش|مشروحات من القيادة|الوثائق العسكرية/.test(req)) {
-        return req.replace(/\.?$/, '') + ' (مختومة من وزارة الخارجية الأردنية).';
+      if (/خبرة|خبره/.test(req)) {
+        if (context.isJordanian) return req;
+        const duration = req.split('(')[0].replace(/[،.\s]+$/, '').trim();
+        return `${duration}، الخبرة حسب بلد الإصدار: إذا كانت صادرة من السعودية تُقبل صورة عنها بعد أختامها المطلوبة؛ وإذا كانت صادرة من الأردن تُختم حسب الأصول من الجهات الأردنية؛ وإذا كانت صادرة من بلد آخر تُصدق من جهة الإصدار وخارجيتها والجهات المطلوبة في الأردن.`;
       }
-      if (/الشهادة الجامعية|شهادة جامعية|الشهادة المدرسية|شهادة مدرسية|شهادة الثانوية|شهادة الصف العاشر/.test(req)) {
-        return req.replace(/\.?$/, '') + ' (مختومة من وزارة الخارجية الأردنية).';
-      }
-      if (/\bخبرة\b|خبرة لمدة|خبره/.test(req)) {
-        return req.replace(/\.?$/, '') + ' (مختومة من مكتب العمل ووزارة الخارجية الأردنية).';
-      }
-      if (/المشروعات|المشاريع|مشروعات|مشاريع/.test(req)) {
-        return req.replace(/\.?$/, '') + ' (مختومة من وزارة الخارجية الأردنية).';
-      }
+      if (!context.isJordanian && /الشهادة المدرسية|شهادة مدرسية|شهادة الثانوية|شهادة الصف العاشر/.test(req)) return req.replace(/\s*\(مختومة من وزارة الخارجية الأردنية\)\.?/g, '') + ' وتُصدق حسب الأصول من بلد الإصدار والجهات المطلوبة عند تقديمها في عمّان.';
+      if (context.isJordanian && !req.includes('وزارة الخارجية الأردنية') && /مشروحات الجيش|مشروحات من القيادة|الوثائق العسكرية|حسن سيرة وسلوك/.test(req)) return `${req.replace(/\.?$/, '')} (مختوم حسب الأصول من وزارة الخارجية الأردنية).`;
       return req;
     });
 
     reqs = distinct(reqs).filter((r) => r !== PASSPORT);
-    // الاستقدام العائلي معاملة إقامة وليس تأشيرة عمل — لا يتطلب مطعوم السحايا.
-    if (template.label && template.label.includes('الاستقدام العائلي')) {
-      reqs = reqs.filter((r) => r !== VACCINE);
-    } else {
-      // إزالة أي ظهور لبند مطعوم السحايا ثم إعادته في النهاية كبند ختامي إجباري.
-      reqs = reqs.filter((r) => r !== VACCINE);
-      reqs.push(VACCINE);
-    }
+    if (template.label && template.label.includes('الاستقدام العائلي')) reqs = reqs.filter((r) => r !== VACCINE);
+    else { reqs = reqs.filter((r) => r !== VACCINE); reqs.push(VACCINE); }
 
-    // بند العمر قبل آخر بند، مع إبقاء آخر بند الأصلي في مكانه الختامي.
     reqs = reqs.filter((r) => !r.includes('عمر المتعاقد'));
-    if (reqs.length === 0) return [AGE_LIMIT];
-    return [...reqs.slice(0, -1), AGE_LIMIT, reqs[reqs.length - 1]];
+    reqs = reqs.length === 0 ? [AGE_LIMIT] : [...reqs.slice(0, -1), AGE_LIMIT, reqs[reqs.length - 1]];
+
+    if (!context.isJordanian && typeof nationalityAdditions === 'function') {
+      const additions = nationalityAdditions({ ...template, gender: template.gender || (gender === 'female' ? 'أنثى' : '') }, title, context);
+      reqs.push(...additions);
+    }
+    return reqs;
   }
 
   function renderRequirementsInline() {
@@ -1393,7 +1469,7 @@
     if (!list) return;
     const { template, gender } = currentGenerated;
 
-    const finalReqs = finalizeReqs(template, gender);
+    const finalReqs = finalizeReqs(template, gender, currentGenerated.userTitle);
 
     let html = finalReqs.map((r, i) => {
       const cls = 'bg-white p-3 rounded-lg border border-gray-100';
@@ -1403,14 +1479,21 @@
       </li>`;
     }).join('');
 
-    // 📌 ملاحظة خارج البنود المرقومة (في الأسفل) — مثل ملاحظة الاعتماد المهني
-    if (template.note) {
-      html += `<li class="bg-blue-50 border-r-4 border-blue-400 p-3 rounded-lg list-none mt-2">
+    // 📌 ملاحظات خارج البنود المرقومة — لا تُعامل حالة الإقامة كمستند.
+    const context = typeof selectedNationalityContext === 'function' ? selectedNationalityContext() : { isJordanian: true, isSyrian: false, residency: 'unknown', nationality: 'الأردن' };
+    const routeNote = !context.isJordanian && context.residency === 'not-resident'
+      ? (context.isSyrian
+        ? 'معاملة السوري غير المقيم مشروطة حاليًا؛ يجب تأكيدها مع المكتب والجهة المختصة قبل التقديم.'
+        : `لا يمكن استكمال التقديم من الأردن دون إقامة أردنية سارية للجنسية ${context.nationality}. يجب مراجعة جهة التقديم قبل تجهيز الأوراق.`)
+      : '';
+    const notes = [template.note, routeNote].filter(Boolean);
+    if (notes.length) {
+      html += notes.map((note) => `<li class="bg-blue-50 border-r-4 border-blue-400 p-3 rounded-lg list-none mt-2">
         <div class="flex gap-2 text-xs sm:text-sm text-blue-900">
           <i class="fas fa-info-circle text-blue-500 mt-0.5"></i>
-          <span>${escapeHtml(template.note)}</span>
+          <span>${escapeHtml(note)}</span>
         </div>
-      </li>`;
+      </li>`).join('');
     }
 
     list.innerHTML = html;
@@ -1436,7 +1519,7 @@
   function printGeneratedSheet() {
     if (!currentGenerated) return;
     const { userTitle, template, gender } = currentGenerated;
-    const finalReqs = finalizeReqs(template, gender);
+    const finalReqs = finalizeReqs(template, gender, currentGenerated.userTitle);
     if (typeof window.printProfessionDocument === 'function') {
       window.printProfessionDocument('AUTO', userTitle, finalReqs);
     }
