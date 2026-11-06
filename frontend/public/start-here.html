@@ -24,10 +24,7 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/icons/logo-192.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/pwa-apple-180.png">
   <link rel="stylesheet" href="/new-seo-pages.css?v=20260830-mobile-layout-2">
   <script src="/schema-markup.js" defer></script>
   <script src="/bilingual-translations.js" defer></script>
@@ -57,137 +54,242 @@
     ]
   }
   </script>
+<link rel="preload" href="/fonts/notokufiarabic-arabic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/notonaskharabic-arabic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/fonts.css?v=20261029">
+<link rel="stylesheet" href="/css/saudia-ds.css?v=20261029">
+  <!-- PWA (2026-10-31) -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#1B2A41">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="إنجاز السعودية">
 </head>
-<body class="sv-page-bg sv-start-page">
-  <header class="sv-site-header">
-    <div class="sv-header-inner">
-      <a class="sv-brand" href="/" aria-label="العودة إلى مكتب تأشيرات السعودية في الأردن">
-        <img src="/icons/logo-192.png" alt="شعار مكتب تأشيرات السعودية في الأردن">
-        <span>مكتب تأشيرات السعودية في الأردن<small>تأشيرات العمل والتصديقات والمتابعة</small></span>
-      </a>
-      <nav class="sv-nav" aria-label="التنقل الرئيسي">
-        <a href="/">الرئيسية</a>
-        <a href="/about.html">من نحن</a>
-        <a href="/saudi-work-visa-eligibility.html">الأهلية</a>
-        <a href="/professions.html">المهن والأوراق</a>
-        <a href="/corporate.html">للشركات وB2B</a>
-        <a class="sv-nav-cta" href="/#contact">تواصل معنا</a>
-      </nav>
-      <div class="sv-mobile-links" aria-label="روابط سريعة">
-        <a href="/">الرئيسية</a>
-        <a href="/#contact">تواصل معنا</a>
-      </div>
-    </div>
-  </header>
+<body class="sd sv-page-bg sv-start-page">
+<a class="sd-skip" href="#main">تخطَّ إلى المحتوى</a>
+<header id="uh-header" class="sd-header" data-testid="unified-header">
+  <div class="sd-wrap">
+    <a class="sd-brand" href="/"><img src="/icons/logo-192.png" alt="مكتب تأشيرات السعودية" width="42" height="42"><b>مكتب تأشيرات السعودية في الأردن</b></a>
+    <nav class="sd-nav" aria-label="روابط الموقع الأساسية">
+      <a href="/" data-testid="nav-home">الرئيسية</a>
+      <a href="/start-here.html" aria-current="page">ابدأ من هنا</a>
+      <a href="/professions.html" data-testid="nav-professions">المهن والأوراق</a>
+      <a href="/saudi-work-visa-eligibility.html" data-testid="nav-eligibility">الأهلية</a>
+      <a href="/calculator.html">حاسبة الرسوم</a>
+      <a href="/corporate.html" data-testid="nav-corporate">للشركات وB2B</a>
+      <a href="/about.html" data-testid="nav-about">من نحن</a>
+    </nav>
+    <a class="sd-btn sd-btn-primary sd-btn-sm sd-header-cta" href="/#contact" data-testid="nav-contact-cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>تواصل معنا</a>
+    <button class="sd-menu-btn" type="button" id="sd-menu-btn" data-testid="mobile-menu-btn" aria-label="فتح القائمة" aria-expanded="false" aria-controls="sd-drawer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+<div class="sd-backdrop" id="sd-backdrop"></div>
+<aside class="sd-drawer" id="sd-drawer" aria-label="القائمة" aria-hidden="true">
+  <header><b class="sd-kufi">القائمة</b><button class="sd-menu-btn" type="button" data-sd-close aria-label="إغلاق القائمة"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></header>
+  <nav>
+    <a href="/">الرئيسية</a>
+    <a href="/start-here.html">ابدأ من هنا</a>
+    <a href="/about.html">من نحن</a>
+    <a href="/#services">خدماتنا</a>
+    <a href="/corporate.html">خدمات الشركات</a>
+    <a href="/professions.html">المهن والأوراق</a>
+    <a href="/saudi-visa-documents-tracker.html">مسار أوراقي</a>
+    <a href="/saudi-work-visa-authorization.html">تفويض تأشيرة العمل</a>
+    <a href="/certificates.html">تصديق الشهادات</a>
+    <a href="/calculator.html">حاسبة الرسوم</a>
+    <a href="/saudi-work-visa-eligibility.html">تحقق من الأهلية</a>
+    <a href="/saudi-visa-inquiry-print.html">الاستعلام والطباعة</a>
+    <a href="/en/index.html" lang="en" dir="ltr">English Services</a>
+    <a href="/en/saudi-visa-processing-partner-jordan.html" lang="en" dir="ltr">For employers (English)</a>
+    <a href="/blog.html">المدونة</a>
+    <a href="/faq.html">الأسئلة الشائعة</a>
+  </nav>
+  <div class="sd-drawer-foot">
+    <a class="sd-btn sd-btn-primary" href="/#contact">تواصل معنا</a>
+    <a class="sd-btn sd-btn-outline" href="tel:+962789881009" data-config="phone_href"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span class="sd-num" data-config="phone_display">+962 78 988 1009</span></a>
+  </div>
+</aside>
 
-  <main id="top">
-    <section class="sv-hero">
-      <div class="sv-container">
-        <span class="sv-eyebrow">دليل اختيار الخدمة المناسبة</span>
-        <h1>ابدأ من هنا</h1>
-        <p>اختر المسار الأقرب إلى حالتك، وسنرشدك إلى الصفحة والخطوات والأوراق المناسبة. إذا كنت تعرف الخدمة التي تريدها، يمكنك الدخول إليها مباشرة.</p>
-        <div class="sv-hero-actions">
-          <a class="sv-btn sv-btn-primary" href="/saudi-work-visa-eligibility.html">تحقق من الأهلية ←</a>
-          <a class="sv-btn sv-btn-secondary" href="#service-paths">اختر الخدمة</a>
-        </div>
+
+<main id="main" tabindex="-1" class="sd-start">
+
+<section class="sd-has-ph sd-dark sd-tool-hero sd-start-hero">
+<div class="sd-ph" aria-hidden="true" style="--sd-ph-pos:30% 50%"><img src="/images/pages/start-here-1280.webp" srcset="/images/pages/start-here-640.webp 640w, /images/pages/start-here-1280.webp 1280w, /images/pages/start-here-1920.webp 1920w" sizes="100vw" alt="" width="1280" height="640" fetchpriority="high" decoding="async"></div>
+
+
+
+
+
+
+
+
+  <div class="sd-wrap">
+    <nav aria-label="مسار التنقل"><ol class="sd-crumbs"><li><a href="/">الرئيسية</a></li><li aria-current="page">ابدأ من هنا</li></ol></nav>
+    <h1>ماذا تريد أن تنجز اليوم؟</h1><p class="sd-h1-en" lang="en" dir="ltr">Start Here: Choose Your Service</p>
+    <p class="sd-lead">اختر حاجتك، ونأخذك إلى الأداة المناسبة. المكتب يجهّز المعاملات ويراجع الأوراق ويتابع التصديقات؛ قرار التأشيرة للجهة الرسمية.</p>
+  </div>
+</section>
+
+<section class="sd-section">
+  <div class="sd-wrap sd-stack" style="--sd-gap:30px">
+
+    <section aria-labelledby="g-work">
+      <div class="st-head"><h2 id="g-work">أجهّز ملف تأشيرة عمل</h2><p>من معرفة الأوراق حتى مراجعة الملف قبل التسليم.</p></div>
+      <div class="st-grid">
+        <a class="st-card st-card-lead" href="/saudi-work-visa-file-readiness.html">
+          <span class="st-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg></span>
+          <span class="st-body"><b>أريد مراجعة جاهزية ملف تأشيرة العمل</b><span>أربع خطوات قصيرة تُظهر ما هو جاهز، وما ينقص، وما يراجعه المكتب.</span><small>مراجعة الجاهزية</small></span>
+        </a>
+        <a class="st-card" href="/professions.html">
+          <span class="st-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6h.01M4 12h.01M4 18h.01"/></svg></span>
+          <span class="st-body"><b>أريد معرفة أوراق مهنتي</b><span>ابحث باسم المهنة أو رمزها، واقرأ المؤهل والخبرة والأوراق المطلوبة.</span><small>المهن والأوراق</small></span>
+        </a>
+        <a class="st-card" href="/saudi-visa-documents-tracker.html">
+          <span class="st-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M6 17V9a4 4 0 0 1 4-4h6M18 7v8a4 4 0 0 1-4 4H8"/></svg></span>
+          <span class="st-body"><b>أريد تتبّع أوراقي ورقةً ورقة</b><span>حدد ما عندك وما ينقصك وما يحتاج تصديقًا، ثم أرسل القائمة للمكتب.</span><small>مسار أوراقي</small></span>
+        </a>
+        <a class="st-card" href="/saudi-work-visa-eligibility.html">
+          <span class="st-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg></span>
+          <span class="st-body"><b>أريد التأكد من أهليتي للعمل في السعودية</b><span>العمر والجنسية والإقامة والمؤهل والخبرة، مع المهن المناسبة لمؤهلك.</span><small>التحقق من الأهلية</small></span>
+        </a>
+        <a class="st-card" href="/saudi-work-visa-eligibility.html?audience=foreign#residencyField">
+          <span class="st-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span>
+          <span class="st-body"><b>أنا غير أردني وأريد التقديم من الأردن</b><span>ما يتغيّر في أوراقك حسب جنسيتك وإقامتك في الأردن.</span><small>الأهلية لغير الأردنيين</small></span>
+        </a>
+        <a class="st-card" href="/calculator.html">
+          <span class="st-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h2M12 11h2M16 11v6M8 15h2M12 15h2M8 18h2M12 18h2"/></svg></span>
+          <span class="st-body"><b>أريد معرفة التكلفة التقديرية</b><span>رسوم المكتب والفحص الطبي والإجراءات المهنية حسب مهنتك.</span><small>حاسبة الرسوم</small></span>
+        </a>
+      </div>
+    </section>
+
+    <section aria-labelledby="g-docs">
+      <div class="st-head"><h2 id="g-docs">وثائق وخدمات أخرى</h2><p>تصديق الوثائق، والاستعلام، والفحص الطبي، وخدمات الشركات.</p></div>
+      <div class="st-grid">
+        <a class="st-card" href="/saudi-document-attestation-jordan.html">
+          <span class="st-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6l-1 7h-4z"/><path d="M5 14h14v4H5z"/><path d="M4 21h16"/></svg></span>
+          <span class="st-body"><b>أريد تصديق شهادة أو وثيقة</b><span>اختر نوع الوثيقة وبلد إصدارها، فتظهر الأوراق وترتيب الأختام.</span><small>دليل التصديق</small></span>
+        </a>
+        <a class="st-card" href="/saudi-visa-inquiry-print.html">
+          <span class="st-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span>
+          <span class="st-body"><b>أريد الاستعلام عن تأشيرتي أو طباعتها</b><span>الفرق بين رقم الطلب ومستند التأشيرة، والرابط الرسمي المناسب.</span><small>الاستعلام والطباعة</small></span>
+        </a>
+        <a class="st-card" href="/saudi-medical-exam-jordan.html">
+          <span class="st-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></span>
+          <span class="st-body"><b>أريد حجز الفحص الطبي أو معرفة نتيجته</b><span>فحص وافد لتأشيرة العمل أو الزيارة العائلية من الأردن.</span><small>الفحص الطبي (وافد)</small></span>
+        </a>
+        <a class="st-card" href="/saudi-work-visa-authorization.html">
+          <span class="st-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>
+          <span class="st-body"><b>صدرت التأشيرة وأريد تفويض المكتب</b><span>خطوات التفويض الإلكتروني للمكتب وما يليها حتى تسليم الجواز.</span><small>تفويض تأشيرة العمل</small></span>
+        </a>
+        <a class="st-card" href="/corporate.html">
+          <span class="st-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V5l8-2v18M12 7l8 3v11M8 9h.01M8 13h.01M8 17h.01M16 13h.01M16 17h.01M2 21h20"/></svg></span>
+          <span class="st-body"><b>أمثل شركة أو وكالة</b><span>متابعة تأشيرات الموظفين والتصديقات من الأردن لأكثر من متقدم.</span><small>خدمات الشركات</small></span>
+        </a>
+        <a class="st-card" href="/saudi-visa-inquiry-print.html#contact-help">
+          <span class="st-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg></span>
+          <span class="st-body"><b>أسأل عن تأشيرة زيارة أو عمرة أو مرور</b><span>نراجع معك المسار المناسب حسب الجنسية والغرض من السفر.</span><small>التواصل مع المكتب</small></span>
+        </a>
       </div>
     </section>
 
-    <div class="sv-container sv-breadcrumbs" aria-label="مسار الصفحة">
-      <a href="/">الرئيسية</a><span aria-hidden="true"> ← </span><span>ابدأ من هنا</span>
-    </div>
-
-    <section class="sv-main" id="service-paths">
-      <div class="sv-container">
-        <section class="sv-card sv-card-pad" aria-labelledby="paths-title">
-          <h2 id="paths-title">اختر نوع الخدمة</h2>
-          <p class="sv-lead">لا تحتاج إلى معرفة اسم الصفحة. اختر ما تريد إنجازه، وسينقلك الرابط إلى المسار المناسب.</p>
-          <div class="sv-grid-3">
-            <a class="sv-link-card sv-start-card" href="/saudi-work-visa-eligibility.html">
-              <div class="sv-icon">01</div><strong>أريد تأشيرة عمل سعودية</strong>
-              <span>تحقق من الجنسية والإقامة والعمر والمؤهل والمهنة والخبرة والاعتماد المهني.</span>
-              <em>اضغط للتحقق من الأهلية ←</em>
-            </a>
-            <a class="sv-link-card sv-start-card sv-start-card-readiness" href="/saudi-work-visa-file-readiness.html">
-              <div class="sv-icon">02</div><strong>أريد مراجعة جاهزية ملف العمل</strong>
-              <span>رتّب حالة الإقامة والمهنة والمؤهل والخبرة والعقد والتصديق وفحص وافد في نتيجة قصيرة قابلة للنسخ والطباعة.</span>
-              <em>ابدأ مراجعة الملف ←</em>
-            </a>
-            <a class="sv-link-card sv-start-card" href="/professions.html">
-              <div class="sv-icon">03</div><strong>أريد معرفة أوراق مهنتي</strong>
-              <span>ابحث عن المهنة لمعرفة المؤهل والخبرة والاعتماد والأوراق المرتبطة بها.</span>
-              <em>اضغط لفتح المهن والأوراق ←</em>
-            </a>
-            <a class="sv-link-card sv-start-card" href="/saudi-work-visa-eligibility.html?audience=foreign#residencyField">
-              <div class="sv-icon">04</div><strong>أنا غير أردني وأريد التقديم من الأردن</strong>
-              <span>راجع مسار الجنسية والإقامة والمهنة قبل بدء معاملة تأشيرة العمل من عمّان.</span>
-              <em>اضغط لفحص المسار ←</em>
-            </a>
-            <a class="sv-link-card sv-start-card" href="/saudi-document-attestation-jordan.html">
-              <div class="sv-icon">05</div><strong>أريد تصديق شهادة أو وثيقة</strong>
-              <span>اختر نوع الورقة وبلد الإصدار والغرض لمعرفة تسلسل التصديقات والنسخ والأصول.</span>
-              <em>اضغط لفتح أداة التصديق ←</em>
-            </a>
-            <a class="sv-link-card sv-start-card" href="/saudi-visa-inquiry-print.html">
-              <div class="sv-icon">06</div><strong>أريد الاستعلام عن التأشيرة أو طباعتها</strong>
-              <span>اعرف الفرق بين رقم الطلب ومستند التأشيرة، ثم افتح الرابط الرسمي المناسب.</span>
-              <em>اضغط للاستعلام والطباعة ←</em>
-            </a>
-            <a class="sv-link-card sv-start-card" href="/corporate.html">
-              <div class="sv-icon">07</div><strong>أمثل شركة أو وكالة</strong>
-              <span>تعرف على مساعدة الشركات في تأشيرات الموظفين والتصديقات والمتابعة من الأردن.</span>
-              <em>اضغط لخدمات الشركات ←</em>
-            </a>
-          </div>
-        </section>
-
-        <section class="sv-section" aria-labelledby="additional-title">
-          <h2 id="additional-title">خدمات إضافية</h2>
-          <div class="sv-grid-3">
-            <a class="sv-mini-card sv-link-card" href="/saudi-visa-inquiry-print.html#contact-help"><h3>تأشيرات الزيارة والسياحة والعمرة والمرور</h3><p>اطلب مراجعة المسار المناسب حسب الجنسية والغرض من السفر ونوع المعاملة.</p><em>اضغط لمعرفة طريقة التواصل ←</em></a>
-            <a class="sv-mini-card sv-link-card" href="/en/index.html" lang="en" dir="ltr"><h3>English Services</h3><p>للأفراد والشركات والوكالات غير الناطقة بالعربية، مع شرح خدمات المكتب باللغة الإنجليزية.</p><em>Open English Services ←</em></a>
-            <a class="sv-mini-card sv-link-card" href="/about.html#contact"><h3>أحتاج مساعدة في اختيار المسار</h3><p>تواصل مع المكتب وأرسل نوع الخدمة والجنسية والغرض من المعاملة دون إرسال كلمات مرور أو بيانات دفع.</p><em>اضغط للتواصل مع المكتب ←</em></a>
-            <a class="sv-mini-card sv-link-card" href="/saudi-medical-exam-jordan.html"><h3>فحص وافد الطبي</h3><p>اعرف مسار حجز فحص Work Visa أو Family Visa والبحث عن نتيجة التقرير من الأردن.</p><em>افتح دليل وافد ←</em></a>
-          </div>
-        </section>
-
-        <section class="sv-card sv-card-pad sv-section" aria-labelledby="next-title">
-          <h2 id="next-title">كيف نكمل المسار؟</h2>
-          <div class="sv-step-list">
-            <div class="sv-step"><div class="sv-step-number">1</div><div><h3>اختر الخدمة</h3><p>ابدأ بالبطاقة التي تصف حاجتك، ولا ترسل مستندات حساسة داخل الموقع.</p></div></div>
-            <div class="sv-step"><div class="sv-step-number">2</div><div><h3>راجع الشروط والأوراق</h3><p>استخدم الأهلية والمهن والتصديق لمعرفة البيانات والأوراق التي ترتبط بالمسار.</p></div></div>
-            <div class="sv-step"><div class="sv-step-number">3</div><div><h3>تواصل عند الحاجة</h3><p>إذا بقيت نقطة غير واضحة، تواصل مع المكتب عبر القناة الرسمية لمراجعة الحالة.</p></div></div>
-          </div>
-          <div class="sv-note">المعلومات في هذه الصفحة إرشادية. القرار النهائي ومتطلبات الجهة المستفيدة يعتمدان على نوع المعاملة وصحة المستندات والأنظمة السارية.</div>
-        </section>
-
-          <section class="sv-desktop-qr" aria-label="التواصل عبر WhatsApp من الكمبيوتر">
-            <img src="/images/whatsapp-qr.webp" alt="رمز QR لفتح WhatsApp مع مكتب تأشيرات السعودية في الأردن" width="492" height="492" loading="lazy" decoding="async">
-            <div>
-              <h3>تتصفح من الكمبيوتر؟ امسح رمز WhatsApp من هاتفك</h3>
-              <p>افتح كاميرا هاتفك وامسح الرمز لفتح محادثة المكتب مباشرة. مستخدمو الهاتف يمكنهم الضغط على زر WhatsApp.</p>
-              <a href="https://wa.me/message/TW2PMJLSQSO4L1" target="_blank" rel="noopener noreferrer">أو افتح WhatsApp من هذا الرابط</a>
-            </div>
-          </section>
-
-          <div class="sv-action-row sv-page-actions">
-            <a class="sv-btn sv-btn-secondary" href="javascript:history.back()" onclick="if (history.length <= 1) { this.href='/'; }">العودة إلى الصفحة السابقة</a>
-          <a class="sv-btn sv-btn-dark" href="#top">العودة إلى بداية الصفحة ↑</a>
-          <button class="sv-btn sv-btn-secondary" type="button" data-share-page>مشاركة الصفحة</button>
-        </div>
+    <section class="st-help" aria-labelledby="g-help">
+      <div>
+        <h2 id="g-help">لست متأكدًا من الخيار المناسب؟</h2>
+        <p>اكتب لنا ما تريد إنجازه وجنسيتك ومهنتك، ونرشدك إلى الخطوة الأولى. لا ترسل كلمات مرور أو بيانات دفع.</p>
+      </div>
+      <div class="st-help-actions">
+        <a class="sd-btn sd-btn-gold" href="https://wa.me/962789881009" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20l1.2-4.2A8.5 8.5 0 1 1 20 11.5z"/><path d="M8.5 9.5c.5 2 2 3.6 4 4.4l1.2-1.1 1.8.8c-.2 1-1 1.7-2 1.7-3.3-.4-5.9-3-6.3-6.3 0-1 .7-1.8 1.7-2l.8 1.8z"/></svg>اسأل المكتب عبر واتساب</a>
+        <a class="sd-btn sd-btn-outline" href="tel:+962789881009"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span dir="ltr">+962 78 988 1009</span></a>
+        <a class="sd-btn sd-btn-outline" href="/en/index.html" lang="en" dir="ltr">English Services</a>
       </div>
     </section>
-  </main>
 
-  <footer class="sv-footer">
-    <div class="sv-container">
-      <div class="sv-footer-grid">
-        <div><h2>مكتب تأشيرات السعودية في الأردن</h2><p>مساعدة في تأشيرات العمل والتصديقات والاعتماد المهني وتجهيز المستندات من الأردن.</p></div>
-        <div><h3>روابط مفيدة</h3><p><a href="/">الرئيسية</a><br><a href="/saudi-work-visa-eligibility.html">الأهلية</a><br><a href="/professions.html">المهن والأوراق</a><br><a href="/saudi-document-attestation-jordan.html">دليل التصديق</a><br><a href="/saudi-visa-inquiry-print.html">الاستعلام والطباعة</a><br><a href="/en/index.html" lang="en" dir="ltr">English Services</a></p></div>
-        <div><h3>تواصل معنا</h3><p><a href="tel:+962789881009">+962 78 988 1009</a><br><a href="mailto:Visa@saudia-visa.com">Visa@saudia-visa.com</a><br><a href="https://wa.me/962789881009" target="_blank" rel="noopener noreferrer">واتساب المكتب</a></p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="sd-footer">
+  <div class="sd-wrap">
+    <div class="sd-foot-grid">
+      <div>
+        <h3><span>إنجاز</span> السعودية</h3>
+        <p>مكتب معتمد في الأردن لإنجاز معاملات التأشيرات والتصديقات والاعتماد المهني بدقة واحترافية.</p>
+        
+        <div class="sd-social" data-social-icons>
+          <a href="https://www.facebook.com/Saudiavisajo" data-social="facebook" target="_blank" rel="noopener noreferrer" aria-label="فيسبوك"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z"/></svg></a>
+          <a href="#" data-social="instagram" target="_blank" rel="noopener noreferrer" aria-label="إنستغرام" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></a>
+          <a href="#" data-social="twitter" target="_blank" rel="noopener noreferrer" aria-label="إكس / تويتر" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></a>
+          <a href="#" data-social="linkedin" target="_blank" rel="noopener noreferrer" aria-label="لينكدإن" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></a>
+          <a href="https://wa.me/962789881009" data-config="whatsapp_url" target="_blank" rel="noopener noreferrer" aria-label="واتساب"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20l1.2-4.2A8.5 8.5 0 1 1 20 11.5z"/><path d="M8.5 9.5c.5 2 2 3.6 4 4.4l1.2-1.1 1.8.8c-.2 1-1 1.7-2 1.7-3.3-.4-5.9-3-6.3-6.3 0-1 .7-1.8 1.7-2l.8 1.8z"/></svg></a>
+          <a href="mailto:Visa@saudia-visa.com" data-config="email_url" aria-label="البريد"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+        </div>
       </div>
-      <div class="sv-footer-bottom"><span>© مكتب تأشيرات السعودية في الأردن</span><a href="/privacy.html">سياسة الخصوصية</a></div>
+      <div>
+        <h3>روابط سريعة</h3>
+        <ul>
+          <li><a href="/">الرئيسية</a></li>
+          <li><a href="/#services">خدماتنا</a></li>
+          <li><a href="/professions.html">المهن والأوراق</a></li>
+          <li><a href="/calculator.html">حاسبة الرسوم</a></li>
+          <li><a href="/saudi-work-visa-eligibility.html">التحقق من الأهلية</a></li>
+          <li><a href="/saudi-visa-inquiry-print.html">الاستعلام والطباعة</a></li>
+          <li><a href="/en/index.html" lang="en" dir="ltr">English Services</a></li>
+          <li><a href="/en/about.html" lang="en" dir="ltr">About Us</a></li>
+          <li><a href="/en/saudi-visa-processing-partner-jordan.html" lang="en" dir="ltr">For employers (English)</a></li>
+          <li><a href="/corporate.html">خدمات الشركات</a></li>
+          <li><a href="/blog.html">المدونة</a></li>
+          <li><a href="/about.html" data-testid="footer-link-office-info">من نحن - معتمدون للسفارة السعودية</a></li>
+          <li><a href="/pillar-dataflow.html" data-testid="footer-link-dataflow">دليل DataFlow الشامل 2026</a></li>
+          <li><a href="/pillar-mumaris-plus.html" data-testid="footer-link-mumaris">دليل ممارس بلس Mumaris+</a></li>
+          <li><a href="/faq.html">الأسئلة الشائعة</a></li>
+          <li><a href="/saudi-document-attestation-jordan.html">دليل تصديق الأوراق</a></li>
+          <li><a href="/#contact">تواصل معنا</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>خدماتنا</h3>
+        <ul>
+          <li><a href="/work-visa.html" data-no-instant>تأشيرات العمل</a></li>
+          <li><a href="/saudi-work-visa-authorization.html">تفويض تأشيرة العمل</a></li>
+          <li><a href="/saudi-visa-documents-tracker.html">مسار أوراقي</a></li>
+          <li><a href="/certificates.html">تصديق الشهادات</a></li>
+          <li><a href="/saudi-document-attestation-jordan.html">دليل تصديق الأوراق</a></li>
+          <li><a href="/saudi-qvp-professional-accreditation/">الاعتماد المهني</a></li>
+          <li><a href="/saudi-labor-exam-jordan.html">اختبار الهيئة السعودية</a></li>
+          <li><a href="/remote-document-services-jordan/">إنجاز المعاملات والوثائق من الأردن عن بُعد</a></li>
+        </ul>
+        <h3 style="margin-top:22px !important">تصنيفات المهن</h3>
+        <ul>
+          <li><a href="/professions.html?category=المدراء">أوراق المدراء والتنفيذيين</a></li>
+          <li><a href="/professions.html?category=الاختصاصيون">أوراق الأطباء والمهندسين والأخصائيين</a></li>
+          <li><a href="/professions.html?category=الفنيون">أوراق الفنيين</a></li>
+          <li><a href="/professions.html?category=الحرفيون">أوراق الحرفيين والمهن المهارية</a></li>
+          <li><a href="/professions.html?category=العمال">أوراق العمال والسائقين</a></li>
+          <li><a href="/professions.html?category=الكتبة">أوراق الكتبة والإداريين</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>معلومات التواصل</h3>
+        <ul style="gap:14px">
+          <li><span class="sd-label">الهاتف / واتساب</span><a href="tel:+962789881009" data-config="phone_href" dir="ltr"><span data-config="phone_display">+962 78 988 1009</span></a></li>
+          <li><span class="sd-label">البريد الإلكتروني</span><a href="mailto:Info@saudia-visa.com">Info@saudia-visa.com</a><br><a href="mailto:Visa@saudia-visa.com">Visa@saudia-visa.com</a></li>
+          <li><span class="sd-label">العنوان</span><div>الدوار الأول - جبل عمان<br>عمان، الأردن</div></li>
+          <li><span class="sd-label">ساعات الدوام</span><div>الأحد – الخميس<br><span style="color:var(--sd-gold-400)">9:00 صباحاً – 4:00 مساءً</span><br><span class="sd-label">الجمعة والسبت: مغلق</span></div></li>
+        </ul>
+      </div>
     </div>
-  </footer>
+    <div class="sd-foot-bottom">
+      <div>© مكتب تأشيرات السعودية في الأردن</div>
+      <div class="sd-row" style="gap:18px"><a href="/privacy.html">سياسة الخصوصية</a><a href="/terms.html">الشروط والأحكام</a><a href="/disclaimer.html">إخلاء المسؤولية</a></div>
+    </div>
+  </div>
+</footer>
+
+
+<script src="/core.js?v=20261029" defer></script>
+<script src="/js/saudia-ui.js?v=20261029" defer></script>
+
 </body>
 </html>

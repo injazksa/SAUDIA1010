@@ -24,10 +24,7 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/icons/logo-192.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/pwa-apple-180.png">
   <link rel="stylesheet" href="/new-seo-pages.css?v=20260830-mobile-layout-2">
   <script src="/schema-markup.js" defer></script>
   <script src="/bilingual-pages.js?v=20260830-language-2" defer></script>
@@ -56,344 +53,517 @@
   }
   </script>
   <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"FAQPage",
-    "mainEntity":[
-      {"@type":"Question","name":"هل مراجعة الجاهزية تعني أن التأشيرة ستصدر؟","acceptedAnswer":{"@type":"Answer","text":"لا. هذه أداة إرشادية محلية تساعد على ترتيب عناصر الملف واكتشاف النواقص الظاهرة، ولا تستبدل قرار الجهة الرسمية أو مراجعة صاحب العمل أو المكتب."}},
-      {"@type":"Question","name":"هل تطلب الأداة رقم الجواز أو صورة المستندات؟","acceptedAnswer":{"@type":"Answer","text":"لا. الأداة لا تطلب رقم الجواز أو صورة الجواز أو التقرير الطبي أو كلمة المرور أو بيانات الدفع، ولا تحفظ إجاباتك على الموقع."}},
-      {"@type":"Question","name":"ماذا أفعل إذا ظهر أن الملف يحتاج مراجعة؟","acceptedAnswer":{"@type":"Answer","text":"افتح الرابط المرتبط بالعنصر الناقص، أو انسخ النتيجة، أو افتح رسالة واتساب جاهزة تذكر الخدمة والمهنة والفئات الناقصة فقط دون بيانات جواز أو معلومات طبية."}}
-    ]
-  }
-  </script>
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "هل مراجعة الجاهزية تعني أن التأشيرة ستصدر؟",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "لا. هذه أداة إرشادية محلية تساعد على ترتيب عناصر الملف واكتشاف النواقص الظاهرة، ولا تستبدل قرار الجهة الرسمية أو مراجعة صاحب العمل أو المكتب."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "هل تطلب الأداة رقم الجواز أو صورة المستندات؟",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "لا. الأداة لا تطلب رقم الجواز أو صورة الجواز أو التقرير الطبي أو كلمة المرور أو بيانات الدفع، ولا تحفظ إجاباتك على الموقع."
+      }
+    }
+  ]
+}
+</script>
+<link rel="preload" href="/fonts/notokufiarabic-arabic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/notonaskharabic-arabic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/fonts.css?v=20261029">
+<link rel="stylesheet" href="/css/saudia-ds.css?v=20261029">
+  <!-- PWA (2026-10-31) -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#1B2A41">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="إنجاز السعودية">
 </head>
-<body class="sv-page-bg sv-readiness-page">
-  <header class="sv-site-header">
-    <div class="sv-header-inner">
-      <a class="sv-brand" href="/" aria-label="العودة إلى مكتب تأشيرات السعودية في الأردن">
-        <img src="/icons/logo-192.png" alt="شعار مكتب تأشيرات السعودية في الأردن">
-        <span>مكتب تأشيرات السعودية في الأردن<small>تأشيرات العمل والتصديقات والمتابعة</small></span>
-      </a>
-      <nav class="sv-nav" aria-label="التنقل الرئيسي">
-        <a href="/">الرئيسية</a>
-        <a href="/about.html">من نحن</a>
-        <a href="/saudi-work-visa-eligibility.html">الأهلية</a>
-        <a href="/professions.html">المهن والأوراق</a>
-        <a href="/saudi-medical-exam-jordan.html">وافد الطبي</a>
-        <a class="sv-nav-cta" href="/#contact">تواصل معنا</a>
-      </nav>
-      <div class="sv-mobile-links" aria-label="روابط سريعة">
-        <a href="/">الرئيسية</a>
-        <a href="/#contact">تواصل معنا</a>
-      </div>
-    </div>
-  </header>
+<body class="sd sv-page-bg sv-readiness-page">
+<a class="sd-skip" href="#main">تخطَّ إلى المحتوى</a>
+<header id="uh-header" class="sd-header" data-testid="unified-header">
+  <div class="sd-wrap">
+    <a class="sd-brand" href="/"><img src="/icons/logo-192.png" alt="مكتب تأشيرات السعودية" width="42" height="42"><b>مكتب تأشيرات السعودية في الأردن</b></a>
+    <nav class="sd-nav" aria-label="روابط الموقع الأساسية">
+      <a href="/" data-testid="nav-home">الرئيسية</a>
+      <a href="/start-here.html">ابدأ من هنا</a>
+      <a href="/professions.html" data-testid="nav-professions">المهن والأوراق</a>
+      <a href="/saudi-work-visa-eligibility.html" data-testid="nav-eligibility" aria-current="page">الأهلية</a>
+      <a href="/calculator.html">حاسبة الرسوم</a>
+      <a href="/corporate.html" data-testid="nav-corporate">للشركات وB2B</a>
+      <a href="/about.html" data-testid="nav-about">من نحن</a>
+    </nav>
+    <a class="sd-btn sd-btn-primary sd-btn-sm sd-header-cta" href="/#contact" data-testid="nav-contact-cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>تواصل معنا</a>
+    <button class="sd-menu-btn" type="button" id="sd-menu-btn" data-testid="mobile-menu-btn" aria-label="فتح القائمة" aria-expanded="false" aria-controls="sd-drawer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+<div class="sd-backdrop" id="sd-backdrop"></div>
+<aside class="sd-drawer" id="sd-drawer" aria-label="القائمة" aria-hidden="true">
+  <header><b class="sd-kufi">القائمة</b><button class="sd-menu-btn" type="button" data-sd-close aria-label="إغلاق القائمة"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></header>
+  <nav>
+    <a href="/">الرئيسية</a>
+    <a href="/start-here.html">ابدأ من هنا</a>
+    <a href="/about.html">من نحن</a>
+    <a href="/#services">خدماتنا</a>
+    <a href="/corporate.html">خدمات الشركات</a>
+    <a href="/professions.html">المهن والأوراق</a>
+    <a href="/saudi-visa-documents-tracker.html">مسار أوراقي</a>
+    <a href="/saudi-work-visa-authorization.html">تفويض تأشيرة العمل</a>
+    <a href="/certificates.html">تصديق الشهادات</a>
+    <a href="/calculator.html">حاسبة الرسوم</a>
+    <a href="/saudi-work-visa-eligibility.html">تحقق من الأهلية</a>
+    <a href="/saudi-visa-inquiry-print.html">الاستعلام والطباعة</a>
+    <a href="/en/index.html" lang="en" dir="ltr">English Services</a>
+    <a href="/en/saudi-visa-processing-partner-jordan.html" lang="en" dir="ltr">For employers (English)</a>
+    <a href="/blog.html">المدونة</a>
+    <a href="/faq.html">الأسئلة الشائعة</a>
+  </nav>
+  <div class="sd-drawer-foot">
+    <a class="sd-btn sd-btn-primary" href="/#contact">تواصل معنا</a>
+    <a class="sd-btn sd-btn-outline" href="tel:+962789881009" data-config="phone_href"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span class="sd-num" data-config="phone_display">+962 78 988 1009</span></a>
+  </div>
+</aside>
 
-  <main id="top">
-    <section class="sv-hero">
-      <div class="sv-container">
-        <span class="sv-eyebrow">مراجعة إرشادية قبل تسليم الملف</span>
-        <h1>مراجعة جاهزية ملف تأشيرة العمل السعودية من الأردن</h1>
-        <p>أجب عن أسئلة قصيرة حول الجنسية والإقامة والمهنة والأوراق الأساسية. ستظهر لك قائمة واضحة بما يبدو جاهزًا، وما يحتاج استكمالًا، وأي صفحة تفتحها بعد ذلك.</p>
-        <div class="sv-hero-actions">
-          <a class="sv-btn sv-btn-primary" href="#readiness-checker">ابدأ المراجعة ←</a>
-          <a class="sv-btn sv-btn-secondary" href="/start-here.html">العودة إلى ابدأ من هنا</a>
-        </div>
-      </div>
-    </section>
 
-    <div class="sv-container sv-breadcrumbs" aria-label="مسار الصفحة">
-      <a href="/">الرئيسية</a><span aria-hidden="true"> ← </span><a href="/start-here.html">ابدأ من هنا</a><span aria-hidden="true"> ← </span><span>جاهزية ملف العمل</span>
-    </div>
+<main id="main" tabindex="-1" class="sd-elig sd-ready">
 
-    <section class="sv-main">
-      <div class="sv-container">
-        <section class="sv-card sv-card-pad sv-readiness-intro" aria-labelledby="intro-title">
-          <span class="sv-eyebrow">ما الذي تفعله هذه الصفحة؟</span>
-          <h2 id="intro-title">رتّب ملفك قبل أن تبدأ المراجعة</h2>
-          <p class="sv-lead">هذه الصفحة ليست طلب تأشيرة ولا قرار قبول. هي أداة ترتيب تساعد المتقدم من الأردن على معرفة عناصر ملف تأشيرة العمل التي ينبغي مراجعتها: وضع الجنسية والإقامة، المهنة، المؤهل، الخبرة، الاعتماد أو الفحص المهني عند انطباقه، عقد العمل وخطاب الاطلاع، التصديقات، فحص وافد، وتطابق البيانات.</p>
-          <div class="sv-readiness-how" aria-label="خطوات استخدام الأداة">
-            <article class="sv-process-card"><span>1</span><h3>اختر حالتك</h3><p>حدد الجنسية أو الوضع القانوني وجهة تجهيز الملف من الأردن. لا تكتب رقم جواز أو أي بيانات شخصية.</p></article>
-            <article class="sv-process-card"><span>2</span><h3>راجع العناصر</h3><p>اختر حالة المؤهل والخبرة والاعتماد والتصديق والعقد والفحص الطبي كما هي عندك الآن.</p></article>
-            <article class="sv-process-card"><span>3</span><h3>اقرأ النتيجة</h3><p>سترى جاهزًا، يحتاج مراجعة، أو يحتاج استكمالًا، مع رابط الصفحة الأقرب لكل عنصر.</p></article>
-          </div>
-          <div class="sv-note"><strong>خصوصية مهمة:</strong> لا ترفع الأداة صور جوازات أو تقارير طبية، ولا تطلب كلمات مرور أو بيانات دفع، ولا تحفظ إجابات المراجعة على الموقع. عند الحاجة، افتح WhatsApp بنفسك لإرسال رسالة مختصرة عن الخدمة والمهنة والفئات الناقصة فقط.</div>
-          <div class="sv-note"><strong>كيف يقرأ المرشد الأوراق؟</strong> يقارن المسمى في التأشيرة بالمسمى في الخبرة، ويراجع الحد الأدنى للتعليم ومدة الخبرة المكتملة والاعتماد المهني عند ظهوره في قائمة المهنة. كما يذكّرك بأن الشهادة أو الخبرة الصادرة من خارج الأردن لا تُرفض لمجرد بلد الإصدار؛ بل تُراجع أختامها حسب بلد الإصدار، ثم تُرفع للتحقق المهني عند انطباقه. تظهر المتطلبات التفصيلية في صفحة أوراق المهن، ويؤكد الموظف المسؤول في المكتب الحالة النهائية.</div>
-        </section>
+<section class="sd-has-ph sd-dark sd-tool-hero">
+<div class="sd-ph" aria-hidden="true" style="--sd-ph-pos:35% 50%"><img src="/images/pages/readiness-1280.webp" srcset="/images/pages/readiness-640.webp 640w, /images/pages/readiness-1280.webp 1280w, /images/pages/readiness-1920.webp 1920w" sizes="100vw" alt="" width="1280" height="640" fetchpriority="high" decoding="async"></div>
 
-        <section id="readiness-checker" class="sv-card sv-card-pad sv-section" aria-labelledby="checker-title">
-          <span class="sv-eyebrow">أداة قصيرة من أربع مراحل</span>
-          <h2 id="checker-title">ابدأ مراجعة جاهزية الملف</h2>
-          <p class="sv-lead">املأ الخيارات التي تعرفها. الأسئلة الإضافية تظهر فقط عندما تحتاجها حالتك، ويمكنك تغيير أي اختيار ثم إعادة المراجعة.</p>
-          <nav class="sv-stepper" aria-label="مراحل المراجعة">
-            <button type="button" class="sv-stepper-item is-active" data-readiness-step-target="1"><strong>1</strong><span>الحالة</span></button>
-            <button type="button" class="sv-stepper-item" data-readiness-step-target="2"><strong>2</strong><span>المهنة</span></button>
-            <button type="button" class="sv-stepper-item" data-readiness-step-target="3"><strong>المؤهل والخبرة</strong></button>
-            <button type="button" class="sv-stepper-item" data-readiness-step-target="4"><strong>الملف النهائي</strong></button>
-          </nav>
-          <p id="readinessStepStatus" class="sv-step-status" role="status">المرحلة 1 من 4: اختر الحالة</p>
-          <p id="readinessStepError" class="sv-step-error" role="alert" hidden></p>
-          <form id="readinessForm" class="sv-checker-form" novalidate>
-            <div class="sv-readiness-stage" data-readiness-step="1"><span>المرحلة 1</span><strong>الجنسية والإقامة</strong></div>
-            <div class="sv-checker-grid" data-readiness-step-panel="1">
-              <label class="sv-field"><span>1. ما وضع الجنسية والتقديم؟</span><select id="readinessNationality" class="sv-input" required>
-                <option value="">اختر الحالة</option>
+
+
+
+
+
+
+
+  <div class="sd-wrap">
+    <nav aria-label="مسار التنقل"><ol class="sd-crumbs"><li><a href="/">الرئيسية</a></li><li><a href="/start-here.html">ابدأ من هنا</a></li><li aria-current="page">جاهزية ملف العمل</li></ol></nav>
+    <h1>مراجعة جاهزية ملف تأشيرة العمل السعودية من الأردن</h1><p class="sd-h1-en" lang="en" dir="ltr">Saudi Work Visa File Readiness Check</p>
+    <p class="sd-lead">أربع خطوات قصيرة: حالتك، ومهنتك، ومؤهلك وخبرتك، ثم أوراقك وفحوصك. تظهر لك بعدها قائمة بما هو جاهز، وما يحتاج استكمالًا، وما يراجعه المكتب.</p>
+    <ul class="sd-hero-facts" aria-label="ما تحتاج معرفته">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>أقل من 3 دقائق</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>لا نطلب رقم جواز ولا صورًا</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5h.01"/></svg>النتيجة إرشادية ولا تضمن صدور التأشيرة</li>
+    </ul>
+  </div>
+</section>
+
+<section class="sd-section sd-tool-body">
+  <div class="sd-wrap sd-ready-grid">
+
+    <section id="readiness-checker" class="sd-card sd-tool-card" aria-labelledby="checker-title">
+      <h2 id="checker-title">ابدأ مراجعة الملف</h2>
+      <p class="sd-muted">أجب بما تعرفه الآن. الأسئلة الإضافية تظهر فقط عندما تحتاجها حالتك، ويمكنك الرجوع إلى أي خطوة دون أن تفقد إجاباتك.</p>
+
+      <form id="readinessForm" novalidate data-sd-steps>
+        <div class="sd-steps-progress" data-sd-progress></div>
+
+        <fieldset class="sd-step" data-title="الجنسية والإقامة">
+          <legend>الجنسية والإقامة</legend>
+          <div class="sv-form-grid">
+            <div class="sv-field sv-field-full">
+              <label for="readinessNationality">ما جنسيتك ووضعك في الأردن؟</label>
+              <select id="readinessNationality" required>
+                <option value="">اختر حالتك</option>
                 <option value="jordan">أردني وأجهز الملف من الأردن</option>
                 <option value="foreign-resident">غير أردني ولدي إقامة أردنية سارية</option>
                 <option value="foreign-no-residency">غير أردني ولا أملك إقامة أردنية سارية</option>
                 <option value="syrian-resident">سوري مقيم في الأردن بإقامة سارية</option>
                 <option value="syrian-nonresident">سوري غير مقيم في الأردن حاليًا</option>
                 <option value="unsure">لست متأكدًا من الحالة المناسبة</option>
-              </select></label>
-              <label id="readinessResidencyField" class="sv-field" hidden><span>2. هل بطاقة الإقامة الأردنية متاحة للمراجعة؟</span><select id="readinessResidency" class="sv-input">
+              </select>
+            </div>
+            <div id="readinessDualField" class="sv-field" hidden>
+              <label for="readinessDual">هل تحمل جوازًا أجنبيًا أيضًا؟</label>
+              <select id="readinessDual" data-optional>
+                <option value="no" selected>لا، جوازي أردني فقط</option>
+                <option value="yes">نعم، أحمل جوازًا أجنبيًا أيضًا</option>
+              </select>
+              <small class="sv-field-help">تبقى أوراقك أوراق المواطن الأردني حتى لو صدرت التأشيرة على الجواز الأجنبي.</small>
+            </div>
+            <div id="readinessPassportNameField" class="sv-field" hidden>
+              <label for="readinessPassportName">هل الاسم الكامل متطابق في الجوازين؟</label>
+              <select id="readinessPassportName">
+                <option value="">اختر الإجابة</option>
+                <option value="ready">نعم، متطابق تمامًا</option>
+                <option value="missing">لا، يختلف الاسم</option>
+                <option value="review">لست متأكدًا</option>
+              </select>
+            </div>
+            <div id="readinessResidencyField" class="sv-field" hidden>
+              <label for="readinessResidency">هل بطاقة الإقامة الأردنية سارية ومتاحة؟</label>
+              <select id="readinessResidency">
                 <option value="">اختر الإجابة</option>
                 <option value="ready">نعم، سارية ومتاحة</option>
                 <option value="missing">لا، غير متاحة أو منتهية</option>
                 <option value="review">غير متأكد من صلاحيتها</option>
-              </select><small>يظهر هذا السؤال لغير الأردني المقيم في الأردن. السوري غير المقيم له اختيار مستقل ولا نضيف له بطاقة إقامة أردنية.</small></label>
-              <label id="readinessConductField" class="sv-field" hidden><span>3. ورقة السلوك أو عدم المحكومية</span><select id="readinessConduct" class="sv-input">
+              </select>
+            </div>
+            <div id="readinessConductField" class="sv-field" hidden>
+              <label for="readinessConduct" id="readinessConductLabel">حسن السيرة والسلوك</label>
+              <select id="readinessConduct">
                 <option value="">اختر الحالة</option>
                 <option value="ready">جاهزة بالأصل والأختام المطلوبة</option>
                 <option value="missing">غير متوفرة أو لم أبدأ بها</option>
                 <option value="review">متوفرة لكن تحتاج مراجعة</option>
-              </select><small id="readinessConductHint">تظهر الصيغة الإرشادية المناسبة بعد اختيار الجنسية وحالة الإقامة.</small></label>
-              <label class="sv-field"><span>4. مراجعة الأهلية والعمر</span><select id="readinessEligibility" class="sv-input" required>
-                <option value="">اختر الحالة</option>
-                <option value="ready">راجعت الأهلية والعمر والمهنة</option>
-                <option value="review">أحتاج مراجعة الأهلية أو العمر</option>
-              </select><small>هذه الأداة لا تحسب العمر ولا تصدر قرارًا؛ افتح أداة الأهلية للفحص التفصيلي.</small></label>
+              </select>
+              <small id="readinessConductHint">تظهر الصيغة المناسبة بعد اختيار الجنسية والإقامة.</small>
             </div>
+            <div class="sv-field">
+              <label for="readinessEligibility">هل راجعت شروط العمر والأهلية؟</label>
+              <select id="readinessEligibility" required>
+                <option value="">اختر الإجابة</option>
+                <option value="ready">نعم، راجعت الأهلية والعمر</option>
+                <option value="review">لا، أحتاج مراجعتها</option>
+              </select>
+              <small>للفحص التفصيلي افتح <a href="/saudi-work-visa-eligibility.html">أداة الأهلية</a>.</small>
+            </div>
+          </div>
+        </fieldset>
 
-            <div class="sv-readiness-stage" data-readiness-step="2"><span>المرحلة 2</span><strong>المهنة والمتطلبات الخاصة</strong></div>
-            <div class="sv-checker-grid" data-readiness-step-panel="2">
-              <label class="sv-field"><span>5. ما فئة المهنة؟</span><select id="readinessProfessionType" class="sv-input" required>
+        <fieldset class="sd-step" data-title="المهنة">
+          <legend>المهنة</legend>
+          <div class="sv-form-grid">
+            <div class="sv-field sv-field-full sd-prof-pick">
+              <label for="readinessProfessionName">ما مهنتك؟</label>
+              <input id="readinessProfessionName" type="text" maxlength="80" autocomplete="off" required placeholder="اكتب اسم المهنة أو رمزها، مثال: محاسب أو مهندس مدني أو 241101" role="combobox" aria-expanded="false" aria-controls="readinessProfessionList" aria-autocomplete="list" data-sd-dict>
+              <ul id="readinessProfessionList" class="m-results sd-prof-list" role="listbox" hidden></ul>
+              <small id="readinessProfessionPicked" class="sd-prof-picked" aria-live="polite">اختر المهنة من القائمة التي تظهر أثناء الكتابة. إن لم تجدها، نعرض نتيجة تقديرية ويراجعها المكتب.</small>
+            </div>
+            <div id="readinessProfessionTypeField" class="sv-field sv-field-full" hidden>
+              <label for="readinessProfessionType">لم نتعرف على المهنة. ما أقرب فئة لها؟</label>
+              <select id="readinessProfessionType">
                 <option value="">اختر الفئة</option>
-                <option value="ordinary">مهنة عادية أو إدارية</option>
+                <option value="ordinary">مهنة إدارية أو مكتبية</option>
                 <option value="experience">مهنة تشترط خبرة محددة</option>
-                <option value="accreditation">مهنة تحتاج اعتمادًا مهنيًا أو فحصًا مهنيًا</option>
+                <option value="accreditation">مهنة تحتاج تحققًا مهنيًا (QVP) أو فحصًا مهنيًا (SVP)</option>
                 <option value="engineer">مهندس أو مهنة هندسية</option>
                 <option value="doctor">طبيب أو مهنة طبية</option>
                 <option value="hairdresser">مصفف شعر أو مصففة شعر</option>
-                <option value="unknown">لا أعرف فئة المهنة بعد</option>
-              </select></label>
-              <label class="sv-field"><span>6. المسمى في التأشيرة أو الطلب</span><input id="readinessProfessionName" class="sv-input" type="text" maxlength="80" autocomplete="off" placeholder="مثال: أخصائي تسويق أو مهندس مدني" required></label>
-              <label class="sv-field"><span>7. المسمى في شهادة الخبرة <small>(إن كانت المهنة تشترط خبرة)</small></span><input id="readinessExperienceTitle" class="sv-input" type="text" maxlength="80" autocomplete="off" placeholder="مثال: أخصائي تسويق"></label>
-              <label class="sv-field"><span>8. الجنس عند انطباق متطلبات المهنة <small>(اختياري)</small></span><select id="readinessGender" class="sv-input">
+                <option value="unknown">لا أعرف</option>
+              </select>
+            </div>
+            <div class="sv-field">
+              <label for="readinessExperienceTitle">المسمى المكتوب في شهادة الخبرة <span class="sd-opt">اختياري</span></label>
+              <input id="readinessExperienceTitle" type="text" maxlength="80" autocomplete="off" placeholder="مثال: محاسب">
+              <small>نقارنه بمسمى المهنة. الخبرة بمسمى مختلف لا تُعد مطابقة تلقائيًا.</small>
+            </div>
+            <div class="sv-field">
+              <label for="readinessGender">المتقدم <span class="sd-opt">اختياري</span></label>
+              <select id="readinessGender">
                 <option value="">لم أحدد</option>
                 <option value="female">أنثى</option>
                 <option value="male">ذكر</option>
-              </select><small>إذا ظهرت أوراق خاصة بالإناث، مثل عقد الزواج أو عدم الممانعة، راجع تصديقها حسب الأصول من وزارة الخارجية الأردنية عند انطباقها.</small></label>
-              <label id="readinessFemaleDocumentsField" class="sv-field" hidden><span>9. المستندات الخاصة بالإناث</span><select id="readinessFemaleDocuments" class="sv-input">
+              </select>
+              <small>بعض المهن تطلب للمتقدمات أوراقًا إضافية، مثل موافقة ولي الأمر.</small>
+            </div>
+            <div id="readinessFemaleDocumentsField" class="sv-field" hidden>
+              <label for="readinessFemaleDocuments">أوراق المتقدمات (عقد الزواج أو عدم الممانعة)</label>
+              <select id="readinessFemaleDocuments">
                 <option value="">اختر الحالة</option>
                 <option value="ready">راجعتها ومصدقة حسب الأصول</option>
                 <option value="missing">غير متوفرة أو غير مصدقة</option>
                 <option value="review">أحتاج التأكد هل هي مطلوبة</option>
-              </select><small>عند انطباقها، راجع عقد الزواج أو عدم الممانعة وختم وزارة الخارجية الأردنية والجهة المطلوبة.</small></label>
+              </select>
             </div>
-            <div id="readinessProfessionHint" class="sv-inline-note" data-readiness-step-panel="2">اكتب المسمى كما يظهر في التأشيرة أو الطلب، ثم اكتب المسمى الموجود في الخبرة. يجب أن يكون المسمى متطابقًا أو مقبولًا للجهة المختصة؛ لا يكفي أن تكون الخبرة في مجال مختلف.</div>
-            <div id="readinessProfessionMatchHint" class="sv-inline-note" data-readiness-step-panel="2" hidden></div>
-            <div id="readinessEngineeringField" class="sv-inline-note" data-readiness-step-panel="2" hidden>
-              <strong>متطلب خاص للمهندسين:</strong> يجب مراجعة مدة التخرج والتسجيل المهني. اسأل عن سنة التخرج وحالة الاستثناء لمواليد السعودية قبل اعتماد مسار المهندس.
-            </div>
+          </div>
+          <div id="readinessProfessionMatchHint" class="sv-inline-note" hidden></div>
+          <div id="readinessProfessionSpecificHint" class="sv-inline-note" hidden></div>
+        </fieldset>
 
-            <div class="sv-readiness-stage" data-readiness-step="3"><span>المرحلة 3</span><strong>الأوراق التي ترتبط بالمهنة</strong></div>
-            <div class="sv-checker-grid" data-readiness-step-panel="3">
-                            <label class="sv-field"><span>9. أعلى مؤهل لديك</span>
-<select id="readinessQualificationLevel" class="sv-input" required>
+        <fieldset class="sd-step" data-title="المؤهل والخبرة">
+          <legend>المؤهل والخبرة</legend>
+          <div class="sv-form-grid">
+            <div class="sv-field">
+              <label for="readinessQualificationLevel">أعلى مؤهل لديك</label>
+              <select id="readinessQualificationLevel" required>
                 <option value="">اختر المستوى</option>
                 <option value="none">لا أملك شهادة ثانوية مكتملة</option>
                 <option value="school">شهادة مدرسية</option>
                 <option value="secondary">ثانوية عامة أو ما يعادلها</option>
-                <option value="diploma">دبلوم أو مؤهل متوسط</option>
+                <option value="diploma">دبلوم متوسط أو مهني</option>
+                <option value="diploma-full">دبلوم شامل</option>
                 <option value="university">شهادة جامعية</option>
                 <option value="postgraduate">دراسات عليا</option>
-              </select><small>اكتب مستوى المؤهل الحقيقي، ثم اختر في السؤال التالي هل استوفيت المستوى المطلوب للمهنة.</small></label>
-                            <label class="sv-field"><span>10. هل المؤهل المطلوب للمهنة متوفر؟</span>
-<select id="readinessQualification" class="sv-input" required>
-                <option value="">اختر الحالة</option>
-                <option value="ready">متوفر بالمستوى المطلوب</option>
-                <option value="missing">غير متوفر أو غير مناسب</option>
-                <option value="review">متوفر لكن يحتاج مراجعة</option>
-              </select></label>
-                            <label id="readinessExperienceField" class="sv-field"><span>11. حالة الخبرة المطلوبة</span>
-<select id="readinessExperience" class="sv-input" required>
-                <option value="">اختر الحالة</option>
-                <option value="ready">جاهزة وبنفس المسمى أو المسمى المقبول</option>
-                <option value="not-required">لا تظهر كشرط لهذه الفئة</option>
-                <option value="missing">غير متوفرة أو غير مكتملة</option>
-                <option value="review">موجودة لكن تحتاج مراجعة</option>
-              </select></label>
-                            <label class="sv-field"><span>12. سنوات الخبرة المكتملة</span>
-<input id="readinessExperienceYears" class="sv-input" type="number" min="0" max="60" step="0.01" inputmode="decimal" placeholder="مثال: 2 أو 1" required><small>اكتب السنوات المكتملة فعليًا. سنة و11 شهرًا لا تُحسب سنتين كاملتين.</small></label>
-                            <label id="readinessAccreditationField" class="sv-field" hidden><span>13. الاعتماد المهني أو الفحص المهني</span>
-<select id="readinessAccreditation" class="sv-input">
-                <option value="">اختر الحالة</option>
-                <option value="ready">جاهز أو تم التقديم عليه</option>
-                <option value="missing">غير موجود أو لم أبدأ به</option>
-                <option value="review">لا أعرف هل هو مطلوب أو ما حالته</option>
-              </select><small>يشمل ذلك المهن التي يظهر لها اعتماد مهني أو فحص مهني، مثل بعض المهن الهندسية والطبية والمهن المفعّلة على النظام.</small></label>
-                            <label class="sv-field"><span>14. عقد العمل وخطاب الاطلاع</span>
-<select id="readinessContract" class="sv-input" required>
-                <option value="">اختر الحالة</option>
-                <option value="ready">متوفران أو تم تأكيد المطلوب منهما</option>
-                <option value="missing">أحدهما غير متوفر</option>
-                <option value="review">أحتاج التأكد من الصيغة أو الأختام</option>
-              </select><small>عند انطباقهما، تُراجع صور المستندات السعودية وختم الغرفة التجارية ووزارة الخارجية السعودية.</small></label>
+              </select>
             </div>
-            <div id="readinessProfessionSpecificHint" class="sv-inline-note" data-readiness-step-panel="2" hidden></div>
-            <div class="sv-checker-grid" data-readiness-step-panel="3">
-              <label class="sv-field"><span>15. بلد إصدار المؤهل</span><select id="readinessQualificationSource" class="sv-input" required>
-                <option value="">اختر بلد الإصدار</option>
+            <div class="sv-field">
+              <label for="readinessQualificationSource">بلد إصدار المؤهل</label>
+              <select id="readinessQualificationSource" required>
+                <option value="">اختر البلد</option>
                 <option value="jordan">الأردن</option>
                 <option value="saudi">السعودية</option>
                 <option value="other">دولة أخرى</option>
-              </select><small>صدور الشهادة من خارج الأردن لا يرفضها تلقائيًا؛ تُراجع الأختام والتحقق المهني حسب الجهة المختصة.</small></label>
-              <label id="readinessGraduationYearsField" class="sv-field" hidden><span>16. منذ كم سنة تخرجت من الجامعة؟</span><input id="readinessGraduationYears" class="sv-input" type="number" min="0" max="80" step="0.1" inputmode="decimal" placeholder="مثال: 6"><small>للمهن الهندسية: راجع شرط أكثر من خمس سنوات أو الاستثناء المختص قبل التسجيل.</small></label>
-              <label id="readinessSaudiBornField" class="sv-field" hidden><span>17. هل تنطبق حالة الاستثناء لمواليد السعودية؟</span><select id="readinessSaudiBorn" class="sv-input">
+              </select>
+              <small>الشهادة الصادرة من خارج الأردن لا تُرفض لهذا السبب؛ تتغير أختامها فقط.</small>
+            </div>
+            <div class="sv-field">
+              <label for="readinessQualification">هل وثيقة المؤهل جاهزة؟</label>
+              <select id="readinessQualification" required>
                 <option value="">اختر الحالة</option>
-                <option value="yes">نعم، تنطبق حسب ما أعرف</option>
+                <option value="ready">جاهزة بالمستوى المطلوب</option>
+                <option value="missing">غير متوفرة أو غير مناسبة</option>
+                <option value="review">متوفرة لكن تحتاج مراجعة</option>
+              </select>
+            </div>
+            <div id="readinessExperienceField" class="sv-field">
+              <label for="readinessExperience">شهادة الخبرة</label>
+              <select id="readinessExperience" required>
+                <option value="">اختر الحالة</option>
+                <option value="ready">جاهزة وبالمسمى نفسه</option>
+                <option value="not-required">المهنة لا تشترط خبرة</option>
+                <option value="missing">غير متوفرة أو غير مكتملة</option>
+                <option value="review">موجودة لكن تحتاج مراجعة</option>
+              </select>
+            </div>
+            <div class="sv-field" id="readinessExperienceYearsField">
+              <label for="readinessExperienceYears">سنوات الخبرة المكتملة</label>
+              <input id="readinessExperienceYears" type="text" maxlength="20" autocomplete="off" placeholder="مثال: 2 أو سنتين" data-sd-digits>
+              <small>اكتب السنوات المكتملة فعليًا: سنة و11 شهرًا لا تُحسب سنتين.</small>
+            </div>
+            <div id="readinessAccreditationField" class="sv-field" hidden>
+              <label for="readinessAccreditation" id="readinessAccreditationLabel">التحقق المهني (QVP) أو الفحص المهني (SVP)</label>
+              <select id="readinessAccreditation">
+                <option value="">اختر الحالة</option>
+                <option value="ready">مكتمل أو قدّمت عليه</option>
+                <option value="missing">لم أبدأ به</option>
+                <option value="review">لا أعرف حالته</option>
+              </select>
+              <small id="readinessAccreditationHint"></small>
+            </div>
+            <div id="readinessGraduationYearsField" class="sv-field" hidden>
+              <label for="readinessGraduationYears">كم سنة مضت على تخرجك من الجامعة؟</label>
+              <input id="readinessGraduationYears" type="text" inputmode="decimal" pattern="[0-9.]*" maxlength="4" autocomplete="off" placeholder="مثال: 6" data-sd-digits>
+              <small>مدة التخرج تختلف عن سنوات الخبرة. يراجع المكتب شرط مدة التخرج للمهندسين.</small>
+            </div>
+            <div id="readinessSaudiBornField" class="sv-field" hidden>
+              <label for="readinessSaudiBorn">هل تنطبق عليك حالة استثناء من شرط مدة التخرج؟</label>
+              <select id="readinessSaudiBorn">
+                <option value="">اختر الإجابة</option>
+                <option value="yes">نعم، حسب ما أعرف</option>
                 <option value="no">لا</option>
-                <option value="review">أحتاج التحقق من الاستثناء</option>
-              </select></label>
+                <option value="review">لا أعرف</option>
+              </select>
+              <small>نص الاستثناء الرسمي لم يُحسم بعد؛ يؤكده المكتب مع الهيئة السعودية للمهندسين.</small>
             </div>
+          </div>
+          <div id="readinessEngineeringField" class="sv-inline-note" hidden>
+            <strong>للمهندسين أربعة أمور منفصلة:</strong> مدة التخرج، وسنوات الخبرة (لا تقل عن سنتين بالمسمى نفسه)، والتسجيل لدى الهيئة السعودية للمهندسين، ومطابقة المسمى. لا يغني أحدها عن الآخر.
+          </div>
+        </fieldset>
 
-            <div class="sv-readiness-stage" data-readiness-step="4">
-<span>المرحلة 4</span><strong>التصديق والفحص وتطابق البيانات</strong></div>
-            <div class="sv-checker-grid" data-readiness-step-panel="4">
-                            <label class="sv-field"><span>18. تصديق الشهادات والخبرة والوثائق</span>
-<select id="readinessAttestation" class="sv-input" required>
+        <fieldset class="sd-step" data-title="الأوراق والفحوص">
+          <legend>الأوراق والفحوص</legend>
+          <div class="sv-form-grid">
+            <div class="sv-field">
+              <label for="readinessContract">عقد العمل وخطاب الاطلاع</label>
+              <select id="readinessContract" required>
                 <option value="">اختر الحالة</option>
-                <option value="ready">راجعت الأختام حسب بلد الإصدار</option>
-                <option value="missing">لم أستكمل التصديق المطلوب</option>
-                <option value="review">أحتاج تحديد الأصل والتسلسل الصحيح</option>
-              </select></label>
-                            <label class="sv-field"><span>19. فحص وافد الطبي</span>
-<select id="readinessWafid" class="sv-input" required>
+                <option value="ready">متوفران أو تأكدت من المطلوب منهما</option>
+                <option value="missing">أحدهما غير متوفر</option>
+                <option value="review">أحتاج التأكد من الصيغة أو الأختام</option>
+              </select>
+            </div>
+            <div class="sv-field">
+              <label for="readinessAttestation">تصديق الشهادات والخبرة</label>
+              <select id="readinessAttestation" required>
                 <option value="">اختر الحالة</option>
-                <option value="ready">حجزت الفحص والنتيجة جاهزة أو صالحة</option>
-                <option value="missing">لم أحجز أو لم أبدأ الفحص</option>
-                <option value="review">حجزت لكن النتيجة أو الحالة تحتاج متابعة</option>
-              </select></label>
-                            <label class="sv-field sv-field-full"><span>20. تطابق الاسم والمهنة والبيانات</span>
-<select id="readinessConsistency" class="sv-input" required>
+                <option value="ready">صدّقتها حسب بلد الإصدار</option>
+                <option value="missing">لم أستكمل التصديق</option>
+                <option value="review">لا أعرف تسلسل الأختام</option>
+              </select>
+            </div>
+            <div class="sv-field">
+              <label for="readinessWafid">الفحص الطبي (وافد)</label>
+              <select id="readinessWafid" required>
                 <option value="">اختر الحالة</option>
-                <option value="ready">البيانات متطابقة في المستندات</option>
-                <option value="missing">يوجد اختلاف واضح يحتاج تصحيحًا</option>
-                <option value="review">لست متأكدًا من التطابق</option>
-              </select></label>
+                <option value="ready">أجريت الفحص والنتيجة صالحة</option>
+                <option value="missing">لم أحجز بعد</option>
+                <option value="review">حجزت وأنتظر النتيجة</option>
+              </select>
             </div>
-
-            <div class="sv-note">النتيجة تُبنى على اختياراتك واختبار المطابقة الإرشادي فقط: «جاهز» تعني أن العنصر كما وصفته متوفر، و«يحتاج مراجعة» تعني أن الصيغة أو القاعدة غير محسومة، و«يحتاج استكمالًا» تعني أن عنصرًا ظاهرًا لم يكتمل. لا تمثل النتيجة موافقة أو ضمانًا لصدور التأشيرة.</div>
-            <div class="sv-step-actions" aria-label="التنقل بين مراحل الأداة">
-              <button id="readinessPrev" class="sv-btn sv-btn-secondary" type="button" hidden>السابق</button>
-              <button id="readinessNext" class="sv-btn sv-btn-primary" type="button">التالي</button>
-              <button id="readinessSubmit" class="sv-btn" type="submit" hidden>اعرض نتيجة جاهزية الملف</button>
+            <div class="sv-field">
+              <label for="readinessConsistency">هل الاسم والمهنة متطابقان في كل الأوراق؟</label>
+              <select id="readinessConsistency" required>
+                <option value="">اختر الإجابة</option>
+                <option value="ready">نعم، متطابقة</option>
+                <option value="missing">يوجد اختلاف يحتاج تصحيحًا</option>
+                <option value="review">لست متأكدًا</option>
+              </select>
             </div>
-          </form>
-        </section>
-
-        <section id="readinessResult" class="sv-card sv-result-card sv-section" aria-labelledby="readinessResultTitle" tabindex="-1" hidden>
-          <span class="sv-eyebrow">نتيجة إرشادية محلية</span>
-          <h2 id="readinessResultTitle">نتيجة مراجعة الجاهزية</h2>
-          <p id="readinessResultSummary" class="sv-lead"></p>
-          <div id="readinessResultList" class="sv-result-list"></div>
-          <section id="readinessProfessionMatch" class="sv-readiness-match" aria-labelledby="readinessProfessionMatchTitle" hidden>
-            <h3 id="readinessProfessionMatchTitle">مطابقة المهنة والخبرة والمؤهل</h3>
-            <p id="readinessProfessionMatchSummary"></p>
-            <div id="readinessAlternativePanel" class="sv-alternative-panel" hidden>
-              <h4 id="readinessAlternativeTitle">بدائل تحتاج مراجعة</h4>
-              <p id="readinessAlternativeIntro"></p>
-              <div id="readinessAlternativeList" class="sv-alternative-list"></div>
-            </div>
-          </section>
-          <div id="readinessNextSteps" class="sv-readiness-next"></div>
-          <div class="sv-action-row sv-result-actions">
-            <button id="copyReadinessResult" class="sv-btn sv-btn-secondary" type="button">نسخ النتيجة</button>
-            <button id="printReadinessResult" class="sv-btn sv-btn-dark" type="button">طباعة النتيجة</button>
-            <a id="readinessWhatsapp" class="sv-btn sv-btn-whatsapp" href="https://wa.me/962789881009" target="_blank" rel="noopener noreferrer">مراجعة النتيجة عبر WhatsApp</a>
           </div>
-          <p id="readinessCopyStatus" class="sv-inline-note" role="status" hidden></p>
-        </section>
+          <button id="readinessSubmit" class="sd-btn sd-btn-gold sd-btn-block" type="submit">اعرض نتيجة الجاهزية</button>
+        </fieldset>
 
-        <section class="sv-section" aria-labelledby="guidance-title">
-          <h2 id="guidance-title">كيف تتصرف حسب النتيجة؟</h2>
-          <div class="sv-grid-3">
-            <article class="sv-mini-card"><div class="sv-icon">✓</div><h3>الملف يبدو جاهزًا للمراجعة</h3><p>هذا يعني أن الاختيارات التي أدخلتها لا تظهر عنصرًا ناقصًا. افتح صفحة المهن أو تواصل مع المكتب لمراجعة التفاصيل قبل تسليم الأصل.</p><a class="sv-text-link" href="/professions.html">راجع أوراق المهنة ←</a></article>
-            <article class="sv-mini-card"><div class="sv-icon">!</div><h3>هناك عنصر يحتاج استكمالًا</h3><p>ابدأ بالرابط الذي سيظهر في النتيجة. لا تدفع رسومًا ولا تسلم أصلًا يصعب استبداله قبل التأكد من الجهة المطلوبة.</p><a class="sv-text-link" href="/saudi-document-attestation-jordan.html">افتح دليل التصديق ←</a></article>
-            <article class="sv-mini-card"><div class="sv-icon">↗</div><h3>الحالة غير محسومة</h3><p>إذا لم تعرف نوع المهنة أو حالة الختم أو نتيجة الفحص، انسخ النتيجة وافتح WhatsApp برسالة مختصرة للمراجعة.</p><a class="sv-text-link" href="/saudi-medical-exam-jordan.html">افتح دليل وافد ←</a></article>
-          </div>
-        </section>
+        <div class="sd-step-nav" data-sd-nav></div>
+      </form>
+      <button type="button" class="sd-btn sd-btn-outline sd-btn-sm" data-sd-edit hidden>عدّل إجاباتك</button>
+    </section>
 
-        <section class="sv-section" aria-labelledby="related-title">
-          <h2 id="related-title">الصفحة التالية المناسبة لك</h2>
-          <p class="sv-lead">لا تستبدل هذه الأداة الصفحات التفصيلية. استخدم البطاقة التي توافق العنصر الذي تريد مراجعته، ويمكنك العودة إلى هذه الصفحة في أي وقت.</p>
-          <div class="sv-grid-3">
-            <a class="sv-link-card" href="/saudi-work-visa-eligibility.html"><strong>التحقق من أهلية تأشيرة العمل</strong><span>راجع العمر والجنسية والإقامة والمهنة والمؤهل والخبرة والاعتماد المهني.</span><em>افتح أداة الأهلية ←</em></a>
-            <a class="sv-link-card" href="/professions.html"><strong>الأوراق حسب المهنة</strong><span>ابحث عن المسمى الوظيفي واقرأ متطلبات المؤهل والخبرة والاعتماد والأوراق.</span><em>ابحث عن المهنة ←</em></a>
-            <a class="sv-link-card" href="/saudi-document-attestation-jordan.html"><strong>دليل تصديق الوثائق</strong><span>حدد بلد إصدار الشهادة أو الخبرة أو الوثيقة، ثم راجع تسلسل الأختام والأصول.</span><em>راجع مسار التصديق ←</em></a>
-            <a class="sv-link-card" href="/saudi-medical-exam-jordan.html"><strong>فحص وافد الطبي من الأردن</strong><span>افتح رابط الحجز الرسمي أو ابحث عن حالة الفحص لتأشيرة العمل أو الاستقدام العائلية.</span><em>افتح دليل وافد ←</em></a>
-            <a class="sv-link-card" href="/work-visa.html"><strong>دليل تأشيرة العمل السعودية</strong><span>اقرأ شرحًا عامًا لمسار تجهيز تأشيرة العمل والخدمات المرتبطة بها.</span><em>قراءة دليل العمل ←</em></a>
-            <a class="sv-link-card" href="/saudi-visa-inquiry-print.html"><strong>الاستعلام والطباعة</strong><span>بعد وجود طلب أو مستند تأشيرة، استخدم الرابط الرسمي المناسب للاستعلام والطباعة.</span><em>افتح الاستعلام والطباعة ←</em></a>
-          </div>
-        </section>
+    <aside class="sd-ready-aside" aria-label="معلومات مختصرة">
+      <div class="sd-card sd-ready-legend">
+        <h2>كيف تقرأ النتيجة؟</h2>
+        <ul>
+          <li><span class="sd-dot ok" aria-hidden="true"></span><b>جاهز:</b> العنصر متوفر كما وصفته.</li>
+          <li><span class="sd-dot warn" aria-hidden="true"></span><b>يحتاج مراجعة:</b> الصيغة أو القاعدة تحتاج تأكيد المكتب.</li>
+          <li><span class="sd-dot bad" aria-hidden="true"></span><b>يحتاج استكمالًا:</b> عنصر مطلوب لم يكتمل بعد.</li>
+        </ul>
+        <p class="sd-muted">لا نحفظ إجاباتك على الموقع، ولا نطلب كلمات مرور أو بيانات دفع.</p>
+      </div>
+      <div class="sd-card sd-ready-help">
+        <h2>تحتاج مساعدة؟</h2>
+        <p class="sd-muted">أرسل نتيجتك للمكتب، أو اتصل بنا من الأحد إلى الخميس.</p>
+        <a class="sd-btn sd-btn-primary sd-btn-block" id="readinessContactWhatsapp" href="https://wa.me/962789881009" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20l1.2-4.2A8.5 8.5 0 1 1 20 11.5z"/><path d="M8.5 9.5c.5 2 2 3.6 4 4.4l1.2-1.1 1.8.8c-.2 1-1 1.7-2 1.7-3.3-.4-5.9-3-6.3-6.3 0-1 .7-1.8 1.7-2l.8 1.8z"/></svg>واتساب المكتب</a>
+        <a class="sd-btn sd-btn-outline sd-btn-block" href="tel:+962789881009"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span dir="ltr">+962 78 988 1009</span></a>
+      </div>
+    </aside>
 
-        <section id="contact-help" class="sv-contact-panel sv-section" aria-labelledby="contact-title">
-          <div>
-            <span class="sv-panel-label">مساعدة بشرية عند الحاجة</span>
-            <h2 id="contact-title">لم تعرف أي خيار تختار؟</h2>
-            <p>لا يوجد نموذج طويل ولا رفع مستندات داخل الموقع. انسخ نتيجة الأداة أو اكتب نوع الخدمة والمهنة فقط، ثم افتح قناة التواصل الرسمية. إذا احتاجت المراجعة صورة جواز أو مستند، تُرسل داخل محادثة WhatsApp الرسمية فقط وبعد طلبها.</p>
-          </div>
-          <div class="sv-contact-actions">
-            <a class="sv-btn sv-btn-whatsapp" id="readinessContactWhatsapp" href="https://wa.me/962789881009" target="_blank" rel="noopener noreferrer">افتح WhatsApp</a>
-            <a class="sv-btn sv-btn-light" href="tel:+962789881009">اتصل +962 78 988 1009</a>
-            <a class="sv-btn sv-btn-ghost-light" href="mailto:Visa@saudia-visa.com">Visa@saudia-visa.com</a>
-          </div>
-        </section>
+    <section id="readinessResult" class="sd-card sd-ready-result" aria-labelledby="readinessResultTitle" tabindex="-1" hidden>
+      <p class="sd-ready-kicker">نتيجة إرشادية</p>
+      <h2 id="readinessResultTitle">نتيجة مراجعة الجاهزية</h2>
+      <p id="readinessResultSummary" class="sd-muted"></p>
+      <div id="readinessResultList" class="sd-ready-list"></div>
+      <section id="readinessProfessionMatch" class="sd-ready-match" aria-labelledby="readinessProfessionMatchTitle" hidden>
+        <h3 id="readinessProfessionMatchTitle">مطابقة المهنة والمؤهل والخبرة</h3>
+        <p id="readinessProfessionMatchSummary"></p>
+        <div id="readinessAlternativePanel" hidden>
+          <h4 id="readinessAlternativeTitle">بدائل تحتاج مراجعة</h4>
+          <p id="readinessAlternativeIntro"></p>
+          <div id="readinessAlternativeList" class="sd-ready-alts"></div>
+        </div>
+      </section>
+      <div id="readinessNextSteps" class="sd-ready-next"></div>
+      <p class="sd-notice info sd-ready-disclaimer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5h.01"/></svg><span>هذه النتيجة إرشادية ومبنية على إجاباتك فقط. لا تعني قبول الملف ولا تضمن صدور التأشيرة؛ القرار للجهة الرسمية، ويراجع المكتب ملفك قبل التقديم.</span></p>
+      <div class="sd-ready-actions sd-noprint">
+                <button id="printReadinessResult" class="sd-btn sd-btn-outline" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 9V3h10v6"/><rect x="4" y="9" width="16" height="8" rx="2"/><path d="M7 14h10v7H7z"/></svg>اطبع النتيجة أو احفظها PDF</button>
+        <a id="readinessWhatsapp" class="sd-btn sd-btn-gold" href="https://wa.me/962789881009" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20l1.2-4.2A8.5 8.5 0 1 1 20 11.5z"/><path d="M8.5 9.5c.5 2 2 3.6 4 4.4l1.2-1.1 1.8.8c-.2 1-1 1.7-2 1.7-3.3-.4-5.9-3-6.3-6.3 0-1 .7-1.8 1.7-2l.8 1.8z"/></svg>أرسل النتيجة للمكتب</a>
+      </div>
+      <p id="readinessCopyStatus" class="sv-inline-note" role="status" hidden></p>
+    </section>
 
-        <section class="sv-card sv-card-pad sv-section" aria-labelledby="faq-title">
-          <h2 id="faq-title">أسئلة شائعة عن مراجعة جاهزية الملف</h2>
-          <details class="sv-accordion"><summary>هل مراجعة الجاهزية تعني أن التأشيرة ستصدر؟</summary><p>لا. هذه أداة إرشادية محلية تساعد على ترتيب عناصر الملف واكتشاف النواقص الظاهرة، ولا تستبدل قرار الجهة الرسمية أو مراجعة صاحب العمل أو المكتب.</p></details>
-          <details class="sv-accordion"><summary>هل تطلب الأداة رقم الجواز أو صورة المستندات؟</summary><p>لا. الأداة لا تطلب رقم الجواز أو صورة الجواز أو التقرير الطبي أو كلمة المرور أو بيانات الدفع، ولا تحفظ إجاباتك على الموقع.</p></details>
-          <details class="sv-accordion"><summary>ماذا أفعل إذا ظهر أن الملف يحتاج مراجعة؟</summary><p>افتح الرابط المرتبط بالعنصر الناقص، أو انسخ النتيجة، أو افتح رسالة واتساب جاهزة تذكر الخدمة والمهنة والفئات الناقصة فقط دون بيانات جواز أو معلومات طبية.</p></details>
-        </section>
+  </div>
+</section>
 
-        <section class="sv-desktop-qr" aria-label="التواصل عبر WhatsApp من الكمبيوتر">
-          <img src="/images/whatsapp-qr.webp" alt="رمز QR لفتح WhatsApp مع مكتب تأشيرات السعودية في الأردن" width="492" height="492" loading="lazy" decoding="async">
-          <div>
-            <h3>تتصفح من الكمبيوتر؟ امسح رمز WhatsApp من هاتفك</h3>
-            <p>افتح كاميرا هاتفك وامسح الرمز لفتح محادثة المكتب مباشرة. مستخدمو الهاتف يمكنهم الضغط على زر WhatsApp.</p>
-            <a href="https://wa.me/message/TW2PMJLSQSO4L1" target="_blank" rel="noopener noreferrer">أو افتح WhatsApp من هذا الرابط</a>
-          </div>
-        </section>
+<section class="sd-section sd-band">
+  <div class="sd-wrap">
+    <h2 style="margin-bottom:14px">أسئلة شائعة عن مراجعة الجاهزية</h2>
+    <div class="sd-faq">
+      <details><summary><span>هل مراجعة الجاهزية تعني أن التأشيرة ستصدر؟</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><p>لا. هذه أداة إرشادية محلية تساعد على ترتيب عناصر الملف واكتشاف النواقص الظاهرة، ولا تستبدل قرار الجهة الرسمية أو مراجعة صاحب العمل أو المكتب.</p></details>
+      <details><summary><span>هل تطلب الأداة رقم الجواز أو صورة المستندات؟</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><p>لا. الأداة لا تطلب رقم الجواز أو صورة الجواز أو التقرير الطبي أو كلمة المرور أو بيانات الدفع، ولا تحفظ إجاباتك على الموقع.</p></details>
+      <details><summary><span>ماذا أفعل إذا ظهر أن الملف يحتاج مراجعة؟</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><p>افتح الرابط المرتبط بالعنصر الناقص، أو اطبع النتيجة، أو افتح رسالة واتساب جاهزة تذكر الخدمة والمهنة والفئات الناقصة فقط دون بيانات جواز أو معلومات طبية.</p></details>
+    </div>
+    <div class="sd-ready-related">
+      <a href="/saudi-visa-documents-tracker.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M6 17V9a4 4 0 0 1 4-4h6M18 7v8a4 4 0 0 1-4 4H8"/></svg><span><b>مسار أوراقي</b>قائمة أوراق مهنتك وتتبع كل ورقة</span></a>
+      <a href="/saudi-work-visa-eligibility.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg><span><b>التحقق من الأهلية</b>العمر والجنسية والمؤهل والخبرة</span></a>
+      <a href="/saudi-document-attestation-jordan.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6l-1 7h-4z"/><path d="M5 14h14v4H5z"/><path d="M4 21h16"/></svg><span><b>دليل التصديق</b>تسلسل الأختام حسب بلد الإصدار</span></a>
+      <a href="/saudi-medical-exam-jordan.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span><b>الفحص الطبي (وافد)</b>الحجز والاستعلام عن النتيجة</span></a>
+    </div>
+  </div>
+</section>
 
-        <div class="sv-action-row sv-page-actions">
-          <a class="sv-btn sv-btn-secondary" href="javascript:history.back()" onclick="if (history.length <= 1) { this.href='/'; }">العودة إلى الصفحة السابقة</a>
-          <a class="sv-btn sv-btn-dark" href="#top">العودة إلى بداية الصفحة ↑</a>
-          <a class="sv-btn sv-btn-secondary" href="/start-here.html">كل الخدمات</a>
-          <button class="sv-btn sv-btn-secondary" type="button" data-share-page>مشاركة الصفحة</button>
+<section id="readinessPrintSheet" class="sv-print-sheet" aria-hidden="true">
+  <h2 id="readinessPrintTitle">مراجعة جاهزية ملف تأشيرة العمل</h2>
+  <p id="readinessPrintSubtitle">مكتب تأشيرات السعودية في الأردن</p>
+  <div id="readinessPrintContent"></div>
+  <p>هذه نتيجة إرشادية مبنية على الاختيارات المدخلة محليًا، وليست موافقة على التأشيرة. راجع المكتب والجهة المختصة قبل دفع رسوم أو تسليم أصل الوثيقة.</p>
+</section>
+
+</main>
+
+<footer class="sd-footer">
+  <div class="sd-wrap">
+    <div class="sd-foot-grid">
+      <div>
+        <h3><span>إنجاز</span> السعودية</h3>
+        <p>مكتب معتمد في الأردن لإنجاز معاملات التأشيرات والتصديقات والاعتماد المهني بدقة واحترافية.</p>
+        
+        <div class="sd-social" data-social-icons>
+          <a href="https://www.facebook.com/Saudiavisajo" data-social="facebook" target="_blank" rel="noopener noreferrer" aria-label="فيسبوك"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z"/></svg></a>
+          <a href="#" data-social="instagram" target="_blank" rel="noopener noreferrer" aria-label="إنستغرام" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></a>
+          <a href="#" data-social="twitter" target="_blank" rel="noopener noreferrer" aria-label="إكس / تويتر" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></a>
+          <a href="#" data-social="linkedin" target="_blank" rel="noopener noreferrer" aria-label="لينكدإن" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></a>
+          <a href="https://wa.me/962789881009" data-config="whatsapp_url" target="_blank" rel="noopener noreferrer" aria-label="واتساب"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20l1.2-4.2A8.5 8.5 0 1 1 20 11.5z"/><path d="M8.5 9.5c.5 2 2 3.6 4 4.4l1.2-1.1 1.8.8c-.2 1-1 1.7-2 1.7-3.3-.4-5.9-3-6.3-6.3 0-1 .7-1.8 1.7-2l.8 1.8z"/></svg></a>
+          <a href="mailto:Visa@saudia-visa.com" data-config="email_url" aria-label="البريد"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
         </div>
       </div>
-    </section>
-  </main>
-
-  <section id="readinessPrintSheet" class="sv-print-sheet" aria-hidden="true">
-    <h2 id="readinessPrintTitle">مراجعة جاهزية ملف تأشيرة العمل</h2>
-    <p id="readinessPrintSubtitle">مكتب تأشيرات السعودية في الأردن</p>
-    <div id="readinessPrintContent"></div>
-    <p>هذه نتيجة إرشادية مبنية على الاختيارات المدخلة محليًا، وليست موافقة على التأشيرة. راجع المكتب والجهة المختصة قبل دفع رسوم أو تسليم أصل الوثيقة.</p>
-  </section>
-
-  <footer class="sv-footer">
-    <div class="sv-container">
-      <div class="sv-footer-grid">
-        <div><h2>مكتب تأشيرات السعودية في الأردن</h2><p>مساعدة في تأشيرات العمل والتصديقات والاعتماد المهني وتجهيز المستندات من الأردن.</p></div>
-        <div><h3>روابط مفيدة</h3><p><a href="/">الرئيسية</a><br><a href="/start-here.html">ابدأ من هنا</a><br><a href="/saudi-work-visa-eligibility.html">الأهلية</a><br><a href="/professions.html">المهن والأوراق</a><br><a href="/saudi-document-attestation-jordan.html">دليل التصديق</a><br><a href="/saudi-medical-exam-jordan.html">وافد الطبي</a><br><a href="/saudi-visa-inquiry-print.html">الاستعلام والطباعة</a><br><a href="/en/index.html" lang="en" dir="ltr">English Services</a></p></div>
-        <div><h3>تواصل معنا</h3><p><a href="tel:+962789881009">+962 78 988 1009</a><br><a href="mailto:Visa@saudia-visa.com">Visa@saudia-visa.com</a><br><a href="https://wa.me/962789881009" target="_blank" rel="noopener noreferrer">واتساب المكتب</a><br><a href="/about.html#contact">صفحة التواصل ومن نحن</a></p></div>
+      <div>
+        <h3>روابط سريعة</h3>
+        <ul>
+          <li><a href="/">الرئيسية</a></li>
+          <li><a href="/#services">خدماتنا</a></li>
+          <li><a href="/professions.html">المهن والأوراق</a></li>
+          <li><a href="/calculator.html">حاسبة الرسوم</a></li>
+          <li><a href="/saudi-work-visa-eligibility.html">التحقق من الأهلية</a></li>
+          <li><a href="/saudi-visa-inquiry-print.html">الاستعلام والطباعة</a></li>
+          <li><a href="/en/index.html" lang="en" dir="ltr">English Services</a></li>
+          <li><a href="/en/about.html" lang="en" dir="ltr">About Us</a></li>
+          <li><a href="/en/saudi-visa-processing-partner-jordan.html" lang="en" dir="ltr">For employers (English)</a></li>
+          <li><a href="/corporate.html">خدمات الشركات</a></li>
+          <li><a href="/blog.html">المدونة</a></li>
+          <li><a href="/about.html" data-testid="footer-link-office-info">من نحن - معتمدون للسفارة السعودية</a></li>
+          <li><a href="/pillar-dataflow.html" data-testid="footer-link-dataflow">دليل DataFlow الشامل 2026</a></li>
+          <li><a href="/pillar-mumaris-plus.html" data-testid="footer-link-mumaris">دليل ممارس بلس Mumaris+</a></li>
+          <li><a href="/faq.html">الأسئلة الشائعة</a></li>
+          <li><a href="/saudi-document-attestation-jordan.html">دليل تصديق الأوراق</a></li>
+          <li><a href="/#contact">تواصل معنا</a></li>
+        </ul>
       </div>
-      <div class="sv-footer-bottom"><span>© مكتب تأشيرات السعودية في الأردن</span><a href="/privacy.html">سياسة الخصوصية</a><a href="#top">العودة إلى بداية الصفحة ↑</a></div>
+      <div>
+        <h3>خدماتنا</h3>
+        <ul>
+          <li><a href="/work-visa.html" data-no-instant>تأشيرات العمل</a></li>
+          <li><a href="/saudi-work-visa-authorization.html">تفويض تأشيرة العمل</a></li>
+          <li><a href="/saudi-visa-documents-tracker.html">مسار أوراقي</a></li>
+          <li><a href="/certificates.html">تصديق الشهادات</a></li>
+          <li><a href="/saudi-document-attestation-jordan.html">دليل تصديق الأوراق</a></li>
+          <li><a href="/saudi-qvp-professional-accreditation/">الاعتماد المهني</a></li>
+          <li><a href="/saudi-labor-exam-jordan.html">اختبار الهيئة السعودية</a></li>
+          <li><a href="/remote-document-services-jordan/">إنجاز المعاملات والوثائق من الأردن عن بُعد</a></li>
+        </ul>
+        <h3 style="margin-top:22px !important">تصنيفات المهن</h3>
+        <ul>
+          <li><a href="/professions.html?category=المدراء">أوراق المدراء والتنفيذيين</a></li>
+          <li><a href="/professions.html?category=الاختصاصيون">أوراق الأطباء والمهندسين والأخصائيين</a></li>
+          <li><a href="/professions.html?category=الفنيون">أوراق الفنيين</a></li>
+          <li><a href="/professions.html?category=الحرفيون">أوراق الحرفيين والمهن المهارية</a></li>
+          <li><a href="/professions.html?category=العمال">أوراق العمال والسائقين</a></li>
+          <li><a href="/professions.html?category=الكتبة">أوراق الكتبة والإداريين</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>معلومات التواصل</h3>
+        <ul style="gap:14px">
+          <li><span class="sd-label">الهاتف / واتساب</span><a href="tel:+962789881009" data-config="phone_href" dir="ltr"><span data-config="phone_display">+962 78 988 1009</span></a></li>
+          <li><span class="sd-label">البريد الإلكتروني</span><a href="mailto:Info@saudia-visa.com">Info@saudia-visa.com</a><br><a href="mailto:Visa@saudia-visa.com">Visa@saudia-visa.com</a></li>
+          <li><span class="sd-label">العنوان</span><div>الدوار الأول - جبل عمان<br>عمان، الأردن</div></li>
+          <li><span class="sd-label">ساعات الدوام</span><div>الأحد – الخميس<br><span style="color:var(--sd-gold-400)">9:00 صباحاً – 4:00 مساءً</span><br><span class="sd-label">الجمعة والسبت: مغلق</span></div></li>
+        </ul>
+      </div>
     </div>
-  </footer>
-  <script src="/saudi-work-visa-file-readiness.js?v=20260829-readiness-6" defer></script>
-  <script src="/site-share.js?v=20260829-share-1" defer></script>
+    <div class="sd-foot-bottom">
+      <div>© مكتب تأشيرات السعودية في الأردن</div>
+      <div class="sd-row" style="gap:18px"><a href="/privacy.html">سياسة الخصوصية</a><a href="/terms.html">الشروط والأحكام</a><a href="/disclaimer.html">إخلاء المسؤولية</a></div>
+    </div>
+  </div>
+</footer>
+
+
+<script src="/professions.js?v=20261029"></script>
+<script src="/saudi-work-visa-file-readiness.js?v=20261029" defer></script>
+<script src="/js/sd-steps.js?v=20261029" defer></script>
+<script src="/site-share.js?v=20261029" defer></script>
+<script src="/core.js?v=20261029" defer></script>
+<script src="/js/sd-cert-preview.js?v=20261029" defer></script>
+<script src="/js/saudia-ui.js?v=20261029" defer></script>
+
 </body>
 </html>

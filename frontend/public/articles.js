@@ -267,7 +267,7 @@ const articles = {
  <h3 class="text-2xl font-bold text-navy">الاعتماد المهني (QVP)</h3>
  </div>
  <p class="text-gray-700 mb-3">
- حسب مهنتك، قد تحتاج إلى اجتياز اختبار <strong>الاعتماد المهني السعودي (إنجاز)</strong>:
+ حسب مهنتك، قد تحتاج إلى اجتياز اختبار <strong>الاعتماد المهني السعودي</strong>:
  </p>
  <ul class="space-y-2 text-gray-700">
  <li class="flex items-start gap-2">
@@ -280,7 +280,7 @@ const articles = {
  </li>
  </ul>
  <p class="text-gray-700 mt-3">
- <a href="professional.html" class="text-gold font-bold hover:underline">اقرأ المزيد عن الاعتماد المهني</a>
+ <a href="/saudi-qvp-professional-accreditation/" class="text-gold font-bold hover:underline">اقرأ المزيد عن الاعتماد المهني</a>
  </p>
  </div>
 
@@ -524,7 +524,7 @@ const articles = {
  </div>
  </div>
 
- <h2 class="text-3xl font-bold text-navy mb-6 mt-12">نصائح ذهبية لضمان قبول تأشيرتك</h2>
+ <h2 class="text-3xl font-bold text-navy mb-6 mt-12">نصائح ذهبية لتجهيز ملف تأشيرتك</h2>
  
  <div class="grid md:grid-cols-2 gap-6 mb-8">
  <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl border-2 border-green-200">
@@ -553,7 +553,7 @@ const articles = {
  الاستعانة بمكتب معتمد
  </h4>
  <p class="text-gray-700">
- التعامل مع مكتب مرخص يوفر عليك 70% من الوقت والجهد، ويضمن إنجاز معاملتك بدقة 100%.
+ التعامل مع مكتب مرخص يوفر عليك 70% من الوقت والجهد، ويساعدك على تجهيز معاملتك بدقة.
  </p>
  </div>
 
@@ -584,7 +584,7 @@ const articles = {
  </div>
  <div class="flex items-start gap-3">
  <i class="fas fa-check-circle text-gold mt-1"></i>
- <span>نسبة نجاح 98% في قبول التأشيرات</span>
+ <span>مراجعة الأوراق قبل التقديم</span>
  </div>
  <div class="flex items-start gap-3">
  <i class="fas fa-check-circle text-gold mt-1"></i>
@@ -661,7 +661,7 @@ const articles = {
  </p>
 
  <p class="text-lg leading-relaxed mb-8">
- <strong>مكتبنا المعتمد</strong> يوفر لك خدمة متكاملة تشمل: تصديق الشهادات، الاعتماد المهني، طباعة التأشيرة، والمتابعة حتى السفر. نحن نضمن لك الحصول على تأشيرتك في أسرع وقت وبأعلى نسبة نجاح.
+ <strong>مكتبنا المعتمد</strong> يوفر لك خدمة متكاملة تشمل: تصديق الشهادات، الاعتماد المهني، طباعة التأشيرة، والمتابعة حتى السفر. نتابع معاملتك خطوة بخطوة، ويبقى قرار التأشيرة للجهة الرسمية.
  </p>
 
  <div class="bg-gradient-to-r from-navy to-navy-dark text-white rounded-2xl p-10 text-center">
@@ -1245,16 +1245,16 @@ const articles = {
  
  // Article 3: Professional Accreditation
  'professional-accreditation-enjaz': {
- title: 'الاعتماد المهني السعودي (إنجاز): كل ما تحتاج معرفته',
+ title: 'الاعتماد المهني السعودي: كل ما تحتاج معرفته',
  date: '18 ديسمبر 2025',
  readingTime: '10 دقيقة قراءة',
- category: 'إنجاز',
- excerpt: 'شرح مفصل لبرنامج الاعتماد المهني السعودي (إنجاز): التحقق المهني، الفحص المهني، الفرق بينهما، والمهن المطلوبة لكل نوع مع نصائح للنجاح.',
+ category: 'الاعتماد المهني',
+ excerpt: 'شرح مفصل لبرنامج الاعتماد المهني السعودي: التحقق المهني، الفحص المهني، الفرق بينهما، والمهن المطلوبة لكل نوع مع نصائح للنجاح.',
  content: `
 <div class="article-content">
  <h2 class="text-3xl font-bold text-navy mb-6 mt-8">ما هو الاعتماد المهني السعودي؟</h2>
  <p class="text-lg leading-relaxed mb-6">
- <strong>برنامج الاعتماد المهني السعودي (إنجاز)</strong> هو نظام حكومي سعودي أُطلق لضمان جودة وكفاءة العمالة الوافدة. يهدف البرنامج إلى التحقق من أن مهارات ومؤهلات العامل تطابق المهنة المذكورة في تأشيرة العمل، مما يحسّن من جودة سوق العمل السعودي.
+ <strong>برنامج الاعتماد المهني السعودي</strong> هو نظام حكومي سعودي أُطلق لضمان جودة وكفاءة العمالة الوافدة. يهدف البرنامج إلى التحقق من أن مهارات ومؤهلات العامل تطابق المهنة المذكورة في تأشيرة العمل، مما يحسّن من جودة سوق العمل السعودي.
  </p>
  
  <div class="bg-green-50 border-r-4 border-green-500 p-6 rounded-lg mb-8">
@@ -1493,7 +1493,7 @@ const articles = {
  <p class="text-gray-700">
  <i class="fas fa-info-circle text-yellow-600 ml-2"></i>
  <strong>نحن نساعدك:</strong> نوفر خدمة كاملة للتسجيل وحجز الموعد ومتابعة النتيجة. 
- <a href="professional.html" class="text-yellow-700 font-bold hover:underline">تعرف على خدماتنا</a>
+ <a href="/saudi-qvp-professional-accreditation/" class="text-yellow-700 font-bold hover:underline">تعرف على خدماتنا</a>
  </p>
  </div>
 
@@ -1552,7 +1552,7 @@ const articles = {
  <i class="fab fa-whatsapp ml-2"></i>
  واتساب: 0789881009
  </a>
- <a href="professional.html" 
+ <a href="/saudi-qvp-professional-accreditation/" 
  class="bg-white/10 hover:bg-white/20 text-white px-10 py-4 rounded-xl font-bold transition-all border-2 border-white/30 text-lg">
  <i class="fas fa-info-circle ml-2"></i>
  تفاصيل البرنامج
@@ -1830,7 +1830,7 @@ const articles = {
  date: '12 ديسمبر 2025',
  readingTime: '7 دقيقة قراءة',
  category: 'نصائح',
- excerpt: 'تعرف على الأخطاء الأكثر شيوعاً التي يقع فيها المتقدمون على التأشيرات السعودية وكيفية تجنبها لضمان قبول طلبك من المرة الأولى.',
+ excerpt: 'تعرف على الأخطاء الأكثر شيوعاً التي يقع فيها المتقدمون على التأشيرات السعودية وكيفية تجنبها قبل تقديم طلبك.',
  content: `
 <div class="article-content">
  <h2 class="text-3xl font-bold text-navy mb-6 mt-8">مقدمة</h2>
@@ -1926,7 +1926,7 @@ const articles = {
  <h4 class="font-bold text-green-700 mb-2">الحل:</h4>
  <p class="text-gray-700">
  تواصل معنا لمعرفة إذا كانت مهنتك تتطلب اعتماد مهني. 
- <a href="professional.html" class="text-green-600 font-bold hover:underline">اقرأ المزيد عن إنجاز</a>
+ <a href="/saudi-qvp-professional-accreditation/" class="text-green-600 font-bold hover:underline">اقرأ المزيد عن الاعتماد المهني</a>
  </p>
  </div>
  </div>
@@ -2014,8 +2014,8 @@ const articles = {
  <div class="flex items-start gap-3">
  <i class="fas fa-check-circle text-gold text-2xl mt-1"></i>
  <div>
- <h4 class="font-bold text-navy mb-2">ضمان القبول</h4>
- <p class="text-gray-700">نسبة نجاح 98% في قبول التأشيرات</p>
+ <h4 class="font-bold text-navy mb-2">تقليل أسباب الرفض</h4>
+ <p class="text-gray-700">مراجعة الأوراق قبل التقديم</p>
  </div>
  </div>
  </div>

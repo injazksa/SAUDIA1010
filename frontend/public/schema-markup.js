@@ -118,7 +118,7 @@
           itemListElement: [
             { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'تأشيرات العمل السعودية', url: BASE_URL + '/work-visa.html' } },
             { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'تصديق الشهادات', url: BASE_URL + '/certificates.html' } },
-            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'الاعتماد المهني', url: BASE_URL + '/professional.html' } },
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'الاعتماد المهني', url: BASE_URL + '/saudi-qvp-professional-accreditation/' } },
             { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'خدمات الشركات', url: BASE_URL + '/corporate.html' } }
           ]
         }

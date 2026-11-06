@@ -8,7 +8,6 @@
   const tr = (ar, en) => window.SV_TRANSLATE?.t(ar, en) || ar;
   const isEnglish = () => window.SV_TRANSLATE?.isEnglish?.() === true;
   const whatsappNumber = '962789881009';
-  const professionRulesUrl = '/readiness-profession-rules.json?v=20260829-rules-2';
   let lastReview = null;
   let currentStep = 1;
   let professionRules = null;
@@ -17,6 +16,8 @@
   const fields = {
     nationality: $('readinessNationality'),
     residency: $('readinessResidency'),
+    dual: $('readinessDual'),
+    passportName: $('readinessPassportName'),
     eligibility: $('readinessEligibility'),
     professionType: $('readinessProfessionType'),
     professionName: $('readinessProfessionName'),
@@ -113,7 +114,8 @@
     grade10: ['الصف العاشر', 'Grade 10'],
     school: ['شهادة مدرسية', 'School certificate'],
     secondary: ['ثانوية عامة', 'Secondary school'],
-    diploma: ['دبلوم', 'Diploma'],
+    diploma: ['دبلوم متوسط أو مهني', 'Intermediate or vocational diploma'],
+    'diploma-full': ['دبلوم شامل', 'Comprehensive diploma'],
     university: ['شهادة جامعية', 'University degree'],
     postgraduate: ['دراسات عليا', 'Postgraduate degree'],
     unknown: ['غير محدد', 'Not identified']
@@ -129,7 +131,27 @@
   const shownForResidency = new Set(['foreign-resident', 'syrian-resident']);
   const shownForConduct = new Set(['jordan', 'foreign-resident', 'syrian-resident', 'syrian-nonresident']);
   const shownForAccreditation = new Set(['accreditation', 'engineer', 'doctor']);
-  const educationRank = { none: 0, grade10: 1, school: 2, secondary: 2, diploma: 3, university: 4, postgraduate: 5, unknown: -1 };
+  const educationRank = { none: 0, grade10: 1, school: 2, secondary: 2, diploma: 3, 'diploma-full': 3, university: 4, postgraduate: 5, unknown: -1 };
+
+  // owner 2026-10-27: numbers are read in Western digits; Arabic-Indic / Persian digits and the Arabic decimal sign are accepted
+  function toNumber(value) {
+    const s = String(value || '').trim().replace(/[٠-٩]/g, (d) => String(d.charCodeAt(0) - 0x660)).replace(/[۰-۹]/g, (d) => String(d.charCodeAt(0) - 0x6F0)).replace(/[٫,]/g, '.');
+    if (!s) return null;
+    const n = Number(s);
+    return Number.isFinite(n) ? n : null;
+  }
+
+  // «سنتين» «ثلاث سنوات» «3 سنوات» «سنة» → a number (null when the text gives none)
+  function yearsFromText(s) {
+    const t = String(s || '').replace(/[٠-٩]/g, (d) => String(d.charCodeAt(0) - 0x660));
+    const d = t.match(/(\d+)\s*(?:سنوات|سنة|سنين|عام|أعوام)/); if (d) return Number(d[1]);
+    if (/سنتين|سنتان|عامين|عامان/.test(t)) return 2;
+    const W = [[/ثلاث/, 3], [/أربع|اربع/, 4], [/خمس/, 5], [/ست(?:ة)?\s/, 6], [/سبع/, 7], [/ثمان/, 8], [/تسع/, 9], [/عشر/, 10]];
+    for (const [re, n] of W) if (re.test(t)) return n;
+    if (/سنة واحدة|سنة|عام/.test(t)) return 1;
+    return null;
+  }
+  const yearsAr = (n) => (n === 1 ? 'سنة واحدة مكتملة على الأقل' : n === 2 ? 'سنتان مكتملتان على الأقل' : n + ' سنوات مكتملة على الأقل');
 
   function setRequired(node, required) {
     if (node) node.required = Boolean(required);
@@ -165,6 +187,12 @@
   function educationLabel(value) {
     const pair = educationLabels[value] || educationLabels.unknown;
     return tr(pair[0], pair[1]);
+  }
+  // the level a PROFESSION requires (owner 2026-10-28): a pass is stated where the office asks for it
+  const requiredEducationLabels = { grade10: ['الصف العاشر ناجح على الأقل', 'Grade 10 passed at least'], secondary: ['ثانوية عامة ناجح', 'General secondary (pass)'] };
+  function requiredEducationLabel(value) {
+    const pair = requiredEducationLabels[value];
+    return pair ? tr(pair[0], pair[1]) : educationLabel(value);
   }
 
   function sourceLabel(value) {
@@ -212,47 +240,35 @@
     });
   }
 
-  function fallbackProfile(name) {
-    const normalized = normalizeTitle(name);
-    const make = (nameAr, options = {}) => ({
-      name_ar: nameAr,
-      name_en: options.nameEn || '',
-      category: options.category || '',
-      gender: options.gender || 'ذكر',
-      education: options.education || 'unknown',
-      experience_years: Number.isFinite(options.experienceYears) ? options.experienceYears : null,
-      professional: Boolean(options.professional),
-      engineer: Boolean(options.engineer),
-      doctor: Boolean(options.doctor),
-      female_documents: Boolean(options.femaleDocuments),
-      military_explanations: true,
-      inferred: true
-    });
-    if (/مهندس/.test(normalized)) return make(name, { nameEn: 'Engineer', education: 'university', experienceYears: 2, professional: true, engineer: true });
-    if (/طبيب|دكتور/.test(normalized)) return make(name, { nameEn: 'Doctor', education: 'university', experienceYears: 2, professional: true, doctor: true });
-    if (/مشرف انتاج|اخصائي تسويق|محاسب|مدير مشروع|مدير مشاريع|مدير اقليمي|اخصائي مبيعات/.test(normalized)) return make(name, { education: 'university', experienceYears: 2, professional: true });
-    if (/مراقب جوده|مساعد اداري|منسق|بائع/.test(normalized)) return make(name, { education: 'secondary', experienceYears: 1, professional: true });
-    if (/مصفف شعر|مصففه شعر/.test(normalized)) return make(name, { nameEn: 'Hairdresser', education: 'grade10', experienceYears: 1, professional: true, female_documents: true, gender: 'أنثى' });
-    if (/عامل/.test(normalized)) return make(name, { education: 'school', experienceYears: 0, professional: false });
-    return null;
+  /* owner 2026-10-27: ONE data source. The profession and its requirements come from /professions.json through the same
+   * computeRequirements() as «المهن والأوراق» and «مسار أوراقي» (the old readiness-profession-rules.json copy is no longer
+   * read). The profile below is read from the profession's own documents, never guessed from its name. */
+  let professionList = null;
+  let pickedRecord = null; // the record chosen in the search list (or resolved from the typed title)
+  function profileFromRecord(rec) {
+    if (!rec) return null;
+    let reqs = [];
+    try { reqs = (window.computeRequirements ? window.computeRequirements(rec).requirements : rec.requirements) || []; } catch (e) { reqs = rec.requirements || []; }
+    const all = reqs.join('\n');
+    const prof = typeof window.professionProfile === 'function' ? window.professionProfile(rec) : {};
+    const education = /الشهادة الجامعية|شهادة جامعية/.test(all) ? 'university' : /الثانوية العامة|التوجيهي|الثانوية/.test(all) ? 'secondary' : /الصف العاشر/.test(all) ? 'grade10' : /الشهادة المدرسية|شهادة مدرسية/.test(all) ? 'school' : 'unknown';
+    const expLine = reqs.find((t) => /^خبرة|خبرة لا تقل|خبرة لمدة|^الخبرة/.test(t)) || '';
+    const experienceYears = !expLine ? 0 : yearsFromText(expLine);
+    return {
+      name_ar: rec.name_ar, name_en: rec.name_en || '', code: rec.code, category: rec.category || '', gender: rec.gender || 'ذكر',
+      education, experience_years: experienceYears, hasExperience: Boolean(expLine),
+      musadaqa: /مصادقة/.test(all), // the degree's Musadaqa is in THIS profession's requirements
+      qvp: /\(QVP\)/.test(all), svp: /\(SVP\)/.test(all), professional: /\(QVP\)|\(SVP\)/.test(all),
+      engineer: Boolean(prof.engineering) || (rec.isEstimate && /المهندسون/.test(rec.estimateLabel || '')),
+      doctor: Boolean(prof.doctor), female_documents: /عدم ممانعة|عقد الزواج/.test(all) || rec.gender === 'أنثى',
+      isEstimate: Boolean(rec.isEstimate), estimateLabel: rec.estimateLabel || '', officialCode: rec.officialCode || '', note: rec.note || '', record: rec,
+    };
   }
-
   async function ensureProfessionRules() {
-    if (Array.isArray(professionRules)) return professionRules;
+    if (Array.isArray(professionList)) return professionList;
     if (!professionRulesPromise) {
-      professionRulesPromise = fetch(professionRulesUrl, { cache: 'force-cache' })
-        .then((response) => {
-          if (!response.ok) throw new Error('Profession rules unavailable');
-          return response.json();
-        })
-        .then((data) => {
-          professionRules = Array.isArray(data) ? data : [];
-          return professionRules;
-        })
-        .catch(() => {
-          professionRules = [];
-          return professionRules;
-        });
+      professionRulesPromise = fetch('/professions.json').then((r) => r.json()).then((d) => { professionList = Array.isArray(d) ? d : []; professionRules = professionList; return professionList; })
+        .catch(() => { professionList = []; professionRules = []; return professionList; });
     }
     return professionRulesPromise;
   }
@@ -260,12 +276,14 @@
   function findProfessionProfile(name) {
     const typed = String(name || '').trim();
     if (!typed) return null;
-    const normalized = normalizeTitle(typed);
-    if (Array.isArray(professionRules) && professionRules.length) {
-      const exact = professionRules.find((record) => titlesMatch(normalized, record.name_ar) || titlesMatch(normalized, record.name_en));
-      if (exact) return exact;
+    if (pickedRecord && (pickedRecord.name_ar === typed || String(pickedRecord.code) === typed)) return profileFromRecord(pickedRecord);
+    if (Array.isArray(professionList) && professionList.length && typeof window.SD_resolveTitle === 'function') {
+      const r = window.SD_resolveTitle(professionList, typed);
+      if (r && r.record && (r.kind === 'exact' || r.kind === 'synonym' || r.kind === 'estimate')) return profileFromRecord(r.record);
+      const hit = window.SD_searchProfessions(professionList, typed, 1)[0];
+      if (hit && normalizeTitle(hit.name_ar) === normalizeTitle(typed)) return profileFromRecord(hit);
     }
-    return fallbackProfile(typed);
+    return null; // not recognised: no guessed profile (the visitor picks the closest category instead)
   }
 
   function currentProfile() {
@@ -277,7 +295,8 @@
   }
 
   function needsExperienceEvidence(profile) {
-    if (profile && Number.isFinite(profile.experience_years)) return profile.experience_years > 0;
+    // review 2026-10-27: a profession whose data asks for experience asks for the years too, even when the number is written in words
+    if (profile) return Boolean(profile.hasExperience) || (Number.isFinite(profile.experience_years) && profile.experience_years > 0);
     return ['experience', 'engineer', 'doctor'].includes(fields.professionType.value);
   }
 
@@ -298,18 +317,51 @@
     const femaleVisible = fields.gender.value === 'female' && (Boolean(profile?.female_documents) || professionType === 'hairdresser');
 
     show(panels.residency, residenceVisible);
+    // owner 2026-10-27: a Jordanian who also holds a foreign passport stays on the Jordanian route; the full name must match
+    const dualVisible = route === 'jordan', nameVisible = dualVisible && fields.dual && fields.dual.value === 'yes';
+    show($('readinessDualField'), dualVisible); show($('readinessPassportNameField'), nameVisible); setRequired(fields.passportName, nameVisible);
     show(panels.conduct, conductVisible);
     show(panels.accreditation, accreditationVisible);
     show(panels.engineering, engineeringVisible);
     show(panels.graduationYears, engineeringVisible);
-    show(panels.saudiBorn, engineeringVisible);
+    const gy = toNumber(fields.graduationYears.value);
+    show(panels.saudiBorn, engineeringVisible && gy !== null && gy <= 5);
     show(panels.femaleDocuments, femaleVisible);
     setRequired(fields.residency, residenceVisible);
     setRequired(fields.conduct, conductVisible);
     setRequired(fields.accreditation, accreditationVisible);
     setRequired(fields.graduationYears, engineeringVisible);
-    setRequired(fields.saudiBorn, engineeringVisible);
+    setRequired(fields.saudiBorn, false);
     setRequired(fields.femaleDocuments, femaleVisible);
+    // owner 2026-10-27: the category question appears only when the typed profession was not recognised
+    const typeField = $('readinessProfessionTypeField');
+    const unknownProfession = !profile && Boolean(fields.professionName.value.trim()) && Array.isArray(professionList);
+    show(typeField, unknownProfession);
+    setRequired(fields.professionType, unknownProfession);
+    // the years of experience are asked when the profession asks for experience
+    const yearsNeeded = needsExperienceEvidence(profile);
+    show($('readinessExperienceYearsField'), yearsNeeded);
+    setRequired(fields.experienceYears, yearsNeeded);
+    // owner 2026-10-27: the conduct document is named by the case — «حسن السيرة والسلوك» for a Jordanian and for a
+    // non-Jordanian (or Syrian) RESIDENT in Jordan; «لا حكم عليه» only for a Syrian who is not resident
+    const conductLabel = $('readinessConductLabel');
+    if (conductLabel) conductLabel.textContent = route === 'syrian-nonresident' ? tr('لا حكم عليه (عدم محكومية) من سوريا', 'Syrian no-criminal-record certificate') : tr('حسن السيرة والسلوك', 'Good-conduct certificate');
+    // QVP and SVP are different procedures: the label says which one this profession has
+    // owner 2026-10-27: «شاهد نموذج الشهادة» beside the question; the visitor's choice fills the answer (not a verification)
+    const accField = $('readinessAccreditationField'), certKind = profile?.svp ? 'svp' : profile?.qvp ? 'qvp' : null;
+    if (accField && window.SD_CERT) {
+      const old = accField.querySelector('.sdc-trigger, .sdc-note'); if (old && old.dataset.kind !== certKind) old.remove();
+      if (certKind && !accField.querySelector('.sdc-trigger, .sdc-note')) {
+        const fit = window.SD_CERT.fits(certKind, profile.education === 'university' ? true : profile.education === 'unknown' ? undefined : false);
+        const el = fit ? window.SD_CERT.button(certKind, { profession: profile.name_ar, onChoice: (c) => { fields.accreditation.value = c === 'have' ? 'ready' : c === 'no' ? 'missing' : 'review'; fields.accreditation.dispatchEvent(new Event('change', { bubbles: true })); } }) : window.SD_CERT.note(certKind);
+        el.dataset.kind = certKind; accField.appendChild(el);
+      }
+    }
+    const accLabel = $('readinessAccreditationLabel'), accHint = $('readinessAccreditationHint');
+    if (accLabel) {
+      accLabel.textContent = profile?.qvp ? tr('التحقق المهني (QVP)', 'Professional verification (QVP)') : profile?.svp ? tr('الفحص المهني (SVP)', 'Professional examination (SVP)') : tr('التحقق المهني (QVP) أو الفحص المهني (SVP)', 'Professional verification (QVP) or examination (SVP)');
+      if (accHint) accHint.textContent = profile?.qvp ? tr('للمهن التي تتطلب دبلومًا شاملًا فما فوق: يُتحقق من المؤهل والخبرة (سنتان للبكالوريوس، وأربع سنوات للدبلوم الشامل).', 'Comprehensive diploma and above: qualification and experience are verified (2 years for a bachelor, 4 for a comprehensive diploma).') : profile?.svp ? tr('حجز موعد الفحص ثم أداؤه واجتيازه. حجز الموعد لا يعني اكتمال الفحص.', 'Book, sit and pass the examination. A booking alone is not a completed examination.') : '';
+    }
 
     if (route === 'syrian-nonresident') {
       panels.conductHint.textContent = tr(
@@ -341,18 +393,19 @@
     if (profile) {
       const education = profileRequiredEducation(profile);
       const experience = Number.isFinite(profile.experience_years) ? profile.experience_years : null;
-      const educationText = education ? educationLabel(education) : tr('يجب تأكيده من سجل المهنة', 'must be confirmed from the profession record');
-      const experienceText = experience === null ? tr('يجب تأكيدها من سجل المهنة', 'must be confirmed from the profession record') : experience === 0 ? tr('لا يظهر شرط خبرة في السجل المختصر', 'no experience requirement appears in the compact record') : `${experience} ${tr('سنوات مكتملة على الأقل', 'completed years minimum')}`;
+      const educationText = education ? requiredEducationLabel(education) : tr('يجب تأكيده من سجل المهنة', 'must be confirmed from the profession record');
+      const experienceText = experience === null ? tr('يجب تأكيدها من سجل المهنة', 'must be confirmed from the profession record') : experience === 0 ? tr('لا يظهر شرط خبرة في السجل المختصر', 'no experience requirement appears in the compact record') : `${yearsAr(experience)}`;
       const displayName = displayProfessionValue(profile.name_ar, profile);
-      panels.professionMatchHint.textContent = tr(
-        `تم العثور على «${profile.name_ar}» في قاعدة أوراق المهن. الحد الأدنى الظاهر للمؤهل: ${educationText}، والخبرة: ${experienceText}. ستراجع الأداة مطابقة المسمى والمدة، ثم افتح صفحة المهنة للتفاصيل والأختام.`,
-        `“${displayName}” was found in the profession records. The visible minimum is ${educationText} for education and ${experienceText} for experience. The tool will check the title and duration; open the profession page for full documents and stamps.`
-      );
+      panels.professionMatchHint.textContent = profile.isEstimate
+        ? tr(`«${profile.name_ar}» غير موجودة في قائمة مهن المكتب${profile.officialCode ? ` (رمزها الرسمي ${profile.officialCode})` : ''}، فاعتمدنا أوراق فئة «${profile.estimateLabel}» تقديريًا: المؤهل ${educationText}، والخبرة ${experienceText}. يؤكدها المكتب قبل التقديم.`,
+          `“${displayName}” is not in the office list; we used the “${profile.estimateLabel}” category as an estimate (education: ${educationText}; experience: ${experienceText}). The office confirms it before applying.`)
+        : tr(`«${profile.name_ar}»${/^\d{6}$/.test(String(profile.code)) ? ` (${profile.code})` : ''} من قائمة مهن المكتب. الحد الأدنى للمؤهل: ${educationText}، والخبرة: ${experienceText}.`,
+          `“${displayName}” is in the office list. Minimum education: ${educationText}; experience: ${experienceText}.`);
       show(panels.professionMatchHint, true);
-    } else if (fields.professionName.value.trim()) {
+    } else if (fields.professionName.value.trim() && Array.isArray(professionList)) {
       panels.professionMatchHint.textContent = tr(
-        'لم يُعثر على تطابق حرفي في السجل المختصر. لا تعتمد جوابًا آليًا؛ اكتب المسمى كما في التأشيرة وافتح صفحة المهن أو تواصل مع المكتب للتأكد من المؤهل والخبرة والاعتماد.',
-        'No exact match was found in the compact record. Do not rely on an automated answer; use the title shown on the visa, open the professions page or contact the office to confirm education, experience and verification.'
+        'لم نتعرف على هذا المسمى في قائمة المهن. اختر المهنة من القائمة أثناء الكتابة، أو اختر أقرب فئة لها، ويؤكد المكتب المسمى الصحيح.',
+        'This title was not recognised. Pick the profession from the list while typing, or choose the closest category; the office confirms the exact title.'
       );
       show(panels.professionMatchHint, true);
     } else {
@@ -411,23 +464,26 @@
       qualificationLevel: selectedValue(fields.qualificationLevel),
       qualification: selectedValue(fields.qualification),
       experience: selectedValue(fields.experience),
-      experienceYears: fields.experienceYears.value === '' ? null : Number(fields.experienceYears.value),
+      // digits («2», «٢») or words («سنتين», «ثلاث سنوات») — owner 2026-10-27
+      experienceYears: toNumber(fields.experienceYears.value) ?? yearsFromText(fields.experienceYears.value),
       accreditation: selectedValue(fields.accreditation),
       contract: selectedValue(fields.contract),
       qualificationSource: selectedValue(fields.qualificationSource),
-      graduationYears: fields.graduationYears.value === '' ? null : Number(fields.graduationYears.value),
+      graduationYears: toNumber(fields.graduationYears.value),
       saudiBorn: selectedValue(fields.saudiBorn),
       attestation: selectedValue(fields.attestation),
       wafid: selectedValue(fields.wafid),
       consistency: selectedValue(fields.consistency),
-      conduct: selectedValue(fields.conduct)
+      conduct: selectedValue(fields.conduct),
+      dualPassport: fields.nationality.value === 'jordan' && fields.dual && fields.dual.value === 'yes',
+      passportName: selectedValue(fields.passportName)
     };
   }
 
   function requiredNames(keys) {
     return keys.map((key) => {
       const field = fields[key];
-      return field?.closest('.sv-field')?.querySelector('span')?.textContent?.replace(/^\d+\.\s*/, '').trim() || key;
+      const lab = field && field.id ? document.querySelector('label[for="' + field.id + '"]') : null; return (lab ? lab.textContent : key).replace(/^\d+\.\s*/, '').replace(/اختياري/, '').trim();
     });
   }
 
@@ -435,7 +491,7 @@
     if (!node) return false;
     let current = node;
     while (current && current !== form) {
-      if (current.hidden && !current.hasAttribute('data-readiness-step-panel')) return false;
+      if (current.hidden && !current.hasAttribute('data-readiness-step-panel') && !current.classList.contains('sd-step')) return false;
       current = current.parentElement;
     }
     return true;
@@ -454,10 +510,11 @@
       addIfEmpty('nationality');
       addIfEmpty('eligibility');
       if (conditionalVisible(fields.residency) && fields.residency.required) addIfEmpty('residency');
+      if (fields.passportName && conditionalVisible(fields.passportName) && fields.passportName.required) addIfEmpty('passportName');
       if (conditionalVisible(fields.conduct) && fields.conduct.required) addIfEmpty('conduct');
     }
     if (step === 2) {
-      addIfEmpty('professionType');
+      if (fields.professionType.required) addIfEmpty('professionType');
       addIfEmpty('professionName');
       if (conditionalVisible(fields.femaleDocuments) && fields.femaleDocuments.required) addIfEmpty('femaleDocuments');
     }
@@ -467,16 +524,15 @@
       addIfEmpty('experience');
       addIfEmpty('qualificationSource');
       if (experienceNeedsEvidenceNow()) {
-        if (!data.experienceTitle) missing.push('experienceTitle');
         if (data.experienceYears === null || !Number.isFinite(data.experienceYears) || data.experienceYears < 0) missing.push('experienceYears');
       }
       if (conditionalVisible(fields.accreditation) && fields.accreditation.required) addIfEmpty('accreditation');
       if (isEngineer(currentProfile())) {
         if (data.graduationYears === null || !Number.isFinite(data.graduationYears) || data.graduationYears < 0) missing.push('graduationYears');
-        if (!data.saudiBorn) missing.push('saudiBorn');
       }
     }
     if (step === 4) {
+      addIfEmpty('contract');
       addIfEmpty('attestation');
       addIfEmpty('wafid');
       addIfEmpty('consistency');
@@ -561,13 +617,17 @@
       return match;
     }
 
-    const titleMatch = titlesMatch(data.professionName, profile.name_ar) || titlesMatch(data.professionName, profile.name_en);
-    match.titleStatus = titleMatch ? 'ready' : 'missing';
+    // the profession was recognised in the list (directly, by a synonym or an official title); an estimate needs review
+    match.titleStatus = profile.isEstimate ? 'review' : 'ready';
 
     const requiredEducation = profileRequiredEducation(profile);
     const selectedEducationRank = educationRank[data.qualificationLevel] ?? -1;
     const requiredEducationRank = requiredEducation ? (educationRank[requiredEducation] ?? -1) : -1;
-    if (requiredEducation && selectedEducationRank < requiredEducationRank) {
+    // owner 2026-10-27: QVP covers a comprehensive diploma and above; for such a profession the office reviews the diploma
+    const diplomaFull = data.qualificationLevel === 'diploma-full' && profile.qvp;
+    if (diplomaFull && data.qualification !== 'missing') {
+      match.qualificationStatus = 'review';
+    } else if (requiredEducation && selectedEducationRank < requiredEducationRank) {
       match.qualificationStatus = 'missing';
     } else if (data.qualification === 'missing') {
       match.qualificationStatus = 'missing';
@@ -577,32 +637,36 @@
       match.qualificationStatus = 'ready';
     }
 
-    const requiredExperience = Number.isFinite(profile.experience_years) ? profile.experience_years : null;
+    // owner 2026-10-27: bachelor = at least 2 years; comprehensive diploma = at least 4 years (QVP professions)
+    const requiredExperience = diplomaFull ? Math.max(Number.isFinite(profile.experience_years) ? profile.experience_years : 0, 4) : (Number.isFinite(profile.experience_years) ? profile.experience_years : null);
+    match.requiredExperience = requiredExperience;
     if (requiredExperience === 0) {
       match.experienceStatus = data.experience === 'missing' ? 'missing' : data.experience === 'review' ? 'review' : 'ready';
     } else if (requiredExperience === null) {
       match.experienceStatus = data.experience === 'missing' ? 'missing' : 'review';
     } else {
       const yearsOk = Number.isFinite(data.experienceYears) && data.experienceYears >= requiredExperience;
-      const titleOk = titlesMatch(data.experienceTitle, data.professionName) || titlesMatch(data.experienceTitle, profile.name_ar) || titlesMatch(data.experienceTitle, profile.name_en);
-      if (!yearsOk || !titleOk || data.experience === 'missing') match.experienceStatus = 'missing';
-      else if (data.experience === 'review') match.experienceStatus = 'review';
+      // owner 2026-10-27: the experience-certificate title is optional; when it is given it must match the profession
+      const titleGiven = Boolean(data.experienceTitle);
+      const titleOk = titleGiven && (titlesMatch(data.experienceTitle, data.professionName) || titlesMatch(data.experienceTitle, profile.name_ar) || titlesMatch(data.experienceTitle, profile.name_en));
+      if (!yearsOk || (titleGiven && !titleOk) || data.experience === 'missing') match.experienceStatus = 'missing';
+      else if (data.experience === 'review' || !titleGiven) match.experienceStatus = 'review';
       else match.experienceStatus = 'ready';
     }
 
+    // engineers: the graduation period is the office's rule and its exception is not settled → never «ready» by itself;
+    // a short period is a caution for the office, not a rejection (same wording as the eligibility tool)
     if (isEngineer(profile)) {
       if (data.graduationYears === null || !Number.isFinite(data.graduationYears)) match.engineeringStatus = 'review';
       else if (data.graduationYears > 5) match.engineeringStatus = 'ready';
-      else if (data.saudiBorn === 'yes') match.engineeringStatus = 'review';
-      else if (data.saudiBorn === 'review') match.engineeringStatus = 'review';
-      else match.engineeringStatus = 'missing';
+      else match.engineeringStatus = 'review';
     }
 
     const statuses = [match.titleStatus, match.qualificationStatus, match.experienceStatus, match.engineeringStatus].filter(Boolean);
     match.status = statuses.includes('missing') ? 'missing' : statuses.includes('review') ? 'review' : 'ready';
-    const requiredEducationText = requiredEducation ? educationLabel(requiredEducation) : tr('المستوى الظاهر في السجل', 'the level shown in the record');
-    const requiredExperienceText = requiredExperience === 0 ? tr('لا تظهر خبرة كشرط في السجل المختصر', 'no experience requirement appears in the compact record') : requiredExperience === null ? tr('تحتاج تأكيدًا من الموظف المسؤول', 'needs confirmation by the responsible staff member') : `${requiredExperience} ${tr('سنوات مكتملة على الأقل', 'completed years minimum')}`;
-    const titleText = match.titleStatus === 'ready' ? tr('المسمى متطابق مع السجل.', 'The title matches the record.') : tr('المسمى لا يطابق السجل بما يكفي؛ لا تُعامل الخبرة المختلفة كخبرة للمهنة.', 'The title does not match the record closely enough; unrelated experience is not treated as experience for this profession.');
+    const requiredEducationText = requiredEducation ? requiredEducationLabel(requiredEducation) : tr('المستوى الظاهر في السجل', 'the level shown in the record');
+    const requiredExperienceText = requiredExperience === 0 ? tr('لا تظهر خبرة كشرط في السجل المختصر', 'no experience requirement appears in the compact record') : requiredExperience === null ? tr('تحتاج تأكيدًا من الموظف المسؤول', 'needs confirmation by the responsible staff member') : `${yearsAr(requiredExperience)}`;
+    const titleText = match.titleStatus === 'ready' ? tr('المهنة موجودة في قائمة مهن المكتب.', 'The profession is in the office list.') : tr('المهنة غير موجودة في قائمة المكتب، والأوراق المعروضة لها تقديرية حتى يؤكدها المكتب.', 'The profession is not in the office list; its documents are an estimate until the office confirms them.');
     const educationText = match.qualificationStatus === 'ready' ? tr(`مستوى المؤهل المختار مناسب مبدئيًا، وبلد الإصدار «${sourceLabel(data.qualificationSource)}» لا يرفض الشهادة تلقائيًا.`, `The selected education level is provisionally suitable, and the country of issue “${sourceLabel(data.qualificationSource)}” does not automatically reject the certificate.`) : match.qualificationStatus === 'missing' ? tr(`هذه المهنة يظهر لها حد أدنى هو ${requiredEducationText}. إذا لم تملك هذا المستوى فلن يظهر المسار كجاهز؛ راجع بدائل المهن الأدنى أو الموظف المسؤول.`, `This profession shows a minimum of ${requiredEducationText}. If you do not have that level, the route will not appear ready; review lower-requirement professions or the responsible staff member.`) : tr('يجب مراجعة مستوى المؤهل وأصله ونسخه والجهة التي ستتحقق منه.', 'Review the education level, original, copies and the authority that will verify it.');
     const experienceText = requiredExperience === 0
       ? match.experienceStatus === 'ready'
@@ -611,7 +675,9 @@
           ? tr('لا يظهر شرط خبرة في السجل المختصر، لكن حالة الخبرة المدخلة تحتاج استكمالًا.', 'No experience requirement appears in the compact record, but the entered experience status needs completion.')
           : tr('لا يظهر شرط خبرة في السجل المختصر؛ راجع الموظف المسؤول إذا كانت لديك خبرة أو مستند إضافي.', 'No experience requirement appears in the compact record; contact the responsible staff member if you have experience or an additional document.')
       : match.experienceStatus === 'ready' ? tr(`الخبرة المدخلة تحمل المسمى المناسب ومدتها لا تقل عن ${requiredExperienceText}.`, `The entered experience uses the appropriate title and is at least ${requiredExperienceText}.`) : match.experienceStatus === 'missing' ? tr(`يلزم ${requiredExperienceText}، وأن يكون المسمى في الخبرة مطابقًا أو مقبولًا للمسمى في التأشيرة. سنة و11 شهرًا لا تُحسب سنتين كاملتين.`, `${requiredExperienceText} is required, and the experience title must match or be accepted for the visa title. One year and 11 months does not count as two complete years.`) : tr(`راجع مدة الخبرة والمسمى مع الموظف المسؤول؛ الحد الظاهر هو ${requiredExperienceText}.`, `Review the duration and title with the responsible staff member; the visible minimum is ${requiredExperienceText}.`);
-    const engineeringText = match.engineeringStatus === 'ready' ? tr('مدة التخرج المدخلة تتجاوز خمس سنوات وفق الفحص الإرشادي.', 'The entered time since graduation exceeds five years according to this guidance check.') : match.engineeringStatus === 'missing' ? tr('مسار المهندس يحتاج تخرجًا منذ أكثر من خمس سنوات، ما لم تنطبق حالة استثناء لمواليد السعودية وتؤكدها الجهة المختصة.', 'The engineer route requires graduation more than five years ago unless a Saudi-born exception applies and is confirmed by the competent authority.') : tr('حالة مدة التخرج أو استثناء مواليد السعودية تحتاج مراجعة من الجهة المختصة.', 'The time-since-graduation or Saudi-born exception status needs confirmation by the competent authority.');
+    const engineeringText = match.engineeringStatus === 'ready'
+      ? tr('مضى على التخرج أكثر من خمس سنوات حسب قاعدة المكتب. يبقى قرار التسجيل للهيئة السعودية للمهندسين، ولا تغني مدة التخرج عن شهادة خبرة لا تقل عن سنتين.', 'More than five years since graduation under the office rule. Registration is decided by the Saudi Council of Engineers, and the graduation period does not replace an experience certificate of at least two years.')
+      : tr('مدة التخرج خمس سنوات أو أقل، أو لم تُحدد. يراجع المكتب شرط المدة والاستثناء مع الهيئة السعودية للمهندسين؛ نص الاستثناء الرسمي لم يُحسم بعد.', 'Five years or less since graduation, or not stated. The office reviews the period and any exception with the Saudi Council of Engineers; the official exception wording is not settled yet.');
     match.summaryAr = `${titleText} ${educationText} ${experienceText}${isEngineer(profile) ? ` ${engineeringText}` : ''}`;
     match.summaryEn = `${titleText} ${educationText} ${experienceText}${isEngineer(profile) ? ` ${engineeringText}` : ''}`;
     return match;
@@ -628,7 +694,7 @@
     const candidates = [];
     preferred.forEach((name) => {
       const found = professionRules?.find((record) => titlesMatch(record.name_ar, name));
-      if (found && !candidates.some((item) => item.name_ar === found.name_ar)) candidates.push(found);
+      if (found && !candidates.some((item) => item.name_ar === found.name_ar)) candidates.push(profileFromRecord(found));
     });
     return candidates.slice(0, 4);
   }
@@ -645,7 +711,9 @@
       addItem(items, 'residency', 'الجنسية والإقامة', 'Nationality and residence', 'لم تُحسم الحالة. اختر الجنسية والإقامة المناسبة قبل اعتماد قائمة الأوراق.', 'The status is not settled. Choose the applicable nationality and residence before relying on a document list.', 'review', '/saudi-work-visa-eligibility.html', 'فتح فحص الأهلية ←', 'Open eligibility check ←');
     } else if (shownForResidency.has(data.nationality)) {
       const residenceStatus = statusFor(data.residency);
-      addItem(items, 'residency', 'بطاقة الإقامة الأردنية', 'Jordanian residence card', residenceStatus === 'ready' ? 'بطاقة الإقامة الأردنية السارية متاحة للمراجعة.' : residenceStatus === 'missing' ? 'بطاقة الإقامة الأردنية غير متاحة أو منتهية، وتحتاج إلى استكمال أو تأكيد.' : 'صلاحية بطاقة الإقامة الأردنية غير محسومة وتحتاج مراجعة.', residenceStatus === 'ready' ? 'A valid Jordanian residence card is available for review.' : residenceStatus === 'missing' ? 'The Jordanian residence card is missing or expired and needs completion or confirmation.' : 'The validity of the Jordanian residence card is not confirmed and needs review.', residenceStatus, '/saudi-work-visa-eligibility.html#residencyField', 'فتح خانة الإقامة ←', 'Open residence field ←');
+      // owner 2026-10-28: on the foreign-national route the visa's place of arrival must be Amman (a short reminder, no new question)
+      const arrival = data.nationality === 'foreign-resident' ? ' جهة القدوم في التأشيرة يجب أن تكون عمّان.' : '';
+      addItem(items, 'residency', 'بطاقة الإقامة الأردنية', 'Jordanian residence card', (residenceStatus === 'ready' ? 'بطاقة الإقامة الأردنية السارية متاحة للمراجعة.' : residenceStatus === 'missing' ? 'بطاقة الإقامة الأردنية غير متاحة أو منتهية، وتحتاج إلى استكمال أو تأكيد.' : 'صلاحية بطاقة الإقامة الأردنية غير محسومة وتحتاج مراجعة.') + arrival, residenceStatus === 'ready' ? 'A valid Jordanian residence card is available for review.' : residenceStatus === 'missing' ? 'The Jordanian residence card is missing or expired and needs completion or confirmation.' : 'The validity of the Jordanian residence card is not confirmed and needs review.', residenceStatus, '/saudi-work-visa-eligibility.html#residencyField', 'فتح خانة الإقامة ←', 'Open residence field ←');
     }
 
     if (shownForConduct.has(data.nationality)) {
@@ -662,11 +730,19 @@
       addItem(items, 'conduct', data.nationality === 'syrian-nonresident' ? 'لا حكم عليه' : 'حسن السيرة والسلوك', data.nationality === 'syrian-nonresident' ? 'No-criminal-record certificate' : 'Good-conduct document', messageAr, messageEn, conductStatus, '/saudi-document-attestation-jordan.html', 'فتح دليل التصديق ←', 'Open attestation guide ←');
     }
 
+    if (data.dualPassport) {
+      // a different name is sent to the office for review — the tool never declares the case refused
+      const nameStatus = data.passportName === 'ready' ? 'ready' : 'review';
+      addItem(items, 'passports', 'الجواز الأردني والجواز الأجنبي', 'Jordanian and foreign passports',
+        data.passportName === 'ready' ? 'تبقى أوراقك أوراق المواطن الأردني. أرفق صورة عن الجوازين؛ الاسم الكامل متطابق فيهما كما ذكرت.' : data.passportName === 'missing' ? 'اختلاف الاسم بين الجوازين يحتاج مراجعة المكتب قبل استكمال الإجراءات. أوراقك تبقى أوراق المواطن الأردني.' : 'تأكد أن الاسم الكامل متطابق تمامًا في الجوازين؛ يراجع المكتب ذلك قبل استكمال الإجراءات.',
+        data.passportName === 'ready' ? 'Your documents stay those of a Jordanian citizen. Attach copies of both passports; the full name matches in both.' : 'A name that differs between the two passports needs the office to review it before the procedure continues.',
+        nameStatus, '#contact-help', 'تواصل مع المكتب ←', 'Contact the office ←');
+    }
     const eligibilityStatus = data.eligibility === 'ready' ? 'ready' : 'review';
     addItem(items, 'eligibility', 'الأهلية والعمر', 'Eligibility and age', eligibilityStatus === 'ready' ? 'راجعت الأهلية والعمر والمسمى قبل مراجعة الملف.' : 'الأهلية أو العمر لم يُراجعا بعد بشكل تفصيلي. استخدم أداة الأهلية قبل اعتماد الملف.', eligibilityStatus === 'ready' ? 'You reviewed eligibility, age and the title before reviewing the file.' : 'Eligibility or age has not been checked in detail. Use the eligibility tool before relying on the file.', eligibilityStatus, '/saudi-work-visa-eligibility.html', 'فتح فحص الأهلية ←', 'Open eligibility check ←');
 
     const titleStatus = match.titleStatus;
-    addItem(items, 'profession', 'مسمى المهنة في التأشيرة والخبرة', 'Visa and experience profession title', titleStatus === 'ready' ? 'المسمى في التأشيرة أو الطلب يطابق سجل المهنة، والخبرة ستُراجع بالاسم نفسه.' : 'المسمى يحتاج مراجعة ولا يجوز اعتبار خبرة مهنة مختلفة مطابقة تلقائيًا.', titleStatus === 'ready' ? 'The visa or application title matches the profession record, and experience will be checked under the same title.' : 'The title needs review; experience from a different profession is not automatically treated as a match.', titleStatus, '/professions.html', 'فتح أوراق المهنة ←', 'Open profession documents ←');
+    addItem(items, 'profession', 'المهنة', 'Profession', titleStatus === 'ready' ? 'المهنة موجودة في قائمة مهن المكتب، وتُراجع الخبرة بالمسمى نفسه.' : 'المهنة غير موجودة في قائمة المكتب؛ أوراقها تقديرية حتى يؤكدها المكتب. لا تُعد خبرة مهنة مختلفة مطابقة تلقائيًا.', titleStatus === 'ready' ? 'The visa or application title matches the profession record, and experience will be checked under the same title.' : 'The title needs review; experience from a different profession is not automatically treated as a match.', titleStatus, '/professions.html', 'فتح أوراق المهنة ←', 'Open profession documents ←');
 
     const qualificationStatus = match.qualificationStatus;
     const profileEducation = profileRequiredEducation(profile);
@@ -675,22 +751,22 @@
     addItem(items, 'qualification', 'المؤهل الدراسي وبلد الإصدار', 'Education and country of issue', qualificationMessageAr, qualificationMessageEn, qualificationStatus, '/professions.html', 'مراجعة المؤهل في صفحة المهن ←', 'Review qualification on professions page ←');
 
     const experienceStatus = match.experienceStatus;
-    const requiredExperience = Number.isFinite(profile?.experience_years) ? profile.experience_years : null;
+    const requiredExperience = match.requiredExperience !== undefined ? match.requiredExperience : (Number.isFinite(profile?.experience_years) ? profile.experience_years : null);
     const displayProfession = displayProfessionValue(data.professionName, profile);
-    const experienceMessageAr = experienceStatus === 'ready' ? `الخبرة بالمسمى المناسب ومدتها ${data.experienceYears ?? 0} سنة مكتملة، وهي لا تقل عن الحد الظاهر للمهنة.` : experienceStatus === 'missing' ? `الخبرة لا تحقق الشرط الحالي. يلزم أن يطابق المسمى «${data.professionName}» أو يكون مقبولًا رسميًا، وأن تكون المدة ${requiredExperience === null ? 'حسب سجل المهنة' : `${requiredExperience} سنوات مكتملة على الأقل`}.` : 'راجع مدة الخبرة ومطابقة المسمى ومصدر الختم مع الموظف المسؤول قبل اعتمادها.';
+    const experienceMessageAr = experienceStatus === 'ready' ? `الخبرة بالمسمى المناسب ومدتها ${((n) => n === 1 ? 'سنة واحدة مكتملة' : n === 2 ? 'سنتان مكتملتان' : n >= 3 && n <= 10 ? n + ' سنوات مكتملة' : n + ' سنة مكتملة')(data.experienceYears ?? 0)}، وهي لا تقل عن الحد الظاهر للمهنة.` : experienceStatus === 'missing' ? `الخبرة لا تحقق الشرط الحالي. يلزم أن يطابق المسمى «${data.professionName}» أو يكون مقبولًا رسميًا، وأن تكون المدة ${requiredExperience === null ? 'حسب سجل المهنة' : yearsAr(requiredExperience)}.` : 'راجع مدة الخبرة ومطابقة المسمى ومصدر الختم مع الموظف المسؤول قبل اعتمادها.';
     const experienceMessageEn = experienceStatus === 'ready' ? `The experience uses the appropriate title and ${data.experienceYears ?? 0} completed years, meeting the visible profession minimum.` : experienceStatus === 'missing' ? `The experience does not meet the current requirement. The title must match “${displayProfession}” or be officially accepted, and the duration must be ${requiredExperience === null ? 'confirmed from the profession record' : `${requiredExperience} completed years or more`}.` : 'Review the duration, matching title and stamp source with the responsible staff member before relying on it.';
     addItem(items, 'experience', 'الخبرة ومدى مطابقة المسمى', 'Experience and title match', experienceMessageAr, experienceMessageEn, experienceStatus, '/professions.html', 'مراجعة الخبرة في صفحة المهن ←', 'Review experience on professions page ←');
 
     if (profile?.professional || shownForAccreditation.has(data.professionType)) {
       const accreditationStatus = statusFor(data.accreditation);
-      addItem(items, 'accreditation', 'الاعتماد أو الفحص المهني', 'Professional verification or test', accreditationStatus === 'ready' ? 'الاعتماد أو الفحص المهني جاهز أو تم التقديم عليه حسب اختيارك.' : accreditationStatus === 'missing' ? 'الاعتماد أو الفحص المهني لم يكتمل.' : 'حالة الاعتماد أو الفحص المهني غير محسومة، ويجب التأكد من المهنة والجهة المطلوبة.', accreditationStatus === 'ready' ? 'Professional verification or testing is ready or has been started according to your selection.' : accreditationStatus === 'missing' ? 'Professional verification or testing is not complete.' : 'The status of professional verification or testing is not settled; confirm the profession and required authority.', accreditationStatus, '/professions.html', 'فتح الاعتماد في صفحة المهن ←', 'Open verification on professions page ←');
+      addItem(items, 'accreditation', profile?.qvp ? 'التحقق المهني (QVP)' : profile?.svp ? 'الفحص المهني (SVP)' : 'التحقق المهني أو الفحص المهني', profile?.qvp ? 'Professional verification (QVP)' : 'Professional examination (SVP)', accreditationStatus === 'ready' ? (profile?.svp ? 'الفحص المهني مكتمل أو قدّمت عليه حسب اختيارك. حجز الموعد وحده لا يكفي؛ يكتمل الإجراء باجتياز الفحص.' : 'التحقق المهني مكتمل أو قدّمت عليه حسب اختيارك.') : accreditationStatus === 'missing' ? (profile?.svp ? 'الفحص المهني (SVP) لم يبدأ بعد.' : 'التحقق المهني (QVP) لم يبدأ بعد.') : 'حالة الإجراء المهني غير محسومة؛ يراجعها المكتب.', accreditationStatus === 'ready' ? 'Professional verification or testing is ready or has been started according to your selection.' : accreditationStatus === 'missing' ? 'Professional verification or testing is not complete.' : 'The status of professional verification or testing is not settled; confirm the profession and required authority.', accreditationStatus, '/professions.html', 'فتح الاعتماد في صفحة المهن ←', 'Open verification on professions page ←');
     }
 
     if (isEngineer(profile)) {
       const engineeringStatus = match.engineeringStatus || 'review';
-      const messageAr = engineeringStatus === 'ready' ? 'مدة التخرج المدخلة أكثر من خمس سنوات وفق الفحص الإرشادي.' : engineeringStatus === 'missing' ? 'المهندس يحتاج تخرجًا منذ أكثر من خمس سنوات، إلا إذا انطبقت حالة الاستثناء لمواليد السعودية وأكدتها الجهة المختصة.' : 'مدة التخرج أو استثناء مواليد السعودية يحتاج مراجعة من الجهة المختصة.';
-      const messageEn = engineeringStatus === 'ready' ? 'The entered time since graduation is more than five years according to this guidance check.' : engineeringStatus === 'missing' ? 'An engineer needs to have graduated more than five years ago unless a Saudi-born exception applies and is confirmed by the competent authority.' : 'The time since graduation or Saudi-born exception needs confirmation by the competent authority.';
-      addItem(items, 'graduation', 'مدة التخرج الهندسي والاستثناء', 'Engineering graduation period and exception', messageAr, messageEn, engineeringStatus, '/professions.html', 'فتح متطلبات المهنة ←', 'Open profession requirements ←');
+      const messageAr = engineeringStatus === 'ready' ? 'مضى على التخرج أكثر من خمس سنوات حسب قاعدة المكتب. قرار التسجيل للهيئة السعودية للمهندسين.' : 'مدة التخرج خمس سنوات أو أقل أو غير محددة. يراجع المكتب الشرط والاستثناء مع الهيئة السعودية للمهندسين.';
+      const messageEn = engineeringStatus === 'ready' ? 'More than five years since graduation under the office rule. Registration is decided by the Saudi Council of Engineers.' : 'Five years or less since graduation, or not stated. The office reviews the rule and any exception with the Saudi Council of Engineers.';
+      addItem(items, 'graduation', 'مدة التخرج (مهندس)', 'Graduation period (engineer)', messageAr, messageEn, engineeringStatus, '/saudi-council-of-engineers-registration.html', 'شروط التسجيل في الهيئة ←', 'Council registration ←');
     }
 
     if (data.gender === 'female' && (profile?.female_documents || data.professionType === 'hairdresser')) {
@@ -720,6 +796,7 @@
   function renderItem(item) {
     const wrapper = document.createElement('div');
     wrapper.className = `sv-result-item ${statusClass[item.status] || ''}`;
+    wrapper.dataset.key = item.key;
     const heading = document.createElement('strong');
     heading.textContent = item.label;
     const badge = document.createElement('span');
@@ -759,7 +836,7 @@
         const name = document.createElement('strong');
         name.textContent = alternative.name_ar;
         const meta = document.createElement('span');
-        meta.textContent = `${educationLabel(alternative.education)} · ${alternative.experience_years > 0 ? `${alternative.experience_years} ${tr('سنة خبرة على الأقل', 'year(s) of experience minimum')}` : tr('لا يظهر شرط خبرة', 'no experience requirement shown')}`;
+        meta.textContent = `${requiredEducationLabel(alternative.education)} · ${alternative.experience_years > 0 ? `${alternative.experience_years} ${tr('سنة خبرة على الأقل', 'year(s) of experience minimum')}` : tr('لا يظهر شرط خبرة', 'no experience requirement shown')}`;
         link.append(name, meta);
         result.alternativeList.appendChild(link);
       });
@@ -778,7 +855,7 @@
     if (keys.has('attestation') || keys.has('conduct')) add('attestation', 'التصديق والأصول', 'Attestation and originals', 'راجع بلد الإصدار وتسلسل الأختام والأصل أو النسخة المطلوبة.', 'Review the country of issue, stamp sequence and required original or copy.', '/saudi-document-attestation-jordan.html');
     if (keys.has('wafid')) add('wafid', 'فحص وافد', 'Wafid examination', 'انتقل إلى الحجز أو البحث عن حالة الفحص في منصة وافد الرسمية.', 'Go to official Wafid booking or medical-status search.', '/saudi-medical-exam-jordan.html');
     if (keys.has('contract')) add('work-visa', 'دليل تأشيرة العمل', 'Work visa guide', 'راجع عقد العمل وخطاب الاطلاع والخطوات العامة للملف.', 'Review the employment contract, acknowledgement letter and general file steps.', '/work-visa.html');
-    if (keys.has('consistency') || review.match.status !== 'ready') add('contact', 'مراجعة الموظف المسؤول', 'Responsible staff review', 'انسخ النتيجة أو افتح WhatsApp برسالة مختصرة دون بيانات جواز أو معلومات طبية، ليؤكد الموظف الحالة والأوراق.', 'Copy the result or open WhatsApp with a short message without passport or medical data so the responsible staff member can confirm the case and documents.', '#contact-help');
+    if (keys.has('consistency') || review.match.status !== 'ready') add('contact', 'مراجعة الموظف المسؤول', 'Responsible staff review', 'اطبع النتيجة أو احفظها PDF، أو افتح WhatsApp برسالة مختصرة دون بيانات جواز أو معلومات طبية، ليؤكد الموظف الحالة والأوراق.', 'Print or save the result or open WhatsApp with a short message without passport or medical data so the responsible staff member can confirm the case and documents.', '#contact-help');
     if (!steps.length) add('review', 'مراجعة نهائية', 'Final review', 'الملف يبدو مرتبًا وفق اختياراتك. راجع التفاصيل مع الموظف المسؤول والجهة المختصة قبل تسليم الأصل.', 'The file appears organized according to your selections. Review the details with the responsible staff member and competent authority before handing over originals.', '#contact-help');
     return steps;
   }
@@ -815,7 +892,7 @@
   function resultSummary(review) {
     const nameAr = review.data.professionName ? ` — ${review.data.professionName}` : '';
     const nameEn = review.data.professionName ? ` — ${displayProfessionValue(review.data.professionName, review.profile)}` : '';
-    const summaryAr = `راجعنا اختياراتك لحالة «${routeLabel(review.data.nationality)}» وفئة المهنة «${professionLabel(review.data.professionType)}»${nameAr}. النتيجة إرشادية: ${review.counts.ready} جاهز، ${review.counts.review} يحتاج مراجعة، و${review.counts.missing} يحتاج استكمالًا.`;
+    const summaryAr = `راجعنا اختياراتك لحالة «${routeLabel(review.data.nationality)}» ومهنة «${review.profile ? review.profile.name_ar : (review.data.professionName || professionLabel(review.data.professionType))}». النتيجة إرشادية: ${review.counts.ready} جاهز، ${review.counts.review} يحتاج مراجعة، و${review.counts.missing} يحتاج استكمالًا.`;
     const summaryEn = `We reviewed your selections for “${routeLabel(review.data.nationality)}” and “${professionLabel(review.data.professionType)}”${nameEn}. This is guidance only: ${review.counts.ready} ready, ${review.counts.review} needing review and ${review.counts.missing} needing completion.`;
     return tr(summaryAr, summaryEn);
   }
@@ -873,6 +950,14 @@
     result.summary.textContent = resultSummary(review);
     result.list.innerHTML = '';
     review.items.forEach((item) => result.list.appendChild(renderItem(item)));
+    // owner 2026-10-27: the sample certificate next to the professional procedure in the result (SVP or QVP, from the profession's rules)
+    const certKind = review.profile?.svp ? 'svp' : review.profile?.qvp ? 'qvp' : null;
+    const accItem = result.list.querySelector('[data-key="accreditation"]');
+    if (certKind && accItem && window.SD_CERT) accItem.appendChild(window.SD_CERT.fits(certKind, review.profile.education === 'university' ? true : review.profile.education === 'unknown' ? undefined : false) ? window.SD_CERT.button(certKind, { profession: review.profile.name_ar }) : window.SD_CERT.note(certKind));
+    // owner 2026-10-27: the Musadaqa sample only when THIS profession's requirements include the Musadaqa of the degree
+    const attItem = result.list.querySelector('[data-key="attestation"]');
+    const needsMusadaqa = Boolean(review.profile?.musadaqa);
+    if (needsMusadaqa && attItem && window.SD_CERT) attItem.appendChild(window.SD_CERT.button('musadaqa', { profession: review.profile.name_ar }));
     renderProfessionMatch(review);
     renderNextSteps(review);
     renderPrint(review);
@@ -926,6 +1011,7 @@
 
   function printResult() {
     if (!lastReview) return;
+    if (window.SD_print) { window.SD_print(result.panel, tr('مراجعة جاهزية ملف تأشيرة العمل', 'Work visa file readiness'), resultSummary(lastReview)); return; }
     document.body.classList.add('sv-printing');
     window.print();
     window.setTimeout(() => document.body.classList.remove('sv-printing'), 800);
@@ -954,7 +1040,62 @@
   result.copy?.addEventListener('click', copyResult);
   result.print?.addEventListener('click', printResult);
 
-  ['nationality', 'professionType', 'professionName', 'experienceTitle', 'gender', 'qualificationLevel', 'experienceYears'].forEach((key) => {
+  /* ── profession search (owner 2026-10-27): the same smart search as «مسار أوراقي» — list names, synonyms, official
+   *    codes / titles (internal dictionary), and a labelled estimate when the title is not in the list ── */
+  (function professionCombo() {
+    const input = fields.professionName, list = $('readinessProfessionList'), picked = $('readinessProfessionPicked');
+    if (!input || !list) return;
+    let hits = [], active = -1;
+    const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+    const close = () => { list.hidden = true; input.setAttribute('aria-expanded', 'false'); };
+    function showList() {
+      const v = input.value.trim();
+      if (!v || !Array.isArray(professionList) || typeof window.SD_searchProfessions !== 'function') { close(); return; }
+      hits = window.SD_searchProfessions(professionList, v, 6);
+      const r = window.SD_resolveTitle(professionList, v);
+      if (r && r.record && (r.kind === 'estimate' || r.kind === 'synonym')) hits = [r.record].concat(hits.filter((p) => p !== r.record)).slice(0, 6);
+      if (r && r.kind === 'choose') hits = window.SD_choiceHits(r);
+      if (typeof window.SD_dictSearch === 'function' && hits.length < 6 && !(r && (r.kind === 'estimate' || r.kind === 'choose'))) {
+        const seen = new Set(hits.map((p) => String(p.officialCode || p.code)));
+        window.SD_dictSearch(v, 6 - hits.length).forEach((e) => { if (!seen.has(e.code)) hits.push({ __dict: e, name_ar: e.name, code: e.code }); });
+      }
+      active = hits.length ? 0 : -1;
+      list.innerHTML = hits.length ? hits.map((p, k) => {
+        const sub = p.__query ? 'اعرض المهن المطابقة' : p.__dict ? 'مسمى رسمي غير مدرج في قائمة المكتب' : p.isEstimate ? 'نتيجة تقديرية · فئة ' + esc(p.estimateLabel) : esc(p.category || '');
+        return `<li id="rd-opt${k}" role="option" aria-selected="${k === 0}" data-k="${k}"${p.__dict || p.isEstimate ? ' class="m-est"' : ''}><span>${esc(p.name_ar)} <small>${sub}</small></span><span class="sd-num">${esc(p.officialCode || (!p.no_official_code && /^\d{6}$/.test(String(p.code)) ? p.code : '—'))}</span></li>`;
+      }).join('') + (r && r.kind === 'choose' ? `<li class="m-none m-msg" role="presentation">${esc(r.question)}</li>` : '') : `<li class="m-none" role="option" aria-disabled="true">${esc(r && r.message ? r.message : 'لم نجد هذا المسمى. اختر أقرب فئة في السؤال التالي، ويؤكد المكتب المسمى الصحيح.')}</li>`;
+      list.hidden = false; input.setAttribute('aria-expanded', 'true');
+    }
+    function pick(p) {
+      if (!p) return;
+      if (p.__query) { input.value = p.__query; showList(); return; }
+      if (p.__dict) {
+        let r = window.SD_resolveTitle(professionList, p.__dict.name);
+        if (!r || !r.record) r = window.SD_resolveTitle(professionList, p.__dict.code);
+        if (r && r.record) p = r.record; else { input.value = p.__dict.name; pickedRecord = null; picked.textContent = r && r.message ? r.message : ''; close(); updateVisibility(); return; }
+      }
+      pickedRecord = p; input.value = p.name_ar; close();
+      picked.textContent = p.isEstimate ? `نتيجة تقديرية لفئة «${p.estimateLabel}»${p.officialCode ? ` · الرمز الرسمي ${p.officialCode}` : ''}. يؤكدها المكتب.` : `اخترت: ${p.name_ar}${!p.no_official_code && /^\d{6}$/.test(String(p.code)) ? ` (${p.code})` : p.no_official_code ? ' (بدون رمز رسمي مؤكد)' : ''}.`;
+      updateVisibility();
+    }
+    input.addEventListener('input', () => { pickedRecord = null; picked.textContent = ''; showList(); });
+    input.addEventListener('keydown', (e) => {
+      if (list.hidden) return;
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); if (!hits.length) return; active = (active + (e.key === 'ArrowDown' ? 1 : -1) + hits.length) % hits.length; [...list.children].forEach((li, k) => li.setAttribute('aria-selected', String(k === active))); input.setAttribute('aria-activedescendant', 'rd-opt' + active); }
+      else if (e.key === 'Enter') { e.preventDefault(); pick(hits[active]); }
+      else if (e.key === 'Escape') close();
+    });
+    list.addEventListener('mousedown', (e) => { const li = e.target.closest('li[data-k]'); if (li) { e.preventDefault(); pick(hits[+li.dataset.k]); } });
+    input.addEventListener('blur', () => setTimeout(close, 150));
+    document.addEventListener('sd-dict-ready', () => { if (document.activeElement === input && input.value.trim()) showList(); updateVisibility(); });
+  })();
+  // the profession list (1.9 MB) loads when the visitor reaches the profession field, not with the page (speed)
+  let listAsked = false;
+  const askList = () => { if (listAsked) return; listAsked = true; ensureProfessionRules().then(() => { updateVisibility(); if (fields.professionName.value.trim()) fields.professionName.dispatchEvent(new Event('input')); }); if (window.SD_loadDictionary) window.SD_loadDictionary(); };
+  ['focus', 'pointerdown', 'input'].forEach((ev) => fields.professionName.addEventListener(ev, askList));
+  form.addEventListener('submit', () => ensureProfessionRules(), true);
+
+  ['nationality', 'dual', 'professionType', 'professionName', 'experienceTitle', 'gender', 'qualificationLevel', 'experienceYears', 'graduationYears'].forEach((key) => {
     const node = fields[key];
     node?.addEventListener('input', updateVisibility);
     node?.addEventListener('change', updateVisibility);

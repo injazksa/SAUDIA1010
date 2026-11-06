@@ -2766,3 +2766,111 @@ body.sv-attestation-printing.sv-is-english #attestationPrintSheet {
     font-size: 9px !important;
   }
 }
+/*! contrast-fixes:start */
+/* ════════════════════════════════════════════════════════════════════════════════════════════════════════════
+   Contrast fixes (WCAG 2.1 AA) — 2026-10-25. Source of truth for these rules; tools/apply-contrast-fixes.js copies
+   this file to the end of css/tailwind.min.css (loaded in the <head> of every page), between markers.
+   Found by tools/contrast-audit.js (31 pages × phone/desktop). The navy + gold identity is kept:
+     · the light gold #C9A35E stays as a FILL and as text on navy; on white/cream, gold TEXT is the design-system
+       dark gold #8A5A0A (≥ 4.5:1) and gold ICONS are #9A7432 (≥ 3:1)
+     · text on a gold fill is navy #1B2A41 (6.1:1) instead of white (2.4:1)
+     · WhatsApp buttons use WhatsApp's own dark green #075E54 (7.7:1 with white) instead of #25D366 (2.0:1)
+   Not touched: the print sheet (script.js opens its own window with its own styles), the page layout and sizes.
+   ════════════════════════════════════════════════════════════════════════════════════════════════════════════ */
+:root { --cf-gold-text: #8A5A0A; --cf-gold-icon: #9A7432; --cf-navy: #1B2A41; --cf-wa: #075E54; --cf-wa-hover: #054C44; }
+
+/* 1 · Tailwind gold text on light backgrounds (old-design pages) — kept light on dark sections */
+.text-gold, .group:hover .group-hover\:text-gold { color: var(--cf-gold-text) !important; }
+:is(.bg-navy, .bg-navy-dark, [class*="from-navy"], [class*="via-navy"], .bg-gray-900, .bg-black, .sd-dark, footer, .text-white) .text-gold:not([class*="bg-white"]):not([class*="bg-gray-"]) { color: #D4AF6A !important; }
+/* hover:text-gold is used mostly in the dark footers, where the light gold is right; it is darkened only on light cards/headers */
+:is(.bg-white, .bg-gray-50, .bg-gray-100, header:not([class*="bg-navy"])) .hover\:text-gold:hover { color: var(--cf-gold-text) !important; }
+:is(.bg-navy, .bg-navy-dark, [class*="from-navy"], footer) .hover\:text-gold:hover { color: #D4AF6A !important; }
+:is(.bg-navy, .bg-navy-dark, [class*="from-navy"], [class*="via-navy"], .sd-dark) .text-gold-light { color: #D9B570 !important; }
+
+/* 2 · White text on a gold fill → navy text (buttons, step numbers, gold cards) */
+:is(.bg-gold, [class*="from-gold"]).text-white,
+:is(.bg-gold, [class*="from-gold"]).text-white :is(i, svg, span, p, b, strong, div):not(:is([class*="bg-navy"], [class*="bg-green"], [class*="bg-white"], [class*="bg-gray"]) *):not([class*="bg-navy"]):not([class*="bg-green"]),
+:is(.bg-gold, [class*="from-gold"]) :is(.text-white, [class*="text-white/"]):not([class*="bg-"]):not(:is([class*="bg-navy"], [class*="bg-green"], [class*="bg-gray"]) *) { color: var(--cf-navy) !important; }
+.hover\:bg-gold:hover.text-white, .hover\:bg-gold-light:hover.text-white { color: var(--cf-navy) !important; }
+
+/* 3 · WhatsApp green with white text / icon */
+.bg-green-500, .bg-green-600, .bg-\[\#25D366\], .bg-\[\#25d366\] { background-color: var(--cf-wa) !important; }
+.hover\:bg-green-600:hover, .hover\:bg-green-700:hover { background-color: var(--cf-wa-hover) !important; }
+.text-green-600, .text-green-500 { color: #15803D !important; }
+
+/* 4 · Components injected by core.js (shared header, related links, save star, back button) */
+#uh-header .uh-title-sub { color: var(--cf-gold-text) !important; }
+#uh-header .uh-desktop-nav .uh-desktop-cta, #uh-header .uh-desktop-nav .uh-desktop-cta:hover, #uh-header .uh-desktop-nav .uh-desktop-cta:focus-visible { color: var(--cf-navy) !important; }
+#uh-header .uh-desktop-nav a:not(.uh-desktop-cta):hover, #uh-header .uh-desktop-nav a:not(.uh-desktop-cta):focus-visible { color: var(--cf-gold-text) !important; }
+#uh-drawer .uh-cta-wa { background: var(--cf-wa) !important; color: #fff !important; }
+#uh-drawer .uh-cta-wa:hover { background-color: #054C44 !important; }
+#related-links-sec .rl-icon, .rl-icon { color: var(--cf-gold-icon) !important; }
+#related-links-sec .rl-card:hover .rl-icon, .rl-card:hover .rl-icon { color: var(--cf-navy) !important; }
+#related-links-sec .rl-tag, .rl-tag, #related-links-sec .rl-title strong, .rl-title strong { color: var(--cf-gold-text) !important; }
+.sp-save { color: var(--cf-gold-icon) !important; }
+.sp-save:hover, .sp-save.saved { color: var(--cf-navy) !important; }
+/* (no rule for .global-back-btn: its #id background stays navy on hover, so the original white text is right — verified) */
+
+/* 5 · Old SEO pages (new-seo-pages.css, sv-*) */
+.sv-service-kicker, .sv-link-card em, .sv-language-switch a:hover, .sv-language-switch a:focus-visible { color: var(--cf-gold-text) !important; }
+.sv-icon { color: var(--cf-gold-text) !important; }
+.sv-step-number, .sv-process-card > span { color: var(--cf-navy) !important; }
+.sv-btn-primary, .sv-btn-primary:hover, .sv-btn-primary:focus-visible { color: var(--cf-navy) !important; } /* gold fill only — sv-btn-dark keeps white */
+.sv-nav a:not(.sv-nav-cta):hover, .sv-nav a:not(.sv-nav-cta):focus-visible, .sv-text-link:hover, .sv-text-link:focus-visible { color: var(--cf-gold-text) !important; }
+.sv-language-switch > :not(a) { color: var(--cf-gold-text) !important; }
+.sv-btn:not([class*="sv-btn-"]), .sv-btn:not([class*="sv-btn-"]):hover { color: var(--cf-navy) !important; } /* plain .sv-btn = gold fill */
+.sv-readiness-stage span { color: var(--cf-navy) !important; }
+.sv-card .sv-eyebrow, .sv-section .sv-card .sv-eyebrow { color: var(--cf-gold-text) !important; }
+.sv-stepper-item strong { background: #5B6B82 !important; } /* inactive step number: white on #8c98a8 (2.9:1) → on #5B6B82 (5.3:1) */
+.sv-stepper-item.is-active strong, .sv-stepper-item.is-complete strong { background: var(--sv-gold, #c69a4b) !important; color: var(--cf-navy) !important; }
+.sv-btn-whatsapp { background: var(--cf-wa) !important; color: #fff !important; }
+.sv-nav .sv-nav-cta, .sv-nav .sv-nav-cta:hover, .sv-nav .sv-nav-cta:focus-visible { color: var(--cf-navy) !important; }
+.sv-breadcrumbs, .sv-breadcrumbs span, .sv-section .sv-muted, .sv-section > p { --sv-muted: #556274; }
+.sv-breadcrumbs span { color: #556274 !important; }
+
+/* 5b · Gold number badges on old pages (white digit on gold → navy digit) */
+.bg-gold.rounded-full, .bg-gold.rounded-full *, .calc-label-num { color: var(--cf-navy) !important; }
+
+/* 6 · «اقرأ المزيد» button injected by core.js (gold fill): navy text in every state */
+.rm-btn, .rm-btn:hover, .rm-btn:focus-visible, .rm-btn .rm-btn-label, .rm-btn:hover .rm-btn-label, .rm-btn:hover .rm-btn-arrow { color: var(--cf-navy) !important; }
+:is(.bg-navy, [class*="from-navy"], .sd-dark) .rm-btn, :is(.bg-navy, [class*="from-navy"], .sd-dark) .rm-btn .rm-btn-label { color: #F6E9C9 !important; }
+
+/* 7 · Placeholders: gray-400 (2.5:1) → gray-500 (4.8:1) */
+input::placeholder, textarea::placeholder { color: #6B7280; opacity: 1; }
+
+/* 7b · Old pages: grey footer text on navy, blue info cards */
+:is(.bg-navy, .bg-navy-dark, [class*="from-navy"], footer) :is(.text-gray-500, .text-gray-600) { color: #A3ADBD !important; }
+.bg-gradient-to-r.from-blue-500, .bg-gradient-to-br.from-blue-500 { background-image: linear-gradient(to right, #1E40AF, #1D4ED8) !important; }
+
+/* 8 · Calculator hint icon */
+.calc-hint i, .calc-hint svg { color: var(--cf-gold-icon) !important; }
+
+/* 8b · Responsive type (owner 2026-10-26): the «related services» heading injected by core.js was 22px / three lines
+   on a 360px phone */
+#related-links-sec .rl-title, .rl-title { font-size: clamp(18px, calc(2.4vw + 10px), 22px) !important; line-height: 1.45 !important; }
+
+/* 9 · Pass 5 (all 31 pages × phone/desktop, forced-hover check) */
+/* (gold text on navy is #D4AF6A in section 1: #C9A35E measured 4.28–4.49 on translucent cards/chips) */
+/* «from-navy/10» is a light tint, not a dark section: keep the dark gold there */
+:is([class*="from-navy/"], [class*="via-navy/"]) .text-gold:not([class*="bg-white"]):not([class*="bg-gray-"]) { color: var(--cf-gold-text) !important; }
+/* gold chips (bg-gold/10…/20) on navy heroes → light cream-gold text */
+:is(.bg-navy, .bg-navy-dark, [class*="from-navy"], .sd-dark) [class*="bg-gold/"].text-gold.text-gold { color: #E8CF9A !important; }
+/* white icons/text placed directly on a gold fill → navy */
+.bg-gold > .text-white, .bg-gold > i, [class*="from-gold"]:not([class*="from-gold/"]) > [class*="text-white"]:not([class*="bg-"]) { color: var(--cf-navy) !important; }
+/* «back home» button turns gold on hover (white text 2.4:1) → navy text on gold, in every page */
+.global-back-btn:hover, .global-back-btn:hover *, #global-back-btn:hover, #global-back-btn:hover * { color: var(--cf-navy) !important; }
+.global-back-btn:hover, #global-back-btn:hover { background-color: #C9A35E !important; }
+#uh-header .uh-desktop-nav a.is-active { color: var(--cf-gold-text) !important; }
+.sv-is-english .sv-language-switch a[data-switch-lang="en"], .sv-is-arabic .sv-language-switch a[data-switch-lang="ar"] { color: var(--cf-gold-text) !important; }
+.sv-contact-panel .sv-service-kicker { color: #D4AF6A !important; }
+/* WhatsApp / share buttons */
+.sv-fab-wa, .share-item-icon.whatsapp { background: var(--cf-wa) !important; }
+.share-item-icon.email, .share-item-icon.native { color: var(--cf-navy) !important; }
+[class*="bg-[#1877"] { background-color: #1464D2 !important; }
+[class*="bg-[#0088"] { background-color: #006699 !important; }
+.text-green-700 { color: #166534 !important; }
+/* about.html map pop-up (inline styles written by the map script) */
+.saudi-visa-popup [style*="#C9A35E"], .saudi-visa-popup [style*="#c9a35e"] { color: var(--cf-gold-text) !important; }
+.saudi-visa-popup [style*="#999"] { color: #6B7280 !important; }
+.hover\:text-gold\/80:hover { color: #6E4808 !important; }
+/*! contrast-fixes:end */

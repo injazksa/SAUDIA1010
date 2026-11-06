@@ -18,14 +18,14 @@
   // ═══════════════════════════════════════════════════════════════
   const SECURITY = 'حسن سيرة وسلوك من المخابرات العامة (التقديم إلكتروني عبر موقع المخابرات العامة أو من خلال تطبيق سند).';
   // ✅ الوثائق العسكرية فقط — دون تكرار الجواز/الصور (مُدمجة في بند الفحص الموحّد)
-  const MILITARY = 'الوثائق العسكرية (مشروحات من القيادة العامة، كتاب من التعبئة / قسم شؤون الأفراد العنوان: طبربور دوار الدبابة يكون معك دفتر خدمة العلم / بطاقة إنهاء الخدمة أو الإعفاء).';
+  const MILITARY = 'الوثائق العسكرية (مشروحات من القيادة العامة، كتاب من التعبئة / قسم شؤون الأفراد العنوان: طبربور دوار الدبابة يكون معك دفتر خدمة العلم / بطاقة إنهاء الخدمة أو الإعفاء)؛ ويُحضر عند مراجعة الجهة المختصة أصل جواز السفر وصورتان شخصيتان.';
   const MILITARY_FULL = MILITARY;
-  const FEMALE_PERMISSION = 'عدم ممانعة من ولي الأمر (في حالة كانت متزوجة إحضار شهادة الزواج وعدم الممانعة من الزوج + صورة عن جواز سفر الزوج) (في حال كانت عزباء، إحضار عدم ممانعة من ولي الأمر + قيد فردي + صورة عن جواز سفر ولي الأمر).';
+  const FEMALE_PERMISSION = 'عدم ممانعة من الزوج (للمتزوجة) أو ولي الأمر (للعزباء)، مختومة حسب مصدرها: من مركز أمني تُختم من وزارة الداخلية ثم وزارة الخارجية الأردنية، ومن المحكمة تُختم من المحكمة المصدرة ثم دائرة قاضي القضاة ثم وزارة الخارجية الأردنية؛ ومعها للمتزوجة عقد الزواج أو شهادة الزواج مختومًا من وزارة الخارجية الأردنية وصورة جواز سفر الزوج، وللعزباء قيد فردي مختوم من وزارة الخارجية الأردنية وصورة جواز سفر ولي الأمر (رجل من الأقارب، ولا تُقبل الأم وحدها).';
   // 🔒 البند الموحّد: الفحص + البصمة + الجواز + الصور في سطر واحد لمنع التكرار نهائياً
-  const MEDICAL_BIO = 'عمل الفحص الطبي والبصمة لدى المراكز المعتمدة للسفارة السعودية (إحضار جواز السفر و 6 صور شخصية حديثة بخلفية بيضاء لكافة المعاملات).';
+  const MEDICAL_BIO = 'عمل الفحص الطبي والبصمة لدى المراكز المعتمدة للسفارة السعودية (إحضار أصل جواز السفر وصورتين شخصيتين حديثتين بخلفية بيضاء للفحص الطبي والبصمة).';
   // نسخة العمالة والسياقة — بجواز السفر الجديد
-  const MEDICAL_BIO_NEW = 'عمل الفحص الطبي والبصمة لدى المراكز المعتمدة للسفارة السعودية (إحضار جواز السفر الجديد و 6 صور شخصية حديثة بخلفية بيضاء لكافة المعاملات).';
-  const PASSPORT = 'إحضار جواز السفر و 6 صور شخصية بخلفية بيضاء حديثة لكافة المعاملات.';
+  const MEDICAL_BIO_NEW = 'عمل الفحص الطبي والبصمة لدى المراكز المعتمدة للسفارة السعودية (إحضار أصل جواز السفر الجديد وصورتين شخصيتين حديثتين بخلفية بيضاء للفحص الطبي والبصمة).';
+  const PASSPORT = 'صورتان شخصيتان حديثتان بخلفية بيضاء خاصتان بالمكتب (لملف المعاملة).'; // owner 2026-10-29: the photos are listed per item, the office's own as one separate item
   const PASSPORT_NEW = 'جواز السفر الجديد + صور شخصية عدد 2 بخلفية بيضاء.';
   // 🛑 البند الختامي الإجباري — يجب أن يكون دائماً آخر بند في أي قائمة
   const VACCINE  = 'الحصول على شهادة مطعوم السحايا.';
@@ -50,7 +50,9 @@
   const ENG_JEA          = 'عضوية + مزاولة مهنة من نقابة المهندسين الأردنية.';
   const ENG_SCE          = 'التسجيل في هيئة المهندسين السعودية.';
   const AUTH_OFFICE      = AUTH;
-  const SECONDARY_SCHOOL = 'إحضار شهادة الثانوية العامة (الأصل).';
+  const SECONDARY_SCHOOL = 'إحضار شهادة الثانوية العامة بنتيجة «ناجح» (الأصل).';
+  // owner 2026-10-28: the 10th-grade professions say clearly that a pass is required (the same wording as professions.json)
+  const GRADE10_SCHOOL   = 'إحضار الشهادة المدرسية: الصف العاشر ناجح على الأقل.';
 
   const TEMPLATES = {
     family_recruitment: {
@@ -186,7 +188,7 @@
       reqs: [
         SECURITY,
         MILITARY,
-        SECONDARY_SCHOOL,
+        GRADE10_SCHOOL,
         MEDICAL_BIO,
         ENG_EXP_1Y,
         CONTRACT,
@@ -201,7 +203,7 @@
       reqs: [
         SECURITY,
         MILITARY,
-        'إحضار شهادة الصف العاشر.',
+        GRADE10_SCHOOL,
         MEDICAL_BIO,
         'خبرة لمدة سنة واحدة بنفس مسمى التأشيرة.',
         CONTRACT_ATTESTED,
@@ -217,7 +219,7 @@
       reqs: [
         SECURITY,
         MILITARY,
-        'إحضار شهادة الصف العاشر.',
+        GRADE10_SCHOOL,
         MEDICAL_BIO,
         'خبرة لمدة سنة واحدة بنفس مسمى التأشيرة.',
         CONTRACT_ATTESTED,
@@ -263,7 +265,7 @@
       reqs: [
         SECURITY,
         MILITARY,
-        'إحضار الشهادة المدرسية (الأصل - شهادة الصف العاشر).',
+        'إحضار أصل الشهادة المدرسية: الصف العاشر ناجح على الأقل.',
         'خبرة سنة واحدة بنفس مسمى التأشيرة.',
         MEDICAL_BIO_NEW,
         CONTRACT_ATTESTED,
@@ -959,8 +961,12 @@
     if (_vocabCache) return _vocabCache;
     if (_vocabPromise) return _vocabPromise;
     const baseline = buildVocabFromRules();
-    _vocabPromise = fetch('/professions.json', { cache: 'force-cache' })
-      .then(r => r.ok ? r.json() : [])
+    // One shared download of professions.json per page (professions.js reuses this promise; before, the file was fetched twice).
+    if (!window.SD_professionsPromise) {
+      window.SD_professionsPromise = fetch('/professions.json', { cache: 'force-cache' })
+        .then(r => { if (!r.ok) throw new Error('professions.json HTTP ' + r.status); return r.json(); });
+    }
+    _vocabPromise = window.SD_professionsPromise
       .then(list => {
         for (const p of list || []) {
           const name = normalize(p.name_ar || p.profession_name_ar || '');
@@ -1270,6 +1276,7 @@
     // 🛡️ Smart Profession Validation
     const check = validateProfessionInput(userTitle);
     if (!check.valid) {
+      closeGeneratedSheet();
       input.classList.add('border-red-500');
       if (errorBox) {
         const errorTitle = document.getElementById('error-title');
@@ -1301,8 +1308,43 @@
       return;
     }
 
+    // Owner 2026-10-26: one rule set for the whole platform. A title that is in the list uses its record; any other
+    // title gets the estimate of the shared classifier (professions.js), whose documents come from a REAL record of
+    // the same category and go through the same computeRequirements() as the profession page, «مسار أوراقي» and print.
+    // Only family recruitment (not a profession) keeps its own template below.
+    const familyMatch = matchTemplate(userTitle);
+    const list = typeof window.SD_getProfessions === 'function' ? window.SD_getProfessions() : [];
+    if (familyMatch.template !== 'family_recruitment' && list && list.length && typeof window.computeRequirements === 'function') {
+      let rec = null, label = '';
+      const resolved = window.SD_resolveTitle(list, userTitle);
+      if (resolved && (resolved.kind === 'exact' || resolved.kind === 'synonym')) { rec = resolved.record; label = 'مهنة من قائمة المهن المعتمدة'; }
+      else {
+        const est = resolved && resolved.kind !== 'partial' ? (resolved.kind === 'estimate' ? { record: resolved.record } : resolved) : window.SD_estimateProfession(list, userTitle);
+        if (est && est.record) { rec = est.record; label = 'نتيجة تقديرية · فئة ' + est.record.estimateLabel; }
+        else {
+          closeGeneratedSheet(); // no stale result from a previous title under the message
+          if (errorBox) {
+            document.getElementById('error-title').innerText = est && est.senior ? 'فئة الإدارة العليا وأصحاب الشركات' : 'لم نتمكن من تحديد فئة هذا المسمى';
+            document.getElementById('error-desc').textContent = est && est.message ? est.message : 'لم نجد هذا المسمى في قائمة المهن، ولم نستطع ربطه بفئة مهنية معروفة. تواصل مع المكتب لتحديد الأوراق الصحيحة.';
+            errorBox.classList.remove('hidden');
+          }
+          return;
+        }
+      }
+      // the panel's own gender choice drives the computed list (the same #genderFilter the page uses)
+      const genderEl = document.getElementById('genderFilter');
+      const prevGender = genderEl ? genderEl.value : null;
+      const gender = rec.gender === 'أنثى' ? 'female' : preSelectedGender;
+      if (genderEl) genderEl.value = gender;
+      const computed = window.computeRequirements(rec);
+      if (genderEl && prevGender !== null) genderEl.value = prevGender;
+      const template = { label, icon: rec.isEstimate ? 'fa-wand-magic-sparkles' : 'fa-briefcase', reqs: computed.requirements, note: computed.note, computed: true, code: rec.isEstimate ? (typeof window.SD_printCode === 'function' && rec.officialCode ? window.SD_printCode(rec, 'AUTO') : 'AUTO') : rec.code };
+      showGeneratedSheet(rec.isEstimate ? userTitle : (rec.profession_name_ar || rec.name_ar), template, { template: 'computed' }, gender);
+      return;
+    }
+
     let effectiveTitle = userTitle;
-    let match = matchTemplate(userTitle);
+    let match = familyMatch;
 
     // 🔎 كلمة جزئية من مهنة مركبة: استدعاء المهنة الكاملة وأوراقها الصحيحة
     if (match.template === 'general') {
@@ -1401,6 +1443,7 @@
   // 🛑 المُنفِّذ المركزي: تبديل الجنس + إزالة التكرار + ضمان أن مطعوم السحايا
   // هو البند الختامي الإجباري الأخير في أي قائمة (مخزّنة أو مولّدة ذكياً).
   function finalizeReqs(template, gender, userTitle = '') {
+    if (template.computed) return template.reqs; // already final (computeRequirements: the platform's single rule set)
     const noSwap = template.genderLocked || template.forcedGender;
     const context = typeof selectedNationalityContext === 'function' ? selectedNationalityContext() : { isJordanian: true, isSyrian: false, residency: 'unknown', nationality: 'الأردن' };
     const nonResident = context.residency === 'no' || context.residency === 'not-resident';
@@ -1521,7 +1564,7 @@
     const { userTitle, template, gender } = currentGenerated;
     const finalReqs = finalizeReqs(template, gender, currentGenerated.userTitle);
     if (typeof window.printProfessionDocument === 'function') {
-      window.printProfessionDocument('AUTO', userTitle, finalReqs);
+      window.printProfessionDocument(template.code || 'AUTO', userTitle, finalReqs, '', template.note || '');
     }
   }
 

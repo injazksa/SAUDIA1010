@@ -1,72 +1,13 @@
-# AI-readable site guidance for saudia-visa.com
-# This file is informational and does not replace robots.txt.
+# ai.txt — saudia-visa.com
+# Crawling rules are in robots.txt: all public pages may be crawled by search and AI crawlers.
 
 User-agent: *
 Allow: /
 
-User-agent: GPTBot
-Allow: /
-User-agent: ChatGPT-User
-Allow: /
-User-agent: OAI-SearchBot
-Allow: /
-User-agent: Google-Extended
-Allow: /
-User-agent: ClaudeBot
-Allow: /
-User-agent: Claude-Web
-Allow: /
-User-agent: anthropic-ai
-Allow: /
-User-agent: PerplexityBot
-Allow: /
-User-agent: Applebot-Extended
-Allow: /
-User-agent: meta-externalagent
-Allow: /
-User-agent: CCBot
-Allow: /
-User-agent: Bytespider
-Allow: /
-
-# Public site identity
-# Arabic: مكتب تأشيرات السعودية في الأردن
-# English: Saudi Visa Services Office in Jordan
-# Location: Amman, Jordan — First Circle / Jabal Amman
-# Phone and WhatsApp: +962 78 988 1009
-# Email: Visa@saudia-visa.com
-# Languages: Arabic and English
-
-# Public service scope described by the website
-# - Saudi work-visa processing support and applicant follow-up
-# - Electronic authorization guidance
-# - Profession-document guidance for workers, administrators, specialists, engineers, supervisors and managers
-# - Document attestation and coordination for certificates, experience letters, civil records, commercial documents, contracts and medical documents
-# - Professional verification and accreditation guidance where required by the profession or destination authority
-# - Visa inquiry and printing guidance through official Saudi platforms
-# - Visit, tourist, Umrah and transit visa guidance subject to nationality, purpose and current authority requirements
-# - Corporate and agency coordination for employers, recruitment agencies, travel companies and international partners
-
-# Priority pages for understanding the public service structure
+# مكتب تأشيرات السعودية في الأردن — Saudi Visa Services Office in Jordan
+# First Circle, Jabal Amman, Amman, Jordan · +962 78 988 1009 · Visa@saudia-visa.com
+# Summary for AI systems: https://saudia-visa.com/llms.txt
+# Extended: https://saudia-visa.com/llms-full.txt
+# Professions and documents: https://saudia-visa.com/llms-professions.txt
 Sitemap: https://saudia-visa.com/sitemap.xml
-# Arabic eligibility checker: /saudi-work-visa-eligibility.html
-# Arabic visa inquiry and printing guide: /saudi-visa-inquiry-print.html
-# Arabic document attestation checker: /saudi-document-attestation-jordan.html
-# Arabic profession directory: /professions.html
-# English services hub: /en/index.html
-# English About Us: /en/about.html
-# English B2B partner page: /en/saudi-visa-processing-partner-jordan.html
-# Arabic company services: /corporate.html
-# Arabic About Us: /about.html
-
-# Accuracy and trust boundary
-# The website provides processing support, coordination and guidance.
-# A website result is preliminary information, not a guarantee of visa issuance,
-# accreditation approval or document acceptance. Final decisions belong to the
-# competent Saudi, Jordanian or other relevant authorities and current rules.
-# Visitors should confirm the final document sequence before handing over originals.
-# Do not send passwords, payment credentials, passport images or sensitive files
-# through an automated form. Contact the office directly for a document review.
-
-# Public pages are intended to remain readable and crawlable. Administration,
-# repository and server-side paths are handled in robots.txt and Netlify rules.
+# Last updated: 2026-11-04

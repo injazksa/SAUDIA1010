@@ -283,11 +283,21 @@
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  CTA BUTTON
  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.calc-cta {
+/* engineer certificate: number of copies (owner prices 2026-10-24: 1 = 160, 2 = 180) */
+.calc-copies { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: -2px 0 6px; padding: 10px 12px; border-radius: 14px; background: #fefdf9; border: 1px dashed rgba(201, 163, 94, 0.6); }
+.calc-copies[hidden] { display: none; }
+.calc-copies-label { font-weight: 700; color: #1B2A41; font-size: 0.9rem; }
+.calc-copies input { position: absolute; opacity: 0; pointer-events: none; }
+.calc-copies label { cursor: pointer; padding: 0.5rem 0.9rem; border-radius: 999px; border: 1.5px solid #e5e7eb; background: #fff; color: #1B2A41; font-size: 0.88rem; font-weight: 600; min-height: 40px; display: inline-flex; align-items: center; }
+.calc-copies input:checked + label { border-color: #1B2A41; background: #1B2A41; color: #fff; }
+.calc-copies input:focus-visible + label { outline: 3px solid #C9A35E; outline-offset: 2px; }
+
+/* "button." raises specificity above Tailwind's button reset (loaded later), which made the background transparent and hid the white label. */
+button.calc-cta {
  width: 100%;
  padding: 1.15rem 1.5rem;
  background: linear-gradient(135deg, #C9A35E 0%, #D4AF73 100%);
- color: #fff;
+ color: #1B2A41;
  border: none;
  border-radius: 16px;
  font-family: inherit;
@@ -309,7 +319,7 @@
 }
  .calc-cta-label {
  display: inline-block;
- color: #fff;
+ color: #1B2A41;
  opacity: 1;
  visibility: visible;
  white-space: nowrap;
@@ -396,7 +406,7 @@
 }
 
 /* Share icon button — sits neatly next to total */
-.calc-share-btn {
+button.calc-share-btn {
  display: inline-flex;
  align-items: center;
  justify-content: center;
@@ -568,7 +578,7 @@
  gap: 0.6rem;
  margin-bottom: 1.25rem;
 }
-.share-item {
+.share-item, button.share-item {
  display: flex;
  flex-direction: column;
  align-items: center;
@@ -620,7 +630,7 @@
  white-space: pre-wrap;
  word-wrap: break-word;
 }
-.share-close {
+button.share-close {
  width: 100%;
  margin-top: 1rem;
  padding: 0.8rem;
@@ -676,12 +686,12 @@
  .calc-select option { font-size: 0.92rem; }
  .calc-service { padding: 0.85rem 0.95rem; }
  .calc-service-title { font-size: 0.9rem; }
- .calc-cta { padding: 1rem; font-size: 0.98rem; }
+ button.calc-cta { padding: 1rem; font-size: 0.98rem; }
 
  .calc-result { padding: 1.6rem 1.25rem; border-radius: 20px; }
  .calc-total-box { padding: 1.5rem 1rem; }
  .calc-total-value { font-size: 2.1rem; }
- .calc-share-btn { width: 36px; height: 36px; }
+ button.calc-share-btn { width: 36px; height: 36px; }
  .calc-share-btn i { font-size: 0.9rem; }
  .calc-breakdown { font-size: 0.82rem; }
  .calc-result-actions { flex-direction: column; }

@@ -1,5 +1,16 @@
 {
-  "devDependencies": {
-    "tailwindcss": "^3.4.1"
+  "name": "saudia-visa",
+  "version": "2026.11.5",
+  "private": true,
+  "description": "إنجاز السعودية — موقع مكتب تأشيرات السعودية في الأردن (موقع ثابت على Netlify)",
+  "scripts": {
+    "build": "node scripts/ai-files.mjs && node scripts/sitemap.mjs && node scripts/seo-check.mjs",
+    "ai-files": "node scripts/ai-files.mjs",
+    "sitemap": "node scripts/sitemap.mjs",
+    "check": "node scripts/ai-files.mjs --check && node scripts/sitemap.mjs --check && node scripts/seo-check.mjs",
+    "start": "node scripts/serve.mjs 8080"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }

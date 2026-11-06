@@ -7,12 +7,9 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
  <link rel="icon" type="image/png" sizes="192x192" href="/icons/logo-192.png">
- <link rel="apple-touch-icon" sizes="180x180" href="/icons/logo-192.png">
+ <link rel="apple-touch-icon" sizes="180x180" href="/icons/pwa-apple-180.png">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <title>تصديق أوراق وشهادات سفارة الإمارات في الأردن | متابعة من عمّان</title>
- <link rel="preconnect" href="https://fonts.googleapis.com">
- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
  <meta name="description" content="نساعد في تصديق وتوثيق الأوراق والشهادات وختم المستندات لدى سفارة الإمارات في عمّان من الأردن. تعرّف على الأصول والأختام والخطوات المطلوبة وتواصل معنا للمراجعة.">
  <!-- ✅ Google Search Console: استبدل XXXX برمز التحقق من لوحة GSC -->
  <meta name="google-site-verification" content="REPLACE_WITH_GSC_CODE">
@@ -31,7 +28,7 @@
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
  <meta property="og:url" content="https://saudia-visa.com/uae-embassy-attestation-jordan.html">
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+ <link rel="stylesheet" href="/vendor/fontawesome/6.4.0/css/all.min.css">
  
  <!-- ⚡ Performance: preload critical resources -->
  <link rel="preload" href="/styles.css" as="style">
@@ -89,17 +86,23 @@
     <link rel="stylesheet" href="/css/tailwind.min.css">
 
 
+<link rel="preload" href="/fonts/notonaskharabic-arabic.woff2" as="font" type="font/woff2" crossorigin data-sd-bridge><link rel="preload" href="/fonts/notokufiarabic-arabic.woff2" as="font" type="font/woff2" crossorigin data-sd-bridge><link rel="stylesheet" href="/css/fonts.css?v=20261028" data-sd-bridge><link rel="stylesheet" href="/css/sd-bridge.css?v=20261028" data-sd-bridge>
+  <!-- PWA (2026-10-31) -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#1B2A41">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="إنجاز السعودية">
 </head>
-<body class="bg-gray-50 font-arabic">
+<body data-sd-bb class="bg-gray-50 font-arabic">
 
 
  <!-- Hero -->
- <section class="relative overflow-hidden bg-gradient-to-br from-navy via-navy-dark to-navy text-white">
- <!-- Decorative hero image layer -->
- <div class="absolute inset-0 opacity-25">
- <img src="/images/other-services-hero.webp" alt="خدمات تصديق إضافية" class="w-full h-full object-cover" width="1600" height="900">
- <div class="absolute inset-0 bg-gradient-to-l from-navy via-navy/85 to-navy/70"></div>
- </div>
+ <section class="sd-has-ph relative overflow-hidden bg-gradient-to-br from-navy via-navy-dark to-navy text-white">
+<div class="sd-ph" aria-hidden="true" style="--sd-ph-pos:30% 55%"><img src="/images/pages/uae-attestation-1280.webp" srcset="/images/pages/uae-attestation-640.webp 640w, /images/pages/uae-attestation-1280.webp 1280w, /images/pages/uae-attestation-1920.webp 1920w" sizes="100vw" alt="" width="1280" height="640" fetchpriority="high" decoding="async"></div>
+
+
+
  <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
  <div class="inline-flex items-center gap-2 bg-gold/15 text-gold px-4 py-1.5 rounded-full text-xs font-bold mb-5 border border-gold/30">
  <i class="fas fa-sparkles"></i>
@@ -108,6 +111,7 @@
  <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-5">
  تصديق أوراق وشهادات سفارة الإمارات في الأردن <span class="text-gold">وخدمات التوثيق</span>
  </h1>
+ <p class="sd-h1-en" lang="en" dir="ltr">UAE Embassy Document Attestation in Jordan</p>
  <p class="text-base md:text-lg text-gray-200 leading-relaxed max-w-3xl">
  نساعد الأفراد والشركات في الأردن على تجهيز ومتابعة تصديق الأوراق والشهادات والوثائق التي تحتاج إلى ختم أو توثيق من سفارة الإمارات في عمّان.
  تختلف الأختام المطلوبة حسب نوع المستند وبلد إصداره، لذلك نراجع الحالة والخطوات قبل تسليم الأصول، مع إمكانية تنسيق الاستلام والتسليم عند توفر الخدمة.
@@ -273,7 +277,8 @@
  </section>
 
  <!-- Footer -->
- <footer class="bg-gradient-to-br from-navy to-navy-dark text-white py-12">
+ <p data-xlink-2026-11-05 dir="rtl" style="max-width:1180px;margin:20px auto;padding:0 16px;box-sizing:border-box;font-size:15px;line-height:1.9;color:#4A5568">مرتبط: <a href="/certificates.html" style="color:#0F1B2D;font-weight:700;text-decoration:underline">تصديق الشهادات للسعودية</a> · <a href="/remote-document-services-jordan/#delivery" style="color:#0F1B2D;font-weight:700;text-decoration:underline">الاستلام والتسليم وأرامكس</a></p>
+<footer class="bg-gradient-to-br from-navy to-navy-dark text-white py-12">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
    <div class="grid md:grid-cols-3 gap-8 text-right">
     <div>
@@ -282,7 +287,7 @@
     </div>
     <div>
      <h3 class="font-bold text-gold mb-3">روابط مفيدة</h3>
-     <p class="text-gray-300 text-sm leading-8"><a href="/" class="hover:text-gold">الرئيسية</a><br><a href="/other-services.html" class="hover:text-gold">خدمات أخرى</a><br><a href="/certificates.html" class="hover:text-gold">تصديق الشهادات</a><br><a href="/#contact" class="hover:text-gold">اتصل بنا</a><br><a href="/privacy.html" class="hover:text-gold">سياسة الخصوصية</a></p>
+     <p class="text-gray-300 text-sm leading-8"><a href="/" class="hover:text-gold">الرئيسية</a><br><a href="/remote-document-services-jordan/" class="hover:text-gold">إنجاز المعاملات والوثائق من الأردن عن بُعد</a><br><a href="/certificates.html" class="hover:text-gold">تصديق الشهادات</a><br><a href="/#contact" class="hover:text-gold">اتصل بنا</a><br><a href="/privacy.html" class="hover:text-gold">سياسة الخصوصية</a></p>
     </div>
     <div>
      <h3 class="font-bold text-gold mb-3">تواصل معنا</h3>

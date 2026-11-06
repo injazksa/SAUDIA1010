@@ -1,0 +1,94 @@
+/* ═══════════════════════════════════════════════════════════════════
+   Saudia bridge (owner 2026-10-27): pages that are NOT yet on the design system (body without .sd —
+   about, FAQ, blog, guides, legal pages and the profession pages /p/) take the same identity:
+   the same Arabic fonts, navy + gold, light backgrounds, no green buttons, no page fade-in,
+   balanced heading sizes on phones. Colours/fonts only — no content and no layout structure change.
+   Loaded after the page's own CSS (tools/apply-bridge-css.js).
+   ═══════════════════════════════════════════════════════════════════ */
+:root {
+  --sv-navy: #1B2A41; --sv-navy-2: #26385A; --sv-gold: #C9A35E; --sv-gold-soft: #F6E9C9;
+  --sv-ink: #24324A; --sv-muted: #475569; --sv-bg: #F8F6F1;
+  --cf-wa: #1B2A41; --cf-wa-hover: #26385A;
+}
+body:not(.sd) { font-family: "Noto Naskh Arabic", "Traditional Arabic", Tahoma, serif !important; animation: none !important; opacity: 1 !important; }
+body:not(.sd) h1, body:not(.sd) h2, body:not(.sd) h3, body:not(.sd) h4, body:not(.sd) .font-bold, body:not(.sd) button, body:not(.sd) .sv-btn, body:not(.sd) nav, body:not(.sd) label, body:not(.sd) th { font-family: "Noto Kufi Arabic", "Segoe UI", Tahoma, sans-serif !important; }
+body:not(.sd) [lang="en"], body:not(.sd) [dir="ltr"] { font-family: "Segoe UI", Arial, sans-serif !important; }
+body:not(.sd) .sv-page-bg, body:not(.sd).sv-page-bg { font-family: inherit; }
+
+/* headings: no headline that fills a phone screen */
+body:not(.sd) h1 { font-size: clamp(24px, calc(2.6vw + 14px), 42px) !important; line-height: 1.4 !important; }
+body:not(.sd) h2 { font-size: clamp(20px, calc(1.6vw + 14px), 30px) !important; line-height: 1.45 !important; }
+body:not(.sd) h3 { line-height: 1.5 !important; }
+body:not(.sd) .text-6xl, body:not(.sd) .text-5xl { font-size: clamp(26px, calc(2.6vw + 14px), 42px) !important; }
+
+/* green WhatsApp / success buttons → the office navy with a gold edge (the WhatsApp icon says what it is) */
+body:not(.sd) .bg-green-500, body:not(.sd) .bg-green-600, body:not(.sd) .bg-\[\#25D366\], body:not(.sd) .bg-\[\#25d366\], body:not(.sd) .sv-btn-whatsapp,
+body:not(.sd) a.bg-green-500, body:not(.sd) .hover\:bg-green-600:hover { background-color: #1B2A41 !important; color: #fff !important; border-color: #C9A35E !important; }
+body:not(.sd) .sv-btn-whatsapp { box-shadow: inset 0 0 0 2px #C9A35E !important; }
+body:not(.sd) .text-green-500, body:not(.sd) .text-green-600 { color: #2F6B4F !important; }
+
+/* gold text on light backgrounds: the readable deep gold */
+body:not(.sd) .text-gold, body:not(.sd) .sv-eyebrow, body:not(.sd) .sv-text-link { color: #8A5A0A !important; }
+body:not(.sd) .bg-navy .text-gold, body:not(.sd) .sv-hero .sv-eyebrow, body:not(.sd) [class*="bg-gradient"] .text-gold { color: #E7CD97 !important; }
+
+/* light, calm backgrounds; no ruled-paper patterns */
+body:not(.sd) .bg-gray-50 { background-color: #F8F6F1 !important; }
+body:not(.sd) [class*="pattern"], body:not(.sd) .hero-pattern { background-image: none !important; }
+
+/* focus that can be seen */
+body:not(.sd) a:focus-visible, body:not(.sd) button:focus-visible, body:not(.sd) input:focus-visible, body:not(.sd) select:focus-visible { outline: 3px solid #C9A35E !important; outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { body:not(.sd) *, body:not(.sd) *::before, body:not(.sd) *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; } }
+
+/* owner 2026-10-27 (responsive): no automatic text enlargement on phones, long words wrap inside headings,
+   media never wider than the screen, and the main heading follows the shared scale on small screens. */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+h1, h2, h3, h4 { overflow-wrap: break-word; }
+img, video, iframe, canvas { max-width: 100%; }
+img { height: auto; }
+@media (max-width: 640px) {
+  main h1, section h1 { font-size: clamp(24px, calc(2.6vw + 14px), 30px) !important; line-height: 1.45 !important; }
+  main h2, section h2 { font-size: clamp(20px, calc(1.5vw + 14px), 24px) !important; line-height: 1.5 !important; }
+}
+/* owner 2026-10-27 (wide screens): page-wide containers grow with the screen; article-width text (max-w-4xl/5xl) keeps
+   its reading width */
+@media (min-width: 1500px) { .container, .max-w-6xl, .max-w-7xl { max-width: min(86vw, 1440px) !important; } }
+@media (min-width: 1900px) { .container, .max-w-6xl, .max-w-7xl { max-width: min(84vw, 1640px) !important; } }
+@media (min-width: 2400px) { .container, .max-w-6xl, .max-w-7xl { max-width: min(80vw, 1880px) !important; } }
+/* owner 2026-10-27 (wide screens): the shared header of older pages follows the same widths as the page */
+@media (min-width: 1500px) { #uh-header .uh-bar, .sd-backbar { max-width: min(86vw, 1440px) !important; } }
+@media (min-width: 1900px) { #uh-header .uh-bar, .sd-backbar { max-width: min(84vw, 1640px) !important; } }
+@media (min-width: 2400px) { #uh-header .uh-bar, .sd-backbar { max-width: min(80vw, 1880px) !important; } }
+/* profession pages (/p/): on wide screens the page widens and the numbered documents list uses two columns
+   (the numbers keep the order); every line of text stays at a reading width */
+@media (min-width: 1500px) {
+  body.sd-prof-page .max-w-4xl { max-width: min(86vw, 1440px) !important; }
+  body.sd-prof-page ul.space-y-4.mb-12 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  body.sd-prof-page ul.space-y-4.mb-12 > * { margin: 0 !important; }
+  body.sd-prof-page p, body.sd-prof-page summary { max-inline-size: 80ch; }
+}
+@media (min-width: 1900px) { body.sd-prof-page .max-w-4xl { max-width: min(84vw, 1640px) !important; } }
+
+/* sd-bb-slot (2026-10-28): core.js replaces the old page header with the unified one and adds the «رجوع» bar under it
+   after the first paint; the bar's height is kept free from the start so nothing below it jumps (layout shift).
+   The old header is removed at that moment, so the reserved space and the bar never add up. */
+body[data-sd-bb]:not(.sd-bb-done) > header:first-of-type:not(#uh-header), body[data-sd-bb]:not(.sd-bb-done) > nav:first-of-type:not(.sd-backbar) { margin-bottom: 48px; }
+/* pages without a header of their own: the unified header (65px) and the bar (48px) both arrive later */
+body[data-sd-bb]:not(.sd-bb-done):not(:has(> header)):not(:has(> nav)) { padding-top: 113px; }
+
+/* sd-h1-en: short English subtitle under the Arabic title (owner 2026-10-28) */
+.sd-h1-en { margin: 6px 0 14px; font-family: "Segoe UI", system-ui, -apple-system, sans-serif; font-size: clamp(13px, calc(.4vw + 12px), 16px); font-weight: 500; letter-spacing: .01em; color: #E6C98F; direction: ltr; unicode-bidi: isolate; }
+.sd-h1-en { text-align: right; }
+.text-center .sd-h1-en { text-align: center; }
+
+/* sd-ph: page header photo (owner 2026-10-28). Same block in saudia-ds.css and sd-bridge.css. */
+.sd-has-ph { position: relative; overflow: hidden; isolation: isolate; }
+.sd-ph { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background: #0B1B3A; }
+.sd-ph img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: var(--sd-ph-pos, 35% 50%); transform: scale(1.04); transform-origin: 40% 50%; }
+.sd-ph::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to left, rgba(9,20,44,.93) 0%, rgba(9,20,44,.87) 45%, rgba(9,20,44,.6) 74%, rgba(9,20,44,.3) 100%), linear-gradient(0deg, rgba(9,20,44,.45), rgba(9,20,44,0) 40%); }
+.sd-ph-center .sd-ph::after { background: radial-gradient(ellipse 60% 75% at 50% 50%, rgba(9,20,44,.88), rgba(9,20,44,.62)); }
+@media (max-width: 1199px) { .sd-ph::after, .sd-ph-center .sd-ph::after { background: linear-gradient(180deg, rgba(9,20,44,.8), rgba(9,20,44,.7) 22%, rgba(9,20,44,.78) 50%, rgba(9,20,44,.9)); } }
+@media (max-width: 767px) { .sd-ph img { object-position: var(--sd-ph-pos-m, var(--sd-ph-pos, 35% 50%)); } }
+@media (prefers-reduced-motion: no-preference) { .sd-ph img { animation: sd-ph-kb 30s ease-in-out infinite alternate; } }
+@keyframes sd-ph-kb { from { transform: scale(1.04) translateX(0); } to { transform: scale(1.1) translateX(-1.6%); } }
+@media print { .sd-ph { display: none !important; } }
+/* /sd-ph */
