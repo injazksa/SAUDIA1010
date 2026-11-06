@@ -1,0 +1,18 @@
+{
+ "llms.txt": {
+  "fp": "82d476fb75554b3b",
+  "date": "2026-11-06"
+ },
+ "llms-full.txt": {
+  "fp": "9f5eadf8be176305",
+  "date": "2026-11-06"
+ },
+ "llms-professions.txt": {
+  "fp": "8a4f810b718eab2a",
+  "date": "2026-11-04"
+ },
+ "ai.txt": {
+  "fp": "2efe932f79c6363f",
+  "date": "2026-11-04"
+ }
+}

@@ -1,5 +1,12 @@
 // Print Function for Profession Documents
-function printProfessionDocument(professionCode, professionName, requirements, selectedNationality = '') {
+function printProfessionDocument(professionCode, professionName, requirements, selectedNationality = '', professionNote = '') {
+ // owner 2026-10-26: the printed list carries the same notes as the screen (estimate by category, SVP activation,
+ // office notes) and says clearly when the profession is an estimate rather than a listed record
+ const escP = (s) => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+ const isEstimate = /نتيجة تقديرية/.test(professionNote || '');
+ // (2026-10-29: «XXXXXX (رمز رسمي؛ …)» = the official code of an estimate, printed as given)
+ // (and «لا يوجد رمز رسمي مؤكد…» for a record without a confirmed official code, also printed as given)
+ if (!/^\d{6}(?:$| \()|^لا يوجد رمز رسمي مؤكد/.test(String(professionCode)) && professionCode !== 'FAMILY') professionCode = isEstimate ? 'غير مدرجة (نتيجة تقديرية)' : 'غير محدد';
  // 🛑 حارس إجباري: ضمان أن بند مطعوم السحايا هو البند الختامي الأخير في أي مستند مطبوع
  // (يُستثنى الاستقدام العائلي لأنه معاملة إقامة وليس تأشيرة عمل)
  const VACCINE_ITEM = 'الحصول على شهادة مطعوم السحايا.';
@@ -11,6 +18,10 @@ function printProfessionDocument(professionCode, professionName, requirements, s
  if (!isFamilyDoc) {
    requirements.push(VACCINE_ITEM);
  }
+ // 2026-11-05 (security, owner approval): every value written into the print document is escaped — the profession
+ // name and the nationality can be typed by the visitor (smart fallback, «جنسية أخرى»), so no markup may run.
+ // The site's data has no & < > in these values, so the printed document is byte-for-byte the same as before.
+ const nameH = escP(professionName), natH = escP(printNationality), codeH = escP(professionCode);
 
  // Create a new window for printing
  const printWindow = window.open('', '_blank');
@@ -20,7 +31,7 @@ function printProfessionDocument(professionCode, professionName, requirements, s
 	 <html lang="ar" dir="rtl">
 	 <head>
 	 <meta charset="UTF-8">
-	 <title>الأوراق المطلوبة - ${professionName}</title>
+	 <title>الأوراق المطلوبة - ${nameH}</title>
 		 <style>
 			 @page {
 			 size: A4;
@@ -49,7 +60,8 @@ function printProfessionDocument(professionCode, professionName, requirements, s
 			 padding: 0;
 			 font-size: 14px;
 		 }
-		 .print-container {
+		 /* 2026-10-30: the watermark comes from the site's one system (js/sd-watermark.js): A4 pages, 3–5 marks per page in the empty areas */
+		 .print-container { position: relative; z-index: 1;
 		 width: 100%;
 		 height: 100%;
 		 display: flex;
@@ -122,7 +134,16 @@ function printProfessionDocument(professionCode, professionName, requirements, s
 		 font-size: 11px;
 		 }
 		 .footer p { margin: 4px 0; }
-		 h2 { 
+		 /* 2026-10-31: only when the footer would stand alone on a second page — less space between items, same text */
+		 .sv-snug .print-header { margin-bottom: 14px; padding-bottom: 10px; }
+		 .sv-snug .document-title { margin: 12px 0; }
+		 .sv-snug .profession-info { margin: 10px 0; }
+		 .sv-snug h2 { margin: 10px 0 8px; }
+		 .sv-snug .requirements-list { margin: 10px 0; }
+		 .sv-snug .requirements-list li { padding: 6px 0; margin-bottom: 3px; }
+		 .sv-snug .footer { padding-top: 10px; }
+		 .sv-keep .requirements-list { margin-top: 0; }
+		 h2 {
 		 color: #1B2A41; 
 		 margin: 16px 0 10px; 
 		 font-size: 15px;
@@ -148,10 +169,10 @@ function printProfessionDocument(professionCode, professionName, requirements, s
 	 </div>
 	 
 		 <div class="profession-info">
-<span><strong>المهنة:</strong> ${professionName}</span>
-			 ${printNationality && printNationality !== 'الأردن' ? `<span><strong>الجنسية:</strong> ${printNationality}</span>` : ''}
-			 <span><strong>رمز المهنة:</strong> ${professionCode}</span>
-			 <span><strong>التاريخ:</strong> ${new Date().toLocaleDateString('ar-SA')}</span>
+<span><strong>المهنة:</strong> ${nameH}</span>
+			 ${printNationality && printNationality !== 'الأردن' ? `<span><strong>الجنسية:</strong> ${natH}</span>` : ''}
+			 <span><strong>رمز المهنة:</strong> ${codeH}</span>
+			 <span><strong>التاريخ:</strong> ${(window.SD_printToday ? window.SD_printToday() : new Date().toLocaleDateString('en-GB'))}</span>
 		 </div>
 	 
 	 <h2>الأوراق والمستندات المطلوبة:</h2>
@@ -161,30 +182,71 @@ function printProfessionDocument(professionCode, professionName, requirements, s
 				// Only deduplicate if it's EXACTLY the same string and not the first occurrence
 if (r === 'إحضار جواز السفر و 6 صور شخصية بخلفية بيضاء حديثة لكافة المعاملات.' && requirements.indexOf(r) !== requirements.lastIndexOf(r) && requirements.indexOf(r) !== requirements.indexOf(r)) return false;
 				return true;
-			 }).map(req => `<li>${req}</li>`).join('')}
+			 }).map(req => `<li>${escP(req)}</li>`).join('')}
 			 </ol>
+		 ${professionNote ? `
+		 <div style="margin-top: 6px; padding: 6px; background-color: #fffbeb; border-right: 2px solid #d97706; border-radius: 3px;">
+			 <div style="font-weight: bold; color: #92400e; font-size: 9pt; margin-bottom: 2px;">${isEstimate ? 'نتيجة تقديرية — تحتاج تأكيد المكتب' : 'ملاحظة'}</div>
+			 <div style="color: #78350f; font-size: 8pt; line-height: 1.3;">${escP(professionNote)}</div>
+		 </div>` : ''}
 
-		 ${(!requirements.some(r => r.includes('الاعتماد المهني')) && !professionName.includes('استقدام') && !professionName.includes('اقامة')) ? `
+		 ${(!requirements.some(r => /الاعتماد المهني|التحقق المهني|الفحص المهني|QVP|SVP/.test(r)) && !professionName.includes('استقدام') && !professionName.includes('اقامة')) ? `
 		 <div style="margin-top: 6px; padding: 6px; background-color: #f0f7ff; border-right: 2px solid #3b82f6; border-radius: 3px;">
-			 <div style="font-weight: bold; color: #1e40af; font-size: 9pt; margin-bottom: 2px;">تنبيه بخصوص الاعتماد المهني</div>
-			 <div style="color: #1e3a8a; font-size: 8pt; line-height: 1.2;">هذه المهنة لا تتطلب اختبار اعتماد مهني حالياً، ولكن يرجى العلم أنه قد يتم تفعيل شرط الاعتماد في أي وقت حسب تحديثات الأنظمة السعودية.</div>
+			 <div style="font-weight: bold; color: #1e40af; font-size: 9pt; margin-bottom: 2px;">تنبيه بخصوص التحقق أو الفحص المهني</div>
+			 <div style="color: #1e3a8a; font-size: 8pt; line-height: 1.2;">لا يظهر في قائمة هذه المهنة حاليًا التحقق المهني (QVP) ولا الفحص المهني (SVP)، ولكن قد يتم تفعيل أحدهما في أي وقت حسب تحديثات الأنظمة السعودية.</div>
 		 </div>
 		 ` : ''}
 		 
 		 <div class="footer">
-		 <p><strong>ملاحظة:</strong> قد تختلف المستندات حسب السفارة والحالة الفردية، يرجى التواصل معنا للحصول على معلومات دقيقة ومحدثة.</p>
+		 <p><strong>ملاحظة:</strong> قد تختلف المستندات حسب السفارة والحالة الفردية، يرجى التواصل معنا للحصول على معلومات دقيقة ومحدثة. هذه الورقة إرشادية ولا تعني ضمان صدور التأشيرة.</p>
 		 <p>© 2026 مكتب تأشيرات السعودية في الأردن - جميع الحقوق محفوظة</p>
 		 </div>
 	 </div>
+	 <script src="${location.origin}/js/sd-watermark.js?v=20261031r"><\/script>
+	 <script>
+	 // lay the sheet out on A4 pages with the office watermark (the site's one system), then print
+	 (function () {
+	   // 2026-10-31 (owner): never a last page holding only the footer. 1) as designed; 2) if the footer would stand
+	   // alone: slightly less space BETWEEN items (same font size, same line height); 3) if still alone: the last two
+	   // items go to the second page with the footer (two natural pages). The whole document always prints.
+	   function footerAlone(root) {
+	     var ps = root.querySelectorAll('.sdp-page'); if (ps.length < 2) return false;
+	     var inner = ps[ps.length - 1].querySelector('.sdp-page-inner'), f = inner && inner.querySelector('.footer');
+	     var all = inner ? inner.textContent.replace(/\\s+/g, '').length : 0, ft = f ? f.textContent.replace(/\\s+/g, '').length : 0;
+	     return all - ft < 40;
+	   }
+	   function go() {
+	     var st = document.createElement('style'); st.textContent = SD_WM.css(); document.head.appendChild(st);
+	     var root = document.querySelector('.print-container'), orig = root.innerHTML;
+	     function again() { root.innerHTML = orig; root.removeAttribute('style'); }
+	     SD_WM.layout(root, { fill: 0.99 });
+	     if (footerAlone(root)) { again(); document.body.classList.add('sv-snug'); SD_WM.layout(root, { fill: 0.99 }); }
+	     if (footerAlone(root)) {
+	       again(); document.body.classList.remove('sv-snug');
+	       var ol = root.querySelector('.requirements-list'), lis = ol ? ol.children : [];
+	       if (lis.length > 3) {
+	         // the last two items + notes + footer: one block that moves to the next page together
+	         var grp = document.createElement('div'); grp.setAttribute('data-sdp-atom', ''); grp.className = 'sv-keep';
+	         var ol2 = document.createElement('ol'); ol2.className = 'requirements-list'; ol2.setAttribute('start', String(lis.length - 1));
+	         ol2.appendChild(lis[lis.length - 2]); ol2.appendChild(lis[lis.length - 1]);
+	         ol.parentNode.insertBefore(grp, ol.nextSibling); grp.appendChild(ol2);
+	         while (grp.nextSibling) grp.appendChild(grp.nextSibling);
+	       }
+	       SD_WM.layout(root, { fill: 0.99 });
+	       // the footer (not the whole block) sits at the bottom of the last page
+	       var g = root.querySelector('.sv-keep'), f = g && g.querySelector('.footer');
+	       if (g && f && g.style.marginTop) { f.style.marginTop = g.style.marginTop; g.style.marginTop = ''; }
+	     }
+	     document.documentElement.setAttribute('data-sdp-ready', '1');
+	     if (!window.__SDP_NO_PRINT) setTimeout(function () { window.print(); }, 60);
+	   }
+	   if (document.fonts && document.fonts.ready) document.fonts.ready.then(go); else window.addEventListener('load', go);
+	 })();
+	 <\/script>
 	 </body>
 	 </html>
 	 `;
- 
+
  printWindow.document.write(printContent);
  printWindow.document.close();
- 
- // Wait for content to load then print
- printWindow.onload = function() {
- printWindow.print();
- };
 }

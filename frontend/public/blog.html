@@ -7,7 +7,7 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
  <link rel="icon" type="image/png" sizes="192x192" href="/icons/logo-192.png">
- <link rel="apple-touch-icon" sizes="180x180" href="/icons/logo-192.png">
+ <link rel="apple-touch-icon" sizes="180x180" href="/icons/pwa-apple-180.png">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <title>المدونة | مكتب تأشيرات السعودية في الأردن</title>
  <meta name="description" content="مقالات وأدلّة تفصيلية: تأشيرات العمل، العمرة، السياحية، الاستقدام العائلي. محتوى موثوق من المكتب المعتمد.">
@@ -28,12 +28,10 @@
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
  <meta property="og:locale" content="ar_JO">
- <link rel="preconnect" href="https://fonts.googleapis.com">
- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+ <link href="/css/gf-bea1fe1c.css" rel="stylesheet">
+ <link rel="stylesheet" href="/vendor/fontawesome/6.5.1/css/all.min.css">
  <script>
- tailwind.config = { theme: { extend: {
+ if (window.tailwind) tailwind.config = { theme: { extend: {
  colors: { 'navy': '#1B2A41', 'navy-dark': '#0F1922', 'gold': '#C9A35E', 'gold-light': '#D4AF73' },
  fontFamily: { 'arabic': ['Alexandria', 'Tajawal', 'sans-serif'] }
  }}};
@@ -76,8 +74,15 @@
     <link rel="stylesheet" href="/css/tailwind.min.css">
 
 
+<link rel="preload" href="/fonts/notonaskharabic-arabic.woff2" as="font" type="font/woff2" crossorigin data-sd-bridge><link rel="preload" href="/fonts/notokufiarabic-arabic.woff2" as="font" type="font/woff2" crossorigin data-sd-bridge><link rel="stylesheet" href="/css/fonts.css?v=20261028" data-sd-bridge><link rel="stylesheet" href="/css/sd-bridge.css?v=20261028" data-sd-bridge>
+  <!-- PWA (2026-10-31) -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#1B2A41">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="إنجاز السعودية">
 </head>
-<body class="font-arabic bg-gray-50">
+<body data-sd-bb class="font-arabic bg-gray-50">
  <!-- Nav -->
  <nav class="bg-white shadow-md sticky top-0 z-50">
  <div class="container mx-auto px-4">
@@ -87,11 +92,11 @@
  <span class="text-[11px] lg:text-xs font-bold text-navy leading-tight hidden sm:block">مكتب تأشيرات السعودية في الأردن</span>
  </a>
  <div class="hidden md:flex items-center gap-6">
- <a href="index.html" class="text-navy hover:text-gold transition-colors">الرئيسية</a>
+ <a href="/" class="text-navy hover:text-gold transition-colors">الرئيسية</a>
  <a href="professions.html" class="text-navy hover:text-gold transition-colors">المهن والأوراق</a>
  <a href="calculator.html" class="text-navy hover:text-gold transition-colors">حاسبة الرسوم</a>
  <a href="certificates.html" class="text-navy hover:text-gold transition-colors">تصديق الشهادات</a>
- <a href="professional.html" class="text-navy hover:text-gold transition-colors">الاعتماد المهني</a>
+ <a href="/saudi-qvp-professional-accreditation/" class="text-navy hover:text-gold transition-colors">الاعتماد المهني</a>
  <a href="blog.html" class="text-gold font-bold">المدونة</a>
  <a href="faq.html" class="text-navy hover:text-gold transition-colors">الأسئلة الشائعة</a>
  <a href="https://wa.me/962789881009" class="bg-gold text-white px-6 py-2 rounded-lg hover:bg-gold-light transition-all">تواصل معنا</a>
@@ -100,7 +105,7 @@
  </div>
  </div>
  <div id="mobile-menu" class="hidden md:hidden bg-white border-t px-4 py-4 space-y-2">
- <a href="index.html" class="block py-2 text-navy">الرئيسية</a>
+ <a href="/" class="block py-2 text-navy">الرئيسية</a>
  <a href="professions.html" class="block py-2 text-navy">المهن</a>
  <a href="calculator.html" class="block py-2 text-navy">الحاسبة</a>
  <a href="blog.html" class="block py-2 text-gold font-bold">المدونة</a>
@@ -133,7 +138,7 @@
  <!-- 1. Umrah (NEW) -->
  <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-gold/30 flex flex-col">
  <a href="/blog/umrah-visa-guide-2026.html" class="block relative overflow-hidden">
- <img src="/images/blog-umrah-hero.webp" alt="دليل تأشيرة العمرة 2026" width="800" height="450" class="w-full h-56 object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
+ <img src="/images/blog-umrah-hero.webp?v=20261027" alt="دليل تأشيرة العمرة 2026" width="800" height="450" class="w-full h-56 object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
  <div class="absolute top-4 right-4 bg-gold text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">جديد 2026</div>
  </a>
  <div class="p-6 flex-1 flex flex-col">
@@ -155,7 +160,7 @@
  <!-- 2. Work Visa Comprehensive (NEW) -->
  <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-gold/30 flex flex-col">
  <a href="/blog/work-visa-comprehensive-2026.html" class="block relative overflow-hidden">
- <img src="/images/blog-work-visa-hero.webp" alt="دليل تأشيرة العمل الشامل 2026" width="800" height="450" class="w-full h-56 object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
+ <img src="/images/blog-work-visa-hero.webp?v=20261027" alt="دليل تأشيرة العمل الشامل 2026" width="800" height="450" class="w-full h-56 object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
  <div class="absolute top-4 right-4 bg-gold text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">جديد 2026</div>
  </a>
  <div class="p-6 flex-1 flex flex-col">
@@ -177,7 +182,7 @@
  <!-- 3. Tourist Visa -->
  <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-gold/30 flex flex-col">
  <a href="/blog/tourist-visa-guide.html" class="block relative overflow-hidden">
- <img src="/images/blog-tourist-visa-hero.webp" alt="التأشيرة السياحية للسعودية" width="800" height="450" class="w-full h-56 object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
+ <img src="/images/blog-tourist-visa-hero.webp?v=20261027" alt="التأشيرة السياحية للسعودية" width="800" height="450" class="w-full h-56 object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
  </a>
  <div class="p-6 flex-1 flex flex-col">
  <div class="flex items-center gap-3 text-sm text-gray-500 mb-3">
@@ -198,7 +203,7 @@
  <!-- 4. Family Sponsorship -->
  <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-gold/30 flex flex-col">
  <a href="/blog/family-sponsorship-guide.html" class="block relative overflow-hidden">
- <img src="/images/blog-family-visa-hero.webp" alt="الاستقدام العائلي للسعودية" width="800" height="450" class="w-full h-56 object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
+ <img src="/images/blog-family-visa-hero.webp?v=20261027" alt="الاستقدام العائلي للسعودية" width="800" height="450" class="w-full h-56 object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
  </a>
  <div class="p-6 flex-1 flex flex-col">
  <div class="flex items-center gap-3 text-sm text-gray-500 mb-3">
@@ -219,7 +224,7 @@
  <!-- 6. Certificates -->
  <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-gold/30 flex flex-col">
  <a href="/blog/certificate-attestation-guide.html" class="block relative overflow-hidden">
- <img src="/images/blog-certificates-hero.webp" alt="تصديق الشهادات من السفارة السعودية" width="800" height="450" class="w-full h-56 object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
+ <img src="/images/blog-certificates-hero.webp?v=20261027" alt="تصديق الشهادات من السفارة السعودية" width="800" height="450" class="w-full h-56 object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
  </a>
  <div class="p-6 flex-1 flex flex-col">
  <div class="flex items-center gap-3 text-sm text-gray-500 mb-3">
@@ -240,7 +245,7 @@
  <!-- 7. Professional Accreditation -->
  <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-gold/30 flex flex-col">
  <a href="/blog/professional-accreditation-enjaz.html" class="block relative overflow-hidden">
- <img src="/images/blog-qvp-hero.webp" alt="الاعتماد المهني السعودي" width="800" height="450" class="w-full h-56 object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
+ <img src="/images/blog-qvp-hero.webp?v=20261027" alt="الاعتماد المهني السعودي" width="800" height="450" class="w-full h-56 object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
  </a>
  <div class="p-6 flex-1 flex flex-col">
  <div class="flex items-center gap-3 text-sm text-gray-500 mb-3">
@@ -283,7 +288,7 @@
  </div>
  </footer>
 
- <a href="https://wa.me/962789881009" class="fixed bottom-6 left-6 bg-green-500 text-white w-16 h-16 rounded-full flex items-center justify-center shadow-2xl hover:bg-green-600 transition-all z-50 hover:scale-110"><i class="fab fa-whatsapp text-3xl"></i></a>
+ <a href="https://wa.me/962789881009" class="fixed bottom-6 left-6 bg-green-500 text-white w-16 h-16 rounded-full flex items-center justify-center shadow-2xl hover:bg-green-600 transition-all z-50 hover:scale-110" aria-label="راسلنا عبر واتساب"><i class="fab fa-whatsapp text-3xl"></i></a>
 
  <script src="/core.js" defer></script>
  <script src="/security.js" defer></script>

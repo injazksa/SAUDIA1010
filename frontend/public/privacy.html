@@ -7,7 +7,7 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
  <link rel="icon" type="image/png" sizes="192x192" href="/icons/logo-192.png">
- <link rel="apple-touch-icon" sizes="180x180" href="/icons/logo-192.png">
+ <link rel="apple-touch-icon" sizes="180x180" href="/icons/pwa-apple-180.png">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <title>سياسة الخصوصية | مكتب تأشيرات السعودية</title>
  <meta property="og:type" content="website">
@@ -19,15 +19,12 @@
  <meta property="og:image" content="https://saudia-visa.com/images/og-cover.png">
  <meta property="og:image:width" content="1200">
  <meta property="og:image:height" content="630">
- <link rel="preconnect" href="https://fonts.googleapis.com">
- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
  <meta name="description" content="اطلع على سياسة الخصوصية لموقعنا لتعرف كيف نحمي بياناتك ومعلوماتك وسريتها عند تقديم خدمات معاملات التأشيرات السعودية.">
  <!-- ✅ Google Search Console: استبدل XXXX برمز التحقق من لوحة GSC -->
  <meta name="google-site-verification" content="REPLACE_WITH_GSC_CODE">
  <meta name="robots" content="noindex, nofollow">
  <link rel="canonical" href="https://saudia-visa.com/privacy.html">
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+ <link rel="stylesheet" href="/vendor/fontawesome/6.4.0/css/all.min.css">
  <link rel="stylesheet" href="styles.css">
  
  <!-- ⚡ Performance Optimization Styles -->
@@ -47,8 +44,15 @@
     <link rel="stylesheet" href="/css/tailwind.min.css">
 
 
+<link rel="preload" href="/fonts/notonaskharabic-arabic.woff2" as="font" type="font/woff2" crossorigin data-sd-bridge><link rel="preload" href="/fonts/notokufiarabic-arabic.woff2" as="font" type="font/woff2" crossorigin data-sd-bridge><link rel="stylesheet" href="/css/fonts.css?v=20261028" data-sd-bridge><link rel="stylesheet" href="/css/sd-bridge.css?v=20261028" data-sd-bridge>
+  <!-- PWA (2026-10-31) -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#1B2A41">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="إنجاز السعودية">
 </head>
-<body class="bg-gray-50">
+<body data-sd-bb class="bg-gray-50">
  <!-- Navigation -->
  <nav class="bg-white shadow-md sticky top-0 z-50">
  <div class="container mx-auto px-4">
@@ -62,7 +66,7 @@
  </a>
  </div>
  <div class="hidden md:flex items-center gap-6">
- <a href="index.html" class="text-navy hover:text-gold transition-colors">الرئيسية</a>
+ <a href="/" class="text-navy hover:text-gold transition-colors">الرئيسية</a>
  <a href="https://wa.me/962789881009" class="bg-gold text-white px-6 py-2 rounded-lg hover:bg-gold/90 transition-all">
  تواصل معنا
  </a>
@@ -207,7 +211,7 @@
  <div class="flex gap-3 items-start">
  <i class="fas fa-check-circle text-green-600 mt-1"></i>
  <div>
- <strong>الاعتماد المهني:</strong> تسجيلك وحجز مواعيد الفحص المهني (إنجاز)
+ <strong>الاعتماد المهني:</strong> تسجيلك وحجز مواعيد الفحص المهني (SVP)
  </div>
  </div>
  <div class="flex gap-3 items-start">

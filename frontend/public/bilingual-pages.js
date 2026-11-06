@@ -872,7 +872,8 @@
 
   const pageDict = translations[aliases[page] || page] || {};
   const common = translations.common;
-  const allPageDict = Object.values(translations).reduce((acc, part) => ({ ...acc, ...part }), {});
+  // (2026-10-31, speed) one merge instead of copying the growing object at every step — same keys, same priority
+  const allPageDict = Object.assign({}, ...Object.values(translations));
   const generatedPairs = window.SV_TRANSLATION_PAIRS || {};
   const dict = { ...common, ...allPageDict, ...pageDict, ...generatedPairs };
   const reverse = Object.fromEntries(Object.entries(dict).map(([ar, en]) => [en, ar]));
@@ -1000,14 +1001,21 @@
     });
   }
 
+  const arOriginal = new WeakMap(); // text node → its original Arabic value
+  let translatedOnce = false;
   function translateStaticText() {
+    translatedOnce = true;
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
     const nodes = [];
     while (walker.nextNode()) nodes.push(walker.currentNode);
     nodes.forEach((node) => {
       if (node.parentElement?.closest('.sv-language-switch, script, style, code')) return;
-      const original = node.parentNode?.getAttribute?.('data-ar-text') || node.nodeValue;
-      if (!node.parentNode?.getAttribute?.('data-ar-text')) node.parentNode?.setAttribute?.('data-ar-text', original);
+      // options are translated by their own loop below (which keeps each option's original Arabic): not here as well
+      if (node.parentElement?.closest('option')) return;
+      // (2026-10-31) the original Arabic is kept for EACH text node. It used to be kept once per parent element, so an
+      // element with two pieces of text (e.g. «line 1<br>line 2») got its second piece replaced by the first one.
+      if (!arOriginal.has(node)) arOriginal.set(node, node.nodeValue);
+      const original = arOriginal.get(node);
       const trimmed = original.trim();
       if (!trimmed) return;
       const leading = original.match(/^\s*/)?.[0] || '';
@@ -1036,9 +1044,16 @@
     body.dataset.activeLanguage = lang;
     addLanguageSwitcher();
     updateHeadMeta();
-    translateStaticText();
-    translateAttributes();
-    translateDynamicNodes();
+    // (2026-10-31, speed) Arabic on a page that was never translated: the text walks below would write every text node,
+    // option and attribute back with the SAME value (each write makes the browser re-shape and re-lay out the Arabic
+    // text — measured as the largest cost of this page on a phone). Nothing to change → skipped. The original Arabic
+    // values are recorded at the first switch to English, exactly as before.
+    const neverTranslated = lang !== 'en' && !translatedOnce;
+    if (!neverTranslated) {
+      translateStaticText();
+      translateAttributes();
+      translateDynamicNodes();
+    }
     document.dispatchEvent(new CustomEvent('sv:languagechange', { detail: { lang } }));
   }
 

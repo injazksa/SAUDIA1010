@@ -151,11 +151,16 @@ function preloadLeaflet() {
  const link = document.createElement('link');
  link.rel = 'stylesheet';
  link.href = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css';
+ // 2026-11-05 (security): Subresource Integrity — the browser refuses the file if the CDN copy is ever altered
+ link.integrity = 'sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw==';
+ link.crossOrigin = 'anonymous'; link.referrerPolicy = 'no-referrer';
  document.head.appendChild(link);
  
  // Load Leaflet JS
  const script = document.createElement('script');
  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
+ script.integrity = 'sha512-puJW3E/qXDqYp9IfhAI54BJEaWIfloJ7JWs7OeD5i6ruC9JZL1gERT1wjtwXFlh7CjE7ZJ+/vcRZRkIYIb6p4g==';
+ script.crossOrigin = 'anonymous'; script.referrerPolicy = 'no-referrer';
  script.onload = () => {
  console.log('✅ Leaflet library loaded');
  // Reinitialize map if it wasn't initialized yet

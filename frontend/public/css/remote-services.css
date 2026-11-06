@@ -1,0 +1,114 @@
+/* «إنجاز المعاملات والوثائق من الأردن عن بُعد» (2026-11-06) — only classes prefixed «rs-», loaded by
+   remote-document-services-jordan/ only. Colours, radii and shadows are the design-system tokens of css/saudia-ds.css
+   (navy / gold); no shared class is restyled. */
+
+/* hero */
+.rs-hero .sd-ph::after { content: ""; position: absolute; inset: 0; background: linear-gradient(270deg, rgba(11, 22, 40, .92) 0%, rgba(11, 22, 40, .72) 55%, rgba(11, 22, 40, .35) 100%); }
+/* phones/tablets: the text covers the whole picture, so the picture is kept calm behind it (readability first) */
+@media (max-width: 959px) { .rs-hero .sd-ph::after { background: linear-gradient(180deg, rgba(11, 22, 40, .90) 0%, rgba(11, 22, 40, .82) 100%); } }
+.rs-hero-in { padding-block: 26px 40px; }
+@media (min-width: 960px) { .rs-hero-in { padding-block: 34px 64px; } }
+.rs-hero h1 { font-size: clamp(28px, 6.2vw, 46px); line-height: 1.3; max-width: 18ch; }
+.rs-hero-lead { max-width: 60ch; }
+.rs-legend { list-style: none; margin: 22px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* the four ways a service is done (labels on every card) */
+.rs-mode { display: inline-flex; align-items: center; gap: 6px; font-family: var(--sd-kufi); font-size: 13px; font-weight: 700; line-height: 1.4; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--sd-rule-cool); background: #fff; color: var(--sd-navy-800); }
+.rs-mode svg { width: 15px; height: 15px; flex: none; }
+.rs-mode.is-remote { background: var(--sd-gold-50); border-color: var(--sd-gold-300); color: var(--sd-gold-700); }
+.rs-mode.is-poa { background: var(--sd-navy-50); border-color: var(--sd-navy-200); color: var(--sd-navy-800); }
+.rs-mode.is-guide { background: #fff; border-color: var(--sd-rule-cool); color: var(--sd-navy-700); }
+.rs-mode.is-person { background: #fff; border-color: var(--sd-navy-300); color: var(--sd-navy-900); border-style: dashed; }
+.sd-dark .rs-mode { background: rgba(255, 255, 255, .06); border-color: rgba(255, 255, 255, .22); color: #fff; }
+.sd-dark .rs-mode.is-remote { border-color: var(--sd-gold-400); color: var(--sd-gold-300); }
+
+/* group picker */
+.rs-jump { display: grid; gap: 10px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 640px) { .rs-jump { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1080px) { .rs-jump { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.rs-jump a { display: flex; gap: 12px; align-items: flex-start; min-height: 56px; padding: 14px; border: 1px solid var(--sd-rule-cool); border-radius: var(--sd-r-lg); background: #fff; text-decoration: none !important; color: var(--sd-ink) !important; box-shadow: var(--sd-sh-1); transition: border-color var(--sd-fast) var(--sd-ease), box-shadow var(--sd-fast) var(--sd-ease); }
+.rs-jump a:hover, .rs-jump a:focus-visible { border-color: var(--sd-gold-300); box-shadow: var(--sd-sh-2); }
+.rs-jump .sd-ico { margin: 0; width: 40px; height: 40px; }
+.rs-jump b { display: block; font-family: var(--sd-kufi); font-size: 15.5px; line-height: 1.45; color: var(--sd-navy-900); }
+.rs-jump small { display: block; margin-top: 3px; font-size: 13.5px; line-height: 1.6; color: var(--sd-muted); }
+
+/* how it works */
+.rs-steps { margin-bottom: 22px; }
+.rs-facts .sd-notice p { margin: 0; font-size: 15px; }
+
+/* a service group */
+.rs-alt { background: var(--sd-paper); }
+.rs-group { scroll-margin-top: 80px; }
+.rs-group-head { display: grid; gap: 20px; align-items: center; margin-bottom: 26px; }
+@media (min-width: 960px) { .rs-group-head { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 36px; margin-bottom: 32px; } }
+.rs-fig { margin: 0; border-radius: var(--sd-r-lg); overflow: hidden; background: var(--sd-navy-900); box-shadow: var(--sd-sh-2); aspect-ratio: 16 / 9; position: relative; }
+.rs-fig::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(201, 163, 94, .35); pointer-events: none; }
+.rs-fig img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.rs-group-text h2 { margin: 6px 0 0; font-size: clamp(24px, 4.6vw, 32px); line-height: 1.35; }
+.rs-en { margin-top: 2px; color: var(--sd-gold-700) !important; opacity: 1 !important; } /* on a light background: the text gold of the design system, at full opacity (contrast ≥ 4.5 on paper and white) */
+.rs-group-text .sd-lead { margin-top: 10px; font-size: 17.5px; }
+
+/* a service card */
+.rs-cards { align-items: start; }
+.rs-svc { display: flex; flex-direction: column; gap: 12px; scroll-margin-top: 84px; }
+.rs-svc-head { display: flex; gap: 12px; align-items: flex-start; }
+.rs-svc-head .sd-ico { margin: 0; }
+.rs-svc h3 { margin: 0 0 8px; font-size: 18px; line-height: 1.5; color: var(--sd-navy-900); }
+.rs-modes { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.rs-sum { margin: 0; font-size: 15.5px; }
+.rs-more { border: 1px solid var(--sd-rule-cool); border-radius: 12px; background: var(--sd-navy-50); }
+.rs-more summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 14px; font-family: var(--sd-kufi); font-size: 14.5px; font-weight: 700; color: var(--sd-navy-800); }
+.rs-more summary::-webkit-details-marker { display: none; }
+.rs-more summary svg { width: 18px; height: 18px; flex: none; }
+.rs-more summary svg:last-child { margin-inline-start: auto; transition: transform var(--sd-fast) var(--sd-ease); }
+.rs-more[open] summary svg:last-child { transform: rotate(180deg); }
+.rs-more[open] { background: #fff; }
+.rs-qa { margin: 0; padding: 4px 14px 14px; display: grid; gap: 12px; }
+.rs-qa div { padding-top: 10px; border-top: 1px dashed var(--sd-rule-cool); }
+.rs-qa dt { font-family: var(--sd-kufi); font-size: 14px; font-weight: 700; color: var(--sd-gold-700); margin-bottom: 3px; }
+.rs-qa dd { margin: 0; font-size: 15px; line-height: 1.8; }
+.rs-src { margin: 0; padding: 0 14px 14px; }
+.rs-actions { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; margin-top: auto; padding-top: 4px; }
+.rs-actions .sd-btn { min-height: 44px; white-space: normal; text-align: start; max-width: 100%; }
+
+/* the UAE embassy attestation, highlighted (owner 2026-11-06) */
+.rs-uae { background: linear-gradient(180deg, var(--sd-gold-50), #fff 70%); border-block: 1px solid var(--sd-gold-100); scroll-margin-top: 80px; }
+.rs-uae-grid { display: grid; gap: 24px; align-items: start; }
+@media (min-width: 960px) { .rs-uae-grid { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 40px; } }
+.rs-uae h2 { margin: 6px 0 0; font-size: clamp(24px, 4.6vw, 32px); line-height: 1.35; }
+.rs-uae .sd-lead { margin-top: 10px; font-size: 17.5px; }
+.rs-uae h3 { margin: 22px 0 10px; font-size: 19px; color: var(--sd-navy-900); }
+.rs-uae-docs { gap: 10px; font-size: 15.5px; }
+.rs-uae-steps h4 { margin: 0 0 4px; font-family: var(--sd-kufi); font-size: 17px; color: var(--sd-navy-900); }
+.rs-uae-steps p { font-size: 15.5px; }
+.rs-uae-panel { display: grid; gap: 14px; padding: 22px; border-radius: var(--sd-r-lg); background: #fff; border: 1px solid var(--sd-gold-300); box-shadow: var(--sd-sh-2); }
+@media (min-width: 960px) { .rs-uae-panel { position: sticky; top: 96px; } }
+.rs-uae-fact { display: flex; gap: 12px; align-items: flex-start; }
+.rs-uae-fact .sd-ico { margin: 0; }
+.rs-uae-fact b { display: block; font-family: var(--sd-kufi); font-size: 15.5px; line-height: 1.5; color: var(--sd-navy-900); }
+.rs-uae-fact p { margin: 2px 0 0; font-size: 14.5px; color: var(--sd-muted); }
+.rs-uae-panel .sd-btn { min-height: 46px; justify-content: center; white-space: normal; text-align: center; }
+.rs-jump .rs-jump-feature { border-color: var(--sd-gold-300); background: linear-gradient(180deg, var(--sd-gold-50), #fff); }
+/* print: no section background/border on paper (the whole sheet was one box, so the watermark had no free space) */
+@media print { .rs-uae-panel .sd-btn { display: none !important; } .rs-uae-panel { position: static; box-shadow: none; } .rs-uae { background: none !important; border: 0 !important; } }
+
+/* FAQ and closing */
+.rs-faq-wrap { max-width: 900px; }
+.rs-related a { color: #fff !important; }
+
+@media (max-width: 639px) {
+  .rs-svc { padding: 18px; }
+  .rs-actions .sd-btn-gold { width: 100%; justify-content: center; }
+  .rs-hero .sd-row .sd-btn { width: 100%; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) { .rs-jump a, .rs-more summary svg:last-child { transition: none; } }
+
+/* print: each service prints with its title, how it is done and its summary (all six answers open would be ~29 sheets);
+   pictures, buttons and the «تفاصيل الخدمة» toggle stay off paper. Tighter group spacing keeps every sheet within A4
+   (with the screen spacing one sheet ran over and left a blank page). No text size is changed. */
+@media print {
+  .rs-fig, .rs-actions, .rs-jump, .rs-legend, .rs-hero .sd-row, .rs-more { display: none !important; }
+  .rs-svc { break-inside: avoid; box-shadow: none; }
+  .rs-group.sd-section { padding-block: 20px !important; }
+  .rs-group-head { margin-bottom: 12px; }
+}

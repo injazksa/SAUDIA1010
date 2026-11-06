@@ -13,7 +13,10 @@
   'use strict';
 
   // ───── 1) Facebook Pixel Base Code ─────────────────────────────────
-  !function (f, b, e, v, n, t, s) {
+  // The fbq stub is created at once and queues every call; Facebook's own script (fbevents.js, ~112 KB) is only
+  // downloaded after the page has loaded and the browser is idle (max ~3 s), so it no longer competes with the page.
+  // Queued events (PageView, clicks) are sent when it arrives. (Speed change 2026-10-25, see PROJECT_HANDOVER.md)
+  !function (f, b, e, v, n) {
     if (f.fbq) return;
     n = f.fbq = function () {
       n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
@@ -23,10 +26,17 @@
     n.loaded = !0;
     n.version = '2.0';
     n.queue = [];
-    t = b.createElement(e); t.async = !0;
-    t.src = v;
-    s = b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t, s);
+    var injected = false;
+    function inject() {
+      if (injected) return; injected = true;
+      var t = b.createElement(e); t.async = !0; t.src = v;
+      var s = b.getElementsByTagName(e)[0];
+      (s && s.parentNode ? s.parentNode : b.head).insertBefore(t, s || null);
+    }
+    function later() {
+      if ('requestIdleCallback' in f) f.requestIdleCallback(inject, { timeout: 3000 }); else setTimeout(inject, 1500);
+    }
+    if (b.readyState === 'complete') later(); else f.addEventListener('load', later, { once: true });
   }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
 
   fbq('init', '2499298600459646');
@@ -100,11 +110,12 @@
     init();
   }
 
-  // Re-scan when DOM changes (e.g. when professions load dynamically)
+  // Re-scan when DOM changes (e.g. when professions load dynamically) — at most once per 400 ms burst,
+  // instead of scanning every link of the page after every single DOM change.
+  let rescanTimer = null;
   const observer = new MutationObserver(() => {
-    attachWhatsAppTracking();
-    attachPhoneTracking();
-    attachEmailTracking();
+    if (rescanTimer) return;
+    rescanTimer = setTimeout(() => { rescanTimer = null; init(); }, 400);
   });
   observer.observe(document.body || document.documentElement, {
     childList: true,

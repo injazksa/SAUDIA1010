@@ -11,7 +11,10 @@
  * هذا الملف هو SW الوحيد — تم حذف advanced-service-worker.js
  */
 
-const VERSION = 'v2.4.0-2026-06-16';
+const VERSION = 'v2.6.0-2026-10-31';
+// a page that has a saved copy is shown from it when the network has not answered within this time (weak networks);
+// the network copy still arrives and replaces the saved one for the next visit
+const HTML_TIMEOUT_MS = 3500;
 const STATIC_CACHE = `saudia-static-${VERSION}`;
 const RUNTIME_CACHE = `saudia-runtime-${VERSION}`;
 const IMAGE_CACHE = `saudia-images-${VERSION}`;
@@ -50,6 +53,8 @@ self.addEventListener('activate', (event) => {
  .filter((key) => ![STATIC_CACHE, RUNTIME_CACHE, IMAGE_CACHE].includes(key))
  .map((key) => caches.delete(key))
  ))
+ // navigation preload: the page request starts while this worker is still starting up (no extra wait)
+ .then(() => (self.registration.navigationPreload ? self.registration.navigationPreload.enable().catch(() => {}) : null))
  .then(() => self.clients.claim())
  );
 });
@@ -71,13 +76,15 @@ self.addEventListener('fetch', (event) => {
 
  // تجاهل admin — لا تخزين مطلقاً
  if (url.pathname.startsWith('/admin')) return;
+ // server functions and anything with a query that carries a form / personal data: never cached
+ if (url.pathname.startsWith('/.netlify/')) return;
 
  // استراتيجية حسب نوع المورد
  const accept = request.headers.get('accept') || '';
 
  // HTML → Network First
  if (accept.includes('text/html') || url.pathname.endsWith('.html') || url.pathname === '/') {
- event.respondWith(networkFirst(request, RUNTIME_CACHE));
+ event.respondWith(pageFirst(event, request, RUNTIME_CACHE));
  return;
  }
 
@@ -104,6 +111,25 @@ self.addEventListener('fetch', (event) => {
 });
 
 // ─── STRATEGIES ───
+
+// pages (2026-10-31): the network first (always the latest page), using the preloaded response when there is one;
+// on a slow network a saved copy is shown after HTML_TIMEOUT_MS and the network answer still updates the cache.
+async function pageFirst(event, request, cacheName) {
+ const cache = await caches.open(cacheName);
+ const network = (async () => {
+  const pre = event.preloadResponse ? await event.preloadResponse.catch(() => null) : null;
+  const res = pre || await fetch(request);
+  if (res && res.ok && res.type === 'basic') cache.put(request, res.clone()).catch(() => {});
+  return res;
+ })();
+ event.waitUntil(network.catch(() => {}));
+ const cached = await cache.match(request);
+ if (!cached) {
+  try { return await network; } catch { return (await caches.match('/offline.html')) || new Response('Offline', { status: 503, headers: { 'Content-Type': 'text/plain; charset=utf-8' } }); }
+ }
+ const slow = new Promise((r) => setTimeout(() => r(null), HTML_TIMEOUT_MS));
+ try { return (await Promise.race([network, slow])) || cached; } catch { return cached; }
+}
 
 async function cacheFirst(request, cacheName) {
  const cached = await caches.match(request);

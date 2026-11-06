@@ -11,7 +11,7 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=(), interest-cohort=(), payment=(), usb=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://fonts.googleapis.com https://identity.netlify.com https://unpkg.com https://cdn.jsdelivr.net https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://unpkg.com; img-src 'self' data: blob: https: https://static.prod-images.emergentagent.com https://www.facebook.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:; connect-src 'self' https://*.tile.openstreetmap.org https://saudia-visa.com https://www.facebook.com https://connect.facebook.net https://identity.netlify.com https://api.github.com https://www.googletagmanager.com https://www.google-analytics.com; frame-src https://www.google.com https://www.facebook.com https://www.openstreetmap.org; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://identity.netlify.com; object-src 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; img-src 'self' data: blob: https:; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:; connect-src 'self' https://*.tile.openstreetmap.org https://saudia-visa.com https://www.facebook.com https://connect.facebook.net https://www.googletagmanager.com https://www.google-analytics.com; frame-src https://www.google.com https://www.facebook.com https://www.openstreetmap.org; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
   Cross-Origin-Opener-Policy: same-origin-allow-popups
   Cross-Origin-Resource-Policy: same-site
   # ── كاش افتراضي ──
@@ -59,6 +59,17 @@
 /*.woff2
   Cache-Control: public, max-age=31536000, immutable
 
+# 2026-10-31: self-hosted icons and fonts (same files as cdnjs / Google Fonts; the version is in the path or name)
+/vendor/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/fonts/google/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/css/gf-*
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: text/css; charset=utf-8
+
 /manifest.json
   Cache-Control: public, max-age=86400
   Content-Type: application/manifest+json; charset=utf-8
@@ -71,21 +82,31 @@
   Cache-Control: public, max-age=3600
   Content-Type: application/xml; charset=utf-8
 
+# ── ملفات الذكاء الاصطناعي (تتولد عند كل نشر من scripts/ai-files.mjs) ──
 /llms.txt
   Cache-Control: public, max-age=86400
+  Content-Type: text/plain; charset=utf-8
 
 /llms-full.txt
   Cache-Control: public, max-age=86400
+  Content-Type: text/plain; charset=utf-8
+
+/llms-professions.txt
+  Cache-Control: public, max-age=86400
+  Content-Type: text/plain; charset=utf-8
+
+/ai.txt
+  Cache-Control: public, max-age=86400
+  Content-Type: text/plain; charset=utf-8
 
 # ── بيانات المحتوى — مخفية عن الفهرسة ──
 /content/*
   X-Robots-Tag: noindex, nofollow
   Cache-Control: no-store
 
-# ── AI plugin JSON — للفهرسة الذكية ──
+# ── .well-known (ملف ai-plugin.json القديم حُذف في 2026-11-04؛ بقي security.txt بنوعه الخاص أدناه) ──
 /.well-known/*
   Cache-Control: public, max-age=3600
-  Content-Type: application/json; charset=utf-8
 
 # ── security.txt الرسمي (معيار RFC 9116 للإبلاغ الأمني) ──
 /.well-known/security.txt
@@ -97,12 +118,7 @@
 # منع الفهرسة + منع الكاش + منع التضمين لكل المسارات الإدارية والتكوينية
 # ═══════════════════════════════════════════════════════════════
 
-# ── لوحة الإدارة (Decap CMS) — محظورة تماماً عن البوتات ──
-/admin-secure/*
-  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet, noimageindex
-  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
-  X-Frame-Options: DENY
-  Referrer-Policy: no-referrer
+# ── لوحة الإدارة القديمة (Decap CMS) حُذفت في 2026-11-05 بقرار المالك؛ عنوانها يعطي 404 من _redirects ──
 
 # ── ملفات التكوين الحساسة — منع الوصول والفهرسة ──
 /*.yml

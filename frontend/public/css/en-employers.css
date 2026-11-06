@@ -1,0 +1,113 @@
+/* English employers page (2026-11-06) — only classes prefixed «ee-», loaded by en/saudi-visa-processing-partner-jordan.html
+   only. Colours, radii and shadows are the design-system tokens of css/saudia-ds.css (navy / gold); no shared class is
+   restyled. */
+.ee-card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.ee-card-head .sd-ico { margin: 0; }
+.ee-card-head h3 { margin: 0; }
+.ee-scope .sd-check-list { gap: 10px; }
+.ee-scope .sd-small { margin-top: 14px; }
+
+.ee-services .sd-card { display: flex; flex-direction: column; gap: 8px; transition: border-color var(--sd-fast) var(--sd-ease), box-shadow var(--sd-fast) var(--sd-ease), transform var(--sd-fast) var(--sd-ease); }
+.ee-services .sd-card:hover { border-color: var(--sd-gold-300); box-shadow: var(--sd-sh-2); transform: translateY(-2px); }
+.ee-services .sd-card .sd-ico { margin-bottom: 4px; }
+.ee-services h3 { font-size: 18px; line-height: 1.4; margin: 0; }
+.ee-services p { margin: 0; }
+.ee-dep { margin-top: auto !important; padding-top: 10px; border-top: 1px dashed var(--sd-rule-cool); font-size: 14px; color: var(--sd-muted); }
+.ee-dep b { color: var(--sd-navy-800); }
+.ee-more { margin-top: 18px; }
+.ee-more .sd-card h3 { margin: 6px 0 8px; }
+
+.ee-factors { display: flex; flex-wrap: wrap; gap: 8px; margin: -8px 0 18px; }
+.ee-tool { display: grid; gap: 16px; }
+.ee-form { display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 720px) { .ee-form { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1080px) { .ee-form { grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 1.2fr); } }
+.ee-field { display: grid; gap: 6px; font-family: var(--sd-kufi); font-size: 14px; font-weight: 700; color: var(--sd-navy-800); }
+.ee-field .sd-input { font-family: inherit; font-weight: 400; font-size: 16px; }
+.ee-diploma p { margin: 0; font-size: 15px; }
+.ee-summary { margin: 0; font-family: var(--sd-kufi); font-weight: 700; color: var(--sd-navy-800); }
+.ee-common { padding: 12px 14px; border-radius: var(--sd-r-md); background: var(--sd-navy-50); color: var(--sd-ink); font-size: 14.5px; }
+.ee-common b { color: var(--sd-navy-900); }
+.ee-results { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 900px) { .ee-results { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.ee-occ { border: 1px solid var(--sd-rule-cool); border-radius: var(--sd-r-lg); padding: 16px; background: #fff; display: grid; gap: 10px; align-content: start; }
+.ee-occ.is-match { border-inline-start: 4px solid var(--sd-ok); }
+.ee-occ.is-review { border-inline-start: 4px solid var(--sd-gold-500); }
+.ee-occ.is-nomatch { border-inline-start: 4px solid var(--sd-err); background: #FCFBF9; }
+.ee-occ-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+.ee-occ h3 { margin: 0; font-size: 17px; line-height: 1.4; }
+.ee-code { font-family: var(--sd-kufi); font-variant-numeric: tabular-nums; font-size: 13px; color: var(--sd-muted); white-space: nowrap; }
+.ee-fit { display: inline-flex; align-items: center; gap: 6px; font-family: var(--sd-kufi); font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 999px; justify-self: start; }
+.ee-fit.is-match { background: var(--sd-ok-50); color: var(--sd-ok); }
+.ee-fit.is-review { background: var(--sd-gold-50); color: var(--sd-gold-700); }
+.ee-fit.is-nomatch { background: var(--sd-err-50); color: var(--sd-err); }
+.ee-fit.is-none { background: var(--sd-navy-50); color: var(--sd-navy-800); }
+.ee-meta { margin: 0; font-size: 14px; color: var(--sd-muted); }
+.ee-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.ee-chips .sd-chip { font-size: 12px; }
+.ee-occ details { font-size: 14px; }
+.ee-occ details summary { cursor: pointer; font-family: var(--sd-kufi); font-weight: 700; color: var(--sd-navy-800); }
+.ee-occ details ul { margin: 8px 0 0; padding-inline-start: 18px; display: grid; gap: 4px; }
+.ee-links { display: flex; flex-wrap: wrap; gap: 8px 14px; font-size: 14px; }
+.ee-links a { font-weight: 700; }
+.ee-actions { justify-content: center; }
+.ee-disclaimer { margin-top: 14px; max-width: 900px; }
+
+.ee-masar { display: grid; gap: 24px; align-items: center; }
+@media (min-width: 900px) { .ee-masar { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); } }
+.ee-masar-list { background: #fff; border: 1px solid var(--sd-rule-cool); border-radius: var(--sd-r-lg); padding: 20px; box-shadow: var(--sd-sh-1); }
+
+.ee-corp .sd-card h3, .ee-start h3 { margin: 4px 0 8px; font-size: 18px; }
+.ee-nominate { border-style: dashed; background: var(--sd-paper); }
+.ee-steps { margin-bottom: 24px; }
+.ee-start { align-items: start; }
+
+.ee-contact { display: grid; gap: 10px; margin: 4px 0; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 720px) { .ee-contact { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1080px) { .ee-contact { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+.ee-contact div { padding: 12px 14px; border: 1px solid rgba(255, 255, 255, .14); border-radius: var(--sd-r-md); background: rgba(255, 255, 255, .04); }
+.ee-contact dt { font-family: var(--sd-kufi); font-size: 12.5px; font-weight: 700; color: var(--sd-gold-400); margin-bottom: 2px; }
+.ee-contact dd { margin: 0; font-size: 15px; }
+.ee-contact a { color: #fff !important; }
+
+/* coverage additions (2026-11-06) */
+.ee-audience { margin-top: 18px; }
+.ee-audience .sd-card h3, .ee-types h3, .ee-verify h3, .ee-routes h3, .ee-quals h3 { font-size: 17.5px; line-height: 1.4; margin: 4px 0 8px; }
+.ee-audience .sd-card p, .ee-types p, .ee-verify p, .ee-routes p { margin: 0; }
+.ee-facts { margin-top: 18px; }
+.ee-facts .sd-notice p { margin: 0; font-size: 15px; }
+.ee-types .sd-card, .ee-verify .sd-card { display: flex; flex-direction: column; gap: 6px; }
+.ee-note { margin-top: 16px; max-width: 900px; }
+.ee-journey { margin-bottom: 18px; }
+.ee-journey p b, .ee-verify a, .ee-glossary a { color: var(--sd-navy-800); }
+.ee-quals .sd-check-list { gap: 8px; font-size: 15px; }
+.ee-routes .sd-eyebrow { margin-bottom: 2px; }
+.ee-docs { margin-top: 18px; }
+.ee-docs .sd-check-list { gap: 10px; font-size: 15px; }
+.ee-docs .sd-small { margin-top: 12px; }
+.ee-tools-title { margin: 32px 0 6px; font-size: 20px; }
+.ee-tools-grid { margin-top: 14px; }
+.ee-tool-card { display: block; text-decoration: none !important; color: inherit !important; transition: border-color var(--sd-fast) var(--sd-ease), box-shadow var(--sd-fast) var(--sd-ease); }
+.ee-tool-card:hover, .ee-tool-card:focus-visible { border-color: var(--sd-gold-300); box-shadow: var(--sd-sh-2); }
+.ee-tool-card h4 { margin: 0 0 6px; font-size: 16.5px; color: var(--sd-navy-900); }
+.ee-tool-card p { margin: 0; font-size: 14.5px; color: var(--sd-muted); }
+.ee-models { margin-top: 14px; }
+.ee-models h4 { margin: 0 0 6px; font-size: 16.5px; }
+.ee-models p { margin: 0; font-size: 15px; }
+.ee-glossary { display: grid; gap: 10px; margin: 0; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 900px) { .ee-glossary { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.ee-glossary div { background: #fff; border: 1px solid var(--sd-rule-cool); border-radius: var(--sd-r-md); padding: 12px 14px; }
+.ee-glossary dt { font-family: var(--sd-kufi); font-weight: 700; color: var(--sd-navy-900); margin-bottom: 4px; }
+.ee-glossary dd { margin: 0; font-size: 14.5px; color: var(--sd-ink); }
+/* an opened occupation card no longer stretches the card beside it */
+.ee-results { align-items: start; }
+
+@media (prefers-reduced-motion: reduce) { .ee-services .sd-card { transition: none; } .ee-services .sd-card:hover { transform: none; } }
+@media print { .ee-tool, .ee-factors { display: none !important; } .ee-services .sd-card:hover { transform: none; box-shadow: none; } }
+/* print (2026-11-06): the contact section's screen padding left an empty 112 px shell at the foot of the FAQ sheet, which
+   spilled onto a blank paper page. On paper (no background) the padding is not needed. Class selector: the print sheet
+   clones the section without its id. */
+@media print { .sd-corp-contact { padding-top: 0 !important; padding-bottom: 16px !important; } }
+/* print: with the screen spacing the employment-contract note no longer fitted under the 8 steps, leaving a short sheet
+   with room for one watermark only. Tighter spacing (no text size change) keeps it on the same sheet. */
+@media print { .ee-journey { margin-bottom: 8px !important; } .ee-note { margin-top: 8px !important; } }

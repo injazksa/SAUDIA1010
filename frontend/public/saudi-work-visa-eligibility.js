@@ -66,12 +66,17 @@
     'أفغانستان','ألبانيا','ألمانيا','أندورا','أنغولا','أنتيغوا وبربودا','أرمينيا','أستراليا','النمسا','أذربيجان','الباهاما','بنغلاديش','بربادوس','بيلاروسيا','بلجيكا','بليز','بنين','بوتان','بوليفيا','البوسنة والهرسك','بوتسوانا','البرازيل','بروناي','بلغاريا','بوركينا فاسو','بوروندي','كمبوديا','الكاميرون','كندا','الرأس الأخضر','جمهورية أفريقيا الوسطى','تشاد','تشيلي','الصين','كولومبيا','جمهورية الكونغو','جمهورية الكونغو الديمقراطية','كوستاريكا','ساحل العاج','كرواتيا','كوبا','قبرص','التشيك','الدنمارك','دومينيكا','جمهورية الدومينيكان','الإكوادور','السلفادور','غينيا الاستوائية','إستونيا','إسواتيني','فيجي','فنلندا','فرنسا','الغابون','غامبيا','جورجيا','غانا','اليونان','غرينادا','غواتيمالا','غينيا','غينيا بيساو','غيانا','هايتي','هندوراس','المجر','آيسلندا','الهند','إندونيسيا','إيران','أيرلندا','إيطاليا','جامايكا','اليابان','كازاخستان','كينيا','كيريباتي','كوريا الشمالية','كوريا الجنوبية','كوسوفو','قيرغيزستان','لاوس','لاتفيا','ليسوتو','ليبيريا','ليختنشتاين','ليتوانيا','لوكسمبورغ','مدغشقر','مالاوي','ماليزيا','جزر المالديف','مالي','مالطا','جزر مارشال','موريشيوس','المكسيك','ميكرونيزيا','مولدوفا','موناكو','منغوليا','الجبل الأسود','موزمبيق','ميانمار','ناميبيا','ناورو','نيبال','هولندا','نيوزيلندا','نيكاراغوا','النيجر','نيجيريا','مقدونيا الشمالية','النرويج','باكستان','بالاو','بنما','بابوا غينيا الجديدة','باراغواي','بيرو','الفلبين','بولندا','البرتغال','رومانيا','روسيا','رواندا','سانت كيتس ونيفيس','سانت لوسيا','سانت فنسنت والغرينادين','ساموا','سان مارينو','ساو تومي وبرينسيب','السنغال','صربيا','سيشل','سيراليون','سنغافورة','سلوفاكيا','سلوفينيا','جزر سليمان','جنوب أفريقيا','إسبانيا','سريلانكا','سورينام','السويد','سويسرا','طاجيكستان','تنزانيا','تايلاند','تيمور الشرقية','توجو','تونغا','ترينيداد وتوباغو','تركيا','تركمانستان','توفالو','أوغندا','أوكرانيا','المملكة المتحدة','الولايات المتحدة الأمريكية','أوروغواي','أوزبكستان','فانواتو','الفاتيكان','فنزويلا','فيتنام','ساموا الأمريكية','زامبيا','زيمبابوي'
   ];
 
-  const educationRank = { none: 0, school: 1, secondary: 2, diploma: 2, bachelor: 3, higher: 4 };
+  // 2026-10-30 fix: getProfile() names a university-degree profession 'university' — it was missing here, so its rank
+  // was 0 and ANY selected education (even «none») passed the education check. A university degree = bachelor level.
+  const educationRank = { none: 0, school: 1, secondary: 2, diploma: 2, bachelor: 3, university: 3, higher: 4 };
   let professions = [];
   let selectedRecord = null;
   let previousNationality = '';
   let currentDocuments = [];
   let currentDocumentContext = {};
+  // 2026-11-05 (security): text written with innerHTML is escaped — a typed profession or title must never run as markup.
+  // The documents and names have no markup of their own, so what the visitor sees is unchanged.
+  const escH = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
   function normalize(text) {
     return String(text || '')
@@ -136,15 +141,24 @@
     if (!age) return '';
     return english()
       ? `Your age is ${age.years} years, ${age.months} months and ${age.days} days (approximately ${age.totalDays.toLocaleString('en-US')} days).`
-      : `عمرك ${age.years} سنة و${age.months} شهر و${age.days} يوم (نحو ${age.totalDays.toLocaleString('ar-JO')} يوم).`;
+      : `عمرك ${age.years} سنة و${age.months} شهر و${age.days} يوم (نحو ${age.totalDays.toLocaleString('en-US')} يوم).`;
   }
 
   function isJordanian() { return normalize(nationalityEl.value).includes('اردن'); }
   function isSyrian() { return normalize(nationalityEl.value).includes('سوريا'); }
   function isOrdinarySchoolRole(record) { return ['العمال','الحرفيون'].includes(record?.category); }
   function isInvestorName(name) { return ['مدير عام','رئيس تنفيذي','رئيس مجلس إدارة'].some((item) => normalize(name) === normalize(item)); }
+  // owner 2026-10-29: the four senior categories (official codes) — age OVER 21, no upper limit, every nationality
+  const SENIOR_AGE_CODES = ['112001', '112002', '112004', '112009'];
+  const isSeniorAge = (record, name) => SENIOR_AGE_CODES.includes(String(record?._templateCode || record?.code || '')) || ['مدير عام', 'رئيس تنفيذي', 'رئيس مجلس إدارة', 'رئيس مجلس الإدارة', 'مستثمر'].some((item) => normalize(name) === normalize(item));
   function isInvestorProfession(name) { return isInvestorName(name); }
   function isEngineeringProfessionName(name) { return /مهندس|هندسه|هندسي/.test(normalize(name)); }
+  // the engineering GROUP comes from the record's own documents (Saudi Council of Engineers), as in every other tool;
+  // the title is only a fallback when the shared rules are not loaded (English mode)
+  function isEngineeringRecord(record) {
+    if (record && typeof window.professionProfile === 'function') return window.professionProfile(record).engineering;
+    return isEngineeringProfessionName(recordName(record));
+  }
   function isMedicalProfessionName(name) { return /طبيب|دكتور|طبيبه|صيدلي|صيدله|ممرض|ممرضه|تمريض|مختبر طبي/.test(normalize(name)); }
   function titleMatches(record, value) {
     const entered = normalize(value);
@@ -163,7 +177,9 @@
       : (/الثانوية|ثانوية/.test(text) ? 'secondary' : (/الصف العاشر|الشهادة المدرسية|شهادة الصف/.test(text) ? 'school' : null));
     const education = investorRole ? null : (explicitEducation || (['الاختصاصيون', 'المدراء'].includes(record?.category) ? 'university' : (record?.category === 'الفنيون' ? 'secondary' : (['العمال', 'الحرفيون'].includes(record?.category) ? 'school' : null))));
     const experience = investorRole ? 0 : (/خبرة[^.،]*سنتين|خبرة[^.،]*2/.test(text) ? 2 : (/خبرة/.test(text) ? 1 : 0));
-    const accreditation = investorRole ? false : /الاعتماد المهني|فحص مهني|QVP/.test(text);
+    const accreditation = investorRole ? false : /الاعتماد المهني|فحص مهني|الفحص المهني|التحقق المهني|QVP|SVP/.test(text);
+    // owner 2026-10-26: «التحقق المهني (QVP)» (university degree) vs «الفحص المهني (SVP)» (school level or less)
+    const accreditationType = !accreditation ? '' : /\(SVP\)|الفحص المهني/.test(text) ? 'SVP' : /\(QVP\)|التحقق المهني/.test(text) ? 'QVP' : 'GEN';
     const executiveDocuments = investorRole || /رخصة الاستثمار|السجل التجاري السعودي/.test(text);
     return {
       name,
@@ -171,12 +187,25 @@
       gender: record?.gender || '',
       isGeneralManager,
       education,
+      // owner 2026-10-28: professions whose data asks for the 10th grade say «ناجح على الأقل»; plain school certificates do not
+      grade10: education === 'school' && /الصف العاشر/.test(text),
       experience,
       accreditation,
+      accreditationType,
       executiveDocuments,
-      minAge: 21,
-      maxAge: isGeneralManager ? null : 60
+      // senior four (owner 2026-10-29): over 21 (21 exactly is not accepted), no upper limit; others: 21 to under 60
+      seniorAge: isSeniorAge(record, name),
+      minAge: isSeniorAge(record, name) ? 22 : 21,
+      // engineers: at least 21, no upper limit (owner 2026-10-25), as in the documents list
+      maxAge: isGeneralManager || isSeniorAge(record, name) || isEngineeringRecord(record) ? null : 60
     };
+  }
+
+  // the procedure's name for a profile (Arabic / English)
+  function verificationName(profile) {
+    if (profile.accreditationType === 'SVP') return tr('الفحص المهني (SVP)', 'professional examination (SVP)');
+    if (profile.accreditationType === 'QVP') return tr('التحقق المهني (QVP)', 'professional verification (QVP)');
+    return tr('الاعتماد المهني', 'professional accreditation');
   }
 
   function hairStylistName(value) {
@@ -187,16 +216,18 @@
   function findProfession(value) {
     const query = normalize(value);
     if (!query) return null;
-    if (hairStylistName(value)) {
-      const barber = professions.find((record) => normalize(recordName(record)) === normalize('حلاق')) || professions.find((record) => record?.gender === 'أنثى');
-      if (barber) return { ...barber, name_ar: value, profession_name_ar: value, gender: 'أنثى', code: '---', profession_code: '---', slug: 'مصفف-شعر' };
-    }
     const exact = professions.find((record) => [recordName(record), record?.name_en].some((value) => normalize(value) === query));
     if (exact) return exact;
     if (query === normalize('منسق منتجات')) {
       const quality = professions.find((record) => normalize(recordName(record)).includes(normalize('مراقب جودة')))
         || professions.find((record) => normalize(recordName(record)).includes(normalize('مساعد إداري')));
       if (quality) return { ...quality, name_ar: 'منسق منتجات', profession_name_ar: 'منسق منتجات', slug: 'منسق-منتجات' };
+    }
+    // owner 2026-10-26: one classifier for the whole platform (professions.js) — a synonym of a listed name, or an
+    // estimate by category built from a real record (e.g. «مصفف شعر», «حداد», «مهندس كهرباء»), labelled as an estimate
+    if (typeof window.SD_resolveTitle === 'function') {
+      const r = window.SD_resolveTitle(professions, value);
+      if (r && (r.kind === 'synonym' || r.kind === 'estimate')) return r.record;
     }
     return null;
   }
@@ -208,6 +239,9 @@
       option.textContent = english() ? (window.SV_TRANSLATE?.translateString?.(name) || name) : name;
       nationalityEl.appendChild(option);
     });
+    // owner 2026-10-27: one field to type or pick (js/sd-nationality.js); «اردني» and «أردني» find the same country
+    const natUp = () => { if (window.SD_NAT) window.SD_NAT.enhance(nationalityEl); };
+    if (window.SD_NAT) natUp(); else window.addEventListener('load', natUp);
   }
 
   function populateProfessions() {
@@ -315,10 +349,12 @@
     educationField.hidden = executive || !profile.education;
     experienceField.hidden = executive || !profile.experience;
     accreditationField.hidden = executive || !profile.accreditation;
+    const accLabel = accreditationField.querySelector('label');
+    if (accLabel && profile.accreditation) accLabel.textContent = tr(`7. هل أنجزت ${verificationName(profile)} المطلوب لهذه المهنة؟`, `7. Have you completed the ${verificationName(profile)} required for this profession?`);
     experienceTitleField.hidden = executive || !profile.experience;
     experienceTitleEl.required = !executive && Boolean(profile.experience);
     if (executive || !profile.experience) experienceTitleEl.value = '';
-    const engineering = !executive && isEngineeringProfessionName(profile.name);
+    const engineering = !executive && isEngineeringRecord(selectedRecord);
     engineeringFields.hidden = !engineering;
     graduationYearsEl.required = engineering;
     saudiBornEl.required = engineering;
@@ -365,8 +401,8 @@
   function educationDocument(profile, source, syrian) {
     const university = profile.education === 'university';
     const specialist = university && (isEngineeringProfessionName(profile.name) || isMedicalProfessionName(profile.name));
-    const arLabel = university ? (specialist ? 'أصل الشهادة الجامعية مع صور عنها وكشف العلامات' : 'صورة عن الشهادة الجامعية وكشف العلامات') : profile.education === 'secondary' ? 'شهادة الثانوية العامة الناجحة' : 'الشهادة المدرسية المطلوبة للمهنة';
-    const enLabel = university ? (specialist ? 'Original university certificate with copies and transcript' : 'Copy of university certificate and transcript') : profile.education === 'secondary' ? 'Pass certificate for general secondary education' : 'School certificate required for the profession';
+    const arLabel = university ? (specialist ? 'أصل الشهادة الجامعية مع صور عنها وكشف العلامات' : 'صورة عن الشهادة الجامعية وكشف العلامات') : profile.education === 'secondary' ? 'شهادة الثانوية العامة الناجحة' : profile.grade10 ? 'الشهادة المدرسية: الصف العاشر ناجح على الأقل' : 'الشهادة المدرسية المطلوبة للمهنة';
+    const enLabel = university ? (specialist ? 'Original university certificate with copies and transcript' : 'Copy of university certificate and transcript') : profile.education === 'secondary' ? 'Pass certificate for general secondary education' : profile.grade10 ? 'School certificate: Grade 10 passed at least' : 'School certificate required for the profession';
     const label = tr(arLabel, enLabel);
     const formNote = university
       ? (specialist ? tr('للمهن الهندسية والطبية: يجب إحضار أصل الشهادة الجامعية مع صور عنها، مهما كان بلد الإصدار.', 'For engineering and medical professions: bring the original university certificate with copies, regardless of the country of issue.') : tr('للمهن غير الهندسية والطبية: تُطلب صورة عن المؤهل الجامعي، مهما كان بلد الإصدار.', 'For non-engineering and non-medical professions: a copy of the university qualification is required, regardless of the country of issue.'))
@@ -398,7 +434,70 @@
     return { title: duration, note: notes[source] || notes.other };
   }
 
+  // 2026-10-24 (owner: one data source for every tool): the document list now comes from computeRequirements()
+  // in /professions.js — the same function the professions list and «مسار أوراقي» use — so a profession shows the
+  // same documents everywhere. The eligibility checks (renderResult/validateEligibility) are unchanged.
+  // This tool's existing issuing-country notes for the degree and experience are appended when relevant.
+  // English mode keeps the previous builder (computeRequirements produces Arabic text only).
+  const DOC_LABELS = [
+    // 2026-10-29: the documents added by the office rules (same names as «مسار أوراقي»)
+    [/خاصتان بالمكتب/, 'صور المكتب'], [/^قيد فردي/, 'القيد الفردي'], [/^عقد الزواج أو شهادة الزواج/, 'عقد الزواج أو شهادة الزواج'], [/جواز سفر الزوج/, 'صورة جواز الزوج'], [/جواز سفر ولي الأمر/, 'صورة جواز ولي الأمر'], [/^أوراق الحالة الاجتماعية/, 'أوراق الحالة الاجتماعية'],
+    [/^رخصة مزاولة/, 'رخصة مزاولة المهنة'], [/^عضوية (?:نقابة|النقابة)/, 'عضوية النقابة المهنية'], [/البورد/, 'البورد أو المؤهل التخصصي'], [/شهادة الماجستير/, 'شهادة الماجستير'], [/شهادة الدكتوراه/, 'شهادة الدكتوراه'], [/الشهادة الجامعية \(البكالوريوس\)/, 'شهادة البكالوريوس'],
+    [/عدم ممانعة/, 'موافقة ولي الأمر'], [/حسن سيرة|حسن السيرة/, 'حسن السيرة والسلوك'], [/لا حكم عليه/, 'لا حكم عليه'],
+    [/الوثائق العسكرية|مشروحات/, 'الوثائق العسكرية'], [/^تصديق الشهادات الجامعية/, 'تصديق الشهادات'],
+    [/الشهادة الجامعية|شهادة جامعية/, 'الشهادة الجامعية'], [/الشهادة المدرسية|شهادة مدرسية|الثانوية|الصف العاشر/, 'الشهادة المدرسية'],
+    [/خبرة|خبره/, 'شهادة الخبرة'], [/الفحص الطبي/, 'الفحص الطبي والبصمة'], [/خطاب\s*الاطلاع/, 'خطاب الاطلاع'], [/عقد العمل|عقد عمل/, 'عقد العمل'],
+    [/تفويض/, 'التفويض الإلكتروني'], [/مطعوم/, 'مطعوم السحايا'], [/عمر المتعاقد/, 'شرط العمر'], [/التخصصات الصحية|ممارس/, 'التصنيف المهني الصحي'],
+    [/DataFlow/, 'تقرير DataFlow'], [/مصادقة/, 'مصادقة الشهادة الجامعية (منصة مصادقة)'], [/الجهة الهندسية المختصة/, 'النقابة أو الجهة الهندسية في بلد الجنسية'], [/نقابة المهندسين/, 'نقابة المهندسين الأردنية'], [/هيئة المهندسين|الهيئة السعودية للمهندسين/, 'الهيئة السعودية للمهندسين'],
+    [/\(QVP\)|التحقق المهني/, 'التحقق المهني (QVP)'], [/\(SVP\)|الفحص المهني/, 'الفحص المهني (SVP)'], [/الاعتماد المهني/, 'الاعتماد المهني'], [/مزاولة/, 'مزاولة المهنة'], [/سجل تجاري|السجل التجاري/, 'السجل التجاري'],
+    [/رخصة السياقة|رخصة سياقة/, 'رخصة القيادة'], [/قيد عائلي|بيان فردي/, 'القيد العائلي'], [/بطاقة إقامة/, 'الإقامة الأردنية'], [/Syrian Board|نقابة الأطباء/, 'وثائق مزاولة الطب (سوريا)'],
+  ];
+  const docLabel = (text) => (DOC_LABELS.find(([re]) => re.test(text)) || [null, 'مستند'])[1];
   function buildDocuments(record, nationality, qualificationSource, experienceSource) {
+    if (english() || typeof window.computeRequirements !== 'function' || !document.getElementById('nationalityFilter')) {
+      return buildDocumentsLegacy(record, nationality, qualificationSource, experienceSource);
+    }
+    const set = (id, value) => { const el = document.getElementById(id); if (el) el.value = value; };
+    const jordanian = normalize(nationality).includes('اردن');
+    const genderEl = document.getElementById('applicantGender');
+    set('nationalityFilter', nationality || 'الأردن');
+    set('otherNationality', '');
+    set('residencyFilter', jordanian ? 'unknown' : (residencyEl.value === 'yes' ? 'resident' : residencyEl.value === 'no' ? 'not-resident' : 'unknown'));
+    set('genderFilter', genderEl && genderEl.value === 'female' ? 'female' : 'male');
+    const computed = window.computeRequirements(record);
+    const profile = getProfile(record);
+    const syrian = normalize(nationality).includes('سوريا');
+    const documents = computed.requirements.map((text) => {
+      let note = text;
+      if (/الشهادة الجامعية|شهادة جامعية|الشهادة المدرسية|شهادة مدرسية|الثانوية|الصف العاشر/.test(text) && !(jordanian && qualificationSource === 'jordan')) {
+        const extra = educationDocument(profile.education ? profile : { ...profile, education: 'school' }, qualificationSource, syrian).note;
+        note += ` — حسب مصدر الشهادة المختار (${sourceLabel(qualificationSource)}): ${extra}`;
+      }
+      if (/خبرة|خبره/.test(text) && profile.experience && !(jordanian && experienceSource === 'jordan')) {
+        const extra = experienceDocument(profile, experienceSource);
+        if (extra) note += ` — حسب مصدر الخبرة المختار (${sourceLabel(experienceSource)}): ${extra.note.replace(/^[^،]*،\s*/, '')}`;
+      }
+      return { title: docLabel(text), note };
+    });
+    // engineers (owner 2026-10-26): the same documents, shown in clearly separated groups
+    if (isEngineeringRecord(record)) {
+      const GROUPS = [
+        ['المتطلبات السعودية الموحدة (لا تتغير حسب الجنسية)', /التحقق المهني|مصادقة|الهيئة السعودية للمهندسين|هيئة المهندسين/],
+        ['النقابة أو الجهة المهنية حسب جنسيتك', /نقابة|عضوية/],
+        ['الشهادة الجامعية', /الشهادة الجامعية/],
+        ['الخبرة والمسمى في التأشيرة', /خبرة|خبره/],
+        ['حسن السيرة والسلوك حسب الجنسية والإقامة', /حسن سيرة|حسن السيرة|لا حكم عليه/],
+        ['ينفذها المكتب أو يحجز مواعيدها', /الفحص الطبي|تفويض/],
+      ];
+      const groupOf = (d) => { const i = GROUPS.findIndex(([, re]) => re.test(d.note)); return i < 0 ? GROUPS.length : i; };
+      documents.forEach((d) => { if (d.title !== 'ملاحظة') { const g = groupOf(d); d.group = g < GROUPS.length ? GROUPS[g][0] : 'أوراق أخرى'; d._g = g; } else d._g = GROUPS.length + 1; });
+      documents.sort((a, b) => a._g - b._g);
+    }
+    if (computed.note) documents.push({ title: 'ملاحظة', note: computed.note });
+    return documents;
+  }
+
+  function buildDocumentsLegacy(record, nationality, qualificationSource, experienceSource) {
     const profile = getProfile(record);
     const raw = requirementsText(record);
     const syrian = normalize(nationality).includes('سوريا');
@@ -421,9 +520,9 @@
 
     // المسار النسائي يستبدل مشروحات الجيش، ولا يتطلب من الزائرة اختيار الجنس يدويًا إذا كان المسمى نسائيًا.
     if (female) {
-      add(tr('عدم ممانعة من ولي الأمر أو الزوج حسب الحالة', 'No-objection document from the guardian or husband, as applicable'), tr('للمتزوجة: شهادة زواج وعدم ممانعة الزوج وصورة جوازه. للعزباء: عدم ممانعة ولي الأمر وقيد فردي وصورة جوازه.', 'For a married applicant: marriage certificate, the husband’s no-objection document and a copy of his passport. For an unmarried applicant: the guardian’s no-objection document, an individual civil record and a copy of the guardian’s passport.'));
+      add(tr('عدم ممانعة من ولي الأمر أو الزوج حسب الحالة', 'No-objection document from the guardian or husband, as applicable'), tr('للمتزوجة: عدم ممانعة الزوج، وعقد الزواج أو شهادة الزواج (يُقبل أحدهما) مختومًا من وزارة الخارجية الأردنية، وصورة جواز سفر الزوج. للعزباء: عدم ممانعة ولي الأمر (رجل من الأقارب كالأب أو الأخ أو العم أو الخال؛ ولا تُقبل الأم وحدها)، وقيد فردي مختوم من وزارة الخارجية الأردنية، وصورة جواز سفر ولي الأمر. تُختم عدم الممانعة حسب مصدرها: من مركز أمني من وزارة الداخلية ثم وزارة الخارجية الأردنية، ومن المحكمة من المحكمة ثم دائرة قاضي القضاة ثم وزارة الخارجية الأردنية.', 'Married: the husband’s no-objection document, the marriage contract or certificate (either one) stamped by the Jordanian Ministry of Foreign Affairs, and a copy of the husband’s passport. Unmarried: the no-objection document of the guardian (a male relative such as father, brother or uncle; the mother alone is not accepted), an individual civil record stamped by the Jordanian Ministry of Foreign Affairs and a copy of the guardian’s passport. The no-objection document is stamped according to its source: security centre → Ministry of Interior then Ministry of Foreign Affairs; court → the court, then the Chief Justice Department, then the Ministry of Foreign Affairs.'));
     } else if (isJordanianApplicant && /الوثائق العسكرية|مشروحات/.test(raw)) {
-      add(tr('مشروحات الجيش والوثائق العسكرية', 'Military-status and military documents'), tr('أصل المشروحات والوثائق المطلوبة، مختومة حسب الأصول من الجهات المختصة ثم وزارة الخارجية الأردنية.', 'Original military-status documents, properly stamped by the relevant authorities and then by the Jordanian Ministry of Foreign Affairs.'));
+      add(tr('مشروحات الجيش والوثائق العسكرية', 'Military-status and military documents'), tr('أصل المشروحات والوثائق المطلوبة، مختومة حسب الأصول من الجهات المختصة ثم وزارة الخارجية الأردنية؛ ويُحضر عند مراجعة الجهة المختصة أصل جواز السفر وصورتان شخصيتان.', 'Original military-status documents, properly stamped by the relevant authorities and then by the Jordanian Ministry of Foreign Affairs; bring the original passport and two personal photographs to the relevant authority.'));
     }
 
     if (profile.education) {
@@ -431,15 +530,20 @@
       add(item.title, item.note);
     }
 
-    if (/الفحص الطبي|الفحص الطبي والبصمة/.test(raw) || profile.education || profile.experience) add(tr('الفحص الطبي والبصمة', 'Medical examination and biometrics'), tr('يُحددان من خلال مكتبنا في عمّان لدى المراكز المعتمدة، ويُحضر المتقدم جواز السفر والصور المطلوبة حسب نوع المعاملة.', 'These are arranged through our office in Amman at approved centres. The applicant should bring the passport and photographs required for the transaction.'));
+    if (/الفحص الطبي|الفحص الطبي والبصمة/.test(raw) || profile.education || profile.experience) add(tr('الفحص الطبي والبصمة', 'Medical examination and biometrics'), tr('يُحددان من خلال مكتبنا في عمّان لدى المراكز المعتمدة، ويُحضر المتقدم أصل جواز السفر وصورتين شخصيتين للفحص الطبي والبصمة.', 'These are arranged through our office in Amman at approved centres. The applicant brings the original passport and two personal photographs for the medical examination and biometrics.'));
+    // owner 2026-10-29: the office's own photos — a separate item (the military item, for men, has its own two photos)
+    add(tr('صور المكتب', 'Photographs for the office'), tr('صورتان شخصيتان حديثتان بخلفية بيضاء خاصتان بالمكتب (لملف المعاملة).', 'Two recent personal photographs with a white background for the office file.'));
 
     const experience = experienceDocument(profile, experienceSource);
     if (experience) add(experience.title, experience.note);
 
-    if (profile.accreditation) add(tr('الاعتماد أو التحقق المهني QVP', 'QVP professional verification or assessment'), tr('الحصول على الاعتماد أو اجتياز التحقق المهني QVP إذا كان مطلوباً للمسمى المختار.', 'Obtain the required professional verification or pass the QVP assessment if it applies to the selected title.'));
+    if (profile.accreditation) add(verificationName(profile), profile.accreditationType === 'SVP'
+      ? tr('التقديم على الفحص المهني (SVP) واجتيازه، ويشمل الامتحان النظري عند انطباقه.', 'Apply for and pass the professional examination (SVP), including the theory test where it applies.')
+      : tr('الحصول على شهادة التحقق المهني (QVP) إذا كان مطلوباً للمسمى المختار.', 'Obtain the professional verification (QVP) certificate if it applies to the selected title.'));
     if (/عقد عمل|خطاب إطلاع/.test(raw) || profile.experience || profile.education) {
       add(tr('عقد العمل', 'Employment contract'), tr('صورة عن عقد العمل الصادر من الشركة السعودية، مختومة من الغرفة التجارية السعودية ووزارة الخارجية السعودية.', 'A copy of the employment contract issued by the Saudi company, stamped by the Saudi Chamber of Commerce and the Saudi Ministry of Foreign Affairs.'));
-      add(tr('خطاب الاطلاع', 'Authorization letter'), tr('صورة عن خطاب الاطلاع الصادر من الشركة السعودية، مختومة من الغرفة التجارية السعودية ووزارة الخارجية السعودية.', 'A copy of the authorization letter issued by the Saudi company, stamped by the Saudi Chamber of Commerce and the Saudi Ministry of Foreign Affairs.'));
+      // owner 2026-10-26: the information letter only where the record asks for it (university-degree professions)
+      if (/خطاب\s*(?:ال)?(?:إ|ا)طلاع/.test(raw)) add(tr('خطاب الاطلاع', 'Authorization letter'), tr('صورة عن خطاب الاطلاع الصادر من الشركة السعودية، مختومة من الغرفة التجارية السعودية ووزارة الخارجية السعودية.', 'A copy of the authorization letter issued by the Saudi company, stamped by the Saudi Chamber of Commerce and the Saudi Ministry of Foreign Affairs.'));
     }
     add(tr('التفويض الإلكتروني', 'Electronic authorization'), tr('عمل تفويض إلكتروني إلى مكتب تأشيرات السعودية في الأردن لإنجاز المعاملة.', 'Issue an electronic authorization to the Saudi visa office in Jordan to process the transaction.'));
     add(tr('شرط العمر', 'Age requirement'), profile.isGeneralManager ? tr('إتمام 21 سنة أو أكثر للمدير العام، ولا يوجد حد أعلى للعمر ضمن هذا الفحص الأولي.', 'The General Manager must be at least 21 years old; no upper age limit is applied in this check.') : tr('إتمام 21 سنة أو أكثر، وأن يكون العمر أقل من 60 سنة للمهن العادية.', 'The applicant must be at least 21 and under 60 for ordinary professions.'));
@@ -489,10 +593,14 @@
       ? tr('هذه قائمة إرشادية للمهنة في الحالة السورية. تواصل مع المكتب لتأكيد القائمة النهائية قبل تجهيز الأصول.', 'This is a guidance list for the profession in the Syrian case. Contact the office to confirm the final list before preparing originals.')
       : tr('هذه قائمة أولية مرتبطة بسجل المهنة المختار. راجع مصدر كل مستند قبل التصديق أو التقديم.', 'This guidance list is linked to the selected profession record. Review the source of each document before attestation or submission.');
     documentsList.innerHTML = '';
+    let lastGroup = '';
     currentDocuments.forEach((doc) => {
+      if (doc.group && doc.group !== lastGroup) {
+        const h = document.createElement('h4'); h.className = 'sv-doc-group'; h.textContent = doc.group; documentsList.appendChild(h); lastGroup = doc.group;
+      }
       const item = document.createElement('div');
       item.className = 'sv-doc-item';
-      item.innerHTML = `<div><strong>${doc.title}</strong><span>${doc.note}</span></div>`;
+      item.innerHTML = `<div><strong>${escH(doc.title)}</strong><span>${escH(doc.note)}</span></div>`;
       documentsList.appendChild(item);
     });
     documentsSourceNote.textContent = sourceNote(nationality, qualificationSource, experienceSource);
@@ -593,10 +701,10 @@
       const profile = getProfile(record);
       const card = document.createElement('article');
       card.className = 'sv-recommendation-card';
-        const educationText = english() ? (profile.education === 'university' ? 'University certificate' : profile.education === 'secondary' ? 'General secondary certificate' : 'School certificate') : (profile.education === 'university' ? 'شهادة جامعية' : profile.education === 'secondary' ? 'ثانوية عامة' : 'شهادة مدرسية');
+        const educationText = english() ? (profile.education === 'university' ? 'University certificate' : profile.education === 'secondary' ? 'General secondary (pass)' : profile.grade10 ? 'Grade 10 passed at least' : 'School certificate') : (profile.education === 'university' ? 'شهادة جامعية' : profile.education === 'secondary' ? 'ثانوية عامة ناجح' : profile.grade10 ? 'الصف العاشر ناجح على الأقل' : 'شهادة مدرسية');
       const expText = english() ? (profile.experience === 2 ? 'Two years’ experience' : profile.experience === 1 ? 'One year’s experience' : 'According to the record') : (profile.experience === 2 ? 'خبرة سنتين' : profile.experience === 1 ? 'خبرة سنة' : 'حسب السجل');
-      const qvp = profile.accreditation ? (english() ? ' · QVP' : ' · QVP') : '';
-      card.innerHTML = `<h4>${displayName(record)}</h4><p>${educationText} · ${expText}${qvp}</p><button class="sv-btn sv-btn-secondary" type="button">${english() ? 'View documents and print' : 'عرض الأوراق والطباعة'}</button>`;
+      const qvp = profile.accreditation ? ' · ' + (profile.accreditationType === 'SVP' ? 'SVP' : profile.accreditationType === 'QVP' ? 'QVP' : verificationName(profile)) : '';
+      card.innerHTML = `<h4>${escH(displayName(record))}</h4><p>${educationText} · ${expText}${qvp}</p><button class="sv-btn sv-btn-secondary" type="button">${english() ? 'View documents and print' : 'عرض الأوراق والطباعة'}</button>`;
       card.querySelector('button').addEventListener('click', () => {
         checkModeEl.value = 'profession';
         syncModeFields();
@@ -691,24 +799,35 @@
         else completed.push(tr('مسمى الخبرة يطابق مسمى مهنة التأشيرة.', 'The experience title matches the visa profession title.'));
         if ((profile.experience === 1 && ['1', '2', 'more2'].includes(experienceEl.value)) || (profile.experience === 2 && ['2', 'more2'].includes(experienceEl.value))) completed.push(tr('مدة الخبرة المدخلة توافق الحد المطلوب.', 'The entered experience period meets the required minimum.'));
       }
-      if (!profile.accreditation) completed.push(tr('لا يظهر شرط اعتماد مهني محدد لهذه المهنة في السجل الحالي.', 'No specific professional-verification requirement appears for this profession in the current record.'));
-      else if (accreditationEl.value === 'yes') completed.push(tr('تم تأكيد الاعتماد أو الفحص المهني المطلوب.', 'The required professional verification or assessment was confirmed.'));
+      if (selectedRecord.isEstimate) cautions.push(tr(`«${recordName(selectedRecord)}» غير موجودة في قائمة المهن: النتيجة تقديرية حسب فئة «${selectedRecord.estimateLabel}»، ويؤكدها المكتب.`, `“${recordName(selectedRecord)}” is not in the profession list: this is an estimate for the “${selectedRecord.estimateLabel}” category, to be confirmed by the office.`));
+      if (!profile.accreditation) completed.push(tr('لا يظهر في سجل هذه المهنة تحقق مهني (QVP) ولا فحص مهني (SVP).', 'Neither professional verification (QVP) nor a professional examination (SVP) appears in this profession’s record.'));
+      else if (accreditationEl.value === 'yes') completed.push(tr(`تم تأكيد ${verificationName(profile)} حسب إجابتك.`, `${verificationName(profile)} confirmed according to your answer.`));
       if (profile.executiveDocuments && investorDocumentsEl.value === 'yes') completed.push(tr('تم تأكيد مستندات المسار الاستثماري ووجود الاسم في السجل التجاري السعودي.', 'Saudi investor documents and the applicant’s name in the commercial registration were confirmed.'));
 
-      if (isEngineeringProfessionName(profile.name)) {
+      // Engineers (owner 2026-10-26): four SEPARATE checks — graduation date, years of experience, Saudi Council of
+      // Engineers registration under the title «مهندس», and the experience title matching the visa document. Two years of
+      // experience do not prove registration eligibility; five years since graduation do not prove five years of experience.
+      if (isEngineeringRecord(selectedRecord)) {
         const graduationYears = graduationYearsEl.value === '' ? null : Number(graduationYearsEl.value);
-        if (graduationYears === null || !Number.isFinite(graduationYears)) addIssue(issues, tr('أدخل عدد السنوات المكتملة منذ التخرج للمهنة الهندسية.', 'Enter the completed years since graduation for the engineering profession.'));
-        else if (graduationYears > 5) completed.push(tr('مدة التخرج الهندسية تتجاوز خمس سنوات.', 'The engineering graduation period is more than five years.'));
-        else if (saudiBornEl.value === 'yes') cautions.push(tr('مدة التخرج أقل من أو تساوي خمس سنوات؛ لا يعتمد الاستثناء لمواليد السعودية إلا بعد تأكيد الجهة المختصة.', 'The graduation period is five years or less; the Saudi-born exception must be confirmed by the competent authority.'));
-        else addIssue(issues, tr('المهنة الهندسية تحتاج إلى تخرج منذ أكثر من خمس سنوات، ما لم يثبت استثناء مواليد السعودية.', 'The engineering profession requires graduation more than five years ago unless the Saudi-born exception is confirmed.'));
+        const expOk = ['2', 'more2'].includes(experienceEl.value);
+        // 1) graduation date → registration with the Saudi Council of Engineers (office rule for non-Saudis)
+        if (graduationYears === null || !Number.isFinite(graduationYears)) addIssue(issues, tr('[الهيئة السعودية للمهندسين] أدخل عدد السنوات المكتملة منذ تاريخ التخرج؛ هذا شرط التسجيل لدى الهيئة، وهو مستقل عن سنوات الخبرة.', '[Saudi Council of Engineers] Enter the completed years since graduation; this is the registration condition, separate from years of experience.'));
+        else if (graduationYears > 5) completed.push(tr('[الهيئة السعودية للمهندسين] مضى على التخرج أكثر من خمس سنوات، وهو شرط تسجيل غير السعودي حسب قاعدة المكتب. يبقى قرار التسجيل للهيئة.', '[Saudi Council of Engineers] More than five years since graduation, the office rule for a non-Saudi registration. The decision stays with the Council.'));
+        else if (saudiBornEl.value === 'yes') cautions.push(tr('[الهيئة السعودية للمهندسين] مضى على التخرج خمس سنوات أو أقل. استثناء «مواليد السعودية» لم نجده منشورًا في صفحات الهيئة التي راجعناها، ولا يُعتمد قبل تأكيد الهيئة وشروطه.', '[Saudi Council of Engineers] Five years or less since graduation. The “born in Saudi Arabia” exception was not found on the Council pages we reviewed; it cannot be relied on before the Council confirms it and its conditions.'));
+        else addIssue(issues, tr('[الهيئة السعودية للمهندسين] مضى على التخرج خمس سنوات أو أقل، فلا يستوفي شرط تسجيل غير السعودي بمسمى «مهندس» حسب قاعدة المكتب. قد يوجد مسمى آخر معتمد (مثل مسمى أخصائي)، لكنه لا يُقترح تلقائيًا: يجب أن يطابق المؤهل والخبرة ومستند التأشيرة ومتطلبات التحقق المهني (QVP). راجع المكتب.', '[Saudi Council of Engineers] Five years or less since graduation: the office rule for a non-Saudi registration as an engineer is not met. Another approved title (e.g. a specialist title) may exist, but it is not suggested automatically: it must match the qualification, experience, visa document and QVP requirements. Contact the office.'));
+        // 2) years of experience (separate)
+        if (expOk) completed.push(tr('[الخبرة] سنتان على الأقل حسب إجابتك. هذا لا يثبت أهلية التسجيل لدى الهيئة.', '[Experience] At least two years according to your answer. This does not prove registration eligibility with the Council.'));
+        if (graduationYears !== null && graduationYears > 5 && !expOk) cautions.push(tr('[الخبرة] مرور خمس سنوات على التخرج لا يعني امتلاك خبرة عملية؛ المطلوب شهادة خبرة لا تقل عن سنتين.', '[Experience] Five years since graduation do not mean five years of experience; an experience certificate of at least two years is required.'));
+        // 3) official source note (the Council's own wording differs from the office rule)
+        cautions.push(tr('[مصدر رسمي] تذكر صفحة «الاعتماد المهني» على موقع الهيئة (حسب نتائج البحث داخل saudieng.sa) عدم قبول التسجيل لمن تقل خبراتهم عن خمس سنوات، ما لم يكن سعوديًا أو من البدون أو ابن مواطنة سعودية. هذا يختلف عن قاعدة «مدة التخرج»؛ يؤكده المكتب مع الهيئة.', '[Official source] The Council’s “Professional Accreditation” page (per search results within saudieng.sa) says registration is not accepted with under five years of experience unless the applicant is Saudi, Bedoon or the child of a Saudi mother. This differs from the “years since graduation” rule; the office confirms it with the Council.'));
       }
       if (age && !ageEligible(profile, age)) {
-        addIssue(issues, profile.isGeneralManager ? tr('لم يتم إتمام 21 سنة بعد، والمدير العام يجب أن يكون قد أتم 21 سنة.', 'You have not reached 21 yet; a General Manager must be at least 21.') : (age.years < 21 ? tr('لم يتم إتمام 21 سنة بعد، وهذا شرط أساسي.', 'You have not reached 21 yet, which is required.') : tr('العمر 60 سنة أو أكثر، وهذه المهنة العادية تشترط أن يكون العمر أقل من 60 سنة.', 'The age is 60 or above; ordinary professions require an age under 60.')));
+        addIssue(issues, profile.seniorAge ? tr('يشترط لهذه الفئة (الرئيس التنفيذي، المستثمر، رئيس مجلس الإدارة، المدير العام) أن يكون العمر أكثر من 21 سنة، دون حد أعلى.', 'This category (CEO, investor, chairman, general manager) requires an age over 21, with no upper limit.') : profile.isGeneralManager ? tr('لم يتم إتمام 21 سنة بعد، والمدير العام يجب أن يكون قد أتم 21 سنة.', 'You have not reached 21 yet; a General Manager must be at least 21.') : (age.years < 21 ? tr('لم يتم إتمام 21 سنة بعد، وهذا شرط أساسي.', 'You have not reached 21 yet, which is required.') : tr('العمر 60 سنة أو أكثر، وهذه المهنة العادية تشترط أن يكون العمر أقل من 60 سنة.', 'The age is 60 or above; ordinary professions require an age under 60.')));
       }
       if (profile.education && !compareEducation(profile.education, educationEl.value)) { const requiredAr = profile.education === 'university' ? 'شهادة جامعية' : profile.education === 'secondary' ? 'الثانوية العامة الناجحة' : 'شهادة مدرسية'; const requiredEn = profile.education === 'university' ? 'a university certificate' : profile.education === 'secondary' ? 'a passing general secondary certificate' : 'a school certificate'; addIssue(issues, tr(`المهنة المختارة تحتاج إلى ${requiredAr} على الأقل حسب سجل المهنة.`, `The selected profession requires at least ${requiredEn} according to its record.`)); }
       if (profile.experience === 2 && !['2', 'more2'].includes(experienceEl.value)) addIssue(issues, tr('المهنة المختارة تحتاج إلى خبرة سنتين في نفس المسمى.', 'The selected profession requires two years of experience in the same title.'));
       if (profile.experience === 1 && !['1', '2', 'more2'].includes(experienceEl.value)) addIssue(issues, tr('المهنة المختارة تحتاج إلى خبرة سنة واحدة في نفس المسمى.', 'The selected profession requires one year of experience in the same title.'));
-      if (profile.accreditation && accreditationEl.value !== 'yes') addIssue(issues, tr('المهنة المختارة يظهر في سجلها شرط الاعتماد أو التحقق المهني QVP.', 'The selected profession record shows a QVP professional-verification requirement.'));
+      if (profile.accreditation && accreditationEl.value !== 'yes') addIssue(issues, tr(`المهنة المختارة يظهر في سجلها شرط ${verificationName(profile)}.`, `The selected profession record shows a ${verificationName(profile)} requirement.`));
       if (profile.executiveDocuments && investorDocumentsEl.value !== 'yes') addIssue(issues, tr('هذه المهنة لا تُفحص كمناسبة إلا مع رخصة الاستثمار السعودية وإثبات اسمك في السجل التجاري السعودي.', 'This profession is assessed for the investor pathway only when a Saudi investment licence and proof of your name in the Saudi commercial registration are available.'));
       renderDocuments(selectedRecord);
     }
@@ -728,7 +847,9 @@
     if (!currentDocuments.length) return;
     printTitle.textContent = english() ? `Required documents for ${displayName(selectedRecord)}` : `الأوراق المطلوبة لمهنة ${recordName(selectedRecord)}`;
     printSubtitle.textContent = isJordanian() ? (english() ? 'Saudi Visa Office in Jordan' : 'مكتب تأشيرات السعودية في الأردن') : (english() ? `Saudi Visa Office in Jordan — Nationality: ${window.SV_TRANSLATE?.translateString?.(nationalityEl.value) || nationalityEl.value || 'Not specified'}` : `مكتب تأشيرات السعودية في الأردن — الجنسية: ${nationalityEl.value || 'غير محددة'}`);
-    printContent.innerHTML = `<ol>${currentDocuments.map((doc) => `<li><strong>${doc.title}</strong><br>${doc.note}</li>`).join('')}</ol><p>${documentsSourceNote.textContent}</p>`;
+    printContent.innerHTML = `<ol>${currentDocuments.map((doc) => `<li><strong>${escH(doc.title)}</strong><br>${escH(doc.note)}</li>`).join('')}</ol><p>${escH(documentsSourceNote.textContent)}</p>`;
+    // owner 2026-10-27: unified print (letterhead + watermark) — core.js SD_print
+    if (window.SD_print) { const box = document.createElement('div'); box.innerHTML = printContent.innerHTML; window.SD_print(box, printTitle.textContent, printSubtitle.textContent); return; }
     document.body.classList.add('sv-printing');
     window.setTimeout(() => window.print(), 40);
     window.setTimeout(() => document.body.classList.remove('sv-printing'), 800);
@@ -769,6 +890,8 @@
   qualificationSourceEl.addEventListener('change', () => { if (selectedRecord) renderDocuments(selectedRecord); });
   experienceSourceEl.addEventListener('change', () => { if (selectedRecord) renderDocuments(selectedRecord); });
   form.addEventListener('submit', validateEligibility);
+  const applicantGenderEl = $('applicantGender');
+  if (applicantGenderEl) applicantGenderEl.addEventListener('change', () => { if (selectedRecord && !documentsPanel.hidden) renderDocuments(selectedRecord); });
   document.addEventListener('sv:languagechange', () => {
     syncModeFields();
     syncResidencyFields();
@@ -777,7 +900,7 @@
     if (!result.hidden) validateEligibility();
   });
   printDocumentsBtn.addEventListener('click', printDocuments);
-  copyDocumentsBtn.addEventListener('click', copyDocuments);
+  if (copyDocumentsBtn) copyDocumentsBtn.addEventListener('click', copyDocuments); // the copy button was removed (owner 2026-10-27)
 
   const today = todayISO();
   birthDateEl.max = today;

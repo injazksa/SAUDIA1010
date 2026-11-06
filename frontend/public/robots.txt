@@ -29,7 +29,9 @@ Disallow: /*.toml$
 Disallow: /*.config.js$
 Disallow: /package.json
 Disallow: /package-lock.json
-Disallow: /post.html
-Disallow: /post$
+# (/post and /post.html are old article addresses: left crawlable so search engines can follow their 301 redirects)
 
 Sitemap: https://saudia-visa.com/sitemap.xml
+
+# Summary of the office and its pages for AI systems: https://saudia-visa.com/llms.txt
+# (extended: https://saudia-visa.com/llms-full.txt · professions and documents: https://saudia-visa.com/llms-professions.txt)
