@@ -97,6 +97,7 @@
         '@type': ['ProfessionalService', 'LocalBusiness'],
         '@id': BUSINESS_ID,
         name: business.name,
+        sameAs: ['https://www.facebook.com/Saudiavisajo'],
         alternateName: business.alternateName,
         url: business.url,
         logo: business.logo,
