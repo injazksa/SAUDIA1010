@@ -1,12 +1,12 @@
 # مقارنة الإصدار بنسخة GitHub القديمة
 
 - **النسخة القديمة:** `SAUDIA1010-main.zip`، فيها 2669 ملفًا.
-- **الإصدار الجديد:** 1451 ملفًا.
+- **الإصدار الجديد:** 1467 ملفًا.
 - **القائمة الكاملة** ملفًا ملفًا في `docs/compare-files.csv`.
 
 | الحالة | العدد |
 |---|---|
-| جديد | 399 |
+| جديد | 415 |
 | معدَّل | 1018 |
 | بلا تغيير | 34 |
 | موجود في القديم ولا يدخل الإصدار (يُحذف من المستودع) | 1617 |
@@ -14,20 +14,22 @@
 ## الجديد حسب المجلد
 
 - `frontend/public/p/`: 174
-- `frontend/public/images/`: 96
+- `frontend/public/images/`: 101
+- `docs/`: 32
 - `frontend/public/fonts/`: 29
-- `docs/`: 24
 - `frontend/public/vendor/`: 20
 - `frontend/public/js/`: 13
 - `frontend/public/css/`: 11
-- `frontend/public/ (الجذر)`: 9
+- `frontend/public/ (الجذر)`: 10
 - `scripts/`: 8
 - `frontend/public/icons/`: 7
 - `(جذر المستودع)`: 2
 - `frontend/public/data/`: 2
 - `frontend/public/en/`: 1
 - `frontend/public/remote-document-services-jordan/`: 1
+- `frontend/public/saudi-consular-services-jordan/`: 1
 - `frontend/public/saudi-qvp-professional-accreditation/`: 1
+- `frontend/public/saudi-university-certificate-attestation/`: 1
 - `frontend/public/saudi-work-visa-documents-guide/`: 1
 
 ## المعدَّل حسب المجلد

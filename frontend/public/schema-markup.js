@@ -10,8 +10,9 @@
   const ORGANIZATION_ID = BASE_URL + '/#organization';
   const WEBSITE_ID = BASE_URL + '/#website';
   const business = {
-    name: 'مكتب تأشيرات السعودية في الأردن',
-    alternateName: ['Saudia Visa Jordan', 'إنجاز السعودية'],
+    // 2026-11-07 (owner): one brand — «Saudia Visa» (English) / «السعودية فيزا» (Arabic); the descriptive Arabic name stays an alternate
+    name: 'Saudia Visa',
+    alternateName: ['السعودية فيزا', 'Saudia Visa Services Office – Jordan', 'مكتب تأشيرات السعودية في الأردن', 'Saudia Visa Jordan', 'إنجاز السعودية'],
     url: BASE_URL + '/',
     logo: BASE_URL + '/icons/logo-512.png',
     image: BASE_URL + '/images/og-cover.png',
@@ -82,6 +83,7 @@
         '@id': WEBSITE_ID,
         url: business.url,
         name: business.name,
+        alternateName: ['السعودية فيزا', 'مكتب تأشيرات السعودية في الأردن', 'saudia-visa.com'],
         inLanguage: 'ar-JO',
         publisher: { '@id': ORGANIZATION_ID }
       }

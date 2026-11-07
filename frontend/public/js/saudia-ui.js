@@ -24,12 +24,13 @@
     var setOpen = function (open) {
       drawer.classList.toggle('open', open); backdrop.classList.toggle('open', open);
       btn.setAttribute('aria-expanded', String(open)); drawer.setAttribute('aria-hidden', String(!open));
-      if (open) { var first = drawer.querySelector('nav a'); if (first) first.focus(); } else btn.focus();
+      if (open) { var first = drawer.querySelector('nav a'); if (first) first.focus(); } else btn.focus({ preventScroll: true });
     };
     btn.addEventListener('click', function () { setOpen(true); });
     backdrop.addEventListener('click', function () { setOpen(false); });
     if (close) close.addEventListener('click', function () { setOpen(false); });
-    drawer.querySelectorAll('nav a').forEach(function (a) { a.addEventListener('click', function () { setOpen(false); }); });
+    /* every link in the drawer closes it (2026-11-07: «تواصل معنا» and the phone link sit outside <nav> and left it open) */
+    drawer.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setOpen(false); }); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && drawer.classList.contains('open')) setOpen(false); });
   }
 

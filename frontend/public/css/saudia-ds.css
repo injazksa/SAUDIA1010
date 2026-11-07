@@ -276,6 +276,10 @@ body:not(.sd-bb-done) nav > ol.sd-crumbs:first-child { margin-top: 36px; }
 .sd-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 26px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.14); }
 .sd-stats b { font-family: var(--sd-kufi); font-size: 26px; font-weight: 800; color: var(--sd-gold-400); display: block; line-height: 1.2; }
 .sd-stats span { font-family: var(--sd-kufi); font-size: 13px; color: #C3CCDA; }
+/* 2026-11-07: the number is direction:ltr (.sd-num), so as a block it sat on the left edge while its label sat on the
+   right — far apart on wide screens. Each stat is now one centred unit: number directly above its label. */
+.sd-stats > div { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px; min-width: 0; }
+.sd-stats b { text-align: center; }
 
 /* masar preview card (home) */
 .sd-preview { background: var(--sd-paper-2); color: var(--sd-text); border-radius: 18px; padding: 18px; box-shadow: var(--sd-sh-3); border: 1px solid var(--sd-rule); }
@@ -337,6 +341,9 @@ body:not(.sd-bb-done) nav > ol.sd-crumbs:first-child { margin-top: 36px; }
 .sd-fab { position: fixed; bottom: 16px; left: 16px; z-index: 46; display: flex; flex-direction: column-reverse; gap: 10px; }
 @media (min-width: 768px) { .sd-fab { left: 24px; } }
 @media (max-width: 767px) { body.sd-typing .sd-fab { display: none; } }
+/* 2026-11-07: on pages whose address ends in "/" core.js also adds its floating WhatsApp + call pair at the same spot,
+   so this WhatsApp button sat hidden under the call button (two buttons stacked). Keep the visible pair only. */
+body:has(#sv-floating-contact) .sd-fab { display: none; }
 .sd-fab a { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; background: var(--sd-navy-900); color: #fff !important; box-shadow: var(--sd-sh-3); border: 2px solid var(--sd-gold-500); transition: transform var(--sd-med) var(--sd-ease); }
 .sd-fab a:hover { transform: translateY(-2px); }
 .sd-fab a.call { background: var(--sd-gold-500); color: var(--sd-navy-950) !important; border-color: var(--sd-navy-900); }
@@ -424,6 +431,43 @@ body:not(.sd-bb-done) nav > ol.sd-crumbs:first-child { margin-top: 36px; }
 .sd-auth-docs .sd-search-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
 .sd-auth-docs .sd-search-row .sd-input { flex: 1 1 240px; }
 .sd-auth-cta { border: 0; background: linear-gradient(135deg, var(--sd-navy-900), var(--sd-navy-950)); }
+/* 2026-11-07: authorization page — the illustrative Qiwa document and the three authorization paths */
+.sd-auth-doc { margin: 14px 0 12px; display: grid; gap: 8px; }
+.sd-auth-doc img { width: 100%; max-width: 760px; height: auto; border-radius: 14px; border: 1px solid var(--sd-line, #e5e7eb); box-shadow: var(--sd-sh-2, 0 4px 14px rgba(27,42,65,.08)); background: #fff; }
+.sd-auth-doc figcaption { font-size: 13px; color: var(--sd-muted, #5b6472); }
+.sd-doc-points { margin: 4px 0 14px; padding: 0; list-style: none; display: grid; gap: 8px; counter-reset: dp; }
+.sd-doc-points li { counter-increment: dp; position: relative; padding-right: 38px; line-height: 1.8; }
+.sd-doc-points li::before { content: counter(dp); position: absolute; right: 0; top: 2px; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 13px; font-weight: 700; background: var(--sd-navy-900); color: var(--sd-gold-200, #E7CD97); border: 1.5px solid var(--sd-gold-500); }
+.sd-apaths { display: grid; gap: 16px; margin-top: 12px; }
+/* (one path per row: the main column is ~780px wide beside the side panel; three columns were too narrow) */
+.sd-apath { color: var(--sd-ink); border: 1px solid var(--sd-line, #e5e7eb); border-radius: 16px; padding: 18px; background: #fff; display: grid; gap: 10px; align-content: start; }
+.sd-apath > header { display: flex; gap: 12px; align-items: flex-start; }
+.sd-apath h3 { font-size: 17px; margin: 0 0 4px; }
+.sd-apath-k { flex: none; width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; font-weight: 800; background: var(--sd-gold-50, #FBF5E8); color: var(--sd-navy-900); border: 1.5px solid var(--sd-gold-500); }
+.sd-apath-auth { margin: 0; font-size: 13.5px; color: var(--sd-muted, #5b6472); }
+.sd-apath-auth b { color: var(--sd-navy-900); }
+.sd-apath-steps { list-style: none; margin: 0; padding: 0; counter-reset: ps; display: grid; gap: 0; }
+.sd-apath-steps li { counter-increment: ps; position: relative; padding: 0 38px 14px 0; font-size: 14.5px; line-height: 1.7; }
+.sd-apath-steps li::before { content: counter(ps); position: absolute; right: 0; top: 1px; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 12.5px; font-weight: 700; background: #fff; color: var(--sd-navy-900); border: 1.5px solid var(--sd-gold-500); }
+.sd-apath-steps li:not(:last-child)::after { content: ""; position: absolute; right: 12.5px; top: 29px; bottom: 2px; border-right: 1.5px dashed var(--sd-gold-300, #D9BD84); }
+.sd-apath-list { margin: 0; padding: 0 18px 0 0; display: grid; gap: 4px; }
+@media print { .sd-apath { break-inside: avoid; } .sd-auth-doc img { max-width: 520px; box-shadow: none; } }
+/* 2026-11-07: stamp route (stages with arrows) and document checklists — university attestation & consular pages */
+.sd-chainbox { border: 1px solid var(--sd-line, #e5e7eb); border-radius: 16px; padding: 16px 18px; background: #fff; margin-top: 12px; color: var(--sd-ink); }
+.sd-chainbox h3 { font-size: 16.5px; margin: 0 0 10px; }
+.sd-chain { list-style: none; margin: 0 0 10px; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 6px; counter-reset: ch; }
+.sd-chain li { counter-increment: ch; display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 999px; background: var(--sd-gold-50); border: 1px solid var(--sd-gold-300); font-size: 14px; font-weight: 600; line-height: 1.5; }
+.sd-chain li::before { content: counter(ch); width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; background: var(--sd-navy-900); color: #fff; flex: none; }
+.sd-chain li:not(:last-child)::after { content: "\2190"; margin-inline-start: 6px; color: var(--sd-gold-500); font-weight: 700; }
+.sd-chain li:last-child { background: var(--sd-navy-900); color: #fff; border-color: var(--sd-navy-900); }
+.sd-chain li:last-child::before { background: var(--sd-gold-500); color: var(--sd-navy-950); }
+.sd-docs-h, .sd-auth-docs h3.sd-docs-h { font-size: 16px; margin: 16px 0 6px; color: var(--sd-navy-900); }
+.sd-checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.sd-checks li { position: relative; padding-right: 26px; line-height: 1.8; }
+.sd-checks li::before { content: ""; position: absolute; right: 2px; top: .55em; width: 14px; height: 8px; border: 2px solid var(--sd-gold-500); border-top: 0; border-left: 0; transform: rotate(45deg) translate(-2px, -3px); width: 6px; height: 11px; }
+.sd-svc-group { margin-top: 8px; }
+.sd-svc-group > h3 { font-size: 17px; margin: 18px 0 10px; display: flex; align-items: center; gap: 8px; }
+@media print { .sd-chainbox, .sd-chain li { break-inside: avoid; } }
 /* visa-document data card (no emblem, values masked) */
 .sd-visa-card { justify-self: center; width: 100%; max-width: 400px; background: linear-gradient(160deg, #FFFFFF 0%, var(--sd-paper) 100%); color: var(--sd-ink); border-radius: 20px; padding: 18px; box-shadow: 0 24px 50px rgba(5,10,20,.45), 0 0 0 1px rgba(201,163,94,.35); position: relative; overflow: hidden; }
 .sd-visa-card::before { content: ""; position: absolute; inset: 0 0 auto; height: 5px; background: linear-gradient(90deg, var(--sd-gold-500), var(--sd-navy-900)); }
@@ -1135,3 +1179,7 @@ body.sd .sd-h1-en { direction: ltr; text-align: right; }
 @keyframes sd-ph-kb { from { transform: scale(1.04) translateX(0); } to { transform: scale(1.1) translateX(-1.6%); } }
 @media print { .sd-ph { display: none !important; } }
 /* /sd-ph */
+/* 2026-11-07 (owner): numbered items in printed sheets — the number in a small navy/gold ring, same as the profession sheet */
+.sd-numlist { list-style: none; padding-right: 0; margin: 0; }
+.sd-numlist > li { position: relative; padding-right: 30px; margin-bottom: 10px; line-height: 1.7; }
+.sd-numlist > li::before { content: counter(list-item); position: absolute; right: 0; top: 2px; width: 20px; height: 20px; box-sizing: border-box; border-radius: 50%; border: 1.2px solid var(--sd-gold-500); background: var(--sd-gold-50); color: var(--sd-navy-900); font: 700 11px/17.5px Arial, sans-serif; text-align: center; -webkit-print-color-adjust: exact; print-color-adjust: exact; }

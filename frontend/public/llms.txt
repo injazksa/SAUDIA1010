@@ -1,14 +1,14 @@
-# مكتب تأشيرات السعودية في الأردن — Saudi Visa Services Office in Jordan
+# مكتب تأشيرات السعودية في الأردن — Saudia Visa
 
-> مكتب خاص في عمّان، الأردن (الدوار الأول - جبل عمّان)، يذكر في موقعه أنه معتمد من السفارة السعودية في الأردن لغايات التفويض وإنجاز تأشيرات العمل لجميع المهن. يساعد الأفراد والشركات في معاملات تأشيرات العمل السعودية، وتصديق الشهادات والوثائق، والتحقق المهني (QVP) والفحص المهني (SVP) حسب المهنة، ويوضّح خطوات الفحص الطبي والاستعلام عن التأشيرة. لا يوفر المكتب عقود عمل ولا وظائف، ولا يضمن صدور التأشيرة؛ القرار النهائي للجهات الرسمية.
+> Saudia Visa (السعودية فيزا) مكتب معتمد لدى السفارة السعودية في الأردن لإنجاز معاملات السفارة السعودية، ومنها التفويض وإنجاز تأشيرات العمل لجميع المهن، ومقرّه الدوار الأول - جبل عمّان. مكتب مستقل يحمل صفة الاعتماد، وليس السفارة نفسها ولا جهة حكومية. يساعد الأفراد والشركات في معاملات تأشيرات العمل السعودية، وتصديق الشهادات والوثائق، والتحقق المهني (QVP) والفحص المهني (SVP) حسب المهنة، ويوضّح خطوات الفحص الطبي والاستعلام عن التأشيرة. لا يوفر المكتب عقود عمل ولا وظائف، ولا يضمن صدور التأشيرة؛ القرار النهائي للجهات الرسمية.
 >
-> A private office in Amman, Jordan (First Circle, Jabal Amman). Its website states that it is accredited by the Saudi Embassy in Jordan for work-visa authorization and processing for all professions. It helps individuals and companies with Saudi work-visa files, certificate and document attestation, and the professional verification (QVP) or professional examination (SVP) that a profession requires, and explains the medical-examination and visa-inquiry steps. The office does not provide job contracts or vacancies and does not guarantee visa issuance; final decisions belong to the official authorities.
+> Saudia Visa is an office accredited by the Saudi Embassy in Jordan to process Saudi Embassy transactions, including work-visa authorization and processing for all professions; it is based at First Circle, Jabal Amman. It is an independent office holding this accreditation, not the embassy itself and not a government body. It helps individuals and companies with Saudi work-visa files, certificate and document attestation, and the professional verification (QVP) or professional examination (SVP) that a profession requires, and explains the medical-examination and visa-inquiry steps. The office does not provide job contracts or vacancies and does not guarantee visa issuance; final decisions belong to the official authorities.
 
 This file follows the llms.txt format. The extended version is https://saudia-visa.com/llms-full.txt
 
 ## Office information / معلومات المكتب
-- Name / الاسم: مكتب تأشيرات السعودية في الأردن — Saudi Visa Services Office in Jordan
-- Other names on the website / أسماء أخرى في الموقع: مكتب تأشيرات السعودية المعتمد · مركز السعودية المعتمد · إنجاز السعودية · Saudi Visa Services in Jordan
+- Name / الاسم: مكتب تأشيرات السعودية في الأردن — Saudia Visa
+- Other names on the website / أسماء أخرى في الموقع:  ·  ·  · 
 - Website / الموقع: https://saudia-visa.com (the official domain / النطاق الرسمي)
 - Address / العنوان: الدوار الأول - جبل عمّان، عمّان، الأردن — First Circle, Jabal Amman, Amman, Jordan
 - Hours / الدوام: الأحد – الخميس، 9:00 صباحًا – 4:00 مساءً (بتوقيت عمّان). الجمعة والسبت: مغلق. — Sunday–Thursday, 09:00–16:00 (Amman time). Friday and Saturday: closed.
@@ -33,8 +33,10 @@ This file follows the llms.txt format. The extended version is https://saudia-vi
 
 ## Services / الخدمات
 - [تأشيرة العمل السعودية — Saudi work visa](https://saudia-visa.com/work-visa.html): المساعدة في إجراءات تأشيرات العمل للسعودية لجميع المهن وتجهيز ملفات السفارة: الأوراق حسب المهنة، العقد وخطاب الاطلاع، الاعتماد المهني، الفحص الطبي والتصديقات. / Help with Saudi work-visa procedures for all professions and preparation of the embassy file: documents by profession, contract and information letter, professional verification, medical exam and attestations.
-- [تفويض تأشيرة العمل — Work-visa authorization](https://saudia-visa.com/saudi-work-visa-authorization.html): لمن لديه تأشيرة عمل أو عقد عمل سعودي: شرح التفويض الإلكتروني للمكتب، وتحديد الأوراق حسب المهنة، ومتابعة المعاملة لدى السفارة حتى استلام الجواز. / For holders of a Saudi work visa or contract: the office's electronic authorization, the documents for the profession, and follow-up with the embassy until the passport is collected. (page kept out of search results by the owner's choice; its content is valid / الصفحة غير مفهرسة في محركات البحث بقرار المالك، ومحتواها صحيح)
+- [تفويض تأشيرة العمل — Work-visa authorization](https://saudia-visa.com/saudi-work-visa-authorization.html): لمن لديه تأشيرة عمل أو عقد عمل سعودي: شرح التفويض الإلكتروني للمكتب، وتحديد الأوراق حسب المهنة، ومتابعة المعاملة لدى السفارة حتى استلام الجواز. / For holders of a Saudi work visa or contract: the office's electronic authorization, the documents for the profession, and follow-up with the embassy until the passport is collected.
 - [تصديق الشهادات والوثائق — Certificate and document attestation](https://saudia-visa.com/certificates.html): تصديق الشهادات الجامعية والوثائق الرسمية من الجهات الأردنية والخارجية الأردنية والسفارة السعودية حسب المطلوب. / Attestation of university certificates and official documents through the Jordanian authorities, the Jordanian Ministry of Foreign Affairs and the Saudi Embassy as required.
+- [الخدمات القنصلية السعودية (ما يتابعه المكتب) — Saudi consular transactions (what the office follows up)](https://saudia-visa.com/saudi-consular-services-jordan/): صفحة جامعة لمعاملات السفارة السعودية التي ينجزها المكتب ويتابعها في عمّان بصفته مكتبًا معتمدًا لدى السفارة: التأشيرات، والتصديقات، والوثائق المدنية والشرعية، وشهادات الخبرة، والتقارير الطبية، والاعتماد المهني. / A hub of the Saudi Embassy transactions the office processes and follows up in Amman as an office accredited by the embassy: visas, attestations, civil and legal documents, experience certificates, medical reports and professional accreditation.
+- [تصديق الشهادات الجامعية — University certificate attestation](https://saudia-visa.com/saudi-university-certificate-attestation/): مسار أختام الشهادة الجامعية الأردنية والصادرة من الخارج، والمساعدة في رفع طلب «مصادقة» ومتابعة نتيجته، وتصديق السفارة السعودية في عمّان لمن لديه نتيجة المصادقة وإقامة سعودية أو عقد عمل وتأشيرة. / The stamp route for university certificates issued in Jordan or abroad, help filing the Musadaqa request and following its result, and Saudi Embassy attestation in Amman for applicants with a Musadaqa result plus Saudi residence or a work contract and visa.
 - [دليل تصديق الأوراق — Document attestation guide](https://saudia-visa.com/saudi-document-attestation-jordan.html): ترتيب الأختام حسب نوع الوثيقة وبلد إصدارها. / The order of stamps by document type and issuing country.
 - [الاعتماد المهني السعودي (QVP): التحقق المهني والفحص المهني والمصادقة — Saudi Professional Accreditation (QVP): Professional Verification, SVP and Mosadaqa](https://saudia-visa.com/saudi-qvp-professional-accreditation/): التحقق المهني (QVP) للمهن التي تتطلب مؤهلًا جامعيًا، والفحص المهني (SVP) للمهن المهارية، والفرق بينهما وبين منصة «مصادقة» لتوثيق الشهادات التعليمية، مع مراجعة المتطلبات والمستندات قبل التقديم. / Professional Verification (QVP) for university-degree professions, the Skill Verification Program (SVP) for skilled trades, and how they differ from the Mosadaqa certificate-verification platform, with the requirements and documents reviewed before applying. English page: https://saudia-visa.com/en/saudi-qvp-professional-accreditation/
 - [الفحص المهني SVP — Professional examination (SVP)](https://saudia-visa.com/saudi-labor-exam-jordan.html): الاختبار النظري والعملي للمهن المهارية وطريقة حجزه. / The theory and practical test for skilled trades and how it is booked.
@@ -63,24 +65,24 @@ This file follows the llms.txt format. The extended version is https://saudia-vi
 
 ## Guides and articles / المقالات والأدلة
 - [كيف تصدّق شهادتك للسعودية من الأردن؟ دليل 2026](https://saudia-visa.com/blog/certificate-attestation-guide.html): كيف تصدّق شهادتك الجامعية ووثائقك للسعودية من الأردن 2026: سلسلة التصديق من الجامعة حتى وزارة الخارجية، والوثائق، والأخطاء الشائعة.
-- [الاستقدام العائلي للسعودية 2026 | مكتب تأشيرات السعودية في الأردن](https://saudia-visa.com/blog/family-sponsorship-guide.html): شرح خطوات الاستقدام العائلي للسعودية 2026. تعرف على الشروط، الوثائق المطلوبة كعقد الزواج والشهادات الرسمية، وإجراءات شهادة حسن السيرة والسلوك.
+- [الاستقدام العائلي للسعودية 2026 | السعودية فيزا](https://saudia-visa.com/blog/family-sponsorship-guide.html): شرح خطوات الاستقدام العائلي للسعودية 2026. تعرف على الشروط، الوثائق المطلوبة كعقد الزواج والشهادات الرسمية، وإجراءات شهادة حسن السيرة والسلوك.
 - [الفرق بين التحقق المهني QVP والفحص المهني SVP | دليل 2026](https://saudia-visa.com/blog/professional-accreditation-enjaz.html): الفرق بين التحقق المهني (QVP) والفحص المهني (SVP) في الاعتماد المهني السعودي 2026: المهن المشمولة، والمتطلبات، وكيفية الاستعداد من الأردن.
-- [التأشيرة السياحية للسعودية 2026 | مكتب تأشيرات السعودية في الأردن](https://saudia-visa.com/blog/tourist-visa-guide.html): دليل كامل التأشيرة السياحية للسعودية 2026: الشروط، الجوازات المؤهلة، تأشيرة عند الوصول، متطلبات الجنسيات.
-- [تأشيرة العمرة 2026 من الأردن | مكتب تأشيرات السعودية في الأردن](https://saudia-visa.com/blog/umrah-visa-guide-2026.html): الدليل الشامل لتأشيرة العمرة 2026 من الأردن. تعرف على الأوراق المطلوبة، خطوات التقديم عبر منصة نسك، وتكاليف ورسوم المعاملة بالتفصيل.
+- [التأشيرة السياحية للسعودية 2026 | السعودية فيزا](https://saudia-visa.com/blog/tourist-visa-guide.html): دليل كامل التأشيرة السياحية للسعودية 2026: الشروط، الجوازات المؤهلة، تأشيرة عند الوصول، متطلبات الجنسيات.
+- [تأشيرة العمرة 2026 من الأردن | السعودية فيزا](https://saudia-visa.com/blog/umrah-visa-guide-2026.html): الدليل الشامل لتأشيرة العمرة 2026 من الأردن. تعرف على الأوراق المطلوبة، خطوات التقديم عبر منصة نسك، وتكاليف ورسوم المعاملة بالتفصيل.
 - [متطلبات تأشيرة العمل السعودية 2026 | دليل خطوة بخطوة](https://saudia-visa.com/blog/work-visa-comprehensive-2026.html): متطلبات تأشيرة العمل السعودية 2026 من الأردن خطوة بخطوة: الشروط، والأوراق، والاعتماد المهني QVP وSVP، والفحص الطبي عبر وافد.
 - [المدونة](https://saudia-visa.com/blog.html)
 
 ## English pages
-- [About Us | Saudi Visa Services Office in Jordan](https://saudia-visa.com/en/about.html): About our Amman office: Saudi work visa support, document attestation, professional verification, and visit, tourist, Umrah and transit guidance.
-- [Saudi Visa Services in Jordan | Individuals & Companies](https://saudia-visa.com/en/index.html): English Saudi visa support in Jordan for individuals, employers and agencies: work visas, document attestation, professional verification, visa inquiry and pathways.
+- [About Saudia Visa | Saudi Visa Services Office in Jordan](https://saudia-visa.com/en/about.html): About our Amman office: Saudi work visa support, document attestation, professional verification, and visit, tourist, Umrah and transit guidance.
+- [Saudi Visa Services in Jordan | Saudia Visa](https://saudia-visa.com/en/index.html): English Saudi visa support in Jordan for individuals, employers and agencies: work visas, document attestation, professional verification, visa inquiry and pathways.
 - [Saudi Professional Accreditation (QVP) | Jordan](https://saudia-visa.com/en/saudi-qvp-professional-accreditation/): Saudi Professional Accreditation from Jordan: Professional Verification (QVP) for degree professions, SVP for skilled trades, and how Mosadaqa differs.
 - [Saudi Work Visa Services for Employers | Saudia Visa Jordan](https://saudia-visa.com/en/saudi-visa-processing-partner-jordan.html): Saudia Visa Services Office – Jordan helps employers with Saudi work visa processing, authorization, QVP and SVP, attestation, medical checks and bulk employee files.
 
 ## Main pages / الصفحات الأساسية
-- [مكتب تأشيرات السعودية في الأردن | تأشيرات عمل وتصديقات](https://saudia-visa.com/): مكتب تأشيرات السعودية في الأردن: تأشيرات العمل السعودية، وتصديق الشهادات والخبرة، والاعتماد المهني، وفحص وافد، والاستعلام عن التأشيرة. من جبل عمّان.
-- [من نحن | مكتب تأشيرات السعودية في الأردن](https://saudia-visa.com/about.html): تعرف إلى مكتب تأشيرات السعودية في الأردن وخدمات تأشيرات العمل السعودية والتصديقات والاعتماد المهني من جبل عمان.
-- [الأسئلة الشائعة | تأشيرات السعودية الأردن](https://saudia-visa.com/faq.html): إجابات 20+ سؤال شائع عن تأشيرات السعودية: شروط العمل، الرسوم، التصديقات، التحقق المهني QVP والفحص المهني SVP، مدة الإنجاز، والعمرة.
-- [المدونة | مكتب تأشيرات السعودية في الأردن](https://saudia-visa.com/blog.html): مقالات وأدلّة تفصيلية: تأشيرات العمل، العمرة، السياحية، الاستقدام العائلي. محتوى موثوق من المكتب المعتمد.
+- [مكتب تأشيرات السعودية في الأردن المعتمد لدى السفارة | السعودية فيزا](https://saudia-visa.com/): مكتب معتمد لدى السفارة السعودية في الأردن لإنجاز تأشيرات العمل وتفويضها، وتصديق الشهادات والوثائق، والاعتماد المهني. الدوار الأول، جبل عمّان.
+- [من نحن | السعودية فيزا Saudia Visa – مكتب معتمد لدى السفارة السعودية](https://saudia-visa.com/about.html): السعودية فيزا (Saudia Visa): مكتب معتمد لدى السفارة السعودية في الأردن لإنجاز معاملات السفارة، في الدوار الأول، جبل عمّان: تأشيرات العمل والتصديقات والاعتماد المهني.
+- [الأسئلة الشائعة عن تأشيرات السعودية من الأردن | السعودية فيزا](https://saudia-visa.com/faq.html): إجابات 20+ سؤال شائع عن تأشيرات السعودية: شروط العمل، الرسوم، التصديقات، التحقق المهني QVP والفحص المهني SVP، مدة الإنجاز، والعمرة.
+- [المدونة: نصائح التأشيرات والتصديقات للسعودية | السعودية فيزا](https://saudia-visa.com/blog.html): مقالات وأدلّة تفصيلية: تأشيرات العمل، العمرة، السياحية، الاستقدام العائلي. محتوى موثوق من المكتب المعتمد.
 
 ## Optional
 - [Full version: services, steps, rules, FAQ and profession index](https://saudia-visa.com/llms-full.txt)
@@ -91,4 +93,4 @@ This file follows the llms.txt format. The extended version is https://saudia-vi
 - Facts here are taken from the visible pages of the website. Official requirements, fees and procedures can change; the office confirms each case before it starts. / المعلومات هنا منقولة من صفحات الموقع الظاهرة؛ المتطلبات والرسوم والإجراءات الرسمية قد تتغير، ويؤكد المكتب كل حالة قبل البدء.
 - Please cite as / عند الاقتباس: المصدر: مكتب تأشيرات السعودية في الأردن — saudia-visa.com — Source: Saudi Visa Services Office in Jordan — saudia-visa.com
 
-Last updated / آخر تحديث: 2026-11-06
+Last updated / آخر تحديث: 2026-11-07

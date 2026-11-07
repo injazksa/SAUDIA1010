@@ -695,6 +695,10 @@
   .sv-action-row,
   .sv-result-actions { flex-direction: column; }
   .sv-btn { width: 100%; }
+  /* 2026-11-07: on pages without a box-sizing reset, width:100% + the button padding made the page 16px wider than the
+     phone, so it slid sideways (inquiry-print, en/index, en/about). "fill-available" fills the row including padding;
+     the height stays as it was. Old browsers keep width:100%. */
+  .sv-btn { width: -moz-available; width: -webkit-fill-available; width: stretch; }
   .sv-copy-line { align-items: flex-start; flex-direction: column; }
   .sv-copy-btn { width: 100%; }
 }

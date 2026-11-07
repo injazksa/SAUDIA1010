@@ -847,7 +847,7 @@
     if (!currentDocuments.length) return;
     printTitle.textContent = english() ? `Required documents for ${displayName(selectedRecord)}` : `الأوراق المطلوبة لمهنة ${recordName(selectedRecord)}`;
     printSubtitle.textContent = isJordanian() ? (english() ? 'Saudi Visa Office in Jordan' : 'مكتب تأشيرات السعودية في الأردن') : (english() ? `Saudi Visa Office in Jordan — Nationality: ${window.SV_TRANSLATE?.translateString?.(nationalityEl.value) || nationalityEl.value || 'Not specified'}` : `مكتب تأشيرات السعودية في الأردن — الجنسية: ${nationalityEl.value || 'غير محددة'}`);
-    printContent.innerHTML = `<ol>${currentDocuments.map((doc) => `<li><strong>${escH(doc.title)}</strong><br>${escH(doc.note)}</li>`).join('')}</ol><p>${escH(documentsSourceNote.textContent)}</p>`;
+    printContent.innerHTML = `<ol class="sd-numlist">${currentDocuments.map((doc) => `<li><strong>${escH(doc.title)}</strong><br>${escH(doc.note)}</li>`).join('')}</ol><p>${escH(documentsSourceNote.textContent)}</p>`;
     // owner 2026-10-27: unified print (letterhead + watermark) — core.js SD_print
     if (window.SD_print) { const box = document.createElement('div'); box.innerHTML = printContent.innerHTML; window.SD_print(box, printTitle.textContent, printSubtitle.textContent); return; }
     document.body.classList.add('sv-printing');

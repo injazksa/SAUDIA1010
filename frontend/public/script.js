@@ -125,6 +125,12 @@ function printProfessionDocument(professionCode, professionName, requirements, s
 		 line-height: 1.7;
 		 }
 		 .requirements-list li:last-child { border-bottom: none; }
+		 /* 2026-11-07 (owner): the item number in a small navy/gold ring. The text column keeps its width (26px, as with the old
+		    marker), so lines and pages do not change; counter(list-item) follows the list's start= when a list continues on a page */
+		 .requirements-list { list-style: none; padding-right: 0; }
+		 .requirements-list li { position: relative; padding-right: 26px; }
+		 .requirements-list li::before { content: counter(list-item); position: absolute; right: 0; top: 11px; width: 19px; height: 19px; box-sizing: border-box; border-radius: 50%; border: 1.2px solid #C9A35E; background: #FBF6EA; color: #1B2A41; font: 700 10.5px/16.5px Arial, sans-serif; text-align: center; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+		 .sv-snug .requirements-list li::before { top: 8px; }
 		 .footer {
 		 margin-top: auto;
 		 padding-top: 16px;
@@ -202,7 +208,7 @@ if (r === 'إحضار جواز السفر و 6 صور شخصية بخلفية ب
 		 <p>© 2026 مكتب تأشيرات السعودية في الأردن - جميع الحقوق محفوظة</p>
 		 </div>
 	 </div>
-	 <script src="${location.origin}/js/sd-watermark.js?v=20261031r"><\/script>
+	 <script src="${location.origin}/js/sd-watermark.js?v=20261107"><\/script>
 	 <script>
 	 // lay the sheet out on A4 pages with the office watermark (the site's one system), then print
 	 (function () {

@@ -22,7 +22,7 @@
   }
   // 2026-10-30: the watermark is no longer a tile over the whole sheet. The document is laid out on A4 pages and every
   // page gets 3–5 marks in its empty areas — js/sd-watermark.js (SD_WM), the one system for every output of the site.
-  var WM_SRC = '/js/sd-watermark.js?v=20261031r';
+  var WM_SRC = '/js/sd-watermark.js?v=20261107';
   var FOOT = EN ? '<div class="sdp-foot" dir="ltr" style="direction:ltr">A guidance sheet from ' + OFFICE.name + '. The final requirements are set by the official authorities; this sheet does not mean the application is accepted or that a visa will be issued.</div>' : '<div class="sdp-foot">هذه ورقة إرشادية من ' + OFFICE.name + '. المتطلبات النهائية تحددها الجهات الرسمية، ولا تعني هذه الورقة قبول المعاملة أو ضمان صدور التأشيرة.</div>';
   // the sheet's own look applies on screen too (the sheet is measured off-screen before printing, so the measured pages
   // are the printed pages); it is hidden on screen except while it is being measured

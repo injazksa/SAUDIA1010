@@ -11,7 +11,7 @@
  * هذا الملف هو SW الوحيد — تم حذف advanced-service-worker.js
  */
 
-const VERSION = 'v2.6.0-2026-10-31';
+const VERSION = 'v2.6.1-2026-11-07'; // 2026-11-07: mobile menu / layout fixes in core.js, saudia-ui.js and the CSS — new name clears saved copies
 // a page that has a saved copy is shown from it when the network has not answered within this time (weak networks);
 // the network copy still arrives and replaces the saved one for the next visit
 const HTML_TIMEOUT_MS = 3500;

@@ -18,6 +18,9 @@
     'background:#C9A35E;color:#1B2A41;border-radius:999px;padding:10px 12px 10px 16px;box-shadow:0 10px 24px rgba(27,42,65,.28);font:700 14px/1.4 "Noto Kufi Arabic",Tahoma,sans-serif;direction:' + (EN ? 'ltr' : 'rtl') + ';transition:opacity .3s}' +
     '.sd-install button{font:inherit;border:0;cursor:pointer;background:none;color:inherit;padding:0}.sd-install .sd-install-go{display:inline-flex;align-items:center;gap:8px}' +
     '.sd-install .sd-install-x{width:28px;height:28px;border-radius:50%;background:rgba(27,42,65,.12);display:inline-flex;align-items:center;justify-content:center;font-size:16px;line-height:1}' +
+    /* 2026-11-07: bigger touch areas, same look — the text button was 20px tall and the × 28px (a finger misses them):
+       the install button now covers the pill's full height, the × gets an invisible 44px ring */
+    '.sd-install .sd-install-go{padding:10px 0;margin:-10px 0}.sd-install .sd-install-x{position:relative}.sd-install .sd-install-x::after{content:"";position:absolute;inset:-8px;border-radius:50%}' +
     '.sd-install .sd-install-x:focus-visible,.sd-install .sd-install-go:focus-visible{outline:3px solid #1B2A41;outline-offset:2px}' +
     '.sd-install.ios{border-radius:14px;align-items:flex-start;font-weight:600;font-size:13px}' +
     '@media print{.sd-install{display:none!important}}@media (prefers-reduced-motion:reduce){.sd-install{transition:none}}';

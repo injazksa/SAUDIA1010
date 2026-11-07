@@ -2,26 +2,58 @@
   "_about": "مصدر ملفات الذكاء الاصطناعي (llms.txt وllms-full.txt وllms-professions.txt وai.txt). كل معلومة هنا منقولة من نص ظاهر في صفحات الموقع، والصفحة مذكورة في source. لا تضف رقم ترخيص ولا تقييمًا ولا معلومة غير منشورة في الموقع. بعد التعديل: node scripts/ai-files.mjs",
   "site": "https://saudia-visa.com",
   "name_ar": "مكتب تأشيرات السعودية في الأردن",
-  "name_en": "Saudi Visa Services Office in Jordan",
+  "name_en": "Saudia Visa",
   "other_names": [
-    { "name": "مكتب تأشيرات السعودية المعتمد", "source": "/about.html" },
-    { "name": "مركز السعودية المعتمد", "source": "/about.html" },
-    { "name": "إنجاز السعودية", "source": "/index.html (تذييل الصفحة)" },
-    { "name": "Saudi Visa Services in Jordan", "source": "/en/index.html" }
+    "السعودية فيزا",
+    "Saudia Visa Services Office – Jordan",
+    "Saudi Visa Services Office in Jordan",
+    "إنجاز السعودية"
   ],
-  "summary_ar": "مكتب خاص في عمّان، الأردن (الدوار الأول - جبل عمّان)، يذكر في موقعه أنه معتمد من السفارة السعودية في الأردن لغايات التفويض وإنجاز تأشيرات العمل لجميع المهن. يساعد الأفراد والشركات في معاملات تأشيرات العمل السعودية، وتصديق الشهادات والوثائق، والتحقق المهني (QVP) والفحص المهني (SVP) حسب المهنة، ويوضّح خطوات الفحص الطبي والاستعلام عن التأشيرة. لا يوفر المكتب عقود عمل ولا وظائف، ولا يضمن صدور التأشيرة؛ القرار النهائي للجهات الرسمية.",
-  "summary_en": "A private office in Amman, Jordan (First Circle, Jabal Amman). Its website states that it is accredited by the Saudi Embassy in Jordan for work-visa authorization and processing for all professions. It helps individuals and companies with Saudi work-visa files, certificate and document attestation, and the professional verification (QVP) or professional examination (SVP) that a profession requires, and explains the medical-examination and visa-inquiry steps. The office does not provide job contracts or vacancies and does not guarantee visa issuance; final decisions belong to the official authorities.",
+  "summary_ar": "Saudia Visa (السعودية فيزا) مكتب معتمد لدى السفارة السعودية في الأردن لإنجاز معاملات السفارة السعودية، ومنها التفويض وإنجاز تأشيرات العمل لجميع المهن، ومقرّه الدوار الأول - جبل عمّان. مكتب مستقل يحمل صفة الاعتماد، وليس السفارة نفسها ولا جهة حكومية. يساعد الأفراد والشركات في معاملات تأشيرات العمل السعودية، وتصديق الشهادات والوثائق، والتحقق المهني (QVP) والفحص المهني (SVP) حسب المهنة، ويوضّح خطوات الفحص الطبي والاستعلام عن التأشيرة. لا يوفر المكتب عقود عمل ولا وظائف، ولا يضمن صدور التأشيرة؛ القرار النهائي للجهات الرسمية.",
+  "summary_en": "Saudia Visa is an office accredited by the Saudi Embassy in Jordan to process Saudi Embassy transactions, including work-visa authorization and processing for all professions; it is based at First Circle, Jabal Amman. It is an independent office holding this accreditation, not the embassy itself and not a government body. It helps individuals and companies with Saudi work-visa files, certificate and document attestation, and the professional verification (QVP) or professional examination (SVP) that a profession requires, and explains the medical-examination and visa-inquiry steps. The office does not provide job contracts or vacancies and does not guarantee visa issuance; final decisions belong to the official authorities.",
   "status": [
-    { "ar": "يصف المكتب نفسه في موقعه بأنه «مكتب معتمد ومرخص من السفارة السعودية في الأردن» و«مركز معتمد رسميًا من السفارة السعودية لغايات التفويض وإنجاز تأشيرات العمل لجميع المهن».", "en": "On its website the office describes itself as accredited and licensed by the Saudi Embassy in Jordan for work-visa authorization and processing for all professions.", "source": "/index.html, /about.html" },
-    { "ar": "المكتب ليس جهة حكومية، ولا يصدر التأشيرات. هو «معقب ومنجز» للمعاملات: يراجع البيانات والمستندات، ويوضح الخطوات، ويجهّز الملف ويقدّمه ويتابعه.", "en": "The office is not a government body and does not issue visas. It is a processing agent: it reviews data and documents, explains the steps, prepares, submits and follows up the file.", "source": "/index.html" },
-    { "ar": "لا يوفر المكتب عقود عمل ولا يملك وظائف شاغرة. من لديه عقد عمل سعودي من شركة أو كفيل في السعودية يساعده المكتب في استخراج التأشيرة وإنجاز الأوراق.", "en": "The office does not provide job contracts and has no vacancies. Applicants who already hold a Saudi job contract from a company or sponsor in Saudi Arabia can get help obtaining the visa and completing the documents.", "source": "/index.html, /faq.html" }
+    {
+      "ar": "يصف المكتب نفسه في موقعه بأنه «مكتب معتمد ومرخص من السفارة السعودية في الأردن» و«مركز معتمد رسميًا من السفارة السعودية لغايات التفويض وإنجاز تأشيرات العمل لجميع المهن».",
+      "en": "On its website the office describes itself as accredited and licensed by the Saudi Embassy in Jordan for work-visa authorization and processing for all professions.",
+      "source": "/index.html, /about.html"
+    },
+    {
+      "ar": "المكتب ليس جهة حكومية، ولا يصدر التأشيرات. هو «معقب ومنجز» للمعاملات: يراجع البيانات والمستندات، ويوضح الخطوات، ويجهّز الملف ويقدّمه ويتابعه.",
+      "en": "The office is not a government body and does not issue visas. It is a processing agent: it reviews data and documents, explains the steps, prepares, submits and follows up the file.",
+      "source": "/index.html"
+    },
+    {
+      "ar": "لا يوفر المكتب عقود عمل ولا يملك وظائف شاغرة. من لديه عقد عمل سعودي من شركة أو كفيل في السعودية يساعده المكتب في استخراج التأشيرة وإنجاز الأوراق.",
+      "en": "The office does not provide job contracts and has no vacancies. Applicants who already hold a Saudi job contract from a company or sponsor in Saudi Arabia can get help obtaining the visa and completing the documents.",
+      "source": "/index.html, /faq.html"
+    }
   ],
   "role_vs_authorities": [
-    { "ar": "لا يضمن المكتب صدور التأشيرة أو قبول الطلب؛ القرار النهائي يعود إلى الجهات الرسمية.", "en": "The office does not guarantee that a visa will be issued or an application accepted; the final decision belongs to the official authorities.", "source": "/index.html" },
-    { "ar": "التفويض الإلكتروني خطوة إجرائية تمكّن المكتب من متابعة المعاملة، ولا يضمن صدور التأشيرة.", "en": "The electronic authorization is a procedural step that lets the office follow up the file; it does not guarantee the visa.", "source": "/saudi-work-visa-authorization.html" },
-    { "ar": "قبول المواعيد والمعاملات للجهة الرسمية؛ والتحقق المهني والفحص الطبي والتصديقات تُنجز لدى جهاتها الرسمية ومنصاتها.", "en": "Appointments and transactions are accepted by the official body; professional verification, medical examinations and attestations are carried out by their official bodies and platforms.", "source": "/index.html, /en/about.html" },
-    { "ar": "المتطلبات قد تتغير، وتختلف حسب المهنة والجنسية والإقامة ونوع التأشيرة والتعليمات السارية؛ يحدد المكتب ما ينطبق على كل حالة بعد مراجعتها.", "en": "Requirements can change and depend on the profession, nationality, residence, visa type and the rules in force; the office confirms what applies to each case after reviewing it.", "source": "/saudi-work-visa-authorization.html, /en/about.html" },
-    { "ar": "نتائج أدوات الموقع (الأهلية، الجاهزية، الحاسبة) تقديرية وأولية، وليست قرارًا رسميًا.", "en": "Results of the website tools (eligibility, readiness, fee calculator) are preliminary estimates, not official decisions.", "source": "/index.html, /calculator.html, /saudi-work-visa-eligibility.html" }
+    {
+      "ar": "لا يضمن المكتب صدور التأشيرة أو قبول الطلب؛ القرار النهائي يعود إلى الجهات الرسمية.",
+      "en": "The office does not guarantee that a visa will be issued or an application accepted; the final decision belongs to the official authorities.",
+      "source": "/index.html"
+    },
+    {
+      "ar": "التفويض الإلكتروني خطوة إجرائية تمكّن المكتب من متابعة المعاملة، ولا يضمن صدور التأشيرة.",
+      "en": "The electronic authorization is a procedural step that lets the office follow up the file; it does not guarantee the visa.",
+      "source": "/saudi-work-visa-authorization.html"
+    },
+    {
+      "ar": "قبول المواعيد والمعاملات للجهة الرسمية؛ والتحقق المهني والفحص الطبي والتصديقات تُنجز لدى جهاتها الرسمية ومنصاتها.",
+      "en": "Appointments and transactions are accepted by the official body; professional verification, medical examinations and attestations are carried out by their official bodies and platforms.",
+      "source": "/index.html, /en/about.html"
+    },
+    {
+      "ar": "المتطلبات قد تتغير، وتختلف حسب المهنة والجنسية والإقامة ونوع التأشيرة والتعليمات السارية؛ يحدد المكتب ما ينطبق على كل حالة بعد مراجعتها.",
+      "en": "Requirements can change and depend on the profession, nationality, residence, visa type and the rules in force; the office confirms what applies to each case after reviewing it.",
+      "source": "/saudi-work-visa-authorization.html, /en/about.html"
+    },
+    {
+      "ar": "نتائج أدوات الموقع (الأهلية، الجاهزية، الحاسبة) تقديرية وأولية، وليست قرارًا رسميًا.",
+      "en": "Results of the website tools (eligibility, readiness, fee calculator) are preliminary estimates, not official decisions.",
+      "source": "/index.html, /calculator.html, /saudi-work-visa-eligibility.html"
+    }
   ],
   "contact": {
     "address_ar": "الدوار الأول - جبل عمّان، عمّان، الأردن",
@@ -43,63 +75,272 @@
     "privacy_en": "Do not send passport images or personal documents before the office asks for them, and never send passwords, one-time codes or payment-card details.",
     "source": "/index.html, /about.html, /saudi-work-visa-authorization.html, /en/about.html"
   },
-  "founded": { "value": "2014", "ar": "تأسس عام 2014 (كما في صفحة من نحن)، وخبرة تزيد على 10 سنوات.", "en": "Founded in 2014 (as stated on the About page); more than 10 years of experience.", "source": "/about.html" },
+  "founded": {
+    "value": "2014",
+    "ar": "تأسس عام 2014 (كما في صفحة من نحن)، وخبرة تزيد على 10 سنوات.",
+    "en": "Founded in 2014 (as stated on the About page); more than 10 years of experience.",
+    "source": "/about.html"
+  },
   "audiences": [
-    { "ar": "أفراد لديهم تأشيرة عمل أو عقد عمل سعودي ويريدون إكمال المعاملة من الأردن", "en": "Individuals who hold a Saudi work visa or job contract and want to complete the process from Jordan" },
-    { "ar": "شركات وأصحاب عمل سعوديون يتابعون تأشيرات موظفين في الأردن", "en": "Saudi companies and employers following up employees' visas in Jordan" },
-    { "ar": "وكالات استقدام وشركات موارد بشرية وسفر وشركاء دوليون يحتاجون نقطة تنسيق في الأردن", "en": "Recruitment agencies, HR providers, travel businesses and international partners that need a coordination point in Jordan" },
-    { "ar": "من يحتاج تصديق شهادات ووثائق للسعودية أو للإمارات", "en": "Anyone who needs certificates or documents attested for Saudi Arabia or the UAE" }
+    {
+      "ar": "أفراد لديهم تأشيرة عمل أو عقد عمل سعودي ويريدون إكمال المعاملة من الأردن",
+      "en": "Individuals who hold a Saudi work visa or job contract and want to complete the process from Jordan"
+    },
+    {
+      "ar": "شركات وأصحاب عمل سعوديون يتابعون تأشيرات موظفين في الأردن",
+      "en": "Saudi companies and employers following up employees' visas in Jordan"
+    },
+    {
+      "ar": "وكالات استقدام وشركات موارد بشرية وسفر وشركاء دوليون يحتاجون نقطة تنسيق في الأردن",
+      "en": "Recruitment agencies, HR providers, travel businesses and international partners that need a coordination point in Jordan"
+    },
+    {
+      "ar": "من يحتاج تصديق شهادات ووثائق للسعودية أو للإمارات",
+      "en": "Anyone who needs certificates or documents attested for Saudi Arabia or the UAE"
+    }
   ],
   "services": [
-    { "url": "/work-visa.html", "ar": "تأشيرة العمل السعودية", "en": "Saudi work visa", "desc_ar": "المساعدة في إجراءات تأشيرات العمل للسعودية لجميع المهن وتجهيز ملفات السفارة: الأوراق حسب المهنة، العقد وخطاب الاطلاع، الاعتماد المهني، الفحص الطبي والتصديقات.", "desc_en": "Help with Saudi work-visa procedures for all professions and preparation of the embassy file: documents by profession, contract and information letter, professional verification, medical exam and attestations." },
-    { "url": "/saudi-work-visa-authorization.html", "ar": "تفويض تأشيرة العمل", "en": "Work-visa authorization", "desc_ar": "لمن لديه تأشيرة عمل أو عقد عمل سعودي: شرح التفويض الإلكتروني للمكتب، وتحديد الأوراق حسب المهنة، ومتابعة المعاملة لدى السفارة حتى استلام الجواز.", "desc_en": "For holders of a Saudi work visa or contract: the office's electronic authorization, the documents for the profession, and follow-up with the embassy until the passport is collected." },
-    { "url": "/certificates.html", "ar": "تصديق الشهادات والوثائق", "en": "Certificate and document attestation", "desc_ar": "تصديق الشهادات الجامعية والوثائق الرسمية من الجهات الأردنية والخارجية الأردنية والسفارة السعودية حسب المطلوب.", "desc_en": "Attestation of university certificates and official documents through the Jordanian authorities, the Jordanian Ministry of Foreign Affairs and the Saudi Embassy as required." },
-    { "url": "/saudi-document-attestation-jordan.html", "ar": "دليل تصديق الأوراق", "en": "Document attestation guide", "desc_ar": "ترتيب الأختام حسب نوع الوثيقة وبلد إصدارها.", "desc_en": "The order of stamps by document type and issuing country." },
-    { "url": "/saudi-qvp-professional-accreditation/", "ar": "الاعتماد المهني السعودي (QVP): التحقق المهني والفحص المهني والمصادقة", "en": "Saudi Professional Accreditation (QVP): Professional Verification, SVP and Mosadaqa", "desc_ar": "التحقق المهني (QVP) للمهن التي تتطلب مؤهلًا جامعيًا، والفحص المهني (SVP) للمهن المهارية، والفرق بينهما وبين منصة «مصادقة» لتوثيق الشهادات التعليمية، مع مراجعة المتطلبات والمستندات قبل التقديم.", "desc_en": "Professional Verification (QVP) for university-degree professions, the Skill Verification Program (SVP) for skilled trades, and how they differ from the Mosadaqa certificate-verification platform, with the requirements and documents reviewed before applying. English page: https://saudia-visa.com/en/saudi-qvp-professional-accreditation/" },
-    { "url": "/saudi-labor-exam-jordan.html", "ar": "الفحص المهني SVP", "en": "Professional examination (SVP)", "desc_ar": "الاختبار النظري والعملي للمهن المهارية وطريقة حجزه.", "desc_en": "The theory and practical test for skilled trades and how it is booked." },
-    { "url": "/saudi-medical-exam-jordan.html", "ar": "الفحص الطبي (وافد) من الأردن", "en": "Medical examination (Wafid) from Jordan", "desc_ar": "الفحص الطبي والبصمة لدى المراكز المعتمدة؛ يحجز المكتب الموعدين حسب الإجراء.", "desc_en": "Medical exam and fingerprints at accredited centres; the office books both appointments according to the procedure." },
-    { "url": "/saudi-council-of-engineers-registration.html", "ar": "التسجيل في الهيئة السعودية للمهندسين", "en": "Saudi Council of Engineers registration", "desc_ar": "مراجعة الشهادة الهندسية والأوراق، والتوجيه بشأن مصادقة الشهادة، والمساعدة في التسجيل لدى الهيئة.", "desc_en": "Review of the engineering degree and documents, guidance on degree verification (Mosadaqa), and help with registration." },
-    { "url": "/pillar-dataflow.html", "ar": "دليل DataFlow للمهن الصحية", "en": "DataFlow guide for health professions", "desc_ar": "التحقق من الشهادات والخبرات للمهن الصحية.", "desc_en": "Verification of degrees and experience for health professions." },
-    { "url": "/pillar-mumaris-plus.html", "ar": "دليل ممارس بلس Mumaris+", "en": "Mumaris+ guide", "desc_ar": "منصة الهيئة السعودية للتخصصات الصحية لتسجيل الكوادر الصحية وتصنيفها.", "desc_en": "The Saudi Commission for Health Specialties platform for registering and classifying health practitioners." },
-    { "url": "/uae-embassy-attestation-jordan.html", "ar": "تصديق أوراق سفارة الإمارات", "en": "UAE Embassy attestation in Amman", "desc_ar": "تجهيز ومتابعة تصديق الأوراق والشهادات لدى سفارة الإمارات في عمّان.", "desc_en": "Preparing and following up document attestation at the UAE Embassy in Amman." },
-    { "url": "/remote-document-services-jordan/", "ar": "إنجاز المعاملات والوثائق من الأردن عن بُعد", "en": "Remote document services from Jordan", "desc_ar": "تصديق الشهادات والوثائق والوكالات، واستخراج الوثائق الجامعية، ومعاملات الخارجية والجهات الرسمية والسفارات، والاستلام والتسليم والشحن عبر Aramex (أرامكس)، لمن هم داخل الأردن وخارجه، بحسب متطلبات كل جهة.", "desc_en": "Certificate, document and power-of-attorney attestation, university documents, ministry and embassy transactions, and document pick-up, delivery and Aramex shipping, for people inside and outside Jordan, as each authority requires." },
-    { "url": "/corporate.html", "ar": "خدمات الشركات", "en": "Services for companies", "desc_ar": "تأشيرات الموظفين، والتفويض، والتصديقات، والتحقق المهني للشركات وأصحاب العمل.", "desc_en": "Employee visas, authorization, attestation and professional verification for companies and employers." },
-    { "url": "/saudi-visa-inquiry-print.html", "ar": "الاستعلام عن التأشيرة وطباعتها", "en": "Visa inquiry and printing", "desc_ar": "كيفية الاستعلام عن التأشيرة السعودية وطباعتها من الروابط الرسمية.", "desc_en": "How to check and print a Saudi visa through the official links." }
+    {
+      "url": "/work-visa.html",
+      "ar": "تأشيرة العمل السعودية",
+      "en": "Saudi work visa",
+      "desc_ar": "المساعدة في إجراءات تأشيرات العمل للسعودية لجميع المهن وتجهيز ملفات السفارة: الأوراق حسب المهنة، العقد وخطاب الاطلاع، الاعتماد المهني، الفحص الطبي والتصديقات.",
+      "desc_en": "Help with Saudi work-visa procedures for all professions and preparation of the embassy file: documents by profession, contract and information letter, professional verification, medical exam and attestations."
+    },
+    {
+      "url": "/saudi-work-visa-authorization.html",
+      "ar": "تفويض تأشيرة العمل",
+      "en": "Work-visa authorization",
+      "desc_ar": "لمن لديه تأشيرة عمل أو عقد عمل سعودي: شرح التفويض الإلكتروني للمكتب، وتحديد الأوراق حسب المهنة، ومتابعة المعاملة لدى السفارة حتى استلام الجواز.",
+      "desc_en": "For holders of a Saudi work visa or contract: the office's electronic authorization, the documents for the profession, and follow-up with the embassy until the passport is collected."
+    },
+    {
+      "url": "/certificates.html",
+      "ar": "تصديق الشهادات والوثائق",
+      "en": "Certificate and document attestation",
+      "desc_ar": "تصديق الشهادات الجامعية والوثائق الرسمية من الجهات الأردنية والخارجية الأردنية والسفارة السعودية حسب المطلوب.",
+      "desc_en": "Attestation of university certificates and official documents through the Jordanian authorities, the Jordanian Ministry of Foreign Affairs and the Saudi Embassy as required."
+    },
+    {
+      "url": "/saudi-consular-services-jordan/",
+      "ar": "الخدمات القنصلية السعودية (ما يتابعه المكتب)",
+      "en": "Saudi consular transactions (what the office follows up)",
+      "desc_ar": "صفحة جامعة لمعاملات السفارة السعودية التي ينجزها المكتب ويتابعها في عمّان بصفته مكتبًا معتمدًا لدى السفارة: التأشيرات، والتصديقات، والوثائق المدنية والشرعية، وشهادات الخبرة، والتقارير الطبية، والاعتماد المهني.",
+      "desc_en": "A hub of the Saudi Embassy transactions the office processes and follows up in Amman as an office accredited by the embassy: visas, attestations, civil and legal documents, experience certificates, medical reports and professional accreditation."
+    },
+    {
+      "url": "/saudi-university-certificate-attestation/",
+      "ar": "تصديق الشهادات الجامعية",
+      "en": "University certificate attestation",
+      "desc_ar": "مسار أختام الشهادة الجامعية الأردنية والصادرة من الخارج، والمساعدة في رفع طلب «مصادقة» ومتابعة نتيجته، وتصديق السفارة السعودية في عمّان لمن لديه نتيجة المصادقة وإقامة سعودية أو عقد عمل وتأشيرة.",
+      "desc_en": "The stamp route for university certificates issued in Jordan or abroad, help filing the Musadaqa request and following its result, and Saudi Embassy attestation in Amman for applicants with a Musadaqa result plus Saudi residence or a work contract and visa."
+    },
+    {
+      "url": "/saudi-document-attestation-jordan.html",
+      "ar": "دليل تصديق الأوراق",
+      "en": "Document attestation guide",
+      "desc_ar": "ترتيب الأختام حسب نوع الوثيقة وبلد إصدارها.",
+      "desc_en": "The order of stamps by document type and issuing country."
+    },
+    {
+      "url": "/saudi-qvp-professional-accreditation/",
+      "ar": "الاعتماد المهني السعودي (QVP): التحقق المهني والفحص المهني والمصادقة",
+      "en": "Saudi Professional Accreditation (QVP): Professional Verification, SVP and Mosadaqa",
+      "desc_ar": "التحقق المهني (QVP) للمهن التي تتطلب مؤهلًا جامعيًا، والفحص المهني (SVP) للمهن المهارية، والفرق بينهما وبين منصة «مصادقة» لتوثيق الشهادات التعليمية، مع مراجعة المتطلبات والمستندات قبل التقديم.",
+      "desc_en": "Professional Verification (QVP) for university-degree professions, the Skill Verification Program (SVP) for skilled trades, and how they differ from the Mosadaqa certificate-verification platform, with the requirements and documents reviewed before applying. English page: https://saudia-visa.com/en/saudi-qvp-professional-accreditation/"
+    },
+    {
+      "url": "/saudi-labor-exam-jordan.html",
+      "ar": "الفحص المهني SVP",
+      "en": "Professional examination (SVP)",
+      "desc_ar": "الاختبار النظري والعملي للمهن المهارية وطريقة حجزه.",
+      "desc_en": "The theory and practical test for skilled trades and how it is booked."
+    },
+    {
+      "url": "/saudi-medical-exam-jordan.html",
+      "ar": "الفحص الطبي (وافد) من الأردن",
+      "en": "Medical examination (Wafid) from Jordan",
+      "desc_ar": "الفحص الطبي والبصمة لدى المراكز المعتمدة؛ يحجز المكتب الموعدين حسب الإجراء.",
+      "desc_en": "Medical exam and fingerprints at accredited centres; the office books both appointments according to the procedure."
+    },
+    {
+      "url": "/saudi-council-of-engineers-registration.html",
+      "ar": "التسجيل في الهيئة السعودية للمهندسين",
+      "en": "Saudi Council of Engineers registration",
+      "desc_ar": "مراجعة الشهادة الهندسية والأوراق، والتوجيه بشأن مصادقة الشهادة، والمساعدة في التسجيل لدى الهيئة.",
+      "desc_en": "Review of the engineering degree and documents, guidance on degree verification (Mosadaqa), and help with registration."
+    },
+    {
+      "url": "/pillar-dataflow.html",
+      "ar": "دليل DataFlow للمهن الصحية",
+      "en": "DataFlow guide for health professions",
+      "desc_ar": "التحقق من الشهادات والخبرات للمهن الصحية.",
+      "desc_en": "Verification of degrees and experience for health professions."
+    },
+    {
+      "url": "/pillar-mumaris-plus.html",
+      "ar": "دليل ممارس بلس Mumaris+",
+      "en": "Mumaris+ guide",
+      "desc_ar": "منصة الهيئة السعودية للتخصصات الصحية لتسجيل الكوادر الصحية وتصنيفها.",
+      "desc_en": "The Saudi Commission for Health Specialties platform for registering and classifying health practitioners."
+    },
+    {
+      "url": "/uae-embassy-attestation-jordan.html",
+      "ar": "تصديق أوراق سفارة الإمارات",
+      "en": "UAE Embassy attestation in Amman",
+      "desc_ar": "تجهيز ومتابعة تصديق الأوراق والشهادات لدى سفارة الإمارات في عمّان.",
+      "desc_en": "Preparing and following up document attestation at the UAE Embassy in Amman."
+    },
+    {
+      "url": "/remote-document-services-jordan/",
+      "ar": "إنجاز المعاملات والوثائق من الأردن عن بُعد",
+      "en": "Remote document services from Jordan",
+      "desc_ar": "تصديق الشهادات والوثائق والوكالات، واستخراج الوثائق الجامعية، ومعاملات الخارجية والجهات الرسمية والسفارات، والاستلام والتسليم والشحن عبر Aramex (أرامكس)، لمن هم داخل الأردن وخارجه، بحسب متطلبات كل جهة.",
+      "desc_en": "Certificate, document and power-of-attorney attestation, university documents, ministry and embassy transactions, and document pick-up, delivery and Aramex shipping, for people inside and outside Jordan, as each authority requires."
+    },
+    {
+      "url": "/corporate.html",
+      "ar": "خدمات الشركات",
+      "en": "Services for companies",
+      "desc_ar": "تأشيرات الموظفين، والتفويض، والتصديقات، والتحقق المهني للشركات وأصحاب العمل.",
+      "desc_en": "Employee visas, authorization, attestation and professional verification for companies and employers."
+    },
+    {
+      "url": "/saudi-visa-inquiry-print.html",
+      "ar": "الاستعلام عن التأشيرة وطباعتها",
+      "en": "Visa inquiry and printing",
+      "desc_ar": "كيفية الاستعلام عن التأشيرة السعودية وطباعتها من الروابط الرسمية.",
+      "desc_en": "How to check and print a Saudi visa through the official links."
+    }
   ],
   "tools": [
-    { "url": "/start-here.html", "ar": "ابدأ من هنا", "en": "Start here", "desc_ar": "اختيار المسار المناسب: تأشيرة عمل، جاهزية الملف، أوراق المهنة، التفويض، الرسوم.", "desc_en": "Choose the right path: work visa, file readiness, profession documents, authorization, fees." },
-    { "url": "/professions.html", "ar": "المهن والأوراق", "en": "Professions and documents", "desc_ar": "البحث عن المهنة بالاسم أو الرمز، والأوراق حسب الجنسية والإقامة والجنس، مع الطباعة والتنزيل.", "desc_en": "Search a profession by name or code; documents by nationality, residence and gender; print or download." },
-    { "url": "/saudi-visa-documents-tracker.html", "ar": "مسار أوراقي", "en": "My documents path", "desc_ar": "أوراق المهنة وترتيب أختام كل ورقة، مع متابعة ما جُهّز وطباعة القائمة أو حفظها PDF.", "desc_en": "The documents of a profession with the order of stamps for each, a checklist, and print / save as PDF." },
-    { "url": "/saudi-work-visa-eligibility.html", "ar": "التحقق من الأهلية", "en": "Eligibility check", "desc_ar": "الجنسية والإقامة والعمر والمؤهل والمهنة والخبرة والاعتماد المهني؛ نتيجة تقديرية.", "desc_en": "Nationality, residence, age, qualification, profession, experience and professional verification; an indicative result." },
-    { "url": "/saudi-work-visa-file-readiness.html", "ar": "مراجعة جاهزية ملف العمل", "en": "Work-visa file readiness", "desc_ar": "نتيجة قصيرة قابلة للطباعة بما ينقص الملف.", "desc_en": "A short printable result of what is still missing in the file." },
-    { "url": "/calculator.html", "ar": "حاسبة الرسوم", "en": "Fee calculator", "desc_ar": "تقدير أولي للتكلفة قبل البدء؛ يؤكد المكتب التفاصيل والتكلفة قبل بدء المعاملة.", "desc_en": "A preliminary cost estimate before starting; the office confirms the details and cost before the transaction starts." }
+    {
+      "url": "/start-here.html",
+      "ar": "ابدأ من هنا",
+      "en": "Start here",
+      "desc_ar": "اختيار المسار المناسب: تأشيرة عمل، جاهزية الملف، أوراق المهنة، التفويض، الرسوم.",
+      "desc_en": "Choose the right path: work visa, file readiness, profession documents, authorization, fees."
+    },
+    {
+      "url": "/professions.html",
+      "ar": "المهن والأوراق",
+      "en": "Professions and documents",
+      "desc_ar": "البحث عن المهنة بالاسم أو الرمز، والأوراق حسب الجنسية والإقامة والجنس، مع الطباعة والتنزيل.",
+      "desc_en": "Search a profession by name or code; documents by nationality, residence and gender; print or download."
+    },
+    {
+      "url": "/saudi-visa-documents-tracker.html",
+      "ar": "مسار أوراقي",
+      "en": "My documents path",
+      "desc_ar": "أوراق المهنة وترتيب أختام كل ورقة، مع متابعة ما جُهّز وطباعة القائمة أو حفظها PDF.",
+      "desc_en": "The documents of a profession with the order of stamps for each, a checklist, and print / save as PDF."
+    },
+    {
+      "url": "/saudi-work-visa-eligibility.html",
+      "ar": "التحقق من الأهلية",
+      "en": "Eligibility check",
+      "desc_ar": "الجنسية والإقامة والعمر والمؤهل والمهنة والخبرة والاعتماد المهني؛ نتيجة تقديرية.",
+      "desc_en": "Nationality, residence, age, qualification, profession, experience and professional verification; an indicative result."
+    },
+    {
+      "url": "/saudi-work-visa-file-readiness.html",
+      "ar": "مراجعة جاهزية ملف العمل",
+      "en": "Work-visa file readiness",
+      "desc_ar": "نتيجة قصيرة قابلة للطباعة بما ينقص الملف.",
+      "desc_en": "A short printable result of what is still missing in the file."
+    },
+    {
+      "url": "/calculator.html",
+      "ar": "حاسبة الرسوم",
+      "en": "Fee calculator",
+      "desc_ar": "تقدير أولي للتكلفة قبل البدء؛ يؤكد المكتب التفاصيل والتكلفة قبل بدء المعاملة.",
+      "desc_en": "A preliminary cost estimate before starting; the office confirms the details and cost before the transaction starts."
+    }
   ],
   "authorization_steps": {
     "source": "/saudi-work-visa-authorization.html",
     "note_ar": "الخطوات وصف عام لطبيعة الخدمة، وليست قائمة موحدة لكل الحالات. يحدد المكتب ما ينطبق على المعاملة بعد مراجعتها.",
     "steps": [
-      { "ar": "التواصل وإرسال بيانات التأشيرة: مستند التأشيرة أو بياناتها، والمهنة، والجنسية عبر واتساب أو البريد.", "en": "Contact the office and send the visa document or its details, the profession and the nationality by WhatsApp or e-mail." },
-      { "ar": "مراجعة الحالة: يتحقق المكتب من المعلومات ويحدد الأوراق والإجراءات حسب المهنة والحالة.", "en": "Case review: the office checks the information and sets the documents and procedures for the profession and case." },
-      { "ar": "التفويض الإلكتروني للمكتب: يتمه المتقدم أو جهة العمل بالطريقة التي يوضحها المكتب (وفي بعض المسميات مثل الرئيس التنفيذي يكون من هيئة الاستثمار).", "en": "Electronic authorization of the office, completed by the applicant or the employer as the office explains (for some titles, such as chief executive, through the investment authority)." },
-      { "ar": "تجهيز الأوراق والتصديقات حسب المهنة، ويوضح المكتب تسلسل الأختام قبل التسليم.", "en": "Prepare the documents and attestations for the profession; the office explains the order of stamps before hand-over." },
-      { "ar": "الفحص الطبي والبصمة عند الطلب لدى المراكز المعتمدة (أصل جواز السفر وصورتان بخلفية بيضاء).", "en": "Medical exam and fingerprints when required, at accredited centres (original passport and two white-background photos)." },
-      { "ar": "تسليم الأوراق المكتملة وجواز السفر في المكتب، ويراجع المكتب اكتمال الملف.", "en": "Hand over the completed documents and the passport at the office, which checks the file is complete." },
-      { "ar": "استكمال المعاملة لدى السفارة السعودية، ويبلغ المكتب بالمستجدات.", "en": "The office completes the transaction with the Saudi Embassy and reports updates." },
-      { "ar": "استلام جواز السفر من المكتب بعد انتهاء الإجراء.", "en": "Collect the passport from the office when the procedure is finished." }
+      {
+        "ar": "التواصل وإرسال بيانات التأشيرة: مستند التأشيرة أو بياناتها، والمهنة، والجنسية عبر واتساب أو البريد.",
+        "en": "Contact the office and send the visa document or its details, the profession and the nationality by WhatsApp or e-mail."
+      },
+      {
+        "ar": "مراجعة الحالة: يتحقق المكتب من المعلومات ويحدد الأوراق والإجراءات حسب المهنة والحالة.",
+        "en": "Case review: the office checks the information and sets the documents and procedures for the profession and case."
+      },
+      {
+        "ar": "التفويض الإلكتروني للمكتب حسب نوع التأشيرة: تأشيرات الشركات والمهن العادية يفوّضها ممثل الشركة في منصة التأشيرات التابعة لوزارة الخارجية السعودية برقم التأشيرة ورقم السجل التجاري وتصادق عليها الغرفة التجارية السعودية؛ المهن الاستثمارية (مثل الرئيس التنفيذي والمستثمر) تصادق عليها هيئة الاستثمار؛ المهن المنزلية يتم تفويضها والمصادقة عليها من خلال مكاتب الاستقدام في السعودية.",
+        "en": "Electronic authorization of the office by visa type: company and regular visas are authorized by the company representative on the Saudi Ministry of Foreign Affairs visa platform (visa number and commercial registration number) and certified by the company's Saudi chamber of commerce; investment professions (e.g. chief executive, investor) are certified by the investment authority; domestic professions are authorized and certified through recruitment offices in Saudi Arabia."
+      },
+      {
+        "ar": "تجهيز الأوراق والتصديقات حسب المهنة، ويوضح المكتب تسلسل الأختام قبل التسليم.",
+        "en": "Prepare the documents and attestations for the profession; the office explains the order of stamps before hand-over."
+      },
+      {
+        "ar": "الفحص الطبي والبصمة عند الطلب لدى المراكز المعتمدة (أصل جواز السفر وصورتان بخلفية بيضاء).",
+        "en": "Medical exam and fingerprints when required, at accredited centres (original passport and two white-background photos)."
+      },
+      {
+        "ar": "تسليم الأوراق المكتملة وجواز السفر في المكتب، ويراجع المكتب اكتمال الملف.",
+        "en": "Hand over the completed documents and the passport at the office, which checks the file is complete."
+      },
+      {
+        "ar": "استكمال المعاملة لدى السفارة السعودية، ويبلغ المكتب بالمستجدات.",
+        "en": "The office completes the transaction with the Saudi Embassy and reports updates."
+      },
+      {
+        "ar": "استلام جواز السفر من المكتب بعد انتهاء الإجراء.",
+        "en": "Collect the passport from the office when the procedure is finished."
+      }
     ]
   },
   "document_rules": [
-    { "ar": "تختلف الأوراق حسب المهنة، وبعضها حسب الجنسية والإقامة وبلد إصدار الوثيقة.", "en": "Documents depend on the profession, and some on nationality, residence and the country that issued the document." },
-    { "ar": "كل صفحة مهنة تعرض أوراق المتقدم الأردني الذكر بترتيبها وأختامها؛ وصفحة «المهن والأوراق» و«مسار أوراقي» تعيدان القائمة حسب الجنسية والإقامة والجنس.", "en": "Each profession page lists the documents for a Jordanian male applicant with their stamps; the Professions page and «My documents path» recompute the list for the chosen nationality, residence and gender." },
-    { "ar": "الإجراء المهني: التحقق المهني (QVP) للمهن التي تتطلب مؤهلًا جامعيًا، والفحص المهني (SVP) للمهن المهارية حسب المهنة؛ ولا يُطلب أي منهما لبعض المهن مثل العمالة المنزلية.", "en": "Professional procedure: QVP for professions that require a university degree and SVP for skilled trades, according to the profession; neither applies to some professions such as household workers." },
-    { "ar": "للنساء: يُستبدل بند الوثائق العسكرية بعدم ممانعة من الزوج أو ولي الأمر مختومة حسب مصدرها، مع عقد الزواج أو القيد الفردي.", "en": "For women, the military-documents item is replaced by a no-objection document from the husband or guardian, stamped according to its source, with the marriage contract or the individual civil record." },
-    { "ar": "أغلب المهن تتطلب عقد العمل من الشركة السعودية وخطاب الاطلاع مختومين من الغرفة التجارية والخارجية السعودية.", "en": "Most professions require the contract from the Saudi company and the information letter, stamped by the Chamber of Commerce and the Saudi Ministry of Foreign Affairs." },
-    { "ar": "بعض المسميات ليس لها رمز رسمي مؤكد، وتظهر صفحتها بعبارة «بدون رمز رسمي مؤكد».", "en": "A few titles have no confirmed official code; their pages say so instead of showing a number." }
+    {
+      "ar": "تختلف الأوراق حسب المهنة، وبعضها حسب الجنسية والإقامة وبلد إصدار الوثيقة.",
+      "en": "Documents depend on the profession, and some on nationality, residence and the country that issued the document."
+    },
+    {
+      "ar": "كل صفحة مهنة تعرض أوراق المتقدم الأردني الذكر بترتيبها وأختامها؛ وصفحة «المهن والأوراق» و«مسار أوراقي» تعيدان القائمة حسب الجنسية والإقامة والجنس.",
+      "en": "Each profession page lists the documents for a Jordanian male applicant with their stamps; the Professions page and «My documents path» recompute the list for the chosen nationality, residence and gender."
+    },
+    {
+      "ar": "الإجراء المهني: التحقق المهني (QVP) للمهن التي تتطلب مؤهلًا جامعيًا، والفحص المهني (SVP) للمهن المهارية حسب المهنة؛ ولا يُطلب أي منهما لبعض المهن مثل العمالة المنزلية.",
+      "en": "Professional procedure: QVP for professions that require a university degree and SVP for skilled trades, according to the profession; neither applies to some professions such as household workers."
+    },
+    {
+      "ar": "للنساء: يُستبدل بند الوثائق العسكرية بعدم ممانعة من الزوج أو ولي الأمر مختومة حسب مصدرها، مع عقد الزواج أو القيد الفردي.",
+      "en": "For women, the military-documents item is replaced by a no-objection document from the husband or guardian, stamped according to its source, with the marriage contract or the individual civil record."
+    },
+    {
+      "ar": "أغلب المهن تتطلب عقد العمل من الشركة السعودية وخطاب الاطلاع مختومين من الغرفة التجارية والخارجية السعودية.",
+      "en": "Most professions require the contract from the Saudi company and the information letter, stamped by the Chamber of Commerce and the Saudi Ministry of Foreign Affairs."
+    },
+    {
+      "ar": "بعض المسميات ليس لها رمز رسمي مؤكد، وتظهر صفحتها بعبارة «بدون رمز رسمي مؤكد».",
+      "en": "A few titles have no confirmed official code; their pages say so instead of showing a number."
+    }
   ],
   "faq_exclude": [
-    { "q": "ماذا لو رُفضت تأشيرتي؟", "why": "الجواب الظاهر («تكاد حالات الرفض تكون معدومة») يتعارض مع عبارة «لا نضمن صدور التأشيرة» في الصفحة الرئيسية؛ ينتظر تأكيد المالك" },
-    { "q": "هل يوجد ضمان أو التزام مكتوب؟", "why": "الجواب يبدأ بـ«نعم» لسؤال عن الضمان، ويتعارض مع «لا نضمن صدور التأشيرة»؛ ينتظر تأكيد المالك" }
+    {
+      "q": "ماذا لو رُفضت تأشيرتي؟",
+      "why": "الجواب الظاهر («تكاد حالات الرفض تكون معدومة») يتعارض مع عبارة «لا نضمن صدور التأشيرة» في الصفحة الرئيسية؛ ينتظر تأكيد المالك"
+    },
+    {
+      "q": "هل يوجد ضمان أو التزام مكتوب؟",
+      "why": "الجواب يبدأ بـ«نعم» لسؤال عن الضمان، ويتعارض مع «لا نضمن صدور التأشيرة»؛ ينتظر تأكيد المالك"
+    }
   ],
-  "faq_pages_skip": ["privacy.html", "terms.html", "disclaimer.html", "blog-post.html", "404.html", "offline.html"],
-  "citation": { "ar": "المصدر: مكتب تأشيرات السعودية في الأردن — saudia-visa.com", "en": "Source: Saudi Visa Services Office in Jordan — saudia-visa.com" }
+  "faq_pages_skip": [
+    "privacy.html",
+    "terms.html",
+    "disclaimer.html",
+    "blog-post.html",
+    "404.html",
+    "offline.html"
+  ],
+  "citation": {
+    "ar": "المصدر: مكتب تأشيرات السعودية في الأردن — saudia-visa.com",
+    "en": "Source: Saudi Visa Services Office in Jordan — saudia-visa.com"
+  }
 }

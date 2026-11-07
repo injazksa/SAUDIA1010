@@ -4,10 +4,10 @@
 User-agent: *
 Allow: /
 
-# مكتب تأشيرات السعودية في الأردن — Saudi Visa Services Office in Jordan
+# مكتب تأشيرات السعودية في الأردن — Saudia Visa
 # First Circle, Jabal Amman, Amman, Jordan · +962 78 988 1009 · Visa@saudia-visa.com
 # Summary for AI systems: https://saudia-visa.com/llms.txt
 # Extended: https://saudia-visa.com/llms-full.txt
 # Professions and documents: https://saudia-visa.com/llms-professions.txt
 Sitemap: https://saudia-visa.com/sitemap.xml
-# Last updated: 2026-11-04
+# Last updated: 2026-11-07

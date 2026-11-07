@@ -226,11 +226,42 @@ window.SD_ICON = window.SD_ICON || (function () {
  if (!a) return;
  const id = a.getAttribute('href');
  if (id === '#' || id.length < 2) return;
- const target = document.querySelector(id);
+ const smooth = !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) ? 'smooth' : 'auto';
+ // 2026-11-07: #home / #top = أعلى الصفحة (لم يكن هناك عنصر بهذا الاسم فلم يحدث شيء)
+ if (id === '#home' || id === '#top') {
+  if (document.querySelector(id)) { /* عنصر حقيقي: يكمل كالعادة */ }
+  else { e.preventDefault(); window.scrollTo({ top: 0, behavior: smooth }); return; }
+ }
+ let target = null;
+ try { target = document.querySelector(id); } catch (_) { return; }
  if (!target) return;
  e.preventDefault();
- target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+ scrollBelowHeader(target, smooth);
+ if (history.replaceState) { try { history.replaceState(null, '', id); } catch (_) {} }
  });
+ // 2026-11-07: فتح قسم من صفحة أخرى (/#services من صفحة داخلية): المتصفح يقفز وحده عند التحميل فيقع العنوان تحت
+ // الشريط الثابت، والصور التي تُحمَّل بعده تزيحه. بعد اكتمال التحميل نضعه تحت الشريط (لا عند الرجوع للخلف).
+ const h = location.hash;
+ if (h && h.length > 1) {
+  let nav = '';
+  try { nav = (performance.getEntriesByType('navigation')[0] || {}).type || ''; } catch (_) {}
+  if (nav !== 'back_forward') {
+   const fix = () => { let t = null; try { t = document.getElementById(decodeURIComponent(h.slice(1))); } catch (_) {} if (t) scrollBelowHeader(t, 'auto'); };
+   if (document.readyState === 'complete') setTimeout(fix, 0); else window.addEventListener('load', () => setTimeout(fix, 0), { once: true });
+  }
+ }
+ }
+ // 2026-11-07: انزل تحت الشريط العلوي الثابت، لا خلفه (كان العنوان يختفي تحت الشريط)
+ function scrollBelowHeader(target, behavior) {
+ const bar = document.querySelector('#uh-header, .sd-header, body > header');
+ let offset = 0;
+ if (bar) {
+  const p = getComputedStyle(bar).position;
+  if (p === 'sticky' || p === 'fixed') offset = bar.offsetHeight;
+ }
+ const own = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+ const top = target.getBoundingClientRect().top + window.pageYOffset - Math.max(offset + 8, own);
+ window.scrollTo({ top: Math.max(0, top), behavior: behavior });
  }
 
  // ─── Shared helper: هل الصفحة الحالية مقال؟ (يعمل على أي مقال حالي ومستقبلي) ───
@@ -670,6 +701,7 @@ window.SD_ICON = window.SD_ICON || (function () {
  { href: '/saudi-qvp-professional-accreditation/', label: 'الاعتماد المهني', icon: 'fa-user-check' }, // owner 2026-10-26: never «الاعتماد المهني (QVP)»
  { href: '/saudi-labor-exam-jordan.html', label: 'الفحص المهني للعمالة', icon: 'fa-certificate' },
  { href: '/certificates.html', label: 'تصديق الشهادات', icon: 'fa-certificate' },
+ { href: '/saudi-consular-services-jordan/', label: 'الخدمات القنصلية السعودية', icon: 'fa-landmark' }, // 2026-11-07
  { href: '/work-visa.html', label: 'تأشيرة العمل', icon: 'fa-passport' },
  { href: '/calculator.html', label: 'حاسبة الرسوم', icon: 'fa-calculator' },
  { href: '/remote-document-services-jordan/', label: 'إنجاز المعاملات والوثائق من الأردن عن بُعد', icon: 'fa-concierge-bell' },
@@ -818,7 +850,8 @@ window.SD_ICON = window.SD_ICON || (function () {
  backdrop.addEventListener('click', close);
  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && drawer.classList.contains('is-open')) close(); });
  // أغلق عند الضغط على أي رابط
- drawer.querySelectorAll('.uh-nav a').forEach(a => a.addEventListener('click', () => close()));
+ // 2026-11-07: كل روابط القائمة (ومنها اتصل/واتساب أسفلها) تغلقها، لا روابط .uh-nav وحدها
+ drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => close()));
 
  // CSS مُضمّن — تصميم Navy/Gold موحّد
  if (!document.getElementById('uh-css')) {
@@ -1082,32 +1115,41 @@ window.SD_ICON = window.SD_ICON || (function () {
  spawnStamp(target, e);
  }, { passive: true });
 
+ // 2026-11-07 (mobile bug): the effect used to set position/overflow on the tapped element and append a child to it at
+ // pointerdown. That changed the element's size between the finger going down and up, the links below moved, and the
+ // browser sent the tap to the NEXT link (menu items opened the wrong page). The effect is now drawn in a separate
+ // fixed overlay over the element, clipped to its shape: the element itself is never touched, nothing moves.
  function spawnStamp(el, event) {
- // اضمن أن العنصر يمكن احتواء المؤثر بداخله
- const cs = getComputedStyle(el);
- if (cs.position === 'static') el.style.position = 'relative';
- if (cs.overflow === 'visible') el.style.overflow = 'hidden';
-
  const rect = el.getBoundingClientRect();
+ if (!rect.width || !rect.height) return;
  const x = (event.clientX != null ? event.clientX : (rect.left + rect.width/2)) - rect.left;
  const y = (event.clientY != null ? event.clientY : (rect.top + rect.height/2)) - rect.top;
  const maxDim = Math.max(rect.width, rect.height);
  const size = Math.max(maxDim * 1.6, 80);
 
+ const clip = document.createElement('span');
+ clip.className = 'stamp-fx-clip';
+ clip.style.left = rect.left + 'px'; clip.style.top = rect.top + 'px';
+ clip.style.width = rect.width + 'px'; clip.style.height = rect.height + 'px';
+ clip.style.borderRadius = getComputedStyle(el).borderRadius;
  const stamp = document.createElement('span');
- stamp.className = 'stamp-fx';
+ stamp.className = 'stamp-fx' + (el.closest('.bg-white, .bg-gray-50, [class*="bg-white"], article, .rm-btn') ? ' stamp-fx--light' : '');
  stamp.style.setProperty('--x', x + 'px');
  stamp.style.setProperty('--y', y + 'px');
  stamp.style.setProperty('--size', size + 'px');
- el.appendChild(stamp);
+ clip.appendChild(stamp);
+ document.body.appendChild(clip);
  // cleanup بعد انتهاء الأنيميشن
- setTimeout(() => stamp.remove(), 640);
+ setTimeout(() => clip.remove(), 640);
  }
 
  if (!document.getElementById('stamp-fx-css')) {
  const style = document.createElement('style');
  style.id = 'stamp-fx-css';
  style.textContent = `
+ .stamp-fx-clip {
+ position: fixed; overflow: hidden; pointer-events: none; z-index: 2147483000;
+ }
  .stamp-fx {
  position: absolute;
  left: var(--x); top: var(--y);
@@ -1132,6 +1174,7 @@ window.SD_ICON = window.SD_ICON || (function () {
  100% { transform: scale(1); opacity: 0; }
  }
  /* نسخة على الخلفيات الفاتحة — اجعل المزج normal حتى يبدو الذهب واضحاً */
+ .stamp-fx--light,
  .bg-white .stamp-fx, .bg-gray-50 .stamp-fx, [class*="bg-white"] .stamp-fx,
  article .stamp-fx, .rm-btn .stamp-fx {
  mix-blend-mode: normal;
@@ -1144,7 +1187,7 @@ window.SD_ICON = window.SD_ICON || (function () {
  .stamp-fx { display: none !important; }
  }
  @media print {
- .stamp-fx { display: none !important; }
+ .stamp-fx, .stamp-fx-clip { display: none !important; }
  }
  `;
  document.head.appendChild(style);
@@ -1155,32 +1198,41 @@ window.SD_ICON = window.SD_ICON || (function () {
  // ─── 15. AUTO INTERNAL LINKS — "روابط ذات صلة" أسفل صفحات الخدمات ───
  function initInternalLinks() {
  const p = location.pathname;
+ // 2026-11-07: related links chosen by topic for each page (before: the first 6 of one fixed list, including an old address)
  const PAGES = {
  '/about.html': { name: 'من نحن', icon: 'fa-building' },
- '/work-visa.html': { name: 'تأشيرة العمل', icon: 'fa-passport' },
- '/certificates.html': { name: 'تصديق الشهادات', icon: 'fa-certificate' },
+ '/work-visa.html': { name: 'تأشيرة العمل السعودية', icon: 'fa-passport' },
+ '/saudi-work-visa-authorization.html': { name: 'تفويض تأشيرة العمل', icon: 'fa-file-signature' },
+ '/certificates.html': { name: 'تصديق الشهادات والوثائق', icon: 'fa-certificate' },
+ '/saudi-university-certificate-attestation/': { name: 'تصديق الشهادات الجامعية', icon: 'fa-graduation-cap' },
+ '/saudi-document-attestation-jordan.html': { name: 'دليل تصديق الأوراق', icon: 'fa-stamp' },
+ '/saudi-consular-services-jordan/': { name: 'الخدمات القنصلية السعودية', icon: 'fa-landmark' },
  '/saudi-qvp-professional-accreditation/': { name: 'الاعتماد المهني', icon: 'fa-user-check' },
  '/saudi-labor-exam-jordan.html': { name: 'الفحص المهني للعمالة', icon: 'fa-certificate' },
+ '/pillar-mumaris-plus.html': { name: 'دليل ممارس بلس', icon: 'fa-user-doctor' },
  '/professions.html': { name: 'المهن والأوراق', icon: 'fa-list-check' },
  '/calculator.html': { name: 'حاسبة الرسوم', icon: 'fa-calculator' },
  '/corporate.html': { name: 'خدمات الشركات', icon: 'fa-city' },
  '/remote-document-services-jordan/':{ name: 'إنجاز المعاملات والوثائق من الأردن عن بُعد', icon: 'fa-concierge-bell' },
- '/blog.html': { name: 'المدونة', icon: 'fa-newspaper' },
  '/faq.html': { name: 'الأسئلة الشائعة', icon: 'fa-circle-question' }
  };
-
- const TARGETS = [
- '/about.html', '/work-visa.html', '/certificates.html', '/saudi-qvp-professional-accreditation/',
- '/professions.html', '/calculator.html', '/corporate.html',
- '/other-services.html', '/faq.html', '/saudi-labor-exam-jordan.html'
- ];
+ const RELATED = {
+ '/about.html': ['/saudi-consular-services-jordan/', '/work-visa.html', '/saudi-work-visa-authorization.html', '/certificates.html', '/saudi-university-certificate-attestation/', '/faq.html'],
+ '/work-visa.html': ['/saudi-work-visa-authorization.html', '/professions.html', '/saudi-qvp-professional-accreditation/', '/certificates.html', '/calculator.html', '/saudi-consular-services-jordan/'],
+ '/certificates.html': ['/saudi-university-certificate-attestation/', '/saudi-document-attestation-jordan.html', '/saudi-consular-services-jordan/', '/remote-document-services-jordan/', '/work-visa.html', '/about.html'],
+ '/saudi-qvp-professional-accreditation/': ['/saudi-labor-exam-jordan.html', '/pillar-mumaris-plus.html', '/professions.html', '/work-visa.html', '/saudi-university-certificate-attestation/', '/saudi-consular-services-jordan/'],
+ '/saudi-labor-exam-jordan.html': ['/saudi-qvp-professional-accreditation/', '/professions.html', '/work-visa.html', '/saudi-work-visa-authorization.html', '/calculator.html', '/saudi-consular-services-jordan/'],
+ '/professions.html': ['/work-visa.html', '/saudi-work-visa-authorization.html', '/saudi-qvp-professional-accreditation/', '/calculator.html', '/certificates.html', '/saudi-consular-services-jordan/'],
+ '/calculator.html': ['/work-visa.html', '/professions.html', '/saudi-work-visa-authorization.html', '/certificates.html', '/saudi-consular-services-jordan/', '/about.html'],
+ '/corporate.html': ['/work-visa.html', '/saudi-work-visa-authorization.html', '/professions.html', '/saudi-consular-services-jordan/', '/calculator.html', '/about.html'],
+ '/faq.html': ['/saudi-consular-services-jordan/', '/work-visa.html', '/certificates.html', '/saudi-work-visa-authorization.html', '/calculator.html', '/about.html']
+ };
+ const TARGETS = Object.keys(RELATED);
  if (!TARGETS.some(t => p.endsWith(t))) return;
  if (document.getElementById('related-links-sec')) return;
 
- const currentKey = Object.keys(PAGES).find(k => p.endsWith(k));
- const related = Object.entries(PAGES)
- .filter(([k]) => k !== currentKey)
- .slice(0, 6);
+ const currentKey = TARGETS.find(k => p.endsWith(k));
+ const related = RELATED[currentKey].filter((k) => PAGES[k]).map((k) => [k, PAGES[k]]);
 
  const sec = document.createElement('section');
  sec.id = 'related-links-sec';
@@ -1189,7 +1241,7 @@ window.SD_ICON = window.SD_ICON || (function () {
  <div class="rl-inner">
  <div class="rl-head">
  <span class="rl-tag">اكتشف المزيد</span>
- <h2 class="rl-title">خدمات أخرى من <strong>مكتب تأشيرات السعودية في الأردن</strong></h2>
+ <h2 class="rl-title">خدمات مرتبطة من <strong>السعودية فيزا</strong></h2>
  </div>
  <div class="rl-grid">
  ${related.map(([href, v]) => `
@@ -1876,7 +1928,7 @@ window.SD_ICON = window.SD_ICON || (function () {
    button itself (js/sd-install.js) loads after the page has finished loading, when the browser is idle */
 (function () {
   window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); window.__sdDeferredInstall = e; });
-  function load() { if (document.querySelector('script[data-sd-install]')) return; var s = document.createElement('script'); s.src = '/js/sd-install.js?v=20261031'; s.async = true; s.setAttribute('data-sd-install', ''); document.head.appendChild(s); }
+  function load() { if (document.querySelector('script[data-sd-install]')) return; var s = document.createElement('script'); s.src = '/js/sd-install.js?v=20261107'; s.async = true; s.setAttribute('data-sd-install', ''); document.head.appendChild(s); }
   function later() { (window.requestIdleCallback || function (f) { setTimeout(f, 1500); })(load, { timeout: 4000 }); }
   if (document.readyState === 'complete') later(); else window.addEventListener('load', later, { once: true });
 })();
